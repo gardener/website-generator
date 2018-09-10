@@ -3,6 +3,15 @@ github-pages:
   base_definition:
     repo:
       name: 'gardener_website_generator'
+    repos:
+    - name: 'gardener_website'
+      path: 'gardener/website'
+      branch: 'master'
+      cfg_name: 'github_com'
+    - name: 'gardener_documentation'
+      path: 'gardener/documentation'
+      branch: 'master'
+      cfg_name: 'github_com'
   variants:
     head-update:
       steps:

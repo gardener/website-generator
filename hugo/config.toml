@@ -1,4 +1,5 @@
-baseURL = "https://gardener.cloud"
+#baseURL = "https://gardener.cloud"
+baseURL = "https://gardener.github.io/website/"
 languageCode = "en-US"
 defaultContentLanguage = "en"
 enableGitInfo = true
@@ -10,7 +11,7 @@ defaultContentLanguageInSubdir= true
 contentDir="content"
 
 [params]
-  editURL = "https://github.com/gardener/documentation/edit/master/hugo/content/"
+  editURL = "https://github.com/gardener/documentation/edit/master/website/content/"
   issueURL = "https://github.com/gardener/documentation/issues"
   description = "Documentation for Gardener"
   author = "Andreas Herz"

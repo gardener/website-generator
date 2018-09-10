@@ -1,3 +1,6 @@
 .idea
-hugo/public
+hugo/assets
+hugo/content
+hugo/content
+hugo/static
 node_modules

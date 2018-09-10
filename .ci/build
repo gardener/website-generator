@@ -5,15 +5,32 @@ if [[ -z "${GARDENER_WEBSITE_PATH}" ]]; then
   exit 1
 fi
 
-cd ${GARDENER_WEBSITE_PATH}
+if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH}" ]]; then
+  echo "GARDENER_WEBSITE_GENERATOR_PATH not set"
+  exit 1
+fi
+
+if [[ -z "${GARDENER_DOCUMENTATION_PATH}" ]]; then
+  echo "GARDENER_DOCUMENTATION_PATH not set"
+  exit 1
+fi
+
+# Merge the "Gardener Documentation" folder into the "hugo" directory
+#
+cp -r ${GARDENER_DOCUMENTATION_PATH}/website/assets  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
+cp -r ${GARDENER_DOCUMENTATION_PATH}/website/content ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
+cp -r ${GARDENER_DOCUMENTATION_PATH}/website/layouts ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts
+cp -r ${GARDENER_DOCUMENTATION_PATH}/website/static  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/static
+
+
+cd ${GARDENER_WEBSITE_GENERATOR_PATH}
 npm install
 node ./node/index.js
 cd hugo
 /hugo/hugo version
-/hugo/hugo --destination ../docs
-cd -
-node ./node/index.js clean
+/hugo/hugo --destination ${GARDENER_WEBSITE_PATH}/docs
 
 
+cd ${GARDENER_WEBSITE_PATH}
 git add . -A
 git commit -m 'Automatic build triggered by last commit [skip ci]'
