@@ -30,6 +30,13 @@ cd hugo
 /hugo/hugo version
 /hugo/hugo --destination ${GARDENER_WEBSITE_PATH}/docs
 
+# be nice and cleanup. This is useful in the "local" development mode
+#
+rm -r  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
+rm -r  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
+rm -r  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts
+rm -r  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/static
+
 
 cd ${GARDENER_WEBSITE_PATH}
 git add . -A
