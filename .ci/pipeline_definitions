@@ -1,4 +1,4 @@
-github-pages:
+gardener-website-generator:
   template: 'default'
   base_definition:
     repo:
