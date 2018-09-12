@@ -45,7 +45,7 @@
         {{else}}
           <a href="{{.RelPermalink}}">
               {{ if .Params.icon}}
-              <img class="navigation-icon" src="/images/{{.Params.icon}}"/>
+              <img class="navigation-icon" src="../images/{{.Params.icon}}"/>
               {{end}}
               {{or .Params.menuTitle .LinkTitle .Title}}{{safeHTML .Params.Post}}
           </a>
