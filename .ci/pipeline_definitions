@@ -16,5 +16,5 @@ gardener-website-generator:
     head-update:
       steps:
         build:
-          image: 'freegroup/gardener-website-generator:v3'
+          image: 'freegroup/gardener-website-generator:v5'
           publish_to: ['gardener_website'] 
