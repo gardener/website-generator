@@ -15,29 +15,31 @@ if [[ -z "${GARDENER_DOCUMENTATION_PATH}" ]]; then
   exit 1
 fi
 
+cwd=`pwd`
+
 # Merge the "Gardener Documentation" folder into the "hugo" directory
 #
-cp -r ${GARDENER_DOCUMENTATION_PATH}/website/assets  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
-cp -r ${GARDENER_DOCUMENTATION_PATH}/website/content ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
-cp -r ${GARDENER_DOCUMENTATION_PATH}/website/layouts ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts
-cp -r ${GARDENER_DOCUMENTATION_PATH}/website/static  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/static
+cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/assets  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
+cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/content ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
+cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/layouts ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts
+cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/static  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/static
 
 
-cd ${GARDENER_WEBSITE_GENERATOR_PATH}
+cd ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}
 npm install
 node ./node/index.js
 cd hugo
 /hugo/hugo version
-/hugo/hugo --destination ${GARDENER_WEBSITE_PATH}/docs
+/hugo/hugo --destination ${cwd}/${GARDENER_WEBSITE_PATH}/docs
 
 # be nice and cleanup. This is useful in the "local" development mode
 #
-rm -r  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
-rm -r  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
-rm -r  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts
-rm -r  ${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/static
+rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
+rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
+rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts
+rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/static
 
 
-cd ${GARDENER_WEBSITE_PATH}
+cd ${cwd}/${GARDENER_WEBSITE_PATH}
 git add . -A
 git commit -m 'Automatic build triggered by last commit [skip ci]'
