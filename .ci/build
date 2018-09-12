@@ -26,7 +26,6 @@ cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/static  ${cwd}/${GARDENER_WE
 
 
 cd ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}
-ls -la
 
 npm install
 node ./node/index.js
