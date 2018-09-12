@@ -11,8 +11,10 @@ defaultContentLanguageInSubdir= true
 contentDir="content"
 
 [params]
-  editURL = "https://github.com/gardener/documentation/edit/master/website/content/"
-  issueURL = "https://github.com/gardener/documentation/issues"
+  # edit this for the final pull request to the real repo.  
+  # in the .ci directory too.
+  editURL = "https://github.com/freegroup/documentation/edit/master/website/documentation/"
+  issueURL = "https://github.com/freegroup/documentation/issues"
   description = "Documentation for Gardener"
   author = "Andreas Herz"
   showVisitedLinks = true
