@@ -17,6 +17,9 @@ fi
 
 cwd=`pwd`
 
+ls -la ${cwd}/${GARDENER_DOCUMENTATION_PATH}
+ls -la ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website
+
 # Merge the "Gardener Documentation" folder into the "hugo" directory
 #
 cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/assets  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
