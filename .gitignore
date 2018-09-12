@@ -1,7 +1,4 @@
 .idea
-hugo/assets
 hugo/content
-hugo/layouts
-hugo/static
 node_modules
 

@@ -19,10 +19,8 @@ cwd=`pwd`
 
 # Merge the "Gardener Documentation" folder into the "hugo" directory
 #
-cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/assets  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
-cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/content ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
-cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/layouts ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts
-cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/static  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/static
+cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/documentation ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
+cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/index.html ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts/index.html
 
 
 cd ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}
@@ -37,10 +35,8 @@ ls -la
 
 # be nice and cleanup. This is useful in the "local" development mode
 #
-rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/assets
 rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
-rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts
-rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/static
+rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts/index.html
 
 
 cd ${cwd}/${GARDENER_WEBSITE_PATH}
