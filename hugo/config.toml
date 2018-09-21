@@ -1,5 +1,5 @@
 #baseURL = "https://gardener.cloud"
-baseURL = "https://gardener.github.io/website/"
+baseURL = "https://gardener.cloud/"
 languageCode = "en-US"
 defaultContentLanguage = "en"
 enableGitInfo = true
@@ -13,8 +13,8 @@ contentDir="content"
 [params]
   # edit this for the final pull request to the real repo.  
   # in the .ci directory too.
-  editURL = "https://github.com/freegroup/documentation/edit/master/website/documentation/"
-  issueURL = "https://github.com/freegroup/documentation/issues"
+  editURL = "https://github.com/gardener/documentation/edit/master/website/documentation/"
+  issueURL = "https://github.com/gardener/documentation/issues"
   description = "Documentation for Gardener"
   author = "Andreas Herz"
   showVisitedLinks = true

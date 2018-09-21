@@ -9,7 +9,7 @@ gardener-website-generator:
       branch: 'master'
       cfg_name: 'github_com'
     - name: 'gardener_documentation'
-      path: 'freegroup/documentation'
+      path: 'gardener/documentation'
       branch: 'master'
       cfg_name: 'github_com'
   variants:
