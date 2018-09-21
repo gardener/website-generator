@@ -5,7 +5,7 @@ const urlExists = require("url-exists")
 
 module.exports= function(documentPath, content) {
     let collectedLinks = []
-    let mdMatchRegex = /\[([^\]]+)]\((.+?)(\))/g
+    let mdMatchRegex = /\[([^\]]*)]\((.+?)(\))/g
 
     let md =  content.replace(mdMatchRegex, function (str, text, link) {
         if (isRelativeUrl(link) && link.indexOf("#")!==0) {
