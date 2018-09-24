@@ -16,7 +16,7 @@ process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 // check if we run in a "cleanup" mode
 //
 const clean = process.argv.length===3 && process.argv[2]==="clean"
-const repoCommits = "https://api.github.com/repos/gardener/website/commits"
+const repoCommits = "https://api.github.com/repos/gardener/documentation/commits"
 
 // Parse all files and inline remote MarkDown content.
 //
@@ -116,6 +116,7 @@ glob( __dirname+'/../hugo/content/**/*.md', function( err, files ) {
             else{
                 let rootDir = path.normalize(__dirname+"/..")
                 relUrl =  file.replace(rootDir,"")
+                relUrl =  relUrl.replace("/hugo/content/","/website/documentation/")
                 commitsUrl = repoCommits
             }
 

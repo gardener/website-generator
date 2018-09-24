@@ -35,8 +35,18 @@ ls -la
 
 # be nice and cleanup. This is useful in the "local" development mode
 #
+cd ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
+find . -name '*.json' -exec echo {} \;
+find . -name '*.json' -exec cp  --parents {} ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/documentation \;
 rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
 rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts/index.html
+
+
+echo "Adding changed JSON git history to repo for faster site generation the next time"
+cd ${cwd}/${GARDENER_DOCUMENTATION_PATH}
+git add . -A
+git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse [skip ci]'
+
 
 
 cd ${cwd}/${GARDENER_WEBSITE_PATH}
