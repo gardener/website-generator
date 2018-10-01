@@ -1,0 +1,30 @@
+{{- with (.Get "dir") -}}
+{{- $files := readDir (print "content/" $.Page.File.Dir . ) }}
+<div class="sheetSlider sh-default">
+    {{- range $index, $file := $files -}}
+    <input id="s{{$index}}" type="radio" name="slide1" {{ if eq $index 0 }}checked{{ end }}/>
+    {{- end }}
+
+    <div class="sh__content">
+        {{- range $index, $file := $files -}}
+        {{- $absoluteUrl := print $.Page.Dir ($.Get "dir") "/" $file.Name | absURL }}
+        <div class="sh__item"><img src="{{ $absoluteUrl }}"/></div>
+        {{- end }}
+    </div>
+
+
+    <!--botones -->
+    <div class="sh__btns">
+        {{- range $index, $file := $files -}}
+        <label for="s{{$index}}"></label>
+        {{- end }}
+    </div><!-- .sh__btns -->
+
+    <div class="sh__arrows">
+        {{- range $index, $file := $files -}}
+        <label for="s{{$index}}"></label>
+        {{- end }}
+    </div>
+</div>
+
+{{- end }}
