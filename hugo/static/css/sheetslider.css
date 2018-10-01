@@ -7,7 +7,7 @@
 /* Estilos iniciales
 ------------------------------------*/
 .sheetSlider {
-    background-color: #121214;
+    background-color: transparent;
     font-size: 8px;
     line-height: 1.5;
     position: relative;
@@ -54,6 +54,8 @@
 }
 .sh__item img {
     width: 100%;
+    object-fit: contain;
+    height: 100%;
 }
 
 /* Estilos para textos
@@ -127,7 +129,7 @@
     transform: translate3d(0, 0, 0);
 }
 .sh__arrows label, .sh-control {
-    background-color: white;
+    background-color: #e5e5e5;
     background-repeat: no-repeat;
     background-position: 50%;
     cursor: pointer;
@@ -139,7 +141,7 @@
     height: 50px;
 }
 .sh__arrows label:hover {
-    background-color: rgba(255, 255, 255, .9);
+    background-color: rgb(205, 205, 205);
 }
 
 /* Boton de control (play/pause)
