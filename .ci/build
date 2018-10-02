@@ -1,4 +1,4 @@
-#!/bin/ash
+#!/bin/bash
 
 if [[ -z "${GARDENER_WEBSITE_PATH}" ]]; then
   echo "GARDENER_WEBSITE_PATH not set"
