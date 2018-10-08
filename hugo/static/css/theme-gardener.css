@@ -64,7 +64,9 @@ h1, h2, h3, h4, h5 {
 
 
 h1, #chapter h1 {
-    font-size: 1.4em;
+    font-size: 2em;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding-top: 1em;
 }
 
 
@@ -100,6 +102,20 @@ h2, #chapter h2 {
     list-style-position: outside;
     margin-left: 20px;
 }
+
+
+#body-inner blockquote {
+    border:1px solid red;
+    padding:10px;
+    margin-top:40px;
+    margin-bottom:40px;
+}
+
+#body-inner blockquote p {
+    font-size: 1.5rem;
+    color: black;
+}
+
 .anchor {
     color: var(--MAIN-ANCHOR-color);
 }
@@ -116,10 +132,7 @@ a:hover {
     display: block;
     content: "";
     height: 1px;
-    width: 0%;
-    -webkit-transition: width 0.5s ease;
-    -moz-transition: width 0.5s ease;
-    -ms-transition: width 0.5s ease;
+    width: 0;
     transition: width 0.5s ease;
     background-color: var(--MAIN-LINK-HOVER-color);
 }
@@ -179,7 +192,7 @@ a:hover {
 }
 
 #top-bar p{
-    margin:0px;
+    margin:0;
 }
 
 #sidebar {
@@ -375,7 +388,6 @@ blockquote p {
 .debugprint th.key,
 .debugprint th.type,
 .debugprint th.value {
-    font-family: normal;
     font-size: 1em;
     font-style: normal;
 }

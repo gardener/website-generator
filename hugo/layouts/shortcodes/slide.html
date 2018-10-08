@@ -1,12 +1,21 @@
+{{ $scratch := newScratch }}
+
 {{- with (.Get "dir") -}}
 {{- $files := readDir (print "content/" $.Page.File.Dir . ) }}
+
+{{range $files }}
+   {{if (strings.HasSuffix  .Name ".png" ) }}
+       {{ $scratch.Add "images" (slice .) }}
+   {{end}}
+{{ end }}
+
 <div class="sheetSlider sh-default">
-    {{- range $index, $file := $files -}}
+    {{- range $index, $file := ($scratch.Get "images") -}}
     <input id="s{{$index}}" type="radio" name="slide1" {{ if eq $index 0 }}checked{{ end }}/>
     {{- end }}
 
     <div class="sh__content">
-        {{- range $index, $file := $files -}}
+        {{- range $index, $file := ($scratch.Get "images") -}}
         {{- $absoluteUrl := print $.Page.Dir ($.Get "dir") "/" $file.Name | absURL }}
         <div class="sh__item"><img src="{{ $absoluteUrl }}"/></div>
         {{- end }}
@@ -15,13 +24,13 @@
 
     <!--botones -->
     <div class="sh__btns">
-        {{- range $index, $file := $files -}}
+        {{- range $index, $file := ($scratch.Get "images") -}}
         <label for="s{{$index}}"></label>
         {{- end }}
     </div><!-- .sh__btns -->
 
     <div class="sh__arrows">
-        {{- range $index, $file := $files -}}
+        {{- range $index, $file := ($scratch.Get "images") -}}
         <label for="s{{$index}}"></label>
         {{- end }}
     </div>
