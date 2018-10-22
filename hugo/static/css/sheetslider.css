@@ -7,7 +7,6 @@
 /* Estilos iniciales
 ------------------------------------*/
 .sheetSlider {
-    background-color: transparent;
     font-size: 8px;
     line-height: 1.5;
     position: relative;
@@ -15,6 +14,7 @@
     padding-bottom: 42.857143%;
     overflow: hidden;
     -webkit-font-smoothing: antialiased;
+    background-color: rgba(0,0,0,0.02);
 }
 .sheetSlider input,
 .sh__btns, .sh__meta{display: none;}
