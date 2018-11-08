@@ -53,6 +53,12 @@ li {
     font-size:80%;
 }
 
+
+.drop-shadow {
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    border-radius: 4px
+}
+
 h1, h2, h3, h4, h5 {
     color: var(--MAIN-TITLES-TEXT-color) !important;
     font-family:"Multi", sans-serif !important;
