@@ -3,6 +3,7 @@ gardener-website-generator:
   base_definition:
     repo:
       name: 'gardener_website_generator'
+      trigger: true
     repos:
     - name: 'gardener_website'
       path: 'gardener/website'
@@ -12,9 +13,13 @@ gardener-website-generator:
       path: 'gardener/documentation'
       branch: 'master'
       cfg_name: 'github_com'
+      trigger: true
   variants:
     head-update:
       steps:
         build:
           image: 'freegroup/gardener-website-generator:v6'
           publish_to: ['gardener_website', "gardener_documentation"]
+      traits:
+        cronjob:
+          interval: '24h'
