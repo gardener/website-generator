@@ -8,6 +8,9 @@
 {{if (strings.HasSuffix  .Name ".png" ) }}
 {{ $scratch.Add "images" (slice .) }}
 {{end}}
+{{if (strings.HasSuffix  .Name ".jpg" ) }}
+{{ $scratch.Add "images" (slice .) }}
+{{end}}
 {{ end }}
 
 <div class="sheetSlider sh-default drop-shadow">
