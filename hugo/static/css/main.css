@@ -31,21 +31,31 @@ body {
 	overflow: hidden;
     color:white;
 	background-color:#19222b;
+
+	background-color:white;
+	color:#243b5e;
+
 	box-sizing: initial;
 }
 
 .page:nth-child(odd) {
 	background-color:#e9eae9;
 	color:#243b5e;
+
+	background-color:#19222b;
+	color:white;
 }
 
 #page-1 {
 	z-index:1000;
-    background-image: url('../images/background.svg');
+    background-image: url('../images/gardener-teaser-background.svg');
     background-size: cover;
-    color: #fff;
-	padding-top: 19rem;
+    color: black;
+	padding-top: 10rem;
+	background-repeat: no-repeat;
+	max-width: initial;
 }
+
 
 .overlay{
 	position: absolute;
@@ -115,6 +125,9 @@ body {
 	padding:10px;
 	color: #243b5e;
 	box-shadow: 0 1px 2px #4c4c4c;
+
+	background-color:#19222b;
+	color:white;
 }
 
 #toolbar .branding {
@@ -185,8 +198,28 @@ body {
 	color: #009f76;
 }
 
+.community-installer {
+	border:1px solid black;
+	padding: 10px;
+	margin-top: 29px;
+	position: absolute;
+	text-decoration: none;
+	color:black;
+}
+
 #page-1 h1 {
     font-weight:200;
+}
+
+#page-1 li {
+	list-style-type: none;
+	font-weight: 400;
+	font-size: 2.5rem;
+}
+
+#page-1 .description {
+	padding-top: 42px;
+	padding-left: 40px;
 }
 
 h1 {
