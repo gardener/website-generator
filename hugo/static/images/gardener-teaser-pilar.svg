@@ -189,7 +189,7 @@
         <filter x="-9.3%" y="-15.1%" width="118.7%" height="142.2%" filterUnits="objectBoundingBox" id="filter-40">
             <feOffset dx="0" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
             <feGaussianBlur stdDeviation="2" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
-            <feColorMatrix values="0 0 0 0 0.960784314   0 0 0 0 0.650980392   0 0 0 0 0.137254902  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+            <feColorMatrix values="0 0 0 0 0.976470588   0 0 0 0 0.584313725   0 0 0 0 0.0117647059  0 0 0 1 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
         </filter>
         <path d="M31.4650384,21.7697908 C39.1217287,22.1418792 50.6037288,21.6852591 45.641705,16.6697796 C40.6796813,11.6543001 31.220622,9.98641272 21.6942391,9.50454045 C12.1384698,8.83502712 -2.34376103,8.58620942 1.98638963,13.6590972 C8.48783736,21.1593314 26.0924486,21.2085428 31.4650384,21.7697908 Z" id="path-41"></path>
         <filter x="-15.3%" y="-39.3%" width="130.7%" height="210.0%" filterUnits="objectBoundingBox" id="filter-42">
