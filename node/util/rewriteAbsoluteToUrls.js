@@ -9,23 +9,28 @@ module.exports= function(documentPath, content) {
 
     let md =  content.replace(mdMatchRegex, function (str, text, link) {
         if (isRelativeUrl(link) && link.indexOf("#")!==0) {
-            var root = path.dirname(documentPath)
+            let root = path.dirname(documentPath)
             link = root + "/" + link;
         }
         if(link.indexOf("#")!==0 && link.indexOf("mailto:")!==0)
             collectedLinks.push(link);
         link = link.replace(new RegExp(".png$", 'g'), ".png?raw=true")
+        link = link.replace("/./","/")
         return '[' + text + '](' +link + ')'
     })
-/*
-    console.log("------------------------------")
-    collectedLinks.forEach( link => {
-        urlExists(link, (err, exists) => {
-            if(exists===false)
-                console.log(documentPath, link, exists)
-            })
+
+    mdMatchRegex = /(<img src=")(.+?)(?=")([^>]*)(?=>)>/g
+    md =  md.replace(mdMatchRegex, function (str, pre, link, post) {
+        if (isRelativeUrl(link) && link.indexOf("#")!==0) {
+            let root = path.dirname(documentPath)
+            link = root + "/" + link;
+        }
+        if(link.indexOf("#")!==0 && link.indexOf("mailto:")!==0)
+            collectedLinks.push(link);
+        link = link.replace(new RegExp(".png$", 'g'), ".png?raw=true")
+        link = link.replace("/./", "/")
+        return pre+link+post+">"
     })
-*/
 
     return md;
 }
