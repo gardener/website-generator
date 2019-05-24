@@ -15,6 +15,7 @@ module.exports= function(documentPath, content) {
         if(link.indexOf("#")!==0 && link.indexOf("mailto:")!==0)
             collectedLinks.push(link);
         link = link.replace(new RegExp(".png$", 'g'), ".png?raw=true")
+        link = link.replace(new RegExp(".gif$", 'g'), ".gif?raw=true")
         link = link.replace("/./","/")
         return '[' + text + '](' +link + ')'
     })
@@ -28,6 +29,7 @@ module.exports= function(documentPath, content) {
         if(link.indexOf("#")!==0 && link.indexOf("mailto:")!==0)
             collectedLinks.push(link);
         link = link.replace(new RegExp(".png$", 'g'), ".png?raw=true")
+        link = link.replace(new RegExp(".gif$", 'g'), ".gif?raw=true")
         link = link.replace("/./", "/")
         return pre+link+post+">"
     })
