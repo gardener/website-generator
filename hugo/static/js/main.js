@@ -12,18 +12,21 @@ $(document).ready(function(){
 
 
 $(window).load(function() {
-	var $el, leftPos, newWidth;
-	var $magicLine = $(".menu .menu-line");
+	try {
+		var $el, leftPos, newWidth;
+		var $magicLine = $(".menu .menu-line");
 
-	var calcMenuLine = function(){
-		$magicLine
-			.width($(".current_page_item").width())
-			.css("left", $(".current_page_item a").position().left)
-			.data("origLeft", $magicLine.position().left)
-			.data("origWidth", $magicLine.width());
+		var calcMenuLine = function () {
+			$magicLine
+				.width($(".current_page_item").width())
+				.css("left", $(".current_page_item a").position().left)
+				.data("origLeft", $magicLine.position().left)
+				.data("origWidth", $magicLine.width());
+		}
+		calcMenuLine();
+		$(window).resize(calcMenuLine);
 	}
-	calcMenuLine();
-	$( window ).resize(calcMenuLine);
+	catch (exc){}
 
 
 	$(".menu ul li a").hover(function() {
