@@ -9,8 +9,38 @@ $(document).ready(function(){
 
 })
 
+
+
 $(window).load(function() {
-		
+	var $el, leftPos, newWidth;
+	var $magicLine = $(".menu .menu-line");
+
+	var calcMenuLine = function(){
+		$magicLine
+			.width($(".current_page_item").width())
+			.css("left", $(".current_page_item a").position().left)
+			.data("origLeft", $magicLine.position().left)
+			.data("origWidth", $magicLine.width());
+	}
+	calcMenuLine();
+	$( window ).resize(calcMenuLine);
+
+
+	$(".menu ul li a").hover(function() {
+		$el = $(this);
+		leftPos = $el.position().left;
+		newWidth = $el.parent().width();
+		$magicLine.stop().animate({
+			left: leftPos,
+			width: newWidth
+		});
+	}, function() {
+		$magicLine.stop().animate({
+			left: $magicLine.data("origLeft"),
+			width: $magicLine.data("origWidth")
+		});
+	});
+
 	// response menu at the top right menu bar starting 
 	// on page-2
 	$('.toggle-nav').click(function(e) {
