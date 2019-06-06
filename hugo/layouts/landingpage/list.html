@@ -21,41 +21,35 @@
         <span>Gardener</span>
         <nav class="menu">
             <ul class="active">
-                <li  class="">
-                    <a href="/">
+                <li  {{ if eq .RelPermalink "/" }} class='current_page_item' {{ end }}>
+                    <a href="/"  >
                         <button class="u-pull-right documentation-button">
                             About
                         </button>
                     </a>
                 </li>
 
-                <li  class="current_page_item">
-                    <a href="/adopter">
+                <li {{ if eq .RelPermalink "/adopter/" }} class='current_page_item' {{ end }} >
+                    <a href="/adopter" >
                         <button class="u-pull-right documentation-button">
                             Adopter
                         </button>
                     </a>
                 </li>
 
-                <li  class="current_page_item">
-                    <a href="/blog">
-                        <button class="u-pull-right documentation-button">
-                            Docs
+
+                <li {{ if eq .RelPermalink "/community/" }} class='current_page_item' {{ end }} >
+                    <a href="/community">
+                        <button class="u-pull-right  documentation-button">
+                           Community
                         </button>
                     </a>
                 </li>
 
                 <li>
-                    <a href="https://github.com/gardener" target="_blank">
-                        <button class="u-pull-right  documentation-button">
-                           Github
-                        </button>
-                    </a>
-                </li>
-                <li>
-                    <a href="https://kubernetes.slack.com/messages/gardener" target="_blank" title="self-invite yourself to K8s slack via https://slack.k8s.io">
-                        <button class="u-pull-right  documentation-button">
-                            Slack
+                    <a href="/blog">
+                        <button class="u-pull-right documentation-button">
+                            Docs
                         </button>
                     </a>
                 </li>
@@ -66,7 +60,7 @@
     </div>
 </nav>
 
-cccccc
+
 {{.Content}}
 
 

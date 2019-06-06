@@ -20,7 +20,6 @@ cwd=`pwd`
 # Merge the "Gardener Documentation" folder into the "hugo" directory
 #
 cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/documentation ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
-cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/index.html ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts/index.html
 
 
 cd ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}
@@ -39,7 +38,6 @@ cd ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
 find . -name '*.json' -exec echo {} \;
 find . -name '*.json' -exec cp  --parents {} ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/documentation \;
 rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
-rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/layouts/index.html
 
 
 echo "Adding changed JSON git history to repo for faster site generation the next time"
