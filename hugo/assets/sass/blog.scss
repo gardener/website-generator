@@ -34,7 +34,8 @@ table, td {
 }
 
 .blogs {
-
+  background-color: white;
+  padding-top:70px;
   h1, h2, h3, h4 {
     text-align: left;
     font-weight: 300;
@@ -47,36 +48,63 @@ table, td {
     font-size: 1.2em;
   }
 
-
   .post {
-    padding: 30px 0;
-    border-bottom: solid 2px #737373;
-    td{
-      border-bottom:0;
-    }
-    ul {
-      padding-left:40px;
-      li {
-        list-style-position: outside;
+    padding: 30px;
+
+    .wrapper {
+      display: block;
+      max-width: 950px;
+      margin-left: auto;
+      margin-right: auto;
+      border-bottom: 2px solid #d9d9d9;
+      border-bottom-color: rgba(123,134,149,0.2);
+      overflow:auto;
+
+      td{
+        border-bottom:0;
       }
-    }
-
-    .drop-shadow {
-      box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-      border-radius: 4px
-    }
-
-    .externalLink{
-      color:$primary-color;
-      i{
-        padding-left: 5px;
-        font-size:80%;
+      ul {
+        padding-left:40px;
+        li {
+          list-style-position: outside;
+        }
       }
-    }
 
-    .user-icon {
-      width:60px;
-      border-radius: 50%;
+      .drop-shadow {
+        box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+        border-radius: 4px
+      }
+
+      .externalLink{
+        color:$primary-color;
+        i{
+          padding-left: 5px;
+          font-size:80%;
+        }
+      }
+
+      .user-icon {
+        width:60px;
+        border-radius: 50%;
+      }
+
+      img{
+        margin-left: auto;
+        margin-right: auto;
+        max-width:750px;
+        display:block;
+      }
     }
   }
+
+
+  .post:first-child {
+    z-index:1000;
+    background-image: url('../images/gardener-teaser-background-flip.svg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: -340px;
+/*    background: linear-gradient(to bottom, #f2f6fc 0%,#f2f6fc 77%,#ffffff 100%); */
+  }
+
 }

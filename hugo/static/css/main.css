@@ -29,19 +29,12 @@ body {
 	box-shadow: rgba(34, 48, 64, 0.8) 0px 8px 80px 0px;
 	position: relative;
 	overflow: hidden;
-    color:white;
-	background-color:#19222b;
-
-	background-color:white;
+    background-color:white;
 	color:#243b5e;
-
 	box-sizing: initial;
 }
 
 .page:nth-child(odd) {
-	background-color:#e9eae9;
-	color:#243b5e;
-
 	background-color:#19222b;
 	color:white;
 }
@@ -72,11 +65,11 @@ body {
 	background-size: contain;
     background-repeat: no-repeat;
 }
+
 .arrow-button {
 	display: block;
     width: 48px;
     height: 48px;
-    padding-top: 8px;
     text-align: center;
     cursor: pointer;
     border-radius: 24px;
@@ -107,12 +100,6 @@ body {
 	height: 100%;
 }
 
-.branding span {
-	font-size: 35px;
-	vertical-align: bottom;
-	font-weight: 300;
-	padding-left: 20px;
-}
 
 #toolbar {
 	z-index:1950;
@@ -123,9 +110,7 @@ body {
 	background-color:rgba(255, 255, 255, 0.95);
 	height:50px;
 	padding:10px;
-	color: #243b5e;
 	box-shadow: 0 1px 2px #4c4c4c;
-
 	background-color:#19222b;
 	color:white;
 }
@@ -160,13 +145,34 @@ body {
 .documentation-button {
 	font-size: 14px;
 	font-weight: 300;
-	-webkit-animation: priceTransitionIn ease-out 1;
+    color: white;
+    background-color: transparent;
+    border: 0;
+    transition: all 0.2s ease-in-out;
+    border-radius: 0;
+    text-transform: none;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 1rem;
+    display: inline-block;
+    height: 38px;
+    padding: 0 20px;
+    text-align: center;
+    line-height: 38px;
+    letter-spacing: .1rem;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    box-sizing: border-box;
 }
+
 .github-button {
 	font-size: 14px;
     font-weight: 300;
 	-webkit-animation: priceTransitionIn ease-out 1;
 }
+
 #toolbar button a{
  text-decoration: none;
  color:black;
@@ -212,10 +218,6 @@ body {
 }
 
 #page-1 h1 {
-    font-weight:200;
-}
-
-#page-1 li {
 	list-style-type: none;
 	font-weight: 400;
 	font-size: 2.5rem;
@@ -258,9 +260,6 @@ h2 {
 
 
 
-
-
-
 /*----- Toggle Button -----*/
 .toggle-nav {
 	display:none;
@@ -268,29 +267,77 @@ h2 {
 
 .menu{
 	float:right;
+    height: 70px;
+    overflow: hidden;
+    top: 0;
+    position: absolute;
+    right: 10px;
+    line-height: 70px;
+    width:100%;
 }
 
-.menu ul {
+.menu .menu-items {
 	display:flex;
-	float:right;
+	flex-direction: row;
+    justify-content: flex-end;
 }
 
-.menu li {
-	list-style:none;
+.menu .social-items {
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
-.menu li:last-child {
-	margin-right:0;
+#hide-share-menu,
+#show-share-menu {
+    width:50px;
+    cursor:pointer;
 }
 
-.menu a {
-	transition:color linear 0.15s;
+.menu .social-items > div:last-child {
+    right: 0px;
+    position: absolute;
+}
+
+.menu > div {
+    transform: translateY(-70px);
+    transition:transform  ease-in-out 0.5s;
+}
+
+
+.menu > div.show-share {
+    transform: translateY(0px) !important;
+    transition:transform  ease-in-out 0.5s;
+}
+
+
+.branding-teaser span {
+    position:absolute;
+    font-size: 35px;
+    vertical-align: bottom;
+    font-weight: 300;
+    padding-left: 20px;
+}
+
+.branding-teaser{
+    position: relative;
+    overflow:hidden;
+}
+.branding-teaser *{
+    transform: translateY(0px);
+    transition:transform  ease-in-out 0.5s;
+}
+
+
+.branding-teaser.show-share * {
+    transform: translateY(70px) !important;
+    transition:transform  ease-in-out 0.5s;
 }
 
 
 .menu .menu-line {
-	position: absolute;
-	bottom: 0;
+	position: absolute ;
+	bottom: 2px;
 	height: 2px;
 	background: #fe4902;
 }
@@ -302,46 +349,42 @@ h2 {
 	}
 
 	.menu {
-		position:relative;
+        overflow: initial;
 		display:inline-block;
 	}
 
-	.menu ul.active {
+	.menu .menu-items.active {
 		display:none;
 	}
 
-	.menu ul {
-		position:absolute;
+	.menu .menu-items {
+		position:relative;
 		top:120%;
-		left:-110px;
+		left:-20px;
 		padding:10px;
 		border-radius:3px;
-		background:rgba(170, 170, 170, 0.30980392156862746);
+		background:rgba(0, 0, 0, 0.6);
 		display:block;
 	}
 
-	.menu ul:after {
-		width:0px;
-		height:0px;
-		position:absolute;
-		top:0%;
-		right:55px;
-		content:'';
-		transform:translate(0%, -100%);
-		border-left:7px solid transparent;
-		border-right:7px solid transparent;
-		border-bottom:7px solid #303030;
-	}
-
-	.menu li {
-		margin:5px 0px 5px 0px;
+	.menu .menu-items > div {
+		margin:5px 0 5px 0;
 		float:none;
 		display:block;
 	}
 
+    .menu .menu-items > div:last-child , #show-share-menu {
+        display: none;
+    }
+
 	.menu a {
 		display:block;
 	}
+
+
+    .menu-line {
+        display: none;
+    }
 
 	.toggle-nav {
 		padding:10px;
@@ -349,6 +392,9 @@ h2 {
 		color:#777;
 		font-size:20px;
 		transition:color linear 0.15s;
+        position: absolute;
+        top: 0px;
+        right: 30px;
 	}
 
 	.toggle-nav:hover, .toggle-nav.active {

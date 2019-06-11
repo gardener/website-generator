@@ -8,58 +8,15 @@
     <link rel="icon" type="image/png"    href="/images/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png"    href="/images/favicon-16x16.png" sizes="16x16">
 
-    <link rel="stylesheet" href="../css/skeleton.css">
-    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="/css/skeleton.css">
+    <link rel="stylesheet" href="/css/main.css">
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body id="landingpage"  style="background-color: #dfe9f8;">
 
-<nav id="toolbar">
-    <div class="branding">
-        <img class="u-max-full-width svg" height="45px" src="/images/logo.svg">
-        <span>Gardener</span>
-        <nav class="menu">
-            <ul class="active">
-                <li  {{ if eq .RelPermalink "/" }} class='current_page_item' {{ end }}>
-                    <a href="/"  >
-                        <button class="u-pull-right documentation-button">
-                            About
-                        </button>
-                    </a>
-                </li>
-
-                <li {{ if eq .RelPermalink "/adopter/" }} class='current_page_item' {{ end }} >
-                    <a href="/adopter" >
-                        <button class="u-pull-right documentation-button">
-                            Adopter
-                        </button>
-                    </a>
-                </li>
-
-
-                <li {{ if eq .RelPermalink "/community/" }} class='current_page_item' {{ end }} >
-                    <a href="/community">
-                        <button class="u-pull-right  documentation-button">
-                           Community
-                        </button>
-                    </a>
-                </li>
-
-                <li>
-                    <a href="/blog">
-                        <button class="u-pull-right documentation-button">
-                            Docs
-                        </button>
-                    </a>
-                </li>
-                <li class='menu-line'></li>
-            </ul>
-            <a class="toggle-nav active" href="#">☰</a>
-        </nav>
-    </div>
-</nav>
-
+{{ partial "toolbar.html" . }}
 
 {{.Content}}
 

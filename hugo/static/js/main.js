@@ -6,7 +6,6 @@ $(document).ready(function(){
 	$window.sr.reveal('.reveal-slow', { duration: 2500 });
 	$window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'30px' });
 	$window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'30px' });
-
 })
 
 
@@ -19,18 +18,23 @@ $(window).load(function() {
 		var calcMenuLine = function () {
 			$magicLine
 				.width($(".current_page_item").width())
-				.css("left", $(".current_page_item a").position().left)
+				.css("left", $(".current_page_item").position().left)
 				.data("origLeft", $magicLine.position().left)
 				.data("origWidth", $magicLine.width());
 		}
 		calcMenuLine();
+		console.log( $(".current_page_item .documentation-button"))
+		console.log( $(".current_page_item .documentation-button").position().left)
 		$(window).resize(calcMenuLine);
 	}
-	catch (exc){}
+	catch (exc){
+		console.log(exc)
+	}
 
 
-	$(".menu ul li a").hover(function() {
+	$(".documentation-button").hover(function() {
 		$el = $(this);
+		console.log( $el.position().left)
 		leftPos = $el.position().left;
 		newWidth = $el.parent().width();
 		$magicLine.stop().animate({
@@ -44,23 +48,44 @@ $(window).load(function() {
 		});
 	});
 
-	// response menu at the top right menu bar starting 
-	// on page-2
-	$('.toggle-nav').click(function(e) {
-		$(this).toggleClass('active');
-		$('.menu ul').toggleClass('active');
+
+    // response menu at the top right menu bar starting
+    // on page-2
+    $('.toggle-nav').click(function(e) {
+        $(this).toggleClass('active');
+        $('.menu .menu-items').toggleClass('active');
+        e.preventDefault();
+    });
+
+
+	$('#show-share-menu').click(function(e) {
+        $('.menu > div').addClass('show-share');
+        $('.branding-teaser').addClass('show-share');
 		e.preventDefault();
 	});
 
-	$(document).scroll(function(e) {
-		$('.menu .toggle-nav').addClass('active');
-	   	$('.menu ul').addClass('active');
-   });
-   $(".page").click(function(e) {
-		$('.menu .toggle-nav').addClass('active');
-		$('.menu ul').addClass('active');
-	});
+    $('#hide-share-menu').click(function(e) {
+        $('.menu > div').removeClass('show-share');
+        $('.branding-teaser').removeClass('show-share');
+        e.preventDefault();
+    });
 
+    $(document).scroll(function(e) {
+		$('.menu .toggle-nav').addClass('active');
+	   	$('.menu .menu-items').addClass('active');
+        $('.menu > div').removeClass('show-share');
+        $('.branding-teaser').removeClass('show-share');
+    });
+    $("#landingpage > div").click(function(e) {
+		$('.menu .toggle-nav').addClass('active');
+		$('.menu .menu-items').addClass('active');
+        $('.menu > div').removeClass('show-share');
+        $('.branding-teaser').removeClass('show-share');
+    });
+    $( window ).resize(function() {
+        $('.menu > div').removeClass('show-share');
+        $('.branding-teaser').removeClass('show-share');
+    });
 
 	// reverse the z-index of all "page" elements to ensure that
 	// the stacked page effect works well
