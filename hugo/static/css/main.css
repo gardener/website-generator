@@ -220,7 +220,8 @@ body {
 #page-1 h1 {
 	list-style-type: none;
 	font-weight: 400;
-	font-size: 2.5rem;
+	font-size: 4.0rem;
+	padding-top:40px;
 }
 
 
@@ -242,6 +243,7 @@ h2 {
 	text-align: left;
 	margin-bottom: 6rem;
     font-size: 1.2em;
+	color:#808080;
 }
 
 
@@ -340,6 +342,56 @@ h2 {
 	bottom: 2px;
 	height: 2px;
 	background: #fe4902;
+}
+
+
+.github-stat {
+	box-shadow: 0px 10px 26px 2px rgba(0,0,0,0.28);;
+	margin-top: 80px;
+	margin-bottom: 130px;
+	border-radius: 3px;
+	padding-left:40px;
+	padding-right:40px;
+	padding-top: 25px;
+	padding-bottom:20px;
+	background-color: #f1f6fd;
+}
+
+.github-stat .group{
+	border-right: 1px solid rgba(128, 128, 128, 0.35);
+}
+
+.github-stat .group:last-child{
+	border-right:none;
+}
+
+.github-stat .group .number{
+	text-align: center;
+	font-size:30px;
+	font-weight: bolder;
+}
+.github-stat .group .subject{
+	text-align: center;
+	font-size:10px;
+	font-weight: lighter;
+	color: #6D6D65;
+}
+
+
+/*----- Responsive -----*/
+@media screen and (max-width: 550px) {
+
+	.github-stat .group{
+		border-right: none;
+		border-bottom: 1px solid rgba(128, 128, 128, 0.35);
+		padding-top:20px;
+		padding-bottom:20px;
+	}
+
+	.github-stat .group:last-child{
+		border-right:none;
+		border-bottom:none;
+	}
 }
 
 /*----- Responsive -----*/
