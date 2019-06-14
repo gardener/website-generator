@@ -23,8 +23,6 @@ $(window).load(function() {
 				.data("origWidth", $magicLine.width());
 		}
 		calcMenuLine();
-		console.log( $(".current_page_item .documentation-button"))
-		console.log( $(".current_page_item .documentation-button").position().left)
 		$(window).resize(calcMenuLine);
 	}
 	catch (exc){
@@ -34,7 +32,6 @@ $(window).load(function() {
 
 	$(".documentation-button").hover(function() {
 		$el = $(this);
-		console.log( $el.position().left)
 		leftPos = $el.position().left;
 		newWidth = $el.parent().width();
 		$magicLine.stop().animate({

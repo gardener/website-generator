@@ -135,7 +135,6 @@ var autoComplete = (function(){
                     if (!sel) {
                         next = (key == 40) ? that.sc.querySelector('.autocomplete-suggestion') : that.sc.childNodes[that.sc.childNodes.length - 1]; // first : last
                         next.className += ' selected';
-                        console.log(next);
                         that.value = next.getAttribute('data-val');
                     } else {
                         next = (key == 40) ? sel.nextSibling : sel.previousSibling;
