@@ -14,7 +14,7 @@ gardener-website-generator:
       branch: 'master'
       cfg_name: 'github_com'
       trigger: true
-  variants:
+  jobs:
     head-update:
       steps:
         build:
