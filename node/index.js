@@ -19,55 +19,6 @@ const clean = process.argv.length===3 && process.argv[2]==="clean"
 const repoCommits = "https://api.github.com/repos/gardener/documentation/commits"
 
 
-users = []
-pulls = []
-if(!clean && false){
-
-    function getStatistik(repo){
-
-        var options = {
-            method: "GET",
-            url: `https://api.github.com/repos/gardener/${repo}/stats/contributors`,
-            headers: {
-                'User-Agent': 'request'
-            }
-        };
-        repoUsers = JSON.parse(request("GET", options.url, options).getBody().toString());
-        repoUsers = repoUsers.map(x => x.author.id);
-        users = users.concat(repoUsers)
-        users = users.filter(function (elem, pos) {
-            return users.indexOf(elem) == pos;
-        })
-
-        options = {
-            method: "GET",
-            url: `https://api.github.com/repos/gardener/${repo}/pulls`,
-            headers: {
-                'User-Agent': 'request'
-            }
-        };
-        repoPulls = JSON.parse(request("GET", options.url, options).getBody().toString());
-        repoPulls = repoPulls.map(x => x.id);
-        pulls = pulls.concat(repoPulls)
-        pulls = pulls.filter(function (elem, pos) {
-            return pulls.indexOf(elem) == pos;
-        })
-    }
-
-    try {
-        getStatistik("gardener")
-        getStatistik("documentation")
-        getStatistik("dashboard")
-        getStatistik("gardenctl")
-        getStatistik("machine-controller-manager")
-
-        fs.writeFileSync(file, "", 'utf8');
-    }
-    catch(exc){
-
-    }
-    return
-}
 
 
 // Parse all files and inline remote MarkDown content.
