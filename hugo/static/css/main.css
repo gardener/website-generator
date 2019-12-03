@@ -285,7 +285,7 @@ h2 {
     justify-content: flex-end;
 }
 
-.menu .social-items {
+.menu .hidden-items {
     display:flex;
     flex-direction: row;
     justify-content: center;
@@ -297,7 +297,7 @@ h2 {
     cursor:pointer;
 }
 
-.menu .social-items > div:last-child {
+.menu .hidden-items > div:last-child {
     right: 0px;
     position: absolute;
 }
