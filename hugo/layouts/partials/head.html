@@ -1,0 +1,48 @@
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    {{ partial "meta.html" . }}
+
+    <title>{{with .Title}}{{ . }}{{else}}Gardener{{end}} :: {{ .Site.Title }}</title>
+    
+    <link rel="icon" type="image/x-icon" href='{{"images/favicon.ico" | absURL }}'>
+    <link rel="icon" type="image/png"    href='{{"images/favicon-32x32.png" | absURL }}' sizes="32x32">
+    <link rel="icon" type="image/png"    href='{{"images/favicon-16x16.png" | absURL }}' sizes="16x16">
+
+    {{ block "head-content" . }}
+      {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
+      <link href="{{"css/nucleus.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      <link href="{{"css/font-awesome.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      <link href="{{"css/hybrid.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      <link href="{{"css/featherlight.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      <link href="{{"css/perfect-scrollbar.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      <link href="{{"css/auto-complete.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      <link href="{{"css/skeleton.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      <link href="{{"css/sheetslider.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      <script src="{{"js/moment.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+      <script src="{{"js/vivus.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+      <script src="{{"js/scrollreveal.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+      <script src="{{"js/inlineSVG.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+      <link href="{{"css/theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+
+      <link href="{{"css/hugo-theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      {{with .Site.Params.themeVariant}}
+        <link href="{{(printf "css/theme-%s.css" .) | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+      {{end}}
+
+      <script src="{{"js/jquery.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+
+      <style type="text/css">
+        :root #header + #content > #left > #rlblock_left{ 
+            display:none !important;
+        }
+
+      </style>
+    {{end}}
+
+    <link rel="stylesheet" href="{{"css/custom.css" | relURL}}">
+    <link rel="preload" href="{{"fonts/sap-icofonts/sap-icofonts.woff" | relURL}}" as="font" type="font/woff" crossorigin="anonymous"/>
+    <link rel="preload" href="{{"fonts/sapcom-icons/sapcom-icons.woff" | relURL}}" as="font" type="font/woff" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="{{"css/sapcom-icons.css" | relURL}}">
+
+</head>

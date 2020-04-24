@@ -1,0 +1,161 @@
+<style>
+  .navigation .navbar-collapse .menu .links .link {
+    display: none;
+  }
+  .navigation .navbar-collapse .menu .links .link[data-depth="0"],
+  .navigation .navbar-collapse .menu .links .link[data-depth="1"],
+  .navigation .navbar-collapse .menu .links .link[data-depth="2"] {
+    display: block;
+  }
+  .navigation .navbar-collapse .menu .links .link a {
+    color: #fff;
+  }
+  .navigation .navbar-collapse .menu .links .link.active  {
+    color: inherit;
+  }
+  .navigation .navbar-collapse .menu {
+    display: block;
+  }
+</style>
+<script>
+  $(document).ready(function(){
+    function initStickyNav() {
+      var tln = document.querySelector(".tln");
+      if (!tln) {
+          return;
+      }
+      var bodySelector = document.getElementsByTagName("body")[0];
+      var tlnHeight = tln.clientHeight;
+      var stickyPointEl = document.querySelector(".sticky-nav-point");
+      var stickyPoint = stickyPointEl.clientHeight + stickyPointEl.offsetTop;
+      
+      var stickyNavigation = function() {
+          if (window.pageYOffset + tlnHeight >= stickyPoint) {
+              bodySelector.classList.add("has-sticky-navigation");
+              tln.classList.add("sticky-top");
+          } else {
+              bodySelector.classList.remove("has-sticky-navigation");
+              tln.classList.remove("sticky-top");
+          }
+      }
+  
+      window.onscroll = function() {
+          stickyNavigation();
+      };
+    }
+    initStickyNav();
+  });
+</script>
+<div class="tln fixedsticky">
+  {{- $currentPage:= . -}}
+  <header class="navigation">
+    <div class="container">
+      <div class="navigation-wrapper">
+        <a href="{{"" | relURL}}" class="logo">
+          <img src="{{"images/logo.svg" | relURL}}" />
+          <span class="title">Gardener</span>
+        </a>
+        <a class="nav-button navbar-toggler" href="#"><span class="icon-menu"></span></a>
+        {{/* partial "search.html" . */}}
+        <div class="navbar-collapse">
+          <ul class="links">
+            {{- with .Site.GetPage "section" "020_getting-started" -}}
+            <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
+              <a class="btn primary" href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">{{ .Title }}</a>
+            </li>
+            {{- end -}}            
+            {{ with .Site.GetPage "section" "blog" }}
+            <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
+              <a href="{{ .URL }}">{{ .Title }}</a>
+            </li>
+            {{- end -}} 
+            {{ with .Site.GetPage "section" "community" }}
+            <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
+              <a href="{{ .URL }}">{{ .Title }}</a>
+            </li>
+            {{- end -}} 
+            {{ with .Site.GetPage "section" "adopter" }}
+            <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
+              <a href="{{ .URL }}">{{ .Title }}</a>
+            </li>
+            {{- end -}} 
+            {{ with .Site.GetPage "section" "" }}
+            <li class="link has-child {{if .IsAncestor $currentPage -}}active{{- end -}}">
+              <a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation{{/*.Title*/}}</a>
+              <nav class="container menu">
+                <ul class="topics links">
+                  {{ $currentNode := .  }}
+                  {{- range $index, $page := .Site.Menus.sln -}}
+                    {{with .Page}}
+                      {{if (eq $currentNode.Section .Section) }}
+                  {{- template "tln-nav-tree" dict "sect" . "currentnode" $currentNode "maxTreeDepth" 5 "treeDepth" 0 -}}
+                      {{- end -}} 
+                    {{- end -}} 
+                  {{- end -}} 
+                </ul>
+              </nav>
+            </li>
+            {{- end -}}
+            {{ with .Site.GetPage "section" "contact" }}
+            <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
+              <a href="{{ .URL }}">{{ .Title }}</a>
+            </li>
+            {{ end }}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+<script>
+  //collapsed TLN button
+  $(".navigation .navbar-toggler").click(function(evt){
+    $(".navigation .navbar-collapse").toggle();
+    $(".navigation").toggleClass("collapsed");
+    $(".navigation .search-box").toggle();
+  })
+</script>
+
+<!-- templates -->
+{{ define "tln-nav-tree" }}
+{{ $currentNode := .currentnode }}
+{{ $maxTreeDepth := .maxTreeDepth }}
+{{ $treeDepth := .treeDepth }}
+{{with .sect}}
+  {{if .IsSection}}
+  {{ $isParent:= or (.IsAncestor $currentNode) (.Params.alwaysopen) }}
+  {{ $hiddenChildrenCount:= len (where .Pages ".Params.hidden" true) }}
+  {{ $childrenCount:= (len .Pages)}}
+  {{ $isContainer:= and (gt $childrenCount 0) (gt $childrenCount $hiddenChildrenCount) }}
+  <li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item link
+      {{- if eq .UniqueID $currentNode.UniqueID }} active{{- end -}}
+      {{- if (eq $treeDepth 1) }} top-level{{- end -}}
+      {{- if (eq $treeDepth 0) }} root {{ end -}}
+      " data-depth="{{$treeDepth}}">
+      <a href="{{- (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL -}}">
+          <span class="menu-item-text">{{- or .Params.menuTitle .LinkTitle .Title -}}{{- safeHTML .Params.Post -}}</span>            
+      </a>
+      {{ $numberOfPages := len .Pages }}
+      {{- if (and (not .Params.aggregate) (ne $numberOfPages 0)) -}}
+          <ul {{- if .Parent.IsHome }} style="padding-left:0"{{ end -}}>
+          {{- range sort .Pages ".Dir" -}}
+              {{ if .Params.hidden}}
+              {{else}}
+                  {{ $depth := (add $treeDepth 1) }}
+                  {{ if not (gt $depth $maxTreeDepth) }}
+                  {{ template "tln-nav-tree" dict "sect" . "currentnode" $currentNode "maxTreeDepth" $maxTreeDepth "treeDepth" $depth}}
+                  {{ end }}
+              {{end}}
+          {{- end -}}
+          </ul>
+      {{- end -}}
+  </li>
+  {{else}}
+      <li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item{{- if eq .UniqueID $currentNode.UniqueID}} active{{end -}}">
+      <a href="{{- (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL -}}">
+          <span class="toggle"></span><span class="menu-item-text"></span>{{- safeHTML .Params.head -}}{{- or .Params.menuTitle .LinkTitle .Title -}}{{- safeHTML .Params.Post -}}</span></a>
+      </a>
+  </li>
+  {{end}}
+{{ end }}
+{{ end }}

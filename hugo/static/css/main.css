@@ -26,30 +26,26 @@ body {
 	width: 100%;
 	min-height:100vh;
 	padding-top:300px;
-	box-shadow: rgba(34, 48, 64, 0.45) 0 4px 9px 0;
+	box-shadow: rgba(34, 48, 64, 0.8) 0px 8px 80px 0px;
 	position: relative;
 	overflow: hidden;
-    background-color:white;
-	color:#243b5e;
+    color:white;
+	background-color:#19222b;
 	box-sizing: initial;
-	border-bottom: 1px solid #fe4902;
 }
 
-.page:nth-child(even) {
-	background-color:#e4edfa;
-
+.page:nth-child(odd) {
+	background-color:#e9eae9;
+	color:#243b5e;
 }
 
 #page-1 {
 	z-index:1000;
-    background-image: url('../images/gardener-teaser-background.svg');
+    background-image: url('../images/background.svg');
     background-size: cover;
-    color: black;
-	padding-top: 10rem;
-	background-repeat: no-repeat;
-	max-width: initial;
+    color: #fff;
+	padding-top: 19rem;
 }
-
 
 .overlay{
 	position: absolute;
@@ -66,11 +62,11 @@ body {
 	background-size: contain;
     background-repeat: no-repeat;
 }
-
 .arrow-button {
 	display: block;
     width: 48px;
     height: 48px;
+    padding-top: 8px;
     text-align: center;
     cursor: pointer;
     border-radius: 24px;
@@ -101,6 +97,12 @@ body {
 	height: 100%;
 }
 
+.branding span {
+	font-size: 35px;
+	vertical-align: bottom;
+	font-weight: 300;
+	padding-left: 20px;
+}
 
 #toolbar {
 	z-index:1950;
@@ -111,9 +113,8 @@ body {
 	background-color:rgba(255, 255, 255, 0.95);
 	height:50px;
 	padding:10px;
+	color: #243b5e;
 	box-shadow: 0 1px 2px #4c4c4c;
-	background-color:#19222b;
-	color:white;
 }
 
 #toolbar .branding {
@@ -123,8 +124,7 @@ body {
 
 #landingpage button {
 	margin-top: 5px;
-	background-color: transparent;
-	color:white;
+	background-color: #e9eae9;
 	border:0;
     animation: priceTransitionIn ease-out 1;
     -webkit-animation-fill-mode: forwards;
@@ -134,8 +134,7 @@ body {
 	transition: all 0.2s ease-in-out;
 	border-radius: 0;
 	text-transform: none;
-	margin-left: 5px;
-	margin-right: 5px;
+	margin-left:10px;
 }
 
 #landingpage button:hover{
@@ -146,34 +145,13 @@ body {
 .documentation-button {
 	font-size: 14px;
 	font-weight: 300;
-    color: white;
-    background-color: transparent;
-    border: 0;
-    transition: all 0.2s ease-in-out;
-    border-radius: 0;
-    text-transform: none;
-    margin-top: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    margin-bottom: 1rem;
-    display: inline-block;
-    height: 38px;
-    padding: 0 20px;
-    text-align: center;
-    line-height: 38px;
-    letter-spacing: .1rem;
-    text-decoration: none;
-    white-space: nowrap;
-    cursor: pointer;
-    box-sizing: border-box;
+	-webkit-animation: priceTransitionIn ease-out 1;
 }
-
 .github-button {
 	font-size: 14px;
     font-weight: 300;
 	-webkit-animation: priceTransitionIn ease-out 1;
 }
-
 #toolbar button a{
  text-decoration: none;
  color:black;
@@ -207,24 +185,9 @@ body {
 	color: #009f76;
 }
 
-.community-installer {
-	border:1px solid black;
-	padding: 10px;
-	margin-top: 29px;
-	position: absolute;
-	text-decoration: none;
-	color: white;
-	background-color: #19222b;
-	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
-}
-
 #page-1 h1 {
-	list-style-type: none;
-	font-weight: 400;
-	font-size: 4.0rem;
-	padding-top:40px;
+    font-weight:200;
 }
-
 
 h1 {
     margin-bottom: 1.2rem;
@@ -244,7 +207,6 @@ h2 {
 	text-align: left;
 	margin-bottom: 6rem;
     font-size: 1.2em;
-	color:#808080;
 }
 
 
@@ -263,137 +225,30 @@ h2 {
 
 
 
+
+
+
 /*----- Toggle Button -----*/
 .toggle-nav {
 	display:none;
 }
 
-.menu{
-	float:right;
-    height: 70px;
-    overflow: hidden;
-    top: 0;
-    position: absolute;
-    right: 10px;
-    line-height: 70px;
-    width:100%;
-}
-
-.menu .menu-items {
+.menu ul {
 	display:flex;
-	flex-direction: row;
-    justify-content: flex-end;
 }
 
-.menu .hidden-items {
-    display:flex;
-    flex-direction: row;
-    justify-content: center;
+.menu li {
+	list-style:none;
 }
 
-#hide-share-menu,
-#show-share-menu {
-    width:50px;
-    cursor:pointer;
+.menu li:last-child {
+	margin-right:0px;
 }
 
-.menu .hidden-items > div:last-child {
-    right: 0px;
-    position: absolute;
+.menu a {
+	transition:color linear 0.15s;
 }
 
-.menu > div {
-    transform: translateY(-70px);
-    transition:transform  ease-in-out 0.5s;
-}
-
-
-.menu > div.show-share {
-    transform: translateY(0px) !important;
-    transition:transform  ease-in-out 0.5s;
-}
-
-
-.branding-teaser span {
-    position:absolute;
-    font-size: 35px;
-    vertical-align: bottom;
-    font-weight: 300;
-    padding-left: 20px;
-}
-
-.branding-teaser{
-    position: relative;
-    overflow:hidden;
-}
-.branding-teaser *{
-    transform: translateY(0px);
-    transition:transform  ease-in-out 0.5s;
-}
-
-
-.branding-teaser.show-share * {
-    transform: translateY(70px) !important;
-    transition:transform  ease-in-out 0.5s;
-}
-
-
-.menu .menu-line {
-	position: absolute ;
-	bottom: 2px;
-	height: 2px;
-	background: #fe4902;
-}
-
-
-.github-stat {
-	box-shadow: 0px 10px 26px 2px rgba(0,0,0,0.28);;
-	margin-top: 80px;
-	margin-bottom: 130px;
-	border-radius: 3px;
-	padding-left:40px;
-	padding-right:40px;
-	padding-top: 25px;
-	padding-bottom:20px;
-	background-color: #f1f6fd;
-}
-
-.github-stat .group{
-	border-right: 1px solid rgba(128, 128, 128, 0.35);
-}
-
-.github-stat .group:last-child{
-	border-right:none;
-}
-
-.github-stat .group .number{
-	text-align: center;
-	font-size:30px;
-	font-weight: bolder;
-}
-.github-stat .group .subject{
-	text-align: center;
-	font-size:10px;
-	font-weight: lighter;
-	color: #6D6D65;
-}
-
-
-/*----- Responsive -----*/
-@media screen and (max-width: 550px) {
-
-	.github-stat .group{
-		border-right: none;
-		border-bottom: 1px solid rgba(128, 128, 128, 0.35);
-		padding-top:20px;
-		padding-bottom:20px;
-	}
-
-	.github-stat .group:last-child{
-		border-right:none;
-		border-bottom:none;
-	}
-}
 
 /*----- Responsive -----*/
 @media screen and (max-width: 1100px) {
@@ -402,42 +257,46 @@ h2 {
 	}
 
 	.menu {
-        overflow: initial;
+		position:relative;
 		display:inline-block;
 	}
 
-	.menu .menu-items.active {
+	.menu ul.active {
 		display:none;
 	}
 
-	.menu .menu-items {
-		position:relative;
+	.menu ul {
+		position:absolute;
 		top:120%;
-		left:-20px;
+		left:-110px;
 		padding:10px;
 		border-radius:3px;
-		background:rgba(0, 0, 0, 0.6);
+		background:rgba(170, 170, 170, 0.30980392156862746);
 		display:block;
 	}
 
-	.menu .menu-items > div {
-		margin:5px 0 5px 0;
+	.menu ul:after {
+		width:0px;
+		height:0px;
+		position:absolute;
+		top:0%;
+		right:55px;
+		content:'';
+		transform:translate(0%, -100%);
+		border-left:7px solid transparent;
+		border-right:7px solid transparent;
+		border-bottom:7px solid #303030;
+	}
+
+	.menu li {
+		margin:5px 0px 5px 0px;
 		float:none;
 		display:block;
 	}
 
-    .menu .menu-items > div:last-child , #show-share-menu {
-        display: none;
-    }
-
 	.menu a {
 		display:block;
 	}
-
-
-    .menu-line {
-        display: none;
-    }
 
 	.toggle-nav {
 		padding:10px;
@@ -445,9 +304,6 @@ h2 {
 		color:#777;
 		font-size:20px;
 		transition:color linear 0.15s;
-        position: absolute;
-        top: 0px;
-        right: 30px;
 	}
 
 	.toggle-nav:hover, .toggle-nav.active {

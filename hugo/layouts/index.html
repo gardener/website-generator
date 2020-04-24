@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{ partial "meta.html" . }}
+    <title>Gardener</title>
+    <link rel="icon" type="image/x-icon" href='{{"images/favicon.ico" | absURL }}'>
+    <link rel="icon" type="image/png"    href='{{"images/favicon-32x32.png" | absURL }}' sizes="32x32">
+    <link rel="icon" type="image/png"    href='{{"images/favicon-16x16.png" | absURL }}' sizes="16x16">
+    
+    {{- $assetBusting := not .Site.Params.disableAssetsBusting -}}
+    <!-- Library CSS
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="{{"css/normalize.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    <link rel="stylesheet" href="{{"css/skeleton.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    <link rel="stylesheet" href="{{"css/font-awesome.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    <link rel="stylesheet" href="{{"css/slick.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    <link rel="stylesheet" href="{{"css/slick-theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+
+    <!-- Custom CSS
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <link rel="stylesheet" href="{{"css/custom.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    <link rel="stylesheet" href="{{"css/lp.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    <link rel="stylesheet" href="{{"css/news.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    <link rel="stylesheet" href="{{"css/sapcom-icons.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    <link rel="stylesheet" href="{{"css/auto-complete.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    
+    <!-- Scripts (web pack required in the future)
+      –––––––––––––––––––––––––––––––––––––––––––––––––– -->
+    <script src="{{"js/resizesensor.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/jquery.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/jquery.tmpl.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/vivus.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/jquery.sticky.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/jquery.easing.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/fixed.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/scrollreveal.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/counter.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/slick.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/toastr.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/jso.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/inlineSVG.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  </head>
+
+  <body data-url="{{ .RelPermalink }}">
+      
+    {{ partial "tln.html" . }}
+
+    <div class="landingpage">
+
+      <div id="hero">
+        <div class="container">
+          <div class="content">
+            <div class="hero-text">
+              <img src="{{"images/lp/gardener-logo.svg" | relURL}}" alt="Gardener Logo">
+              <div class="sub-title">
+                  Deliver fully-managed clusters at scale everywhere with your own Kubernetes-as-a-Service
+              </div>
+              <div class="hero-actions">
+                {{- with .Site.GetPage "section" "020_getting-started" -}}
+                <a class="action-btn" href="{{ .URL }}"><span>Get Started</span></a>
+                {{- end -}}
+                <!--a class="action-btn movie" href="#kmsembed-1_7gd2gw78" data-lity><i class="fa fa-film"></i><span>Watch The Video</span></a-->
+              </div>
+            </div>
+            <div class="hero-img">
+              <img src="{{"images/lp/gardener-logo.svg" | relURL }}">
+            </div>
+          </div>
+          <div class="news">
+            {{ partial "news.html" . }}
+          </div>
+        </div>
+      </div>
+
+      <div class="section highlights sticky-nav-point" id="section00">
+        <div class="container">
+          <h2 class="title-2 is-centered">Why Own Kubernetes Service With Gardener?</h2>
+          <div class="row is-centered">
+            <div class="four columns">
+              <div class="sub-title">Keep Options Open</div>
+              <div>Get a better deal from your cloud vendor. Or move to another. With Gardener, migrations are no longer an expensive pain when it comes to Kubernetes clusters.</div>
+            </div>
+            <div class="four columns">
+              <div class="sub-title">Business Continuity</div>
+              <div>Redundancy is key to ensuring your buisness is live 24/7. Gardener enables you to easily span on multiple infratructure providers and avoid risks.</div>
+            </div>
+            <div class="four columns">
+              <div class="sub-title">Minimize The TCO</div>
+              <div>Don’t start from scratch with every lp cloud vendor. Reduce your dependencies, build once, let Gardener run it everywhere and operate it in exactly the same way.</div>
+            </div>
+          </div>
+          <div class="row is-centered">
+            <div class="four columns">
+              <div class="sub-title">Technology Edge</div>
+              <div>The technology level of the Kubernetes service offered by vendors varies. Gardener provides you with superior technology advantage everywhere.</div>
+            </div>
+            <div class="four columns">
+              <div class="sub-title">No Strings Attached</div>
+              <div>Gardener is an open source, 100% pure Kubernetes project, with no agenda to keep you locked in a vendor ecosystem if you need Kubernetes-as-a-service.</div>
+            </div>
+            <div class="four columns">
+              <div class="sub-title">Empowered Consumers</div>
+              <div>Managed services take away a good deal of control from their consumers. Gardener feels confident to empower them with unprecedented level of control on their clusters.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="container" id="section01">
+        <div class="highlights-banner">
+          <div class="banner-item">
+            <img class="icon" src="{{"images/lp/lp-banner-everywhere.svg" | relURL }}">
+            <span class="icon-title">Everywhere</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src="{{"images/lp/lp-banner-homogeneous.svg" | relURL }}">
+            <span class="icon-title">Homogeneous</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src="{{"images/lp/lp-banner-managed.svg" | relURL }}">
+            <span class="icon-title">Fully Managed</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src="{{"images/lp/lp-banner-customizable.svg" | relURL }}">
+            <span class="icon-title">Customizable</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src="{{"images/lp/lp-banner-scalable.svg" | relURL }}">
+            <span class="icon-title">Scalable</span>
+          </div>
+        </div>  
+      </div>
+
+      <div class="section has-light-bg" id="section02">
+        <div class="container is-centered">
+          <h2 class="title-2">What is Gardener</h2>
+          <div class="content">
+            <div class="one-half column">
+              <div>
+                <span class="subtitle">Gardener serves distributed Kubernetes clusters</span>
+                <p>Gardener hosts a multitude of isolated control planes in dedicated Kubernetes clusters and the coresponding nodes are managed on remote infrastructure accounts under the cluster owners control.</p>
+              </div>
+              <div>
+                <span class="subtitle">Scalable by design</span>
+                <p>A single Kubernetes cluster can host an enormous amount of control planes. Should that prove insufficent, Gardener can always scale up and orchestrate more control plane clusters on each supported infrastructure without downtimes.</p>
+              </div>
+            </div>
+            <img class="one-half column image" src="{{"images/lp/gardener-overview.svg" | relURL }}">
+          </div>
+          <div class="call-for-action">
+            <span>Learn more about Gardener concepts</span><a href="">&rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section03">
+        <div class="container is-centered">
+          <h2 class="title-2 has-subtitle">Get The Kubernetes You Really Wanted</h2>
+          <span class="sub-title">The clusters Gardener provisions are like DIY clusters, except you don’t do it yourself</span>
+          <div class="content is-centered">
+            <img class="one-half column image" src="{{"images/lp/lp-section-001.svg" | relURL }}">
+            <div class="one-half column">
+              <div>
+                <span class="subtitle">Configurable</span>
+                <p>Instead of barely configurable control planes and non-conditional  updates not on your schedule, Gardener allows its service consumers to decide whether and what they want to control for more advanced use cases and integration scenarios.</p>
+              </div>
+              <div>
+                <span class="subtitle">100% Kubernetes compliant</span>
+                <p>Gardener is Kubernetes native and is not shy to be completely transparent on its compliance, proudly holding the 100% badge with a public evidence for that.</p>
+              </div>
+              <div>
+                <span class="subtitle">The one you already know</span>
+                <p>Gardener delivers the same Kubernetes you know from kubernetes.io and certified for. The same binaries, the same tools. You are already trained for it.</p>
+              </div>                
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="section has-dark-bg" id="section04">
+        <div class="container is-centered">
+          <h2 class="title-2 has-subtitle">Everywhere You Want It</h2>
+          <span class="sub-title">Reduce “where” to the choice for the compute resources provider for your cluster nodes</span>    
+          <div class="row">
+            <ul class="platforms-container">
+              <li>
+                <img src="{{"images/lp/platforms/alibaba-cloud.png" | relURL }}" class="platform-icon">
+                <div class="platform-text">Alibaba Cloud</div>
+              </li>
+              <li>
+                <img src="{{"images/lp/platforms/aws.png" | relURL }}" class="platform-icon">
+                <div class="platform-text">Amazon Web Services</div>
+              </li>
+              <li>
+                <img src="{{"images/lp/platforms/microsoft-azure.png" | relURL }}" class="platform-icon">
+                <div class="platform-text">Microsoft Azure</div>
+              </li>
+              <li>
+                <img src="{{"images/lp/platforms/google-cloud-platform.svg" | relURL }}" class="platform-icon">
+                <div class="platform-text">Google Cloud Platform</div>
+              </li>
+              <li>
+                <img src="{{"images/lp/platforms/yours.svg" | relURL }}" class="platform-icon">
+                <div id="platforms-yours" class="platform-text">&#x21E7;</div>
+              </li>
+              <li>
+                <img src="{{"images/lp/platforms/metal-pod.png" | relURL }}" class="platform-icon">
+                <div class="platform-text">Metal-Stack</div>
+              </li>
+              <li>
+                <img src="{{"images/lp/platforms/openstack.png" | relURL }}" class="platform-icon">
+                <div class="platform-text">OpenStack</div>
+              </li>
+              <li>
+                <img src="{{"images/lp/platforms/packet.png" | relURL }}" class="platform-icon">
+                <div class="platform-text">Packet Cloud</div>
+              </li>
+              <!--li>
+                <img src="{{"images/lp/platforms/sap.png" | relURL }}" class="platform-icon">
+                <div class="platform-text">SAP CC/GMP</div>
+              </li-->
+              <li>
+                <img src="{{"images/lp/platforms/vmware.png" | relURL }}" class="platform-icon">
+                <div class="platform-text">VMware vSphere</div>
+              </li>
+            </ul>
+          </div>
+          <div class="call-for-action">
+            <span>Don’t see yours listed here? Find out how to contribute it</span><a href="">&rarr;</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="section" id="section05">
+        <div class="container is-centered">
+          <h2 class="title-2 has-subtitle">Infrastructure Agnostic</h2>
+          <span class="sub-title">Focus on Kubernetes, not on the infrastructure</span>
+          <div class="content">
+            <div class="one-half column">
+              <p class="image-wrapper perspective">
+                <img class="image" src="{{"images/lp/lp-screenshot-1.jpg" | relURL }}">
+              </p>
+              <p id="section05-img-placeholder" class="image-wrapper"><img class="image" src="{{"images/lp/placeholder.svg" | relURL }}"></p>
+              <p class="image-wrapper"><img class="image" src="{{"images/lp/garden-linux-logo.png" | relURL }}"></p>
+            </div>
+            <div class="one-half column">
+              <div>
+                <span class="subtitle">One Single Cluster Fleet Operations Hub</span>
+                <p>Gardener is designed as a one-stop shop for all your cluster fleet management operations on multiple infrastructures.</p>
+              </div>
+              <div>
+                <span class="subtitle">Homogeneous Operations and Interface</span>
+                <p>No mandatory vendor-specific tools to hook you on. Instead, the same slick <strong>dashboard UI</strong>, a standard <strong>kubectl CLI</strong> or a <a href="api-reference/">REST API</a> is all it takes to get the job done reagrdless of the infrastructure. Or, if you are Gardener service operator, you can use gardenctl, our CLI tool for cluster operations.</p>
+              </div>
+              <div>
+                <span class="subtitle">Comparable experience</span>
+                <p>Operations experience with infrastructures varies. Gardener makes up for their deficencies as much as possible to provide comparable experience on each supported infrastructure.</p>
+              </div>  
+              <div>
+                <span class="subtitle">External DNS and Certificates Management</span>
+                <p>Gardener takes infrastructure abstraction to a lp level modelng DNS records and TLS certificates for your ingress endpoints as Kubernetes resources, so that you can manage them right frоm your clusters. You can start right away with the most popular DNS service and certificate providers or you can add your own.</p>
+              </div>     
+              <div>
+                <span class="subtitle">Common Host OS for Gardener Managed Cluster Nodes</span>
+                <p>Instead of dealing with each infrastructure provider OS, choose from Gardener’s out-of-the-box set - SUSE CHOST, Canonical Ubuntu, Flatcar Container Linux. Or employ Garden Linux, optimized specifically for this job. Or just bring your own!</p>
+              </div>                          
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="section" id="section06">
+        <div class="container is-centered">
+          <h2 class="title-2 has-subtitle">Fully Managed</h2>
+          <span class="sub-title">Created, Continuously Watched and Healed, Updated and Upgraded by operations-friendly Gardener</span>
+          <div class="content">
+            <div class="column one-third">
+              <img class="image" src="{{"images/lp/placeholder.svg" | relURL }}">
+              <div>Control Planes</div>
+            </div>
+            <div class="column one-third">
+              <img class="image" src="{{"images/lp/placeholder.svg" | relURL }}">
+              <div>Cluster Nodes</div>
+            </div>
+            <div class="column one-third">
+              <img class="image" src="{{"images/lp/placeholder.svg" | relURL }}">
+              <div>Add-ons</div>
+            </div>
+          </div>
+          <div class="call-for-action">
+            <span>Explore Gardener features to get the whole picture</span><a href="">&rarr;</a>
+          </div>
+        </div>
+      </div>
+  
+      <div class="section" id="section07">
+        <div class="container is-centered">
+          <div class="content">
+            <div class="one-half column success-stories">
+              <div>
+                <span class="subtitle">Explore Success Stories</span>
+                <p>From small startups to large companies, learn how they leveraged Gardener to build sustainable business on top of it.</p>
+                <div>
+                  <div class="column one-third">
+                    <img class="image" src="{{"images/lp/placeholder.svg" | relURL }}">
+                  </div>
+                  <div class="column one-third">
+                    <img class="image" src="{{"images/lp/placeholder.svg" | relURL }}">
+                  </div>
+                  <div class="column one-third">
+                    <img class="image" src="{{"images/lp/placeholder.svg" | relURL }}">
+                  </div>                 
+                </div>
+              </div> 
+            </div>
+            <div class="one-half column contacts">
+              <span class="subtitle">Contact Us</span>
+              <p>You are welcome to the Gardener community - stay up to date with the project, contact us or contribute. Find out all about it on the <a href>Community</a> page.</p>
+              <div clas="row">
+                <div class="column one-half">
+                  <img class="image" src="{{"images/lp/comms-community-meetings.svg" | relURL }}">
+                  <span>Community Meetings</span>
+                </div>
+                <div class="column one-half">
+                  <img class="image" src="{{"images/branding/slack-logo-green.svg" | relURL }}">
+                  <span># gardener</span>
+                </div>                
+              </div>
+              <div class="row">
+                <div class="column one-half">
+                  <img class="image" src="{{"images/branding/twitter-logo-green.svg" | relURL }}">
+                  <span>@GardenerProject</span>
+                </div>                
+                <div class="column one-half">
+                  <img class="image" src="{{"images/branding/github-mark-logo-green.svg" | relURL }}">
+                  <span>GitHub</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="section">
+        <div class="container is-centered">
+          <h2 class="title-2 has-subtitle">Get Started Now <a href="">&rarr;</a></h2>
+        </div>
+      </div>
+
+      {{- partial "footer.html" . -}}
+    
+    <script src="{{"js/counter.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/main-lp.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    {{ partial "tail-scripts.html" . }}
+
+  </body>
+  
+</html>
