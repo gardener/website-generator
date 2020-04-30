@@ -1,799 +1,288 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-	typeof define === 'function' && define.amd ? define(factory) :
-	(factory());
-}(this, (function () { 'use strict';
+// Sticky Plugin v1.0.4 for jQuery
+// =============
+// Author: Anthony Garand
+// Improvements by German M. Bravo (Kronuz) and Ruud Kamphuis (ruudk)
+// Improvements by Leonardo C. Daronco (daronco)
+// Created: 02/14/2011
+// Date: 07/20/2015
+// Website: http://stickyjs.com/
+// Description: Makes an element on the page stick on the screen as you scroll
+//              It will only set the 'top' and 'position' of your element, you
+//              might need to adjust the width in some cases.
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+(function (factory) {
+  if (typeof define === 'function' && define.amd) {
+      // AMD. Register as an anonymous module.
+      define(['jquery'], factory);
+  } else if (typeof module === 'object' && module.exports) {
+      // Node/CommonJS
+      module.exports = factory(require('jquery'));
+  } else {
+      // Browser globals
+      factory(jQuery);
+  }
+}(function ($) {
+  var slice = Array.prototype.slice; // save ref to original slice()
+  var splice = Array.prototype.splice; // save ref to original slice()
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-/**
- * Sticky Sidebar JavaScript Plugin.
- * @version 3.3.0
- * @author Ahmed Bouhuolia <a.bouhuolia@gmail.com>
- * @license The MIT License (MIT)
- */
-var StickySidebar = function () {
-
-  // ---------------------------------
-  // # Define Constants
-  // ---------------------------------
-  //
-  var EVENT_KEY = '.stickySidebar';
-  var DEFAULTS = {
-
-    /**
-     * Additional top spacing of the element when it becomes sticky.
-     * @type {Numeric|Function}
-     */
+var defaults = {
     topSpacing: 0,
-
-    /**
-     * Additional bottom spacing of the element when it becomes sticky.
-     * @type {Numeric|Function}
-     */
     bottomSpacing: 0,
+    className: 'is-sticky',
+    wrapperClassName: 'sticky-wrapper',
+    center: false,
+    getWidthFrom: '',
+    widthFromWrapper: true, // works only when .getWidthFrom is empty
+    responsiveWidth: false,
+    zIndex: 'inherit'
+  },
+  $window = $(window),
+  $document = $(document),
+  sticked = [],
+  windowHeight = $window.height(),
+  scroller = function() {
+    var scrollTop = $window.scrollTop(),
+      documentHeight = $document.height(),
+      dwh = documentHeight - windowHeight,
+      extra = (scrollTop > dwh) ? dwh - scrollTop : 0;
 
-    /**
-     * Container sidebar selector to know what the beginning and end of sticky element.
-     * @type {String|False}
-     */
-    containerSelector: false,
+    for (var i = 0, l = sticked.length; i < l; i++) {
+      var s = sticked[i],
+        elementTop = s.stickyWrapper.offset().top,
+        etse = elementTop - s.topSpacing - extra;
 
-    /**
-     * Inner wrapper selector.
-     * @type {String}
-     */
-    innerWrapperSelector: '.inner-wrapper-sticky',
+      //update height in case of dynamic content
+      s.stickyWrapper.css('height', s.stickyElement.outerHeight());
 
-    /**
-     * The name of CSS class to apply to elements when they have become stuck.
-     * @type {String|False}
-     */
-    stickyClass: 'is-affixed',
-
-    /**
-     * Detect when sidebar and its container change height so re-calculate their dimensions.
-     * @type {Boolean}
-     */
-    resizeSensor: true,
-
-    /**
-     * The sidebar returns to its normal position if its width below this value.
-     * @type {Numeric}
-     */
-    minWidth: false
-  };
-
-  // ---------------------------------
-  // # Class Definition
-  // ---------------------------------
-  //
-  /**
-   * Sticky Sidebar Class.
-   * @public
-   */
-
-  var StickySidebar = function () {
-
-    /**
-     * Sticky Sidebar Constructor.
-     * @constructor
-     * @param {HTMLElement|String} sidebar - The sidebar element or sidebar selector.
-     * @param {Object} options - The options of sticky sidebar.
-     */
-    function StickySidebar(sidebar) {
-      var _this = this;
-
-      var options = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-
-      _classCallCheck(this, StickySidebar);
-
-      this.options = StickySidebar.extend(DEFAULTS, options);
-
-      // Sidebar element query if there's no one, throw error.
-      this.sidebar = 'string' === typeof sidebar ? document.querySelector(sidebar) : sidebar;
-      if ('undefined' === typeof this.sidebar) throw new Error("There is no specific sidebar element.");
-
-      this.sidebarInner = false;
-      this.container = this.sidebar.parentElement;
-
-      // Current Affix Type of sidebar element.
-      this.affixedType = 'STATIC';
-      this.direction = 'down';
-      this.support = {
-        transform: false,
-        transform3d: false
-      };
-
-      this._initialized = false;
-      this._reStyle = false;
-      this._breakpoint = false;
-      this._resizeListeners = [];
-
-      // Dimensions of sidebar, container and screen viewport.
-      this.dimensions = {
-        translateY: 0,
-        topSpacing: 0,
-        lastTopSpacing: 0,
-        bottomSpacing: 0,
-        lastBottomSpacing: 0,
-        sidebarHeight: 0,
-        sidebarWidth: 0,
-        containerTop: 0,
-        containerHeight: 0,
-        viewportHeight: 0,
-        viewportTop: 0,
-        lastViewportTop: 0
-      };
-
-      // Bind event handlers for referencability.
-      ['handleEvent'].forEach(function (method) {
-        _this[method] = _this[method].bind(_this);
-      });
-
-      // Initialize sticky sidebar for first time.
-      this.initialize();
-    }
-
-    /**
-     * Initializes the sticky sidebar by adding inner wrapper, define its container, 
-     * min-width breakpoint, calculating dimensions, adding helper classes and inline style.
-     * @private
-     */
-
-
-    _createClass(StickySidebar, [{
-      key: 'initialize',
-      value: function initialize() {
-        var _this2 = this;
-
-        this._setSupportFeatures();
-
-        // Get sticky sidebar inner wrapper, if not found, will create one.
-        if (this.options.innerWrapperSelector) {
-          this.sidebarInner = this.sidebar.querySelector(this.options.innerWrapperSelector);
-
-          if (null === this.sidebarInner) this.sidebarInner = false;
-        }
-
-        if (!this.sidebarInner) {
-          var wrapper = document.createElement('div');
-          wrapper.setAttribute('class', 'inner-wrapper-sticky');
-          this.sidebar.appendChild(wrapper);
-
-          while (this.sidebar.firstChild != wrapper) {
-            wrapper.appendChild(this.sidebar.firstChild);
-          }this.sidebarInner = this.sidebar.querySelector('.inner-wrapper-sticky');
-        }
-
-        // Container wrapper of the sidebar.
-        if (this.options.containerSelector) {
-          var containers = document.querySelectorAll(this.options.containerSelector);
-          containers = Array.prototype.slice.call(containers);
-
-          containers.forEach(function (container, item) {
-            if (!container.contains(_this2.sidebar)) return;
-            _this2.container = container;
-          });
-
-          if (!containers.length) throw new Error("The container does not contains on the sidebar.");
-        }
-
-        // If top/bottom spacing is not function parse value to integer.
-        if ('function' !== typeof this.options.topSpacing) this.options.topSpacing = parseInt(this.options.topSpacing) || 0;
-
-        if ('function' !== typeof this.options.bottomSpacing) this.options.bottomSpacing = parseInt(this.options.bottomSpacing) || 0;
-
-        // Breakdown sticky sidebar if screen width below `options.minWidth`.
-        this._widthBreakpoint();
-
-        // Calculate dimensions of sidebar, container and viewport.
-        this.calcDimensions();
-
-        // Affix sidebar in proper position.
-        this.stickyPosition();
-
-        // Bind all events.
-        this.bindEvents();
-
-        // Inform other properties the sticky sidebar is initialized.
-        this._initialized = true;
-      }
-
-      /**
-       * Bind all events of sticky sidebar plugin.
-       * @protected
-       */
-
-    }, {
-      key: 'bindEvents',
-      value: function bindEvents() {
-        window.addEventListener('resize', this, { passive: true });
-        window.addEventListener('scroll', this, { passive: true });
-
-        this.sidebar.addEventListener('update' + EVENT_KEY, this);
-
-        if (this.options.resizeSensor && 'undefined' !== typeof ResizeSensor) {
-          new ResizeSensor(this.sidebarInner, this.handleEvent);
-          new ResizeSensor(this.container, this.handleEvent);
+      if (scrollTop <= etse) {
+        if (s.currentTop !== null) {
+          s.stickyElement
+            .css({
+              'width': '',
+              'position': '',
+              'top': '',
+              'z-index': ''
+            });
+          s.stickyElement.parent().removeClass(s.className);
+          s.stickyElement.trigger('sticky-end', [s]);
+          s.currentTop = null;
         }
       }
-
-      /**
-       * Handles all events of the plugin.
-       * @param {Object} event - Event object passed from listener.
-       */
-
-    }, {
-      key: 'handleEvent',
-      value: function handleEvent(event) {
-        this.updateSticky(event);
-      }
-
-      /**
-       * Calculates dimensions of sidebar, container and screen viewpoint
-       * @public
-       */
-
-    }, {
-      key: 'calcDimensions',
-      value: function calcDimensions() {
-        if (this._breakpoint) return;
-        var dims = this.dimensions;
-
-        // Container of sticky sidebar dimensions.
-        dims.containerTop = StickySidebar.offsetRelative(this.container).top;
-        dims.containerHeight = this.container.clientHeight;
-        dims.containerBottom = dims.containerTop + dims.containerHeight;
-
-        // Sidebar dimensions.
-        dims.sidebarHeight = this.sidebarInner.offsetHeight;
-        dims.sidebarWidth = this.sidebar.offsetWidth;
-
-        // Screen viewport dimensions.
-        dims.viewportHeight = window.innerHeight;
-
-        this._calcDimensionsWithScroll();
-      }
-
-      /**
-       * Some dimensions values need to be up-to-date when scrolling the page.
-       * @private
-       */
-
-    }, {
-      key: '_calcDimensionsWithScroll',
-      value: function _calcDimensionsWithScroll() {
-        var dims = this.dimensions;
-
-        dims.sidebarLeft = StickySidebar.offsetRelative(this.sidebar).left;
-
-        dims.viewportTop = document.documentElement.scrollTop || document.body.scrollTop;
-        dims.viewportBottom = dims.viewportTop + dims.viewportHeight;
-        dims.viewportLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
-
-        dims.topSpacing = this.options.topSpacing;
-        dims.bottomSpacing = this.options.bottomSpacing;
-
-        if ('function' === typeof dims.topSpacing) dims.topSpacing = parseInt(dims.topSpacing(this.sidebar)) || 0;
-
-        if ('function' === typeof dims.bottomSpacing) dims.bottomSpacing = parseInt(dims.bottomSpacing(this.sidebar)) || 0;
-
-        if ('VIEWPORT-TOP' === this.affixedType) {
-          // Adjust translate Y in the case decrease top spacing value.
-          if (dims.topSpacing < dims.lastTopSpacing) {
-            dims.translateY += dims.lastTopSpacing - dims.topSpacing;
-            this._reStyle = true;
-          }
-        } else if ('VIEWPORT-BOTTOM' === this.affixedType) {
-          // Adjust translate Y in the case decrease bottom spacing value.
-          if (dims.bottomSpacing < dims.lastBottomSpacing) {
-            dims.translateY += dims.lastBottomSpacing - dims.bottomSpacing;
-            this._reStyle = true;
-          }
-        }
-
-        dims.lastTopSpacing = dims.topSpacing;
-        dims.lastBottomSpacing = dims.bottomSpacing;
-      }
-
-      /**
-       * Determine whether the sidebar is bigger than viewport.
-       * @public
-       * @return {Boolean}
-       */
-
-    }, {
-      key: 'isSidebarFitsViewport',
-      value: function isSidebarFitsViewport() {
-        return this.dimensions.sidebarHeight < this.dimensions.viewportHeight;
-      }
-
-      /**
-       * Observe browser scrolling direction top and down.
-       */
-
-    }, {
-      key: 'observeScrollDir',
-      value: function observeScrollDir() {
-        var dims = this.dimensions;
-        if (dims.lastViewportTop === dims.viewportTop) return;
-
-        var furthest = 'down' === this.direction ? Math.min : Math.max;
-
-        // If the browser is scrolling not in the same direction.
-        if (dims.viewportTop === furthest(dims.viewportTop, dims.lastViewportTop)) this.direction = 'down' === this.direction ? 'up' : 'down';
-      }
-
-      /**
-       * Gets affix type of sidebar according to current scrollTop and scrollLeft.
-       * Holds all logical affix of the sidebar when scrolling up and down and when sidebar 
-       * is bigger than viewport and vice versa.
-       * @public
-       * @return {String|False} - Proper affix type.
-       */
-
-    }, {
-      key: 'getAffixType',
-      value: function getAffixType() {
-        var dims = this.dimensions,
-            affixType = false;
-
-        this._calcDimensionsWithScroll();
-
-        var sidebarBottom = dims.sidebarHeight + dims.containerTop;
-        var colliderTop = dims.viewportTop + dims.topSpacing;
-        var colliderBottom = dims.viewportBottom - dims.bottomSpacing;
-
-        // When browser is scrolling top.
-        if ('up' === this.direction) {
-          if (colliderTop <= dims.containerTop) {
-            dims.translateY = 0;
-            affixType = 'STATIC';
-          } else if (colliderTop <= dims.translateY + dims.containerTop) {
-            dims.translateY = colliderTop - dims.containerTop;
-            affixType = 'VIEWPORT-TOP';
-          } else if (!this.isSidebarFitsViewport() && dims.containerTop <= colliderTop) {
-            affixType = 'VIEWPORT-UNBOTTOM';
-          }
-          // When browser is scrolling up.
+      else {
+        var newTop = documentHeight - s.stickyElement.outerHeight()
+          - s.topSpacing - s.bottomSpacing - scrollTop - extra;
+        if (newTop < 0) {
+          newTop = newTop + s.topSpacing;
         } else {
-          // When sidebar element is not bigger than screen viewport.
-          if (this.isSidebarFitsViewport()) {
+          newTop = s.topSpacing;
+        }
+        if (s.currentTop !== newTop) {
+          var newWidth;
+          if (s.getWidthFrom) {
+              padding =  s.stickyElement.innerWidth() - s.stickyElement.width();
+              newWidth = $(s.getWidthFrom).width() - padding || null;
+          } else if (s.widthFromWrapper) {
+              newWidth = s.stickyWrapper.width();
+          }
+          if (newWidth == null) {
+              newWidth = s.stickyElement.width();
+          }
+          s.stickyElement
+            .css('width', newWidth)
+            .css('position', 'fixed')
+            .css('top', newTop)
+            .css('z-index', s.zIndex);
 
-            if (dims.sidebarHeight + colliderTop >= dims.containerBottom) {
-              dims.translateY = dims.containerBottom - sidebarBottom;
-              affixType = 'CONTAINER-BOTTOM';
-            } else if (colliderTop >= dims.containerTop) {
-              dims.translateY = colliderTop - dims.containerTop;
-              affixType = 'VIEWPORT-TOP';
-            }
-            // When sidebar element is bigger than screen viewport.
+          s.stickyElement.parent().addClass(s.className);
+
+          if (s.currentTop === null) {
+            s.stickyElement.trigger('sticky-start', [s]);
           } else {
-
-            if (dims.containerBottom <= colliderBottom) {
-              dims.translateY = dims.containerBottom - sidebarBottom;
-              affixType = 'CONTAINER-BOTTOM';
-            } else if (sidebarBottom + dims.translateY <= colliderBottom) {
-              dims.translateY = colliderBottom - sidebarBottom;
-              affixType = 'VIEWPORT-BOTTOM';
-            } else if (dims.containerTop + dims.translateY <= colliderTop) {
-              affixType = 'VIEWPORT-UNBOTTOM';
-            }
-          }
-        }
-
-        // Make sure the translate Y is not bigger than container height.
-        dims.translateY = Math.max(0, dims.translateY);
-        dims.translateY = Math.min(dims.containerHeight, dims.translateY);
-
-        dims.lastViewportTop = dims.viewportTop;
-        return affixType;
-      }
-
-      /**
-       * Gets inline style of sticky sidebar wrapper and inner wrapper according 
-       * to its affix type.
-       * @private
-       * @param {String} affixType - Affix type of sticky sidebar.
-       * @return {Object}
-       */
-
-    }, {
-      key: '_getStyle',
-      value: function _getStyle(affixType) {
-        if ('undefined' === typeof affixType) return;
-
-        var style = { inner: {}, outer: {} };
-        var dims = this.dimensions;
-
-        switch (affixType) {
-          case 'VIEWPORT-TOP':
-            style.inner = { position: 'fixed', top: dims.topSpacing,
-              left: dims.sidebarLeft - dims.viewportLeft, width: dims.sidebarWidth };
-            break;
-          case 'VIEWPORT-BOTTOM':
-            style.inner = { position: 'fixed', top: 'auto', left: dims.sidebarLeft,
-              bottom: dims.bottomSpacing, width: dims.sidebarWidth };
-            break;
-          case 'CONTAINER-BOTTOM':
-          case 'VIEWPORT-UNBOTTOM':
-            var translate = this._getTranslate(0, dims.translateY + 'px');
-
-            if (translate) style.inner = { transform: translate };else style.inner = { position: 'absolute', top: dims.translateY, width: dims.sidebarWidth };
-            break;
-        }
-
-        switch (affixType) {
-          case 'VIEWPORT-TOP':
-          case 'VIEWPORT-BOTTOM':
-          case 'VIEWPORT-UNBOTTOM':
-          case 'CONTAINER-BOTTOM':
-            style.outer = { height: dims.sidebarHeight, position: 'relative' };
-            break;
-        }
-
-        style.outer = StickySidebar.extend({ height: '', position: '' }, style.outer);
-        style.inner = StickySidebar.extend({ position: 'relative', top: '', left: '',
-          bottom: '', width: '', transform: this._getTranslate() }, style.inner);
-
-        return style;
-      }
-
-      /**
-       * Cause the sidebar to be sticky according to affix type by adding inline
-       * style, adding helper class and trigger events.
-       * @function
-       * @protected
-       * @param {string} force - Update sticky sidebar position by force.
-       */
-
-    }, {
-      key: 'stickyPosition',
-      value: function stickyPosition(force) {
-        if (this._breakpoint) return;
-
-        force = this._reStyle || force || false;
-
-        var affixType = this.getAffixType();
-        var style = this._getStyle(affixType);
-
-        if ((this.affixedType != affixType || force) && affixType) {
-          var affixEvent = 'affix.' + affixType.toLowerCase().replace('viewport-', '') + EVENT_KEY;
-          StickySidebar.eventTrigger(this.sidebar, affixEvent);
-
-          if ('STATIC' === affixType) StickySidebar.removeClass(this.sidebar, this.options.stickyClass);else StickySidebar.addClass(this.sidebar, this.options.stickyClass);
-
-          for (var key in style.outer) {
-            this.sidebar.style[key] = style.outer[key];
+            // sticky is started but it have to be repositioned
+            s.stickyElement.trigger('sticky-update', [s]);
           }
 
-          for (var _key in style.inner) {
-            var _unit2 = 'number' === typeof style.inner[_key] ? 'px' : '';
-            this.sidebarInner.style[_key] = style.inner[_key] + _unit2;
+          if (s.currentTop === s.topSpacing && s.currentTop > newTop || s.currentTop === null && newTop < s.topSpacing) {
+            // just reached bottom || just started to stick but bottom is already reached
+            s.stickyElement.trigger('sticky-bottom-reached', [s]);
+          } else if(s.currentTop !== null && newTop === s.topSpacing && s.currentTop < newTop) {
+            // sticky is started && sticked at topSpacing && overflowing from top just finished
+            s.stickyElement.trigger('sticky-bottom-unreached', [s]);
           }
 
-          var affixedEvent = 'affixed.' + affixType.toLowerCase().replace('viewport-', '') + EVENT_KEY;
-          StickySidebar.eventTrigger(this.sidebar, affixedEvent);
+          s.currentTop = newTop;
+        }
+
+        // Check if sticky has reached end of container and stop sticking
+        var stickyWrapperContainer = s.stickyWrapper.parent();
+        var unstick = (s.stickyElement.offset().top + s.stickyElement.outerHeight() >= stickyWrapperContainer.offset().top + stickyWrapperContainer.outerHeight()) && (s.stickyElement.offset().top <= s.topSpacing);
+
+        if( unstick ) {
+          s.stickyElement
+            .css('position', 'absolute')
+            .css('top', '')
+            .css('bottom', 0)
+            .css('z-index', '');
         } else {
-          if (this._initialized) this.sidebarInner.style.left = style.inner.left;
-        }
-
-        this.affixedType = affixType;
-      }
-
-      /**
-       * Breakdown sticky sidebar when window width is below `options.minWidth` value.
-       * @protected
-       */
-
-    }, {
-      key: '_widthBreakpoint',
-      value: function _widthBreakpoint() {
-
-        if (window.innerWidth <= this.options.minWidth) {
-          this._breakpoint = true;
-          this.affixedType = 'STATIC';
-
-          this.sidebar.removeAttribute('style');
-          StickySidebar.removeClass(this.sidebar, this.options.stickyClass);
-          this.sidebarInner.removeAttribute('style');
-        } else {
-          this._breakpoint = false;
+          s.stickyElement
+            .css('position', 'fixed')
+            .css('top', newTop)
+            .css('bottom', '')
+            .css('z-index', s.zIndex);
         }
       }
+    }
+  },
+  resizer = function() {
+    windowHeight = $window.height();
 
-      /**
-       * Switches between functions stack for each event type, if there's no 
-       * event, it will re-initialize sticky sidebar.
-       * @public
-       */
-
-    }, {
-      key: 'updateSticky',
-      value: function updateSticky() {
-        var _this3 = this;
-
-        var event = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
-        if (this._running) return;
-        this._running = true;
-
-        (function (eventType) {
-
-          requestAnimationFrame(function () {
-            switch (eventType) {
-              // When browser is scrolling and re-calculate just dimensions
-              // within scroll. 
-              case 'scroll':
-                _this3._calcDimensionsWithScroll();
-                _this3.observeScrollDir();
-                _this3.stickyPosition();
-                break;
-
-              // When browser is resizing or there's no event, observe width
-              // breakpoint and re-calculate dimensions.
-              case 'resize':
-              default:
-                _this3._widthBreakpoint();
-                _this3.calcDimensions();
-                _this3.stickyPosition(true);
-                break;
-            }
-            _this3._running = false;
-          });
-        })(event.type);
+    for (var i = 0, l = sticked.length; i < l; i++) {
+      var s = sticked[i];
+      var newWidth = null;
+      if (s.getWidthFrom) {
+          if (s.responsiveWidth) {
+              newWidth = $(s.getWidthFrom).width();
+          }
+      } else if(s.widthFromWrapper) {
+          newWidth = s.stickyWrapper.width();
       }
-
-      /**
-       * Set browser support features to the public property.
-       * @private
-       */
-
-    }, {
-      key: '_setSupportFeatures',
-      value: function _setSupportFeatures() {
-        var support = this.support;
-
-        support.transform = StickySidebar.supportTransform();
-        support.transform3d = StickySidebar.supportTransform(true);
+      if (newWidth != null) {
+          s.stickyElement.css('width', newWidth);
       }
+    }
+  },
+  methods = {
+    init: function(options) {
+      return this.each(function() {
+        var o = $.extend({}, defaults, options);
+        var stickyElement = $(this);
 
-      /**
-       * Get translate value, if the browser supports transfrom3d, it will adopt it.
-       * and the same with translate. if browser doesn't support both return false.
-       * @param {Number} y - Value of Y-axis.
-       * @param {Number} x - Value of X-axis.
-       * @param {Number} z - Value of Z-axis.
-       * @return {String|False}
-       */
+        var stickyId = stickyElement.attr('id');
+        var wrapperId = stickyId ? stickyId + '-' + defaults.wrapperClassName : defaults.wrapperClassName;
+        var wrapper = $('<div></div>')
+          .attr('id', wrapperId)
+          .addClass(o.wrapperClassName);
 
-    }, {
-      key: '_getTranslate',
-      value: function _getTranslate() {
-        var y = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
-        var x = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
-        var z = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+        stickyElement.wrapAll(function() {
+          if ($(this).parent("#" + wrapperId).length == 0) {
+                  return wrapper;
+          }
+});
 
-        if (this.support.transform3d) return 'translate3d(' + y + ', ' + x + ', ' + z + ')';else if (this.support.translate) return 'translate(' + y + ', ' + x + ')';else return false;
-      }
+        var stickyWrapper = stickyElement.parent();
 
-      /**
-       * Destroy sticky sidebar plugin.
-       * @public
-       */
-
-    }, {
-      key: 'destroy',
-      value: function destroy() {
-        window.removeEventListener('resize', this);
-        window.removeEventListener('scroll', this);
-
-        this.sidebar.classList.remove(this.options.stickyClass);
-        this.sidebar.style.minHeight = '';
-
-        this.sidebar.removeEventListener('update' + EVENT_KEY, this);
-
-        var styleReset = { inner: {}, outer: {} };
-
-        styleReset.inner = { position: '', top: '', left: '', bottom: '', width: '', transform: '' };
-        styleReset.outer = { height: '', position: '' };
-
-        for (var key in styleReset.outer) {
-          this.sidebar.style[key] = styleReset.outer[key];
-        }for (var _key2 in styleReset.inner) {
-          this.sidebarInner.style[_key2] = styleReset.inner[_key2];
-        }if (this.options.resizeSensor && 'undefined' !== typeof ResizeSensor) {
-          ResizeSensor.detach(this.sidebarInner, this.handleEvent);
-          ResizeSensor.detach(this.container, this.handleEvent);
+        if (o.center) {
+          stickyWrapper.css({width:stickyElement.outerWidth(),marginLeft:"auto",marginRight:"auto"});
         }
+
+        if (stickyElement.css("float") === "right") {
+          stickyElement.css({"float":"none"}).parent().css({"float":"right"});
+        }
+
+        o.stickyElement = stickyElement;
+        o.stickyWrapper = stickyWrapper;
+        o.currentTop    = null;
+
+        sticked.push(o);
+
+        methods.setWrapperHeight(this);
+        methods.setupChangeListeners(this);
+      });
+    },
+
+    setWrapperHeight: function(stickyElement) {
+      var element = $(stickyElement);
+      var stickyWrapper = element.parent();
+      if (stickyWrapper) {
+        stickyWrapper.css('height', element.outerHeight());
       }
+    },
 
-      /**
-       * Determine if the browser supports CSS transform feature.
-       * @function
-       * @static
-       * @param {Boolean} transform3d - Detect transform with translate3d.
-       * @return {String}
-       */
-
-    }], [{
-      key: 'supportTransform',
-      value: function supportTransform(transform3d) {
-        var result = false,
-            property = transform3d ? 'perspective' : 'transform',
-            upper = property.charAt(0).toUpperCase() + property.slice(1),
-            prefixes = ['Webkit', 'Moz', 'O', 'ms'],
-            support = document.createElement('support'),
-            style = support.style;
-
-        (property + ' ' + prefixes.join(upper + ' ') + upper).split(' ').forEach(function (property, i) {
-          if (style[property] !== undefined) {
-            result = property;
-            return false;
+    setupChangeListeners: function(stickyElement) {
+      if (window.MutationObserver) {
+        var mutationObserver = new window.MutationObserver(function(mutations) {
+          if (mutations[0].addedNodes.length || mutations[0].removedNodes.length) {
+            methods.setWrapperHeight(stickyElement);
           }
         });
-        return result;
-      }
-
-      /**
-       * Trigger custom event.
-       * @static
-       * @param {DOMObject} element - Target element on the DOM.
-       * @param {String} eventName - Event name.
-       * @param {Object} data - 
-       */
-
-    }, {
-      key: 'eventTrigger',
-      value: function eventTrigger(element, eventName, data) {
-        try {
-          var event = new CustomEvent(eventName, { detail: data });
-        } catch (e) {
-          var event = document.createEvent('CustomEvent');
-          event.initCustomEvent(eventName, true, true, data);
-        }
-        element.dispatchEvent(event);
-      }
-
-      /**
-       * Extend options object with defaults.
-       * @function
-       * @static
-       */
-
-    }, {
-      key: 'extend',
-      value: function extend(defaults, options) {
-        var results = {};
-        for (var key in defaults) {
-          if ('undefined' !== typeof options[key]) results[key] = options[key];else results[key] = defaults[key];
-        }
-        return results;
-      }
-
-      /**
-       * Get current coordinates left and top of specific element.
-       * @static
-       */
-
-    }, {
-      key: 'offsetRelative',
-      value: function offsetRelative(element) {
-        var result = { left: 0, top: 0 };
-
-        do {
-          var offsetTop = element.offsetTop;
-          var offsetLeft = element.offsetLeft;
-
-          if (!isNaN(offsetTop)) result.top += offsetTop;
-
-          if (!isNaN(offsetLeft)) result.left += offsetLeft;
-
-          element = 'BODY' === element.tagName ? element.parentElement : element.offsetParent;
-        } while (element);
-        return result;
-      }
-
-      /**
-       * Add specific class name to specific element.
-       * @static 
-       * @param {ObjectDOM} element 
-       * @param {String} className 
-       */
-
-    }, {
-      key: 'addClass',
-      value: function addClass(element, className) {
-        if (!StickySidebar.hasClass(element, className)) {
-          if (element.classList) element.classList.add(className);else element.className += ' ' + className;
+        mutationObserver.observe(stickyElement, {subtree: true, childList: true});
+      } else {
+        if (window.addEventListener) {
+          stickyElement.addEventListener('DOMNodeInserted', function() {
+            methods.setWrapperHeight(stickyElement);
+          }, false);
+          stickyElement.addEventListener('DOMNodeRemoved', function() {
+            methods.setWrapperHeight(stickyElement);
+          }, false);
+        } else if (window.attachEvent) {
+          stickyElement.attachEvent('onDOMNodeInserted', function() {
+            methods.setWrapperHeight(stickyElement);
+          });
+          stickyElement.attachEvent('onDOMNodeRemoved', function() {
+            methods.setWrapperHeight(stickyElement);
+          });
         }
       }
+    },
+    update: scroller,
+    unstick: function(options) {
+      return this.each(function() {
+        var that = this;
+        var unstickyElement = $(that);
 
-      /**
-       * Remove specific class name to specific element
-       * @static
-       * @param {ObjectDOM} element 
-       * @param {String} className 
-       */
-
-    }, {
-      key: 'removeClass',
-      value: function removeClass(element, className) {
-        if (StickySidebar.hasClass(element, className)) {
-          if (element.classList) element.classList.remove(className);else element.className = element.className.replace(new RegExp('(^|\\b)' + className.split(' ').join('|') + '(\\b|$)', 'gi'), ' ');
+        var removeIdx = -1;
+        var i = sticked.length;
+        while (i-- > 0) {
+          if (sticked[i].stickyElement.get(0) === that) {
+              splice.call(sticked,i,1);
+              removeIdx = i;
+          }
         }
-      }
-
-      /**
-       * Determine weather the element has specific class name.
-       * @static
-       * @param {ObjectDOM} element 
-       * @param {String} className 
-       */
-
-    }, {
-      key: 'hasClass',
-      value: function hasClass(element, className) {
-        if (element.classList) return element.classList.contains(className);else return new RegExp('(^| )' + className + '( |$)', 'gi').test(element.className);
-      }
-    }]);
-
-    return StickySidebar;
-  }();
-
-  return StickySidebar;
-}();
-
-// Global
-// -------------------------
-window.StickySidebar = StickySidebar;
-
-(function () {
-  if ('undefined' === typeof window) return;
-
-  var plugin = window.$ || window.jQuery || window.Zepto;
-  var DATA_NAMESPACE = 'stickySidebar';
-
-  // Make sure the site has jquery or zepto plugin.
-  if (plugin) {
-    /**
-     * Sticky Sidebar Plugin Defintion.
-     * @param {Object|String} - config
-     */
-    var _jQueryPlugin = function (config) {
-      return this.each(function () {
-        var $this = plugin(this),
-            data = plugin(this).data(DATA_NAMESPACE);
-
-        if (!data) {
-          data = new StickySidebar(this, typeof config == 'object' && config);
-          $this.data(DATA_NAMESPACE, data);
-        }
-
-        if ('string' === typeof config) {
-          if (data[config] === undefined && ['destroy', 'updateSticky'].indexOf(config) === -1) throw new Error('No method named "' + config + '"');
-
-          data[config]();
+        if(removeIdx !== -1) {
+          unstickyElement.unwrap();
+          unstickyElement
+            .css({
+              'width': '',
+              'position': '',
+              'top': '',
+              'float': '',
+              'z-index': ''
+            })
+          ;
         }
       });
-    };
+    }
+  };
 
-    plugin.fn.stickySidebar = _jQueryPlugin;
-    plugin.fn.stickySidebar.Constructor = StickySidebar;
+// should be more efficient than using $window.scroll(scroller) and $window.resize(resizer):
+if (window.addEventListener) {
+  window.addEventListener('scroll', scroller, false);
+  window.addEventListener('resize', resizer, false);
+} else if (window.attachEvent) {
+  window.attachEvent('onscroll', scroller);
+  window.attachEvent('onresize', resizer);
+}
 
-    var old = plugin.fn.stickySidebar;
-
-    /**
-     * Sticky Sidebar No Conflict.
-     */
-    plugin.fn.stickySidebar.noConflict = function () {
-      plugin.fn.stickySidebar = old;
-      return this;
-    };
+$.fn.sticky = function(method) {
+  if (methods[method]) {
+    return methods[method].apply(this, slice.call(arguments, 1));
+  } else if (typeof method === 'object' || !method ) {
+    return methods.init.apply( this, arguments );
+  } else {
+    $.error('Method ' + method + ' does not exist on jQuery.sticky');
   }
-})();
+};
 
-})));
+$.fn.unstick = function(method) {
+  if (methods[method]) {
+    return methods[method].apply(this, slice.call(arguments, 1));
+  } else if (typeof method === 'object' || !method ) {
+    return methods.unstick.apply( this, arguments );
+  } else {
+    $.error('Method ' + method + ' does not exist on jQuery.sticky');
+  }
+};
+$(function() {
+  setTimeout(scroller, 0);
+});
+}));
