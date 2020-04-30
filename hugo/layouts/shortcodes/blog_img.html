@@ -4,5 +4,5 @@ Usage: {{% img "title" "URL" %}}
 {{ if (strings.HasSuffix  (.Get 1) ".svg" )}}
     <object type="image/svg+xml" data="../{{.Page.Dir}}{{ .Get 1 }}" style="margin: 3rem auto;display: block;" class="drop-shadow"></object>
 {{else}}
-    <img src="../{{.Page.Dir}}{{ .Get 1 }}" title="{{.Get 0}}" width="100%" class="drop-shadow reveal-fast" style="visibility:hidden"/>
+    <img src="../{{.Page.Dir}}{{ .Get 1 }}" title="{{.Get 0}}" width="100%" class="drop-shadow reveal-fast" style=""/>
 {{end}}
