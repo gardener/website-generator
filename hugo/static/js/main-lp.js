@@ -26,13 +26,10 @@ $(document).ready(function () {
         nextArrow: "<button type=\"button\" class=\"slick-next\"><span class=\"icon-arrow-next\"></span></button>",
         prevArrow: "<button type=\"button\" class=\"slick-prev \"><span class=\"icon-arrow-prev\"></span></button>",
         responsive: [
-            {
-              breakpoint: 1200,
-              settings: {
-                slidesToShow: 4,
-                slidesToScroll: 4
-              }
-            },
+          {
+            breakpoint: 1200,
+            settings: "unslick"
+          },
             {
               breakpoint: 900,
               settings: {

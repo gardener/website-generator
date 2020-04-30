@@ -1,0 +1,59 @@
+.page {
+  padding: 6rem 0;
+  display: flex;
+  flex-flow: column;
+  font-family: BentonSans, sans-serif;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    font-family: BentonSans, sans-serif!important;
+    margin: 1rem 0 .5rem;
+  }
+  .page-title {
+    display: block;
+    background: none;
+    border-bottom: none;
+    padding: 0 !important;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .page-sub-title {
+    display: block;
+  }
+}
+ul.news-feed {
+  list-style: none;
+  margin: 2rem 0;
+}
+.page ul.news-feed li {
+  margin-left: 0 !important;
+}
+.news-feed a.nav-link {
+  margin: 2rem 0;
+  padding: 0 1rem;
+  width: 100%;
+  display: flex;
+  flex-flow: column;
+  font-family: BentonSansMedium,sans-serif;
+  font-size: 1.6rem;
+  line-height: 1!important;
+  &>hover {
+    text-decoration: none;
+  }
+  &::after {
+    display: none !important;
+  }
+  .eventdate {
+    font-family: BentonSansLight, sans-serif;
+    display: block;
+  }
+  .publish-date {
+    font-family: BentonSans, sans-serif;
+    display: block;
+    font-size: 1.2rem;
+    color: initial;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+}

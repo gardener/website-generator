@@ -10,7 +10,9 @@
       {{- with .Site.GetPage "section" "blog" -}}
       <li><a href="{{ .URL }}">{{.Title}}</a></li>
       {{- end -}}
-      <li>News</li>
+      {{- with .Site.GetPage "section" "news" -}}
+      <li><a href="{{ .URL }}">{{.Title}}</a></li>
+      {{- end -}}
       {{- with .Site.GetPage "section" "documentation" -}}
       <li><a href="{{ .URL }}">Documentation</a></li>
       {{- end -}}
