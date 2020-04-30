@@ -1,36 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Kubernetes Gardener</title>
-
-    {{ partial "head-google-tag-manager.html" . }}
-
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="icon" type="image/png"    href="/images/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png"    href="/images/favicon-16x16.png" sizes="16x16">
-
-    <link rel="stylesheet" href="/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="/css/skeleton.css">
-    <link rel="stylesheet" href="/css/main.css">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body id="landingpage"  style="background-color:#e4edfa ;">
-
-{{ partial "body-google-tag-manager.html" . }}
-
-{{ partial "toolbar.html" . }}
-
+{{ define "page-content"}}
+<style>
+    .fixedsticky {
+      position: sticky!important;
+      top: 0;
+      z-index: 1;
+      background: #03ce9a;
+    }
+  </style>
 {{.Content}}
-
-
-<script src="/js/jquery.min.js"></script>
-<script src="/js/modernizr.custom.min.js"></script>
-<script src="/js/ScrollMagic.min.js"></script>
-<script src="/js/scrollreveal.js"></script>
-<script src="/js/jsrender.min.js"></script>
-<script src="/js/main.js"></script>
-
-</body>
-</html>
+{{ end }}
