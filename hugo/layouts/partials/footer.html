@@ -4,18 +4,18 @@
 <footer class="footer">
   <div class="container footer-wrapper">
     <ul class="nav">
-      {{- with .Site.GetPage "section" "020_getting-started" -}}
-      <li><a href="{{ .URL }}">Get Started</a></li>
+      {{- with .Site.GetPage "section" "documentation/020_getting-started" -}}
+      <li><a href="{{ .URL }}">{{.Title}}</a></li>
       {{- end -}}
       {{- with .Site.GetPage "section" "blog" -}}
-      <li><a href="{{ .URL }}">Blogs</a></li>
+      <li><a href="{{ .URL }}">{{.Title}}</a></li>
       {{- end -}}
       <li>News</li>
-      {{- with .Site.GetPage "section" "" -}}
+      {{- with .Site.GetPage "section" "documentation" -}}
       <li><a href="{{ .URL }}">Documentation</a></li>
       {{- end -}}
       {{- with .Site.GetPage "section" "community" -}}
-      <li><a href="{{ .URL }}">Community</a></li>
+      <li><a href="{{ .URL }}">{{.Title}}</a></li>
       {{- end -}}
     </ul>
     <img src="{{"images/lp/gardener-logo.svg" | relURL}}" alt="Logo Gardener" class="logo"/>

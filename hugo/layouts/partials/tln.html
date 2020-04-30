@@ -59,7 +59,7 @@
         {{/* partial "search.html" . */}}
         <div class="navbar-collapse">
           <ul class="links">
-            {{- with .Site.GetPage "section" "020_getting-started" -}}
+            {{- with .Site.GetPage "section" "documentation/020_getting-started" -}}
             <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
               <a class="btn primary" href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">{{ .Title }}</a>
             </li>
@@ -79,7 +79,7 @@
               <a href="{{ .URL }}">{{ .Title }}</a>
             </li>
             {{- end -}} 
-            {{ with .Site.GetPage "section" "" }}
+            {{ with .Site.GetPage "section" "documentation" }}
             <li class="link has-child {{if .IsAncestor $currentPage -}}active{{- end -}}">
               <a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation{{/*.Title*/}}</a>
               <nav class="container menu">
