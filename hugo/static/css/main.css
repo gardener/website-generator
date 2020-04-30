@@ -58,7 +58,7 @@ body {
 }
 
 .projectMembers{
-	background-image: url(../images/git_bg.svg);
+	background-image: url(../images/branding/git_bg.svg);
 	background-size: contain;
     background-repeat: no-repeat;
 }
