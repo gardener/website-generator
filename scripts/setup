@@ -1,0 +1,48 @@
+#!/bin/bash
+
+if [[ $(uname) == 'Darwin' ]]; then
+  READLINK_BIN="greadlink"
+else
+  READLINK_BIN="readlink"
+fi
+
+cwd=`pwd`
+if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH}" ]]; then
+  generatorRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/..)"
+else
+  generatorRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_GENERATOR_PATH}")";
+fi
+if [[ ! -d "${generatorRepoPath}" ]]; then
+  echo "website-generator directory path is invalid [`${generatorRepoPath}`]. Set $GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo." 
+  exit 1
+fi
+if [[ -z "${GARDENER_WEBSITE_PATH}" ]]; then
+  # Fallback to "gardener" repo cloned as peer directory to "website-generator"
+  websiteRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/../../website)"
+else
+  websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")";
+fi
+if [[ -z "${GARDENER_DOCUMENTATION_PATH}" ]]; then
+  # Fallback to "documentation" repo cloned as peer directory to "website-generator"
+  contentRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/../../documentation)"
+else
+  contentRepoPath="$(${READLINK_BIN} -f "${GARDENER_DOCUMENTATION_PATH}")";
+fi
+if [[ -z "${GH_INTERNAL_USERNAME}" ]]; then
+  ghorg="gardener"
+fi
+
+if [[ ! -d "${contentRepoPath}" ]]; then
+  echo "gardener/documentation repo is not available locally." 
+  git clone "https://github.wdf.sap.corp/${ghorg}/documentation.git" "$(${READLINK_BIN} -f ../..)/documentation"
+  contentRepoPath="${READLINK_BIN} -f ../../documentation"
+fi
+if [[ ! -d "${websiteRepoPath}" ]]; then
+  echo "gardener/website repo is not available locally." 
+  git clone "https://github.wdf.sap.corp/${ghorg}/website.git" "$(${READLINK_BIN} -f ../..)/website"
+  websiteRepoPath="$(${READLINK_BIN} -f ../../website)"
+fi
+
+content=${contentRepoPath}/website
+rm $generatorRepoPath/hugo/content
+ln -sf $content $generatorRepoPath/hugo/content
