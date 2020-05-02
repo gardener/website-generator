@@ -4,7 +4,7 @@
     {{ if (fileExists $url) -}}
       {{range  (last 1 (getJSON $url)) }}
       {{.author.avatar_url}}
-    {{ end }}
+      {{ end }}
     {{ end }}
   {{ end }}
 {{ end }}
