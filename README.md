@@ -47,69 +47,103 @@ The result of the site build is output to the `/docs` folder of the [gardener](h
 ### Publish changes
 The changes to the website home repo clone from previous phase are _staged_, _commited_ and finally _pushed_ to the [gardener](https://github.com/gardener/website) repo, where they are immediately served by GitHub Pages. 
 
-## Build locally
+## Build Locally
 In most cases when developing site content, you will not need to run the full site build and al you need is a site preview. For the rest of the cases there are several options outlined below.
 
-Feel free to reuse the image utilized by the CI/CD and avoid setting up the tools for the build environment. That has the advantage of keeping you up-to-date with the build setup effortlessly too. Clone the gardener-genrator repo in the contianer and use the [website-generator/scripts/setup](https://github.com/gardener/website-generator/blob/master/scripts/setup) script to setup the otehr clones as required. After you have cloned the repos in the container, you can reuse the [website-generator/.ci/build](https://github.com/gardener/website-generator/blob/master/.ci/build) script for full scale builds. Currently, there is no end-to-end script for the setup stage, so you have to come up with something yourself mount and run it. Contributions are welcome. 
+Feel free to reuse the image utilized by the CI/CD and avoid setting up the tools for the build environment. That has the advantage of keeping you up-to-date with the build setup effortlessly too. Clone the gardener-genrator repo in the contianer and use the [website-generator/scripts/setup](https://github.com/gardener/website-generator/blob/master/scripts/setup) script to setup the other clones as required. After you have cloned the repos in the container, you can reuse the [website-generator/.ci/build](https://github.com/gardener/website-generator/blob/master/.ci/build) script for full scale builds. Currently, there is no end-to-end script for the setup stage, so you have to come up with something yourself mount and run it. Contributions are welcome. 
 
 In other rare case or when you cannot use Docker for some reason, see the procedure below how to setup build environment and run local build.
 
-1. Fork (if you plan ot make changes here) and clone this repository locally
-    ```sh
-    git clone https://github.com/gardener/website-generator.git
-    ```
-1. Change to the cloned repo and run `make` or `make setup` to have all necessary repos fetched and setup (linked) for you automatically.   
-   You can do this also manually:
-    ```sh
-    git clone https://github.com/gardener/documentation.git
-    git clone https://github.com/gardener/website.git
+**Prerequisites**:
+- Git
+- [Hugo](https://github.com/gohugoio/hugo/releases) 
+- [NodeJS](https://nodejs.org/en/)/[NPM](https://www.npmjs.com/get-npm)
 
-    cd  website-generator
-    # make a symbolic link from hugo/content to the website content folder
-    #
-    ln -s ../../documentation/website/ ./hugo/content
-    ```
-1. Install [Hugo](https://github.com/gohugoio/hugo/releases) and [NodeJS](https://nodejs.org/en/)/[NPM]((https://www.npmjs.com/get-npm)) on your system.   
-   **Note**: NdeJS/NPM are required only if you plan a full-scale build or need to preview how a remote page you just added will look like in the website.   
-1. Setup the NodeJS scripts with environment variables:   
-    **Note**: This stage is required only if you plan a full-scale build or need to preview how a remote page you just added will look like in the website.   
-    ```sh
-    # <path-to-the-website-folder> is path to the website folder in the documentation repo clone
-    export CONTENT=<path-to-gardener-documentation-website-folder>
-    # optionally 
-    export LOCAL_BUILD=1
-    ``` 
-    The `LOCAL_BUILD` variable helps the script skip some pre-build operations that are executable only in Concourse and will fail. Failures are non-critical in any way. They just bloat the console output.
-1. Run the build with `.ci/build`   
-    **Note**: This stage is required only if you plan a full-scale build.   
-    The build will apply some heuristics and infer `documentation` and `gardener` are the names of clonded repos that are peer to `website-generator`. To override their paths, use the coresponding environment variables:   
-   - `GARDENER_DOCUMENTATION_PATH` for the documentation repo   
-   - `GARDENER_WEBSITE_PATH` for the build output
+**Procedure**:
+```sh
+# Fork (if you plan ot make changes here) and clone this repository locally
+$ git clone https://github.com/gardener/website-generator.git
 
-   Similiarly, to override the infered location of `website-generator` use `GARDENER_GENERATOR_PATH`.
-1. Run site preview   
-    If you plan to use this local setup for previewing changes while developing site material or layouts, navigate to [website-generator/hugo](https://github.com/gardener/website-generator/tree/master/hugo) and run:
-    ```sh
-    $ hugo serve
-    ```
-    You can now explore the site and your changes upon save on `http://localhost:1313`.
+# Change to the cloned repo 
+cd website-generator
 
-### Windows 10 users
+# Run make (or make setup) to have all necessary repos cloned, and setup (linked) for you automatically as necessary (if they do not exist).
+$ make
+
+# It is highly recommended to supply access token before starting the build to avoid Github API rate limit restrictions.
+# For basic authentication (deprecated by GitHub), use the `GIT_USER` and `GIT_PASSWORD` instead.   
+$ export GIT_OAUTH_TOKEN=<your-github-personal-access-token>
+
+# Set AUTO_PUBLISH to false to instruct the build not to publish changes to the documentation and website repos. This is in the role of CI/CD builds
+# and should not be taken over. 
+$ export AUTO_PUBLISH=false
+
+$ make build
+```
+Normally, all steps except `make build` are executed once during the initial setup. After that, the build step can then be executed numerous times.   
+The build results are produced in `website/docs`.
+
+## Build Configuration
+The build is parameterized by means of environment variables.
+
+#### Locations
+The build will apply some heuristics and infer `documentation` and `gardener` are the names of clonded repos that are peer to `website-generator`. To override their paths, use the coresponding environment variables:   
+- `GARDENER_DOCUMENTATION_PATH` sets the path to the documentation repo (default: `/documentation`)  
+- `GARDENER_WEBSITE_PATH` sets the path to the build output repo (default: `/website`)
+- `GARDENER_GENERATOR_PATH` changes the infered location of `website-generator`defaulting to the directory where the build script is executed.
+- `CONTENT` The build scripts will assume the source for building the site is available in `hugo/content` (note the symlink content<==> documentation/website we setup earlier). In case you need to override its location, use the `CONTENT` environment variable.
+
+#### GitHub authentication
+It is recommended to supply authentication credentials before starting the build to avoid Github API rate limit restrictions.   
+For token-based authentication (recommended), use the `GIT_OAUTH_TOKEN` environment variable. 
+For basic authentication (deprecated by GitHub), use the `GIT_USER` and `GIT_PASSWORD`.
+
+#### Build results
+- `AUTO_PUBLISH` controls the post-build steps publishing the results. Normally it should not be set, unless for the CI/CD pipeline definition build step. To enable, set to `true`.
+
+## Run Site Previews Locally
+Site previews aid the process of developing site material or layouts. Similiar to builds, it is recommended to run site previews with docker, using the scripts supplied in `/documentation` for that. In case you can't benefit from that for some reason, the instructions for setting it up manually are listed here. 
+
+**Prerequisites**:
+- Cloned `/documentation` and `/website-generator` repos
+- Symlink `/website-generator/hugo/content` <==> `/documentation/website`
+- [Hugo](https://github.com/gohugoio/hugo/releases) available on your system
+
+The first two prerequisites are automatically ensured by running `make` (or `make setup`). Or you can do that manually.
+
+> Note that the `/website repo` is not necessary to perform this task.
+
+**Procedure**:
+```sh
+cd website-generator/hugo
+
+$ hugo serve
+```
+You can now explore the site and your changes upon save at `http://localhost:1313`.
+
+## Windows 10 Users
 The instructions above are applicable when using Windows 10 WSL e.g. with Ubuntu. Here are a few hints how to setup your environment accordingly.
 
-#### Symlinks in Windows
+### Symlinks in Windows
+One of the problematic integration areas in WSL are symbolic links. Despite that a good progress was made it is still necessary to use Windows tools to create symbolic links on a Windows file system. The build and setup scripts above consider WSL environments and will automatically fallback to Windows `mklink` command instead of `ln` if necessary. A prerequisite to the success of this operation is to enable **Windows Developer Mode** (Settings > Update & Security > For developers > Use developer features).
+
+Should you experience problems on this stage, create the symlink manually. The build script will work with existing `content` symlink and not attempt to create one.
 To create the `content` symlink in `website-generator` repo clone's `hugo` folder, start CMD as Administrator and make symlink to folder (`/D`)
 
 ```
-mklink /D content <absolute-path-to-gardener-documentation-website-folder>
+[website-generator-repo-clone-path]>\hugo>mklink /D content <absolute-path-to-gardener-documentation-website-folder>
+```
+A successfull operation will signal output similiar to this:
+```
+symbolic link created for content <<===>> <actual-path-on-your-system>\website
 ```
 
-#### Scripts line endings
+### Scripts line endings
 Note that if you are using **GitBash** it is likely to be configured to change line endings with Windows (CRLF) instead of UNIX (LF) style. You will need to change line endings in the bash scripts you plan to use. If you use VS Code look in the lower right corner and you will notice CRLF, which can be changed to LF. Notepad++ also has a Line Ending change option. Consult with your favorite tool options how to deal with this best.
 
-#### Docker
+### Docker
 Install **Docker Desktop for Windows** if you plan to make use of the build image to preview changes or run the same full-scale build as the CI/CD.    
-A helpful article on setting up WSL to work flawlesly with Desktop Docker for Windows is available [here](https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly). The list below is a TL;DR; for key points and SAP-speciffic issues.
+A helpful article on setting up WSL to work flawlesly with Desktop Docker for Windows is available [here](https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly). The list below is a TL;DR; for some key points.
 - **Volumes mounting**
     If you plan to use the image you will need to mount at least source content volume and probably a scripts volume. Docker and volume mounting has some subtleties when it comes to Windows. In short, make sure you have the `C:` drive shared in Docker Desktop and **no firewall rule getting in the way**, and ensure that host mount paths start with `/c` and not `/mnt/c`. If you set `WSL=1` before running the scripts, they will try to remove the leading `/mnt`.
 - Enable **using the daemon** from Docker Desktop for Windows in WSL.

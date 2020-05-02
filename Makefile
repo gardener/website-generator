@@ -22,16 +22,11 @@
 .PHONY: setup
 setup:
 	@scripts/setup
-# `make build` will make a full site build pulling remote content and rewriting links as appropriate,
+# `make build` will make a full site build, pulling remote content and rewriting links as appropriate,
 # uppdating git info, etc. It is the same operation performed by Concourse when a build job is triggered.
 .PHONY: build
 build:
 	@.ci/build
-# `make build-local` behaves like `make build` with the exception that it will skip
-# attempts to get secrets from concourse and reach out ot github.tools.sap.
-.PHONY: build-local
-build-local:
-	@env LOCAL_BUILD=1 .ci/build
 # `make image-build` builds a new docker image. Use thee $TAG environment variable to specify the image tag. 
 # Example: `$ make image-build TAG=v10`
 .PHONY: image-build
@@ -39,7 +34,7 @@ image-build:
 	@scripts/image-build
 # `make image-push` pushes a local image to the project GCR repository. An installed and authenticated gcloud tool 
 # is required to perform the operation. The image to push is identified by its tag.
-# Example: `$ make image-push TAG=v9`
+# Example: `$ make image-push TAG=v10`
 .PHONY: image-push
 image-push:
 	@scripts/image-push

@@ -49,8 +49,10 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
     console.log("Fetching remote content and commits history. This will take a minute..")    
 
     let requestOptions = {
+        timeout: 10000,
         headers: {
-            'User-Agent': "NodeJS"
+            'User-Agent': "NodeJS",
+            "Accept": "application/json"
         }
     }
     // Use authenticated requests to GitHub API if user token or credentials are provided
@@ -62,7 +64,7 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
         console.info("GitHub API request are setup for annonymous access. Significant rate limit restriction will apply.");
     }
 
-    files.forEach(function(file){
+    files.forEach(function(file, idx, filesArr){
         let content;
         try {
             content = fm(fs.readFileSync(file, 'utf8'))
@@ -132,9 +134,9 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
         // ====================================================
         // e.g. https://api.github.com/repos/gardener/gardener/commits?path=README.md
         //
-        let commitsUrl = ""
-        let relUrl =""
-        if (content.attributes.remote){
+        let commitsUrl = repoCommits
+        let relUrl = ""
+        if (content.attributes.remote) {
             let changesUrl = content.attributes.remote;
             if (changesUrl.endsWith(".git")) {
                 changesUrl = changesUrl.replace(".git", "/README.md")
@@ -150,30 +152,39 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
             commitsUrl = ["https://api.github.com/repos", user, project, "commits"].join("/")
 
         } else {
-            relUrl =  relUrl.replace(process.env.CONTENT,"/website")
-            commitsUrl = repoCommits
+            relUrl =  file.replace(process.env.CONTENT,"/website")
         }
 
         commitsUrl = commitsUrl + "?path=" + relUrl;
+        console.debug("Fetching commits", commitsUrl);
         try {
-            // console.debug("Fetching commits", commitsUrl);
-            let commitsJson = request("GET", commitsUrl, requestOptions).getBody().toString()
-            if (commitsJson.length > 0) {
-                commits = JSON.stringify(commitsJson,undefined,2);
-                fs.writeFileSync(file + ".json", commits, 'utf8');
+            let commits = request("GET", commitsUrl, requestOptions).getBody().toString()
+            if (commits.length > 0) {
+                try {
+                    commits = JSON.stringify(JSON.parse(commits), undefined, 2);
+                    if (commits.length > 0) {
+                        fs.writeFileSync(file + ".json", commits, 'utf8');
+                    } else {
+                        console.error("Skip commits json update: unexpected json `[]`", commitsUrl);
+                        console.log("proceeding with next file")
+                        return
+                    }
+                } catch (err){                          
+                    console.error("Invalid JSON content from", commitsUrl, err);
+                    console.log("proceeding with next file")
+                    return
+                }
             } else {
                 console.error("Skip commits json update: unexpected json `[]`", commitsUrl);
                 console.log("proceeding with next file")
                 return
             }
-        }
-        catch (err){
+        } catch (err) {
             console.error("Failed to update commits json from", commitsUrl, err);
             console.log("proceeding with next file")
             return
         }
     })
-
 
     // Parse all MarkdownFiles and check if any link reference to an remote site which we have imported.
     // In this case we REWRITE the link from REMOTE to LOCAL

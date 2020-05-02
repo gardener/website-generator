@@ -6,18 +6,18 @@
     "type": "git",
     "url": "git+https://github.com/gardener/website-generator.git"
   },
-  "license": "Apache 2",
+  "license": "MIT",
   "main": "node/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "fetch": "1.1.0",
-    "front-matter": "2.3.0",
-    "glob": "7.1.2",
-    "is-relative-url": "2.0.0",
+    "front-matter": "3.1.0",
+    "glob": "7.1.6",
+    "is-relative-url": "3.0.0",
     "shuffle-array": "^1.0.1",
-    "sync-request": "6.0.0",
+    "sync-request": "6.1.0",
     "url-exists": "1.0.3",
     "axios": "0.19.2"
   }

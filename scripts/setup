@@ -44,5 +44,19 @@ if [[ ! -d "${websiteRepoPath}" ]]; then
 fi
 
 content=${contentRepoPath}/website
-rm $generatorRepoPath/hugo/content
-ln -sf $content $generatorRepoPath/hugo/content
+
+# create symlink hugo/content -> /documentation/website, if it doesn't exists
+#
+if [[ ! -d "hugo/content" ]]; then
+echo 'linking hugo/content <==> /documentation/website'
+cd hugo
+# WSL users: If the script fails with "You do not have sufficient privilege to perform this operation.", enable the Windows Developer Mode.
+if [[ -z "${WSL_DISTRO_NAME}" ]]; then
+  ../scripts/mklink.sh content $(wslpath -w $content)
+else
+  ln -s $content $generatorRepoPath/hugo/content
+fi
+symlinkoutput="$(ls -lt content)"
+echo "${symlinkoutput}"
+cd ..
+fi
