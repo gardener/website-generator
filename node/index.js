@@ -1,14 +1,17 @@
 
 /**
  * Environment variables used in this script:
- * CONTENT:      Path to the website source content. Defaults to "../hugo/content", 
- *               relative to the current directory (`node`).
- * GIT_USER:     The GitHub user for (Basic) authenticated requests to github.com. Useful 
- *               to avoid hitting GitHub API's rate limit. Always used with GIT_PASSWORD.
- *               Deprecation notice: GitHub deprecated user-based authentication.
- * GIT_PASSWORD: The GitHub user password for authenticated requests to github.com. Always used
- *               with GIT_USER. 
- *               Deprecation notice: GitHub deprecated user-based authentication.
+ * CONTENT:         Path to the website source content. Defaults to "../hugo/content", 
+ *                  relative to the current directory (`node`).
+ * GIT_OAUTH_TOKEN: The GitHub Personal Access Token for OAuth authenticated requests to 
+ *                  github.com. GIT_OAUTH_TOKEN takes priority if GIT_USER/PASSWORD are 
+ *                  also specified.
+ * GIT_USER:        The GitHub user for Basic authenticated requests to github.com. Useful 
+ *                  to avoid hitting GitHub API's rate limit. Always used with GIT_PASSWORD.
+ *                  Deprecation notice: GitHub deprecated Basic authentication.
+ * GIT_PASSWORD:    The GitHub user password for Basic authenticated requests to github.com.
+ *                  Always used with GIT_USER. 
+ *                  Deprecation notice: GitHub deprecated Basic authentication.
  */
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
@@ -50,9 +53,13 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
             'User-Agent': "NodeJS"
         }
     }
-    // Use (Basic) authenticated requests to GitHub API if user credentials are provided
-    if (process.env.GIT_USER !== "" && process.env.GIT_PASSWORD !== "") {
-        requestOptions.headers['Authorization'] = "Basic " + new Buffer.from(process.env.GIT_USER + ':' + process.env.GIT_PASSWORD).toString('base64')
+    // Use authenticated requests to GitHub API if user token or credentials are provided
+    if ('GIT_OAUTH_TOKEN' in process.env) {
+        requestOptions.headers['Authorization'] = "token " + process.env.GIT_OAUTH_TOKEN;
+    } else if ('GIT_USER' in process.env && 'GIT_PASSWORD' in process.env){
+        requestOptions.headers['Authorization'] = "Basic " + new Buffer.from(process.env.GIT_USER + ':' + process.env.GIT_PASSWORD).toString('base64');
+    } else {
+        console.info("GitHub API request are setup for annonymous access. Significant rate limit restriction will apply.");
     }
 
     files.forEach(function(file){
