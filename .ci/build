@@ -10,7 +10,6 @@ if [[ -z "${HUGO}" ]]; then
   HUGO=hugo;
 fi
 
-cwd=`pwd`
 if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH}" ]]; then
   generatorRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/..)"
 else
@@ -45,12 +44,21 @@ echo "Generated site directory: ${website}" ;
 
 cd ${generator}
 
-# create symlink hugo/content -> /documentation/website 
+# create symlink hugo/content -> /documentation/website, if it doesn't exists
 #
-[ -f hugo/content ] && rm hugo/content
+if [[ ! -d "hugo/content" ]]; then
+echo 'linking hugo/content <==> /documentation/website'
 cd hugo
-ln -sf $content content
+# WLS users: If the script fails with "You do not have sufficient privilege to perform this operation.", enable the Windows Developer Mode.
+if [[ -z "${WLS}" ]]; then
+  ../scripts/mklink.sh content $(wslpath -w $content)
+else
+  ln -s $content content
+fi
+# symlinkoutput="$(ls -lt content)"
+# echo "${symlinkoutput}"
 cd ..
+fi
 
 # Run pregeneration: pull remote content
 #
