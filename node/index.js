@@ -1,3 +1,16 @@
+
+/**
+ * Environment variables used in this script:
+ * CONTENT:      Path to the website source content. Defaults to "../hugo/content", 
+ *               relative to the current directory (`node`).
+ * GIT_USER:     The GitHub user for (Basic) authenticated requests to github.com. Useful 
+ *               to avoid hitting GitHub API's rate limit. Always used with GIT_PASSWORD.
+ *               Deprecation notice: GitHub deprecated user-based authentication.
+ * GIT_PASSWORD: The GitHub user password for authenticated requests to github.com. Always used
+ *               with GIT_USER. 
+ *               Deprecation notice: GitHub deprecated user-based authentication.
+ */
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 if (!process.env.CONTENT) { 
     process.env.CONTENT = __dirname+'/../hugo/content';
@@ -21,7 +34,6 @@ const repoCommits = "https://api.github.com/repos/gardener/documentation/commits
 // Parse all files and inline remote MarkDown content.
 //
 glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
-
     // We must shuffle the files to process them in a random order...WHY THIS HACK?
     //
     // Github.com has some rate limits/hour. But we want to fetch the github commit statistic
@@ -32,6 +44,17 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
     shuffle(files)
 
     console.log("Fetching remote content and commits history. This will take a minute..")    
+
+    let requestOptions = {
+        headers: {
+            'User-Agent': "NodeJS"
+        }
+    }
+    // Use (Basic) authenticated requests to GitHub API if user credentials are provided
+    if (process.env.GIT_USER !== "" && process.env.GIT_PASSWORD !== "") {
+        requestOptions.headers['Authorization'] = "Basic " + new Buffer.from(process.env.GIT_USER + ':' + process.env.GIT_PASSWORD).toString('base64')
+    }
+
     files.forEach(function(file){
         let content;
         try {
@@ -104,11 +127,6 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
         //
         let commitsUrl = ""
         let relUrl =""
-        let options = {
-            headers: {
-                'user-agent': 'example-user-agent',
-            }
-        }
         if (content.attributes.remote){
             let changesUrl = content.attributes.remote;
             if (changesUrl.endsWith(".git")) {
@@ -132,8 +150,7 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
         commitsUrl = commitsUrl + "?path=" + relUrl;
         try {
             // console.debug("Fetching commits", commitsUrl);
-            let commits = request("GET", commitsUrl, options).getBody().toString()
-            commits = JSON.stringify(JSON.parse(commits),undefined,2)
+            let commitsJson = request("GET", commitsUrl, requestOptions).getBody().toString()
             if (commitsJson.length > 0) {
                 commits = JSON.stringify(commitsJson,undefined,2);
                 fs.writeFileSync(file + ".json", commits, 'utf8');
