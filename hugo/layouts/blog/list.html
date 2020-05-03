@@ -9,6 +9,19 @@
       z-index: 1;
       background: #03ce9a;
     }
+    .blogs .author {
+      display: block;
+      font-size: 1.3rem;
+      text-align: center;
+      line-height: 1;
+      margin: 10px 0 5px;
+    }
+    .blogs .publishdate {
+      display: block;
+      font-size: 1.3rem;
+      text-align: center;
+      line-height: 1;
+    }
   </style>
   <div class="page blogs">
     <!-- Ranges through content/blog/*.md -->
@@ -18,14 +31,16 @@
     {{else}}
     <article class="post row" data-path="">
         <div class="wrapper">
-            <div class="one column">
+            <div class="two columns">
                 <img {{ printf "src=%q" (trim (partial "git_avatar.html" .) " \r\n") | safeHTMLAttr }}
+                    {{ printf "title=%q" (trim (partial "git_author.html" .) " \r\n") | safeHTMLAttr }}
                     class="user-icon icons"
-                    alt="user-image">
+                    alt="blog author avatar">
+                <span class="author">{{(trim (partial "git_author.html" .) " \r\n") | safeHTML}}</span>
+                <span class="publishdate">{{ partial "git_date.html" . }}</span>
             </div>
-            <div class="nine columns">
+            <div class="ten columns">
                 <h2>{{ .Title }}</h2>
-                <h3><div class="last-update">Updated <span>{{ partial "git_date.html" . }}</span> by {{ partial "git_author.html" . }}</div></h3>
                 <p>
                     {{.Content}}
                 </p>
