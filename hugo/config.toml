@@ -1,24 +1,24 @@
-#baseURL = "https://gardener.cloud"
 baseURL = "https://gardener.cloud/"
 languageCode = "en-US"
 defaultContentLanguage = "en"
-enableGitInfo = true
 
-title = "Gardener Documentation"
+title = "Gardener"
 theme = "learn"
 metaDataFormat = "yaml"
 defaultContentLanguageInSubdir= true
 contentDir="content"
+enableGitInfo = true
+
+[markup] 
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true  
 
 [params]
-  # edit this for the final pull request to the real repo.  
-  # in the .ci directory too.
-  editURL = "https://github.com/gardener/documentation/edit/master/website/documentation/"
+  editURL = "https://github.com/gardener/documentation/edit/master/website/"
   issueURL = "https://github.com/gardener/documentation/issues"
-  description = "Documentation for Gardener"
-  author = "Andreas Herz"
+  description = "Project Gardener Website"
   showVisitedLinks = true
-  # Change default color scheme with a variant one. Can be "red", "blue", "green".
   themeVariant = "gardener"
 
 [outputs]
