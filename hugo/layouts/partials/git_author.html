@@ -4,7 +4,10 @@
     {{ if (fileExists $url) -}}
       {{ $scratch := newScratch }}
       {{range (getJSON $url) }}
+        {{ if (hasPrefix .commit.message "[int]") }}
+        {{else}}
         {{ $scratch.Add "email" (slice (printf "<a href='mailto:%s'>%s</a>" .commit.author.email .commit.author.name)) }}
+        {{end}}
       {{ end }}
       {{- delimit (uniq ($scratch.Get "email")) ", " -}}
     {{ end }}
