@@ -1,15 +1,17 @@
-{{ with .File }}
-  {{ with .Path }}
-    {{ $url := print "content/" . ".json"}}
-    {{ if (fileExists $url) -}}
-      {{ $scratch := newScratch }}
-      {{range (getJSON $url) }}
-        {{ if (hasPrefix .commit.message "[int]") }}
-        {{else}}
-        {{ $scratch.Add "email" (slice (printf "<a href='mailto:%s'>%s</a>" .commit.author.email .commit.author.name)) }}
-        {{end}}
-      {{ end }}
-      {{- delimit (uniq ($scratch.Get "email")) ", " -}}
-    {{ end }}
-  {{ end }}    
-{{ end }}
+{{- with .File -}}
+  {{- with .Path -}}
+    {{- $url := print "content/" . ".json" -}}
+    {{- if (fileExists $url) -}}
+      {{- $scratch := newScratch -}}
+      {{- range (getJSON $url) -}}
+        {{- if (hasPrefix .commit.message "[int]") -}}
+        {{- else -}}
+        {{- $scratch.SetInMap "authors" (print .commit.author.email) (printf "<a href='mailto:%s'>%s</a>" .commit.author.email .commit.author.name) -}}
+        {{- end -}}
+      {{- end -}}
+      {{- range ($scratch.GetSortedMapValues "authors") -}}
+      {{-  .  | safeHTML  -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}    
+{{- end }}
