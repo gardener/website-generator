@@ -9,9 +9,9 @@
         {{- $scratch.SetInMap "authors" (print .commit.author.email) (printf "<a href='mailto:%s'>%s</a>" .commit.author.email .commit.author.name) -}}
         {{- end -}}
       {{- end -}}
-      {{- range ($scratch.GetSortedMapValues "authors") -}}
-      {{-  .  | safeHTML  -}}
-      {{- end -}}
+      {{ with ($scratch.GetSortedMapValues "authors") }}
+      {{- delimit . "," -}}
+      {{end}}
     {{- end -}}
   {{- end -}}    
 {{- end }}
