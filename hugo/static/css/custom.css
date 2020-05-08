@@ -6,6 +6,7 @@
   --font-family-regular: BentonSans, sans-serif;
   --font-family-light: BentonSansLight, sans-serif;
   --font-family-medium: BentonSansMedium, sans-serif;
+  --font-family-book: BentonSansBook, sans-serif;
 }
 
 /*
@@ -44,11 +45,26 @@ questions: http://www.webtype.com
 }
 
 @font-face {
+  font-family: "BentonSansBook";
+  src: url("../fonts/BentonSansBook/BentonSans-Book.woff2")
+      format("woff2"),
+    url("../fonts/BentonSansBook/BentonSans-Book.woff")
+      format("woff"),
+    url("../fonts/BentonSansBook/BentonSans-Book.ttf")
+      format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: "BentonSansLight";
   src: url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-2.eot");
-  src: url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-2.eot?") format("embedded-opentype"),
-       url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-3.woff") format("woff"),
-       url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-1.ttf") format("truetype");
+  src: url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-2.eot?")
+      format("embedded-opentype"),
+    url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-3.woff")
+      format("woff"),
+    url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-1.ttf")
+      format("truetype");
   font-style: normal;
   font-weight: normal;
 }
@@ -56,9 +72,12 @@ questions: http://www.webtype.com
 @font-face {
   font-family: "BentonSansBold";
   src: url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-2.eot");
-  src: url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-2.eot?") format("embedded-opentype"),
-       url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-3.woff") format("woff"),
-       url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-1.ttf") format("truetype");
+  src: url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-2.eot?")
+      format("embedded-opentype"),
+    url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-3.woff")
+      format("woff"),
+    url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-1.ttf")
+      format("truetype");
   font-style: normal;
   font-weight: bold;
 }
@@ -68,7 +87,7 @@ questions: http://www.webtype.com
 }
 
 body {
-  font-family: var(--font-family-regular), sans-serif;
+  font-family: var(--font-family-regular);
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
@@ -84,7 +103,7 @@ a {
 
 a {
   text-decoration: none;
-  font-family: var(--font-family-medium), sans-serif;
+  font-family: var(--font-family-regular);
 }
 
 a:hover {
@@ -131,13 +150,21 @@ a:hover {
 }
 
 .sub-title {
-  margin-bottom: 42px;
+  font-family: var(--font-family-book);
+  font-size: 18px;
+  line-height: 1.65;
+  /* margin-bottom: 2.2em; */
+  margin-top: 12px;
+  /* margin-bottom: 42px; */
 }
 
 .title-1 {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   font-size: 45px;
   line-height: 1.2;
+}
+
+.title-1:not(.has-subtitle) {
   margin-bottom: 1em;
 }
 
@@ -237,12 +264,6 @@ strong {
   font-family: BentonSansMedium, sans-serif;
 }
 
-.sub-title {
-  font-size: 18px;
-  line-height: 1.65;
-  margin-bottom: 2.2em;
-}
-
 @media (min-width: 750px) {
   .sub-title {
     font-size: 20px;
@@ -302,12 +323,13 @@ strong {
   left: 0;
   right: 0;
   z-index: 100;
-  background: #03ce9a;
+  /* background: #03ce9a; */
+  background: #0b8062;
 }
-@media (min-width:1000px){
-    .navigation .navbar-collapse .menu {
-        display: none;
-    }
+@media (min-width: 1000px) {
+  .navigation .navbar-collapse .menu {
+    display: none;
+  }
 }
 
 .toggle {
@@ -331,9 +353,12 @@ strong {
 }
 
 header {
-  background-color: rgba(0, 0, 0, 0.3);
   margin: 0px;
   height: var(--header-height);
+}
+
+.tln:not(.sticky-top) header {
+  background: linear-gradient(90deg, #0e5843 12.41%, rgba(15, 103, 78, 0.6) 92.73%);
 }
 
 header .navigation-wrapper {
@@ -424,7 +449,7 @@ header .search-box {
 } */
 
 .navigation {
-  background-color: rgba(0, 0, 0, 0.3);
+  /* background-color: rgba(0, 0, 0, 0.3); */
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
@@ -518,7 +543,7 @@ a.nav-button:hover {
 }
 
 .navigation .links .link > a {
-  font-family: var(--font-family-regular), sans-serif;
+  font-family: var(--font-family-regular);
   padding: 18px 10px 17px;
   border-bottom: 4px solid transparent;
   transition: all 0.3s;
@@ -529,11 +554,11 @@ a.nav-button:hover {
 }
 
 .navigation .links .link a:hover {
-  color: var(--color-emphasis);
+  /* color: var(--color-emphasis); */
 }
 
 .navigation .links .link.active a {
-  color: var(--color-emphasis);
+  /* color: var(--color-emphasis); */
 }
 
 .navigation .links .link.active > a {
@@ -621,7 +646,7 @@ a.nav-button:hover {
   align-items: center;
   color: #fff;
   font-size: 24px;
-  font-family: "Open Sans", var(--font-family-regular), sans-serif;
+  font-family: "Open Sans", var(--font-family-regular);
 }
 
 .navigation a.logo {
@@ -649,14 +674,14 @@ a.nav-button:hover {
 }
 
 body.has-sticky-navigation .navigation .logo .title {
-  text-transform: uppercase;
+  /* text-transform: uppercase; */
   display: block;
 }
 
 @media (min-width: 425px) {
   .navigation .logo .title {
     font-size: 1.67rem;
-  }  
+  }
 }
 @media (min-width: 550px) {
   .navigation .logo img {
@@ -673,6 +698,7 @@ body.has-sticky-navigation .navigation .logo .title {
 @media (min-width: 750px) {
   .navigation .logo .title {
     display: block;
+    font-size: 3rem;
   }
 }
 
@@ -726,7 +752,7 @@ body .navbar-list {
   display: inline-block;
   border-bottom: 4px solid transparent;
   transition: all 0.5s;
-  font-family: var(--font-family-regular), sans-serif;
+  font-family: var(--font-family-regular);
   white-space: nowrap;
   margin-bottom: -1px;
 }
@@ -755,7 +781,7 @@ body .navbar-list img {
 }
 
 .footer {
-  background-image: url(../images/footer-green.svg);
+  background-image: url(../images/footer-green-2.svg);
   background-position: center;
   background-size: cover;
   padding: 40px 0;
@@ -770,7 +796,7 @@ body .navbar-list img {
 .footer a {
   text-decoration: none;
   color: #fff;
-  font-family: var(--font-family-regular), sans-serif;
+  font-family: var(--font-family-regular);
 }
 .footer .nav {
   display: flex;
@@ -819,7 +845,7 @@ body .navbar-list img {
 .footer .copyright {
   font-size: 14px;
   line-height: 16px;
-  color: #E1E1E1;
+  color: #e1e1e1;
   text-align: center;
 }
 @media (min-width: 750px) {
@@ -845,25 +871,25 @@ body .navbar-list img {
 }
 
 a.btn {
-  display: inline-block!important;
+  display: inline-block !important;
 }
 .btn {
   /* border-radius: 0!important; */
   display: inline-block;
   position: relative;
-  padding: 10px 16px!important;
-  border-radius: 28px!important;
+  padding: 10px 16px !important;
+  border-radius: 28px !important;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
   font-family: var(--font-family-regular), sans-serif !important;
-  font-size: 13px!important;
-  line-height: 1.1!important;
-  vertical-align: middle!important;
-  text-decoration: none!important;
-  transition: all 0.5s!important;
+  font-size: 13px !important;
+  line-height: 1.1 !important;
+  vertical-align: middle !important;
+  text-decoration: none !important;
+  transition: all 0.5s !important;
   overflow: hidden;
 }
 .btn.primary {
-  color: #fff!important;
+  color: #fff !important;
   border: 1px solid var(--color-emphasis) !important;
   background-color: var(--color-emphasis) !important;
   /* border: 1px solid #007db8!important;
@@ -874,13 +900,13 @@ a.btn {
   background: var(--color-emphasis) !important;
   /* background-color: #1e6a92!important;
   border-color: #1e6a92!important; */
-  color: #fff!important;
+  color: #fff !important;
 }
 
 .navigation .btn {
-  display: none!important;
+  display: none !important;
 }
 
 body.has-sticky-navigation .navigation .btn {
-  display: inline-block!important;
+  display: inline-block !important;
 }

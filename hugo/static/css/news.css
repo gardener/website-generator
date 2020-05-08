@@ -4,6 +4,8 @@
   .news ul.news-feed {
     list-style: none;
     margin: 3rem auto 2rem;
+    padding: 8px 4px;
+    background-color: #fefefe1a;
   }
   
   .news .slick-slider button {
@@ -59,7 +61,7 @@
   
   .news .news-box a {
     height: 100%;
-    color: #e1e1e1;
+    color: #eee;
     font-family: BentonSansLight;
     text-decoration: none;
     display: flex;
