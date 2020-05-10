@@ -160,11 +160,11 @@ To troubleshoot failed website production [pipeline](https://concourse.ci.garden
 1. Download fly (look for `cli:` at the bottom right of the screen at https://concourse.ci.gardener.cloud/) 
 1. Login to a target with fly: 
    ```sh
-   $ fly -t internal-gardener login -c https://concourse.ci.gardener.cloud/ -n gardener
+   $ fly -t gardener login -c https://concourse.ci.gardener.cloud/ -n gardener
    ```   
    Fly will request that you login at a URL and automatically intercept a successfull login.
 1. Intercept the failed container with 
    ```sh
-   $ fly -t internal-gardener hijack -u <url-of-your-build>
+   $ fly -t gardener hijack -u <url-of-your-build>
    ```
    Example <url-of-your-build> is https://concourse.ci.gardener.cloud/teams/gardener/pipelines/gardener-website-generator-master/jobs/master-head-update-job/builds/102 , where 102 is the number of the build job that you wnat to inspect.
