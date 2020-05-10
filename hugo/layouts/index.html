@@ -1,16 +1,15 @@
 <!DOCTYPE html>
-
-<html lang="en">
+<html lang="{{ .Page.Language | default "en" }}" class="js csstransforms3d"></html>
 
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     {{ partial "meta.html" . }}
-    <title>Gardener</title>
+    <title>{{ with .Title }}{{ . }}{{ else }}{{ with .Site.title }}{{ . }}{{ end }}{{ end }}</title>
     <link rel="icon" type="image/x-icon" href='{{"images/favicon.ico" | absURL }}'>
     <link rel="icon" type="image/png"    href='{{"images/favicon-32x32.png" | absURL }}' sizes="32x32">
     <link rel="icon" type="image/png"    href='{{"images/favicon-16x16.png" | absURL }}' sizes="16x16">
     
+    {{ partial "google-tags-manager.html" . }}
+
     {{- $assetBusting := not .Site.Params.disableAssetsBusting -}}
     <!-- Library CSS
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -47,7 +46,7 @@
   </head>
 
   <body data-url="{{ .RelPermalink }}">
-      
+
     {{ partial "tln.html" . }}
 
     <div class="landingpage">
@@ -221,10 +220,6 @@
                 <img src="{{"images/lp/platforms/packet-rgb.png" | relURL }}" class="platform-icon">
                 <div class="platform-text">Packet Cloud</div>
               </li>
-              <!--li>
-                <img src="{{"images/lp/platforms/sap.png" | relURL }}" class="platform-icon">
-                <div class="platform-text">SAP CC/GMP</div>
-              </li-->
               <li>
                 <img src="{{"images/lp/platforms/vmware.svg" | relURL }}" class="platform-icon">
                 <div class="platform-text">VMware vSphere</div>
@@ -318,6 +313,8 @@
     
     <script src="{{"js/counter.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
     <script src="{{"js/main-lp.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+
+    {{ partial "google-tags-manager-frame.html" . }}
     {{ partial "tail-scripts.html" . }}
 
   </body>

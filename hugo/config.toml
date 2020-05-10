@@ -1,13 +1,15 @@
 baseURL = "https://gardener.cloud/"
-languageCode = "en-US"
-defaultContentLanguage = "en"
-
 title = "Gardener"
 theme = "learn"
 metaDataFormat = "yaml"
+languageCode = "en-US"
+defaultContentLanguage = "en"
 defaultContentLanguageInSubdir= true
 contentDir="content"
 enableGitInfo = true
+# Google Analytics Track ID
+googleAnalytics = "UA-165447164-1"
+disableHugoGeneratorInject = true
 
 [markup] 
   [markup.goldmark]
@@ -17,9 +19,12 @@ enableGitInfo = true
 [params]
   editURL = "https://github.com/gardener/documentation/edit/master/website/"
   issueURL = "https://github.com/gardener/documentation/issues"
-  description = "Project Gardener Website"
+  copyright = "Copyright 2019 Gardener project authors."
+  description = "Project Gardener Website - A Managed Kubernetes Service Done Right"
   showVisitedLinks = true
   themeVariant = "gardener"
+  # Google Tag Manager container
+  googleTagsManager = "GTM-W2FGNSX"
 
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
