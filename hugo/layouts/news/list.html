@@ -1,0 +1,28 @@
+{{ define "page-content"}}
+  {{ $style := resources.Get "sass/news.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  <div class="page news-feed">
+    <h2 class="page-title">News Feed</h2>
+    <!-- <span class="page-sub-title">Explore the news feed</span> -->
+    <ul class="news-feed twelve columns">
+      <!-- Ranges through content/news/*.md -->
+      {{/* range $index, $page :=  ((sort (where $.Site.Pages ".Type" "news") ".Params.publishdate")) */}}
+      {{ with .Site.GetPage "news" }}
+      {{ range $index, $page :=  sort .Pages ".Params.publishdate" }}
+        {{if $page.Params.aggregate }}
+        {{else}}
+          <li class="news-item">
+            <a href="{{.URL}}" class="nav-link">
+              {{with .Params.publishdate}} 
+              <span class="publish-date">{{ .Format "Monday, Jan 2, 2006" }}</span>
+              {{end}}          
+              <h3>{{ .Title }} &rarr;</h3>
+              <span class="eventdate">{{ .Params.eventdate }}</span>
+            </a>
+          </li>
+          {{end}}
+      {{end}}
+      {{end}}
+    </ul>
+  </div>
+{{ end }}

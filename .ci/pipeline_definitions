@@ -18,8 +18,11 @@ gardener-website-generator:
     head-update:
       steps:
         build:
-          image: 'freegroup/gardener-website-generator:v6'
+          image: 'eu.gcr.io/gardener-project/gardener-website-generator:v9'
           publish_to: ['gardener_website', "gardener_documentation"]
+        define_env_vars:
+          vars:
+            AUTO_PUBLISH: '"true"' 
       traits:
         cronjob:
           interval: '24h'

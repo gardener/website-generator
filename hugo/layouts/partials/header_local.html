@@ -1,18 +1,14 @@
 <!DOCTYPE html>
 <html lang="{{ .Page.Language | default "en" }}" class="js csstransforms3d">
   <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-
-    {{ partial "head-google-tag-manager.html" . }}
-
     {{ partial "meta.html" . }}
-    {{ partial "favicon.html" . }}
-    <title>{{ .Title }} :: {{ .Site.Title }}</title>
-
+  
+    <title>{{ with .Title }}{{ . }} :: {{ end }}{{ with .Site.Title }}{{ . }}{{ end }}</title>
     <link rel="icon" type="image/x-icon" href='{{"images/favicon.ico" | absURL }}'>
     <link rel="icon" type="image/png"    href='{{"images/favicon-32x32.png" | absURL }}' sizes="32x32">
     <link rel="icon" type="image/png"    href='{{"images/favicon-16x16.png" | absURL }}' sizes="16x16">
+    
+    {{ partial "google-tags-manager.html" . }}
 
     {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
     <link href="{{"css/nucleus.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
@@ -24,7 +20,7 @@
 
     <link href="{{"css/skeleton.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
     <link href="{{"css/sheetslider.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
-
+    
       <script src="{{"js/moment.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
       <script src="{{"js/vivus.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
       <script src="{{"js/scrollreveal.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
@@ -37,12 +33,12 @@
     {{end}}
 
     <script src="{{"js/jquery-2.x.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/fixed.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
     
     <style type="text/css">
       :root #header + #content > #left > #rlblock_left{ 
           display:none !important;
       }
-
     </style>
 
     {{ partial "custom-header.html" . }}

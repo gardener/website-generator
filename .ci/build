@@ -1,52 +1,95 @@
-#!/bin/ash
+#!/bin/bash
 
-if [[ -z "${GARDENER_WEBSITE_PATH}" ]]; then
-  echo "GARDENER_WEBSITE_PATH not set"
-  exit 1
+if [[ $(uname) == 'Darwin' ]]; then
+  READLINK_BIN="greadlink"
+else
+  READLINK_BIN="readlink"
+fi
+
+if [[ -z "${HUGO}" ]]; then
+  HUGO=hugo;
 fi
 
 if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH}" ]]; then
-  echo "GARDENER_WEBSITE_GENERATOR_PATH not set"
+  generatorRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/..)"
+else
+  generatorRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_GENERATOR_PATH}")";
+fi
+if [[ ! -d "${generatorRepoPath}" ]]; then
+  echo "website-generator directory path is invalid [`${generatorRepoPath}`]. Set $GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo." 
   exit 1
 fi
-
+if [[ -z "${GARDENER_WEBSITE_PATH}" ]]; then
+  # Fallback to "website" repo cloned as peer directory to "website-generator"
+  websiteRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/../../website)"
+else
+  websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")";
+fi
 if [[ -z "${GARDENER_DOCUMENTATION_PATH}" ]]; then
-  echo "GARDENER_DOCUMENTATION_PATH not set"
+  # Fallback to "documentation" repo cloned as peer directory to "website-generator"
+  contentRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/../../documentation)"
+else
+  contentRepoPath="$(${READLINK_BIN} -f "${GARDENER_DOCUMENTATION_PATH}")";
+fi
+if [[ ! -d "${contentRepoPath}" ]]; then
+  echo "Source content directory path not specified. Set $GARDENER_DOCUMENTATION_PATH or run from website-generator cloned repo." 
   exit 1
 fi
 
-cwd=`pwd`
+content=${contentRepoPath}/website
+generator=${generatorRepoPath}
+website=${websiteRepoPath}/docs
+echo "Content directory: ${content}" ;
+echo "Generated site directory: ${website}" ;
 
-# Merge the "Gardener Documentation" folder into the "hugo" directory
+cd ${generator}
+
+# create symlink hugo/content -> /documentation/website, if it doesn't exists
 #
-cp -r ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/documentation ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
-
-
-cd ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}
-
-npm install
-node ./node/index.js
+if [[ ! -d "hugo/content" ]]; then
+echo 'linking hugo/content <==> /documentation/website'
 cd hugo
-ls -la
+# WSL users: If the script fails with "You do not have sufficient privilege to perform this operation.", enable the Windows Developer Mode.
+if [[ -z "${WSL_DISTRO_NAME}" ]]; then
+  ../scripts/mklink.sh content $(wslpath -w $content)
+else
+  ln -s $content content
+fi
+# symlinkoutput="$(ls -lt content)"
+# echo "${symlinkoutput}"
+cd ..
+fi
 
-/hugo/hugo version
-/hugo/hugo --destination ${cwd}/${GARDENER_WEBSITE_PATH}/docs
-
-# be nice and cleanup. This is useful in the "local" development mode
+# Run pregeneration: pull remote content
 #
-cd ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
-find . -name '*.json' -exec echo {} \;
-find . -name '*.json' -exec cp  --parents {} ${cwd}/${GARDENER_DOCUMENTATION_PATH}/website/documentation \;
-rm -r  ${cwd}/${GARDENER_WEBSITE_GENERATOR_PATH}/hugo/content
+echo  ;
+echo "Running pre-site-building tasks" ;
+npm install
+export CONTENT=$generator/hugo/content
+node ./node/index.js
 
+cd hugo
 
+# Generate site from ${content} into ${website}
+#
+echo ;
+hugo --minify --destination ${website}
+
+if [[ -z ${AUTO_PUBLISH+x} ]]; then 
+if [[ $AUTO_PUBLISH == 'true' ]]; then  
+echo "Publishing build results" ;
+cd ${contentRepoPath}
+echo
 echo "Adding changed JSON git history to repo for faster site generation the next time"
-cd ${cwd}/${GARDENER_DOCUMENTATION_PATH}
 git add . -A
 git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse [skip ci]'
+# git log --name-status HEAD^..HEAD | cat
 
-
-
-cd ${cwd}/${GARDENER_WEBSITE_PATH}
+cd ${websiteRepoPath}
+echo
+echo "Committing website changes"
 git add . -A
 git commit -m 'Automatic build triggered by last commit [skip ci]'
+# git log --name-status HEAD^..HEAD | cat
+fi
+fi

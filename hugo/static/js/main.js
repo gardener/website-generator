@@ -6,83 +6,54 @@ $(document).ready(function(){
 	$window.sr.reveal('.reveal-slow', { duration: 2500 });
 	$window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'30px' });
 	$window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'30px' });
+
+
+	/* Compenste header height (adaptive to screenwidths) while scrolling anchor (#) links.
+	   Applies to elements selected with ".docs"
+	*/
+	// The function actually applying the offset
+	function offsetAnchor() {
+		if (location.hash.length !== 0) {
+		var offset = 63;
+		if($(window).width() > 1000){
+			offset = 143;
+		}
+		window.scrollTo(window.scrollX, window.scrollY - offset);
+		}
+	}
+	
+	// Captures click events of all <a> elements with href starting with #
+	$(".docs").on('click', 'a[href^="#"]', function(event) {
+		// Click events are captured before hashchanges. Timeout
+		// causes offsetAnchor to be called after the page jump.
+		window.setTimeout(function() {
+		offsetAnchor();
+		}, 0);
+	});
+	
+	// Set the offset when entering page with hash present in the url
+	window.setTimeout(offsetAnchor, 0);
 })
 
-
-
 $(window).load(function() {
-	try {
-		var $el, leftPos, newWidth;
-		var $magicLine = $(".menu .menu-line");
-
-		var calcMenuLine = function () {
-			$magicLine
-				.width($(".current_page_item").width())
-				.css("left", $(".current_page_item").position().left)
-				.data("origLeft", $magicLine.position().left)
-				.data("origWidth", $magicLine.width());
-		}
-		calcMenuLine();
-		$(window).resize(calcMenuLine);
-	}
-	catch (exc){
-		console.log(exc)
-	}
-
-
-	$(".documentation-button").hover(function() {
-		$el = $(this);
-		leftPos = $el.position().left;
-		newWidth = $el.parent().width();
-		$magicLine.stop().animate({
-			left: leftPos,
-			width: newWidth
-		});
-	}, function() {
-		$magicLine.stop().animate({
-			left: $magicLine.data("origLeft"),
-			width: $magicLine.data("origWidth")
-		});
-	});
-
-
-    // response menu at the top right menu bar starting
-    // on page-2
-    $('.toggle-nav').click(function(e) {
-        $(this).toggleClass('active');
-        $('.menu .menu-items').toggleClass('active');
-        e.preventDefault();
-    });
-
-
-	$('#show-share-menu').click(function(e) {
-        $('.menu > div').addClass('show-share');
-        $('.branding-teaser').addClass('show-share');
+		
+	// response menu at the top right menu bar starting 
+	// on page-2
+	$('.toggle-nav').click(function(e) {
+		$(this).toggleClass('active');
+		$('.menu ul').toggleClass('active');
 		e.preventDefault();
 	});
 
-    $('#hide-share-menu').click(function(e) {
-        $('.menu > div').removeClass('show-share');
-        $('.branding-teaser').removeClass('show-share');
-        e.preventDefault();
-    });
+	$(document).scroll(function(e) {
+		$('.menu .toggle-nav').addClass('active');
+	   	$('.menu ul').addClass('active');
+   });
+   $(".page").click(function(e) {
+		$('.menu .toggle-nav').addClass('active');
+		$('.menu ul').addClass('active');
+	});
 
-    $(document).scroll(function(e) {
-		$('.menu .toggle-nav').addClass('active');
-	   	$('.menu .menu-items').addClass('active');
-        $('.menu > div').removeClass('show-share');
-        $('.branding-teaser').removeClass('show-share');
-    });
-    $("#landingpage > div").click(function(e) {
-		$('.menu .toggle-nav').addClass('active');
-		$('.menu .menu-items').addClass('active');
-        $('.menu > div').removeClass('show-share');
-        $('.branding-teaser').removeClass('show-share');
-    });
-    $( window ).resize(function() {
-        $('.menu > div').removeClass('show-share');
-        $('.branding-teaser').removeClass('show-share');
-    });
 
 	// reverse the z-index of all "page" elements to ensure that
 	// the stacked page effect works well
@@ -161,7 +132,7 @@ $(window).load(function() {
 			// trigger scroll
 			controller.scrollTo(id);
 
-				// if supported by the browser we can even update the URL.
+			// if supported by the browser we can even update the URL.
 			if (window.history && window.history.pushState) {
 				history.pushState("", document.title, id);
 			}

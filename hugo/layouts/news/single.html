@@ -1,0 +1,33 @@
+{{ define "page-toolbar" }}
+  {{ partial "page-topbar.html" . }}
+{{ end }}
+{{ define "page-content" }}
+  <style>
+    .page {
+        padding: 5rem 0;
+    }
+    a.nav-link {
+        font-family: BentonSans, sans-serif;
+        line-height: 1!important;
+        font-size: 1.6rem;
+        margin: 1rem 0;
+        padding: 1rem;
+        color: var(--gd-color-brand-1);
+        border: 1px solid #d5755d;
+    }
+    a.nav-link:hover {
+        text-decoration: none;
+        color: #fff;
+        background-color: var(--gd-color-brand-1);
+        border-color: #d5755d;
+    }
+    a.nav-link::after {
+        display: none!important;
+    }
+  </style>
+  <div class="page">
+    <a href="{{ "news" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to news</a>
+    {{ .Content }}
+    <a href="{{ "news" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to news</a>
+  </div>
+{{ end }}

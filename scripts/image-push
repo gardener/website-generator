@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+HOST=eu.gcr.io
+PROJECT=gardener-project
+IMAGE=gardener-website-generator
+for i in "$@"
+do
+case $i in
+  --t=*|--tag=*) 
+    TAG="${i#*=}"
+    shift
+    ;;
+  *) echo "Unknown parameter passed: $i"; exit 1;;
+esac
+done
+if [[ -z "${TAG}" ]]; then
+  echo "No image tag specified. Either use the --tag=your-tag option (-t=your-tag), or $TAG environment variable to specify it. The -t | --tag option has priority."
+  exit 1;
+fi
+
+echo "Pushing image to GCR. Tagged as :latest and :${TAG}"
+docker push $HOST/$PROJECT/$IMAGE:$TAG
+docker push $HOST/$PROJECT/$IMAGE:latest

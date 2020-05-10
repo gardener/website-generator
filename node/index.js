@@ -1,5 +1,23 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
+/**
+ * Environment variables used in this script:
+ * CONTENT:         Path to the website source content. Defaults to "../hugo/content", 
+ *                  relative to the current directory (`node`).
+ * GIT_OAUTH_TOKEN: The GitHub Personal Access Token for OAuth authenticated requests to 
+ *                  github.com. GIT_OAUTH_TOKEN takes priority if GIT_USER/PASSWORD are 
+ *                  also specified.
+ * GIT_USER:        The GitHub user for Basic authenticated requests to github.com. Useful 
+ *                  to avoid hitting GitHub API's rate limit. Always used with GIT_PASSWORD.
+ *                  Deprecation notice: GitHub deprecated Basic authentication.
+ * GIT_PASSWORD:    The GitHub user password for Basic authenticated requests to github.com.
+ *                  Always used with GIT_USER. 
+ *                  Deprecation notice: GitHub deprecated Basic authentication.
+ */
+
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+if (!process.env.CONTENT) { 
+    process.env.CONTENT = __dirname+'/../hugo/content';
+}
 const glob = require( 'glob' )
 const fs = require('fs')
 const fm = require('front-matter')
@@ -13,19 +31,13 @@ const rewriteAndCheckUrls = require("./util/rewriteAbsoluteToUrls")
 //
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
-// check if we run in a "cleanup" mode
-//
-const clean = process.argv.length===3 && process.argv[2]==="clean"
 const repoCommits = "https://api.github.com/repos/gardener/documentation/commits"
-
-
 
 
 // Parse all files and inline remote MarkDown content.
 //
-glob( __dirname+'/../hugo/content/**/*.md', function( err, files ) {
-
-    // We must shuffel the files to process them in a random order...WHY THIS HACK?
+glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
+    // We must shuffle the files to process them in a random order...WHY THIS HACK?
     //
     // Github.com has some rate limits/hour. But we want to fetch the github commit statistic
     // for each file. At a dedicated point the github fetch is banned and we didn't get
@@ -34,26 +46,49 @@ glob( __dirname+'/../hugo/content/**/*.md', function( err, files ) {
     // each build - WHAT A HACK!!!!!!!
     shuffle(files)
 
-    files.forEach(function(file){
-        let content = fm(fs.readFileSync(file, 'utf8'))
-        if(content.attributes.remote) {
+    console.log("Fetching remote content and commits history. This will take a minute..")    
+
+    let requestOptions = {
+        timeout: 10000,
+        headers: {
+            'User-Agent': "NodeJS",
+            "Accept": "application/json"
+        }
+    }
+    // Use authenticated requests to GitHub API if user token or credentials are provided
+    if ('GIT_OAUTH_TOKEN' in process.env) {
+        requestOptions.headers['Authorization'] = "token " + process.env.GIT_OAUTH_TOKEN;
+    } else if ('GIT_USER' in process.env && 'GIT_PASSWORD' in process.env){
+        requestOptions.headers['Authorization'] = "Basic " + new Buffer.from(process.env.GIT_USER + ':' + process.env.GIT_PASSWORD).toString('base64');
+    } else {
+        console.info("GitHub API request are setup for annonymous access. Significant rate limit restriction will apply.");
+    }
+
+    files.forEach(function(file, idx, filesArr){
+        let content;
+        try {
+            content = fm(fs.readFileSync(file, 'utf8'))
+        } catch (err) {
+            console.error("Failed to read front-matter from", file, err);
+            console.log("proceeding with next file")
+            return
+        }
+        if (content.attributes.remote) {
             // transform a normal URL of a file to the RAW version.
             //
             let url = content.attributes.remote
-            markdownUrl = url
 
             // we reference a complete repository. In this case we fetch the README.md and inline them
             //
             if(url.endsWith(".git")){
                 url = url.replace(".git","/blob/master/README.md")
-                markdownUrl = url
             }
 
-            // The url points to a github wiki.
+            // The url points to an external github wiki.
             // works just for external GITHUB
             //
-            if(url.indexOf("/wiki")!==-1) {
-                // Check if we gt a link to a GitHub wiki page. In this case we must transform them
+            if(url.indexOf("/wiki/")!==-1) {
+                // Check if we got a link to a GitHub wiki page. In this case we must transform them
                 // to the RAW version as well
                 // e.g. IN: https://github.com/gardener/documentation/wiki/Architecture
                 //     OUT: https://raw.githubusercontent.com/wiki/gardener/documentation/Architecture.md
@@ -65,6 +100,7 @@ glob( __dirname+'/../hugo/content/**/*.md', function( err, files ) {
             }
             else {
                 // Required to fetch the plain MarkDown instead of the rendered version
+                // Replace the "normal" github URL with the "RAW" API Link
                 //
                 url = url
                         .replace("https://github.com/" ,"https://raw.githubusercontent.com/")
@@ -72,17 +108,17 @@ glob( __dirname+'/../hugo/content/**/*.md', function( err, files ) {
                         .replace("/tree/master/", "/master/")
             }
 
-            // Get the content of the references MD file and append it to the
-            // Hugo CMS page...but only if we didn't run in the "clean" mode
+            // Get the content of the referenced MD file and append it to the
+            // Hugo CMS page
             //
             let md = "";
-            if(!clean){
-                try {
-                    md = fm(request("GET", url).getBody().toString()).body
-                    md = rewriteAndCheckUrls(markdownUrl, md)
-                }catch(err){
-                    console.log("unable to get ",url)
-                }
+            try {
+                md = fm(request("GET", url).getBody().toString()).body
+                md = rewriteAndCheckUrls(url, md, file)
+            } catch(err) {
+                console.error("Unable to get remote content for",url, err)
+                console.log("proceeding with next file")
+                return
             }
 
             let newDoc = [
@@ -92,65 +128,81 @@ glob( __dirname+'/../hugo/content/**/*.md', function( err, files ) {
                 md].join("\n")
             fs.writeFileSync(file, newDoc, 'utf8');
         }
+
         // ====================================================
         // try to fetch the github changes for the file
         // ====================================================
         // e.g. https://api.github.com/repos/gardener/gardener/commits?path=README.md
         //
-        if(!clean){
-            let commitsUrl = ""
-            let relUrl =""
-            if(content.attributes.remote){
-                let changesUrl = content.attributes.remote;
-                if (changesUrl.endsWith(".git")) {
-                    changesUrl = changesUrl.replace(".git", "/README.md")
-                }
-
-                let segments = changesUrl.replace("https://github.com/", "").split("/")
-                let user = segments[0]
-                let project = segments[1]
-
-                relUrl = changesUrl
-                    .replace("/blob/master", "")
-                    .replace("https://github.com/" + user + "/" + project, "")
-                commitsUrl = ["https://api.github.com/repos", user, project, "commits"].join("/")
-
-            }
-            else{
-                let rootDir = path.normalize(__dirname+"/..")
-                relUrl =  file.replace(rootDir,"")
-                relUrl =  relUrl.replace("/hugo/content/","/website/documentation/")
-                commitsUrl = repoCommits
+        let commitsUrl = repoCommits
+        let relUrl = ""
+        if (content.attributes.remote) {
+            let changesUrl = content.attributes.remote;
+            if (changesUrl.endsWith(".git")) {
+                changesUrl = changesUrl.replace(".git", "/README.md")
             }
 
-            commitsUrl = commitsUrl + "?path=" + relUrl;
-            try {
-                console.log(commitsUrl)
-                let commits = request("GET", commitsUrl, {
-                    headers: {
-                        'user-agent': 'example-user-agent',
+            let segments = changesUrl.replace("https://github.com/", "").split("/")
+            let user = segments[0]
+            let project = segments[1]
+
+            relUrl = changesUrl
+                .replace("/blob/master", "")
+                .replace("https://github.com/" + user + "/" + project, "")
+            commitsUrl = ["https://api.github.com/repos", user, project, "commits"].join("/")
+
+        } else {
+            relUrl =  file.replace(process.env.CONTENT,"/website")
+        }
+
+        commitsUrl = commitsUrl + "?path=" + relUrl;
+        console.debug("Fetching commits", commitsUrl);
+        try {
+            let commits = request("GET", commitsUrl, requestOptions).getBody().toString()
+            if (commits.length > 0) {
+                try {
+                    commits = JSON.stringify(JSON.parse(commits), undefined, 2);
+                    if (commits.length > 0) {
+                        fs.writeFileSync(file + ".json", commits, 'utf8');
+                    } else {
+                        console.error("Skip commits json update: unexpected json `[]`", commitsUrl);
+                        console.log("proceeding with next file")
+                        return
                     }
-                }).getBody().toString()
-                commits = JSON.stringify(JSON.parse(commits),undefined,2)
-                fs.writeFileSync(file + ".json", commits, 'utf8');
+                } catch (err){                          
+                    console.error("Invalid JSON content from", commitsUrl, err);
+                    console.log("proceeding with next file")
+                    return
+                }
+            } else {
+                console.error("Skip commits json update: unexpected json `[]`", commitsUrl);
+                console.log("proceeding with next file")
+                return
             }
-            catch (err){
-                //console.log(err)
-            }
+        } catch (err) {
+            console.error("Failed to update commits json from", commitsUrl, err);
+            console.log("proceeding with next file")
+            return
         }
     })
-
 
     // Parse all MarkdownFiles and check if any link reference to an remote site which we have imported.
     // In this case we REWRITE the link from REMOTE to LOCAL
     //
-    glob(__dirname+ '/../hugo/content/**/*.md', function( err, files ) {
-        var docPath = path.normalize(__dirname+ "/../hugo/content/")
+    glob(process.env.CONTENT + '/**/*.md', function( err, files ) {
+        var docPath = path.normalize(process.env.CONTENT)
         var importedMarkdownFiles = []
         // collect all remote links in the "front matter" annotations
         //
         files.forEach(function (file) {
-            let content = fm(fs.readFileSync(file, 'utf8'))
+            let content;
+            try{
+                content = fm(fs.readFileSync(file, 'utf8'));
+            } catch (err) {
+                console.error("Failed to read front-matter from", file, err);
+                console.log("proceeding with next file")
+                return
+            }
             if (content.attributes.remote) {
                 importedMarkdownFiles.push({file:file.replace(docPath,"/"),remote:content.attributes.remote})
             }
@@ -160,7 +212,14 @@ glob( __dirname+'/../hugo/content/**/*.md', function( err, files ) {
         // internal document
         //
         files.forEach(function (file) {
-            let content = fm(fs.readFileSync(file, 'utf8'))
+            let content;
+            try {
+                content = fm(fs.readFileSync(file, 'utf8'));
+            } catch (err) {
+                console.error("Failed to read front-matter from", file, err);
+                console.log("proceeding with next file")
+                return
+            }
             if (content.attributes.remote) {
                 let md = content.body;
                 importedMarkdownFiles.forEach(function(entry){

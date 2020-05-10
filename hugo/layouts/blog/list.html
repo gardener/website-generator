@@ -1,60 +1,67 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Kubernetes Gardener</title>
-
-    {{ partial "head-google-tag-manager.html" . }}
-
-    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
-    <link rel="icon" type="image/png"    href="/images/favicon-32x32.png" sizes="32x32">
-    <link rel="icon" type="image/png"    href="/images/favicon-16x16.png" sizes="16x16">
-
-    <link rel="stylesheet" href="/css/fontawesome-all.min.css" >
-    <link rel="stylesheet" href="/css/skeleton.css">
-    <link rel="stylesheet" href="/css/main.css">
-
-    {{ $css := resources.Get "sass/blog.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
-    <link rel="stylesheet" href="{{ $css.Permalink }}">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/moment.js"></script>
-</head>
-<body id="landingpage"  style="background-color: #dfe9f8;">
-{{ partial "body-google-tag-manager.html" . }}
-{{ partial "toolbar.html" . }}
-<div class="blogs">
-        <!-- Ranges through content/post/*.md -->
-        {{ range $index, $page :=  ((sort (where $.Site.Pages "Section" "blog") ".Dir" "desc")) }}
-        <article class="post row" data-path="">
-            <div class="wrapper">
-                <div class="one column">
-                    <img src="{{ trim (partial "git_avatar.html" .File.Path) " \n" }}"
-                         class="user-icon icons"
-                         alt="user-image">
-                </div>
-                <div class="nine columns">
-                    <h2>{{ .Title }}</h2>
-                    <h3><div class="last-update">Updated <span>{{ partial "git_date.html" . }}</span> by {{ partial "git_author.html" . }}</div></h3>
-                    <p>
-                        {{.Content}}
-                    </p>
-                </div>
+{{ define "page-content"}}
+  {{ $style := resources.Get "sass/blog.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  <script src="/js/moment.js"></script>
+  <style>
+    .fixedsticky {
+      position: sticky!important;
+      top: 0;
+      z-index: 1;
+      background: #03ce9a;
+    }
+    .blogs .author {
+      display: block;
+      font-size: 1.3rem;
+      text-align: center;
+      line-height: 1;
+      margin: 10px 0 5px;
+    }
+    .blogs .publishdate {
+      display: block;
+      font-size: 1.3rem;
+      text-align: center;
+      line-height: 1;
+    }
+  </style>
+  <div class="page blogs">
+    <!-- Ranges through content/blog/*.md -->
+    {{ with .Site.GetPage "blog" }}
+    {{ range $index, $page :=  ((sort .Pages ".Dir" "desc")) }}
+    {{if $page.Params.aggregate }}
+    {{else}}
+    <article class="post row" data-path="">
+        <div class="wrapper">
+            <div class="two columns">
+                {{$avatar := (trim ( trim (partial "git_avatar.html" .) " \r\n") " ") }}
+                {{$author := (trim (trim (partial "git_author.html" .) " \r\n") " ") }}
+                {{$publishdate := (trim (partial "git_date.html" .) " ")}}
+                {{if gt (len $avatar) 0}}
+                <img {{ printf "src=%q" $avatar | safeHTMLAttr }}
+                    {{/*printf "title=%q" $author| safeHTMLAttr*/}}
+                    class="user-icon icons"
+                    alt="blog author avatar">
+                {{end}}
+                {{if gt (len $author) 0}}
+                <span class="author">{{$author | safeHTML}}</span>
+                {{end}}
+                {{if gt (len $publishdate) 0}}
+                <span class="publishdate">{{$publishdate | safeHTML}}</span>
+                {{end}}
             </div>
-        </article>
-        {{end}}
-</div>
-
-
-
+            <div class="ten columns">
+                <h2>{{ .Title }}</h2>
+                <p>
+                    {{.Content}}
+                </p>
+            </div>
+        </div>
+    </article>
+    {{end}}
+    {{end}}
+    {{end}}
+  </div>
 <script src="/js/modernizr.custom.min.js"></script>
-<script src="/js/ScrollMagic.min.js"></script>
-<script src="/js/scrollreveal.js"></script>
 <script src="/js/jsrender.min.js"></script>
 <script src="/js/main.js"></script>
 
-</body>
-</html>
+{{ end }}
