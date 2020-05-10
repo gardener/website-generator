@@ -4,8 +4,11 @@
     {{ if (fileExists $url) -}}
       {{ $id := md5 $url}}
       {{range (first 1 (getJSON $url)) }}
+      {{- if (hasPrefix .commit.message "[int]") -}}
+      {{- else -}}
         <span id="{{- $id -}}"></span>
         <script>$("#{{- $id -}}").html(moment("{{- .commit.author.date -}}").fromNow())</script>
+      {{ end }}
       {{ end }}
     {{ end }}
   {{ end }}
