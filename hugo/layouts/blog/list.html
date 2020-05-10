@@ -34,12 +34,13 @@
             <div class="two columns">
                 {{$avatar := (trim ( trim (partial "git_avatar.html" .) " \r\n") " ") }}
                 {{$author := (trim (trim (partial "git_author.html" .) " \r\n") " ") }}
-                {{$publishdate := (trim (partial "git_date.html" .) " ")}}
+                {{$publishdate := (trim (trim (partial "git_date.html" .) " \r\n") " ")}}
                 {{if gt (len $avatar) 0}}
                 <img {{ printf "src=%q" $avatar | safeHTMLAttr }}
-                    {{/*printf "title=%q" $author| safeHTMLAttr*/}}
                     class="user-icon icons"
                     alt="blog author avatar">
+                {{else}}
+                    <div style="width:10px;height:10px;"></div>
                 {{end}}
                 {{if gt (len $author) 0}}
                 <span class="author">{{$author | safeHTML}}</span>

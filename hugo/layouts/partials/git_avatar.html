@@ -3,7 +3,10 @@
     {{ $url := print "content/" . ".json" }}
     {{ if (fileExists $url) -}}
       {{range  (last 1 (getJSON $url)) }}
-      {{.author.avatar_url}}
+      {{- if (hasPrefix .commit.message "[int]") -}}
+      {{- else -}}
+        {{.author.avatar_url}}
+      {{ end }}
       {{ end }}
     {{ end }}
   {{ end }}
