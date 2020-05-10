@@ -96,6 +96,10 @@ body {
   color: var(--color-font);
 }
 
+/* .main {
+  margin-top: var(--header-height);
+} */
+
 .brandingColor,
 a {
   color: var(--color-emphasis);
@@ -316,9 +320,9 @@ strong {
   left: 0;
   right: 0;
 }
-.sticky-top {
+.sticky-top, .fixedsticky {
   position: -webkit-sticky;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
