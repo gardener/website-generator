@@ -238,7 +238,54 @@
 
 .landingpage .section.has-dark-bg {
   background-color: #edf8f5;
+  /* background-color: rgb(237, 248, 245);
+  background-image: url(../images/lp/bgr-wave.svg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position-y: -250px; */
 }
+
+@media (min-width: 450px) {
+  .landingpage .section.has-dark-bg {
+    background-image: url(../images/lp/bgr-wave.svg);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-y: -250px;
+    background-position-y: -180px;
+  }
+}
+@media (min-width: 1000px) {
+  .landingpage .section.has-dark-bg {
+    background-position-y: -200px;
+  }
+}
+
+@media (min-width: 1400px) {
+  .landingpage .section.has-dark-bg {
+    background-position-y: -220px;
+  }
+}
+@media (min-width: 1600px) {
+  .landingpage .section.has-dark-bg {
+    background-position-y: -260px;
+  }
+}
+@media (min-width: 1800px) {
+  .landingpage .section.has-dark-bg {
+    background-position-y: -300px;
+  }
+}
+@media (min-width: 2100px) {
+  .landingpage .section.has-dark-bg {
+    background-position-y: -360px;
+  }
+}
+@media (min-width: 2500px) {
+  .landingpage .section.has-dark-bg {
+    background-position-y: -470px;
+  }
+}
+
 
 /* .landingpage .section.papercut .container:last-child {
   margin-bottom: 50px;
