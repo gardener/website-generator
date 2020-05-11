@@ -1,3 +1,7 @@
+{{ if .Params.publishdate }}
+  <span id="0"></span>
+  <script>$("#0").html(moment("{{- .Params.publishdate -}}").fromNow())</script>
+{{else}}
 {{ with .File }}
   {{ with .Path }}
     {{ $url := print "content/" . ".json"}}
@@ -12,4 +16,5 @@
       {{ end }}
     {{ end }}
   {{ end }}
+{{ end }}
 {{ end }}
