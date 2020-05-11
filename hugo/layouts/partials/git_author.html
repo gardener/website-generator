@@ -1,3 +1,6 @@
+{{ if .Params.author | and .Params.email }}
+  <a href='mailto:{{.Params.email}}'>{{.Params.author}}</a>
+{{else}}
 {{- with .File -}}
   {{- with .Path -}}
     {{- $url := print "content/" . ".json" -}}
@@ -14,4 +17,5 @@
       {{end}}
     {{- end -}}
   {{- end -}}    
+{{- end }}
 {{- end }}
