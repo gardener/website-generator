@@ -1,0 +1,56 @@
+{{ define "page-content"}}
+  {{ $style := resources.Get "sass/blog.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  <script src="/js/moment.js"></script>
+  <div class="page blogs">
+    <style>
+      .fixedsticky {
+        position: sticky!important;
+        top: 0;
+        z-index: 1;
+        background: #03ce9a;
+      }
+      a.nav-link {
+        font-family: BentonSans, sans-serif;
+        line-height: 1!important;
+        font-size: 1.6rem;
+        margin: 1rem 0;
+        padding: 1rem;
+        color: var(--color-emphasis);
+        border: 1px solid #d5755d;
+        display: inline-block;
+      }
+      a.nav-link:hover {
+        text-decoration: none;
+        color: #fff;
+        background-color: var(--color-emphasis);
+        border-color: #d5755d;
+      }
+      a.nav-link::after {
+          display: none!important;
+      }
+      .blogs .author {
+        display: block;
+        font-size: 1.3rem;
+        text-align: center;
+        line-height: 1;
+        margin: 10px 0 5px;
+      }
+      .blogs .publishdate {
+        display: block;
+        font-size: 1.3rem;
+        text-align: center;
+        line-height: 1;
+      }
+    </style>  
+    <div class="page">
+      <a href="{{ "blog" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to Blogs</a>
+      {{ .Content }}
+      <a href="{{ "blog" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to Blogs</a>
+    </div>
+  </div>
+<script src="/js/modernizr.custom.min.js"></script>
+<script src="/js/jsrender.min.js"></script>
+<script src="/js/main.js"></script>
+
+{{ end }}
