@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+
+  <head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Project Gardener Website - A Managed Kubernetes Service Done Right"><meta name="copyright" content="Copyright 2019 Gardener project authors.">
+  
+  <title>News :: Gardener</title>
+  <link rel="icon" type="image/x-icon" href='https://gardener.cloud/images/favicon.ico'>
+  <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-32x32.png' sizes="32x32">
+  <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-16x16.png' sizes="16x16">
+  
+  
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2FGNSX');</script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());    
+    gtag('config', 'UA-165447164-1');
+    </script>
+
+    
+  
+
+  
+  <link href="/css/nucleus.css?1589207795" rel="stylesheet">
+  <link href="/css/font-awesome.min.css?1589207795" rel="stylesheet">
+  <link href="/css/hybrid.css?1589207795" rel="stylesheet">
+  <link href="/css/featherlight.min.css?1589207795" rel="stylesheet">
+  <link href="/css/perfect-scrollbar.min.css?1589207795" rel="stylesheet">
+  <link href="/css/auto-complete.css?1589207795" rel="stylesheet">
+  <link href="/css/skeleton.css?1589207795" rel="stylesheet">
+  <link href="/css/sheetslider.css?1589207795" rel="stylesheet">
+  <script src="/js/fixed.js?1589207795"></script>
+  <script src="/js/moment.js?1589207795"></script>
+  <script src="/js/vivus.js?1589207795"></script>
+  <script src="/js/scrollreveal.js?1589207795"></script>
+  <script src="/js/inlineSVG.js?1589207795"></script>
+  <link href="/css/theme.css?1589207795" rel="stylesheet">
+
+  <link href="/css/hugo-theme.css?1589207795" rel="stylesheet">
+  
+    <link href="/css/theme-gardener.css?1589207795" rel="stylesheet">
+  
+
+  <script src="/js/jquery.min.js?1589207795"></script>
+
+  <style type="text/css">
+    :root #header + #content > #left > #rlblock_left{ 
+        display:none !important;
+    }
+  </style>
+
+  
+
+  <link rel="stylesheet" href="/css/custom.css">
+
+</head>
+
+
+  <body data-url="/news/" class="has-sticky-navigation">
+      
+    <style>
+  .navigation .navbar-collapse .menu .links .link {
+    display: none;
+  }
+  .navigation .navbar-collapse .menu .links .link[data-depth="0"],
+  .navigation .navbar-collapse .menu .links .link[data-depth="1"],
+  .navigation .navbar-collapse .menu .links .link[data-depth="2"] {
+    display: block;
+  }
+  .navigation .navbar-collapse .menu .links .link a {
+    color: #fff;
+  }
+  .navigation .navbar-collapse .menu .links .link.active  {
+    color: inherit;
+  }
+  .navigation .navbar-collapse .menu {
+    display: block;
+  }
+</style>
+<script>
+  $(document).ready(function(){
+    function initStickyNav() {
+      var tln = document.querySelector(".tln");
+      if (!tln) {
+          return;
+      }
+      var bodySelector = document.getElementsByTagName("body")[0];
+      var tlnHeight = tln.clientHeight;
+      var stickyPointEl = document.querySelector(".sticky-nav-point");
+      var stickyPoint = stickyPointEl.clientHeight + stickyPointEl.offsetTop;
+      
+      var stickyNavigation = function() {
+          if (window.pageYOffset + tlnHeight >= stickyPoint) {
+              bodySelector.classList.add("has-sticky-navigation");
+              tln.classList.add("sticky-top");
+          } else {
+              bodySelector.classList.remove("has-sticky-navigation");
+              tln.classList.remove("sticky-top");
+          }
+      }
+  
+      window.onscroll = function() {
+          stickyNavigation();
+      };
+    }
+    initStickyNav();
+  });
+</script>
+<div class="tln fixedsticky"><header class="navigation">
+    <div class="container">
+      <div class="navigation-wrapper">
+        <a href="/" class="logo">
+          <img src="/images/logo.svg" />
+          <span class="title">Gardener</span>
+        </a>
+        <a class="nav-button navbar-toggler" href="#"><span class="icon-menu"></span></a>
+        
+        <div class="navbar-collapse">
+          <ul class="links"><li class="link ">
+              <a class="btn primary" href="/about/">Getting Started</a>
+            </li>
+            <li class="link ">
+              <a href="/blog/">Blogs</a>
+            </li>
+            <li class="link ">
+              <a href="/community/">Community</a>
+            </li>
+            <li class="link ">
+              <a href="/adopter/">Adopters</a>
+            </li>
+            <li class="link has-child ">
+              <a href="/documentation/">Documentation</a>
+              <nav class="container menu">
+                <ul class="topics links">
+                  </ul>
+              </nav>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+<script>
+  
+  $(".navigation .navbar-toggler").click(function(evt){
+    $(".navigation .navbar-collapse").toggle();
+    $(".navigation").toggleClass("collapsed");
+    $(".navigation .search-box").toggle();
+  })
+</script>
+
+
+
+    
+    
+    
+    <div class="main container">
+      
+      <section>
+        <div id="overlay"></div>
+        <div class="highlightable body-inner-wrapper">
+          
+          
+          <div id="body-inner" class="">
+            
+  
+  <link rel="stylesheet" href="https://gardener.cloud/sass/news.min.0999c61a9c5cf6427810d012bf9bee0eaac9918985a6bbde0b1a16db2ee92041.css">
+  <div class="page news-feed">
+    <h2 class="page-title">News Feed</h2>
+    
+    <ul class="news-feed twelve columns">
+      
+      
+      
+      
+        
+          <li class="news-item">
+            <a href="/news/001/release/" class="nav-link">
+               
+              <span class="publish-date">Tuesday, Apr 21, 2020</span>
+                        
+              <h3>Gardener 1.3.0 Released &rarr;</h3>
+              <span class="eventdate">April 16, 2020</span>
+            </a>
+          </li>
+          
+      
+        
+          <li class="news-item">
+            <a href="/news/003/00/" class="nav-link">
+               
+              <span class="publish-date">Sunday, May 10, 2020</span>
+                        
+              <h3>Garden Linux &rarr;</h3>
+              <span class="eventdate">Out Now!</span>
+            </a>
+          </li>
+          
+      
+        
+          <li class="news-item">
+            <a href="/news/002/00/" class="nav-link">
+               
+              <span class="publish-date">Monday, May 11, 2020</span>
+                        
+              <h3>Gardener Website 2.0 &rarr;</h3>
+              <span class="eventdate">Live!</span>
+            </a>
+          </li>
+          
+      
+      
+    </ul>
+  </div>
+            
+          </div>
+        </div>
+        
+      </section>
+      <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+        <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+      </div>
+    </div><style>
+ 
+</style>
+<footer class="footer">
+  <div class="container footer-wrapper">
+    <ul class="nav"><li><a href="/about/">Getting Started</a></li><li><a href="/blog/">Blogs</a></li><li><a href="/news/">News</a></li><li><a href="/documentation/">Documentation</a></li><li><a href="/community/">Community</a></li></ul>
+    <img src="/images/lp/gardener-logo.svg" alt="Logo Gardener" class="logo"/>
+    <ul class="media-wr">
+      <li>
+        <a target="_blank" href="https://kubernetes.slack.com/archives/CB57N0BFG">
+          <img src="/images/branding/slack-logo-white.svg" class="media-icon"/>
+          <div class="media-text">Slack</div>
+        </a>
+      </li>          
+      <li>
+        <a target="_blank" href="https://github.com/gardener">
+          <img src="/images/branding/github-mark-logo.png" class="media-icon" />
+          <div class="media-text">GitHub</div>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://www.youtube.com/channel/UCwUhwKFREV8Su0gwAJQX7tw">
+          <img src="/images/branding/youtube-logo-dark.svg" class="media-icon" />
+          <div class="media-text">YouTube</div>
+        </a>
+      </li>                      
+      <li>
+        <a target="_blank" href="https://twitter.com/GardenerProject">
+          <img src="/images/branding/twitter-logo-white.svg" class="media-icon" />
+          <div class="media-text">Twitter</div>
+        </a>
+      </li>
+    </ul>
+    <span class="copyright">Copiright 2019 Gardener project authors. Privacy Statement</span>
+  </div>
+</footer>
+    
+    <script src="/js/clipboard.min.js?1589207795"></script>
+    <script src="/js/perfect-scrollbar.min.js?1589207795"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1589207795"></script>
+    <script src="/js/jquery.sticky.js?1589207795"></script>
+    <script src="/js/featherlight.min.js?1589207795"></script>
+    <script src="/js/html5shiv-printshiv.min.js?1589207795"></script>
+    <script src="/js/highlight.pack.js?1589207795"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom.71422.js?1589207795"></script>
+
+    <link href="/mermaid/mermaid.css?1589207795" type="text/css" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1589207795"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true, htmlLables: true });
+      function createIssue(issueUrl, page, url) {
+          var uri = issueUrl+"?title=Documentation issue on page \""+page+"\"";
+          uri = uri+ "&body=\n\n<- DESCRIBE MISSING OR FAULTY DOCUMENTATION HERE->\n\n---\nPage: ["+ page +"]("+
+          url+ ")\ndon't remove the link to the page. It's required for the processor"
+          var res = encodeURI(uri);
+          res +="&labels=area/documentation"
+          window.open(res,"issue")
+          return false;
+      }
+
+      $(document).ready(function() {
+          var $window = $(window);
+          $window.sr = ScrollReveal({ reset: false});
+          $window.sr.reveal('.reveal-fast', { duration: 2000 });
+          $window.sr.reveal('.reveal-slow', { duration: 2500 });
+          $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'300px' });
+          $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'300px' });
+
+          inlineSVG.init();
+      });
+    </script>
+
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2FGNSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+
+  </body>
+</html>

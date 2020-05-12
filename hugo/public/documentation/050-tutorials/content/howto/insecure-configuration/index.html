@@ -1,0 +1,1855 @@
+
+	<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Project Gardener Website - A Managed Kubernetes Service Done Right"><meta name="copyright" content="Copyright 2019 Gardener project authors.">
+  
+    <title>Auditing Kubernetes for Secure Setup :: Gardener</title>
+    <link rel="icon" type="image/x-icon" href='https://gardener.cloud/images/favicon.ico'>
+    <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-32x32.png' sizes="32x32">
+    <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-16x16.png' sizes="16x16">
+    
+    
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2FGNSX');</script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());    
+    gtag('config', 'UA-165447164-1');
+    </script>
+
+
+    
+    <link href="/css/nucleus.css?1589207795" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1589207795" rel="stylesheet">
+    <link href="/css/hybrid.css?1589207795" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1589207795" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1589207795" rel="stylesheet">
+    <link href="/css/auto-complete.css?1589207795" rel="stylesheet">
+
+    <link href="/css/skeleton.css?1589207795" rel="stylesheet">
+    <link href="/css/sheetslider.css?1589207795" rel="stylesheet">
+    
+      <script src="/js/moment.js?1589207795"></script>
+      <script src="/js/vivus.js?1589207795"></script>
+      <script src="/js/scrollreveal.js?1589207795"></script>
+      <script src="/js/inlineSVG.js?1589207795"></script>
+
+    <link href="/css/theme.css?1589207795" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1589207795" rel="stylesheet">
+    
+      <link href="/css/theme-gardener.css?1589207795" rel="stylesheet">
+    
+
+    <script src="/js/jquery-2.x.min.js?1589207795"></script>
+    <script src="/js/fixed.js?1589207795"></script>
+    
+    <style type="text/css">
+      :root #header + #content > #left > #rlblock_left{ 
+          display:none !important;
+      }
+    </style>
+
+      <link rel="stylesheet" href="https://gardener.cloud/css/custom.css">
+
+  </head>
+
+
+  <body class="" data-url="/documentation/050-tutorials/content/howto/insecure-configuration/">
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2FGNSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <nav id="sidebar" class="">
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://gardener.cloud/">
+
+	<svg width="90px" height="90px" viewBox="0 0 90 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		
+		<title>logo</title>
+		<defs>
+			<path d="M41.8864954,0.994901575 C42.8830405,0.514990742 44.5028956,0.516982644 45.4953045,0.994901575 L76.8159138,16.0781121 C77.8124589,16.5580229 78.8208647,17.8257185 79.0659694,18.8995926 L86.8015211,52.7912589 C87.0476474,53.8696088 86.6852538,55.4484075 85.9984855,56.3095876 L64.3239514,83.4885938 C63.6343208,84.3533632 62.1740175,85.0543973 61.0725268,85.0543973 L26.3092731,85.0543973 C25.2031915,85.0543973 23.7446167,84.3497739 23.0578485,83.4885938 L1.38331434,56.3095876 C0.693683723,55.4448182 0.335174016,53.865133 0.580278769,52.7912589 L8.31583044,18.8995926 C8.56195675,17.8212428 9.57347722,16.556031 10.5658861,16.0781121 L41.8864954,0.994901575 Z" id="path-1"></path>
+			<linearGradient x1="12.7542673%" y1="-18.6617048%" x2="88.2666158%" y2="84.6075483%" id="linearGradient-3">
+				<stop stop-color="#FFFFFF" offset="0%"></stop>
+				<stop stop-color="#439246" offset="100%"></stop>
+			</linearGradient>
+			<linearGradient x1="50%" y1="4.93673768%" x2="148.756007%" y2="175.514523%" id="linearGradient-4">
+				<stop stop-color="#FFFFFF" offset="0%"></stop>
+				<stop stop-color="#439246" offset="100%"></stop>
+			</linearGradient>
+			<linearGradient x1="19.1574381%" y1="-9.04800713%" x2="82.2203149%" y2="77.9084293%" id="linearGradient-5">
+				<stop stop-color="#FFFFFF" offset="0%"></stop>
+				<stop stop-color="#439246" offset="100%"></stop>
+			</linearGradient>
+			<linearGradient x1="57.4403751%" y1="26.3148481%" x2="137.966711%" y2="158.080556%" id="linearGradient-6">
+				<stop stop-color="#FFFFFF" offset="0%"></stop>
+				<stop stop-color="#439246" offset="100%"></stop>
+			</linearGradient>
+		</defs>
+		<g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+			<g id="Rectangle-2" transform="translate(1.000000, 0.000000)">
+				<mask id="mask-2" fill="white">
+					<use xlink:href="#path-1"></use>
+				</mask>
+				<use id="Mask" fill="#009F76" xlink:href="#path-1"></use>
+				<polygon fill="#000000" opacity="0.289628623" mask="url(#mask-2)" points="-17.6484375 54.5224609 30.8242188 25.0791016 63.4726562 58.5 24.7324219 92.6689453"></polygon>
+			</g>
+			<path d="M56.8508631,39.260019 C56.4193519,40.443987 55.6088085,41.581593 54.6736295,42.1938694 L46.5997298,47.4799783 C45.2142627,48.3870654 42.9749783,48.3916494 41.5825097,47.4799783 L33.50861,42.1938694 C32.123143,41.2867823 31,39.206345 31,37.545932 L31,26.4150304 C31,25.6897174 31.2131118,24.884885 31.5692681,24.1324532 L56.8508631,39.260019 Z" id="Combined-Shape" fill="url(#linearGradient-3)" transform="translate(43.925432, 36.147233) scale(-1, 1) translate(-43.925432, -36.147233) "></path>
+			<path d="M56.0774672,25.1412464 C56.4306829,25.8903325 56.6425556,26.6907345 56.6425556,27.4119019 L56.6425556,38.5428034 C56.6425556,40.2027013 55.5264141,42.2790698 54.1339456,43.1907408 L46.0600459,48.4768498 C44.6745788,49.3839368 42.4352943,49.3885208 41.0428258,48.4768498 L32.9689261,43.1907408 C32.2918101,42.7474223 31.6773514,42.0238435 31.2260376,41.206007 L56.0774672,25.1412464 Z" id="Combined-Shape" fill="url(#linearGradient-4)" transform="translate(43.821278, 37.246598) scale(-1, 1) translate(-43.821278, -37.246598) "></path>
+			<path d="M65.0702134,57.1846889 C64.5985426,58.2007851 63.8367404,59.1236871 62.9788591,59.6189851 L47.37497,68.6278947 C45.9443535,69.4538615 43.6226022,69.4525546 42.1942494,68.6278947 L26.5903603,59.6189851 C25.1597438,58.7930183 24,56.7816693 24,55.1323495 L24,37.1145303 C24,36.3487436 24.249712,35.5060005 24.6599102,34.7400631 L65.0702134,57.1846889 Z" id="Combined-Shape" fill="url(#linearGradient-5)"></path>
+			<path d="M65.0189476,34.954538 C65.3636909,35.6617313 65.5692194,36.42021 65.5692194,37.1145303 L65.5692194,55.1323495 C65.5692194,56.7842831 64.4072119,58.7943252 62.9788591,59.6189851 L47.37497,68.6278947 C45.9443535,69.4538615 43.6226022,69.4525546 42.1942494,68.6278947 L26.5903603,59.6189851 C25.9237304,59.2341061 25.3159155,58.5918431 24.8568495,57.8487596 L65.0189476,34.954538 Z" id="Combined-Shape" fill="url(#linearGradient-6)"></path>
+		</g>
+	</svg>
+	<h1>Gardener</h1>
+	<h2>Universal Kubernetes at Scale</h2>
+</a>
+
+    </div>
+    <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="text" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-close"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1589207795"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1589207795"></script>
+<script type="text/javascript">
+    
+        var baseurl = '\/';
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1589207795"></script>
+
+  </div>
+
+
+  <div class="highlightable">
+      <ul class="topics">
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/" title="Documentations" class="dd-item
+        parent
+        
+        
+        ">
+        
+          <a href="/documentation/">
+              
+              Documentations
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/about/" title="Getting Started" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/about/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_started.svg"/>
+              
+              Getting Started
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/030-architecture/" title="Architecture" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/030-architecture/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_architecture.svg"/>
+              
+              Architecture
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/gardener/" title="Gardener" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/gardener/">
+              
+              Gardener
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/gardenctl/" title="gardenctl" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/gardenctl/">
+              
+              gardenctl
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/mcm/" title="Machine Controller Manager" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/mcm/">
+              
+              Machine Controller Manager
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/cert-broker/" title="Cert Broker" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/cert-broker/">
+              
+              Cert Broker
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/dns-cm/" title="DNS Controller Manager" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/dns-cm/">
+              
+              DNS Controller Manager
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/dashboard/" title="Dashboard" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/dashboard/">
+              
+              Dashboard
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/kubify/" title="kubify" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/kubify/">
+              
+              kubify
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/bouquet/" title="Bouquet" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/bouquet/">
+              
+              Bouquet
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/contribute/" title="Contribute" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/contribute/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_contribute.svg"/>
+              
+              Contribute
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/contribute/code/" title="Code" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/contribute/code/">
+              
+              Code
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/10-contribution_guide/" title="Contribution Guide" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/10-contribution_guide/">
+              
+              Contribution Guide
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/12-security_guide/" title="Security Release Process" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/12-security_guide/">
+              
+              Security Release Process
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/13_env/" title="Enviroment" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/13_env/">
+              
+              Enviroment
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/14_cicd/" title="CI/CD" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/14_cicd/">
+              
+              CI/CD
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/15_conf_secrets/" title="Configuration and Usage" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/15_conf_secrets/">
+              
+              Configuration and Usage
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/20_dependencies/" title="Dependencies" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/20_dependencies/">
+              
+              Dependencies
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/27_deploy_into_cluster/" title="Deploy into a Cluster" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/27_deploy_into_cluster/">
+              
+              Deploy into a Cluster
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/30_deploy_seed_into_aks/" title="Deploy into AKS" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/30_deploy_seed_into_aks/">
+              
+              Deploy into AKS
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/37_process/" title="Process" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/37_process/">
+              
+              Process
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/40_repositories/" title="Repositories" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/40_repositories/">
+              
+              Repositories
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/contribute/docs/" title="Documentation" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/contribute/docs/">
+              
+              Documentation
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/20_documentation/10_organisation/" title="Organisation" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/20_documentation/10_organisation/">
+              
+              Organisation
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/20_documentation/20_style/" title="Style Guide" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/20_documentation/20_style/">
+              
+              Style Guide
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/" title="Markdown" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/20_documentation/25_markup/">
+              
+              Markdown
+          </a>
+          
+          
+            <ul>
+              
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/attachments/" title="Attachments" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/attachments/">
+            Attachments
+        </a>
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/button/" title="Button" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/button/">
+            Button
+        </a>
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/expand/" title="Expand" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/expand/">
+            Expand
+        </a>
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/mermaid/" title="Mermaid" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/mermaid/">
+            Mermaid
+        </a>
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/notice/" title="Notice" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/notice/">
+            Notice
+        </a>
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/tutorials/" title="Tutorials" class="dd-item
+        parent
+        
+        
+        ">
+        
+          <a href="/tutorials/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_tutorials.svg"/>
+              
+              Tutorials
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/using-gardener/administrator/" title="Administrator" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/using-gardener/administrator/">
+              
+              Administrator
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/using-gardener/developer/topic/" title="App Developer" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/using-gardener/developer/topic/">
+              
+              App Developer
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/curated-links/" title="Curated Links" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/curated-links/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_links.svg"/>
+              
+              Curated Links
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/api-reference/" title="API Reference" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/api-reference/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_tutorials.svg"/>
+              
+              API Reference
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/api-reference/core/" title="Core" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/api-reference/core/">
+              
+              Core
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/api-reference/extensions/" title="Extensions" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/api-reference/extensions/">
+              
+              Extensions
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/api-reference/settings/" title="Settings" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/api-reference/settings/">
+              
+              Settings
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/adopter/" title="Adopters" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/adopter/">
+              
+              Adopters
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/blog/" title="Blogs" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/blog/">
+              
+              Blogs
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/community/" title="Community" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/community/">
+              
+              Community
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/installer/" title="" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/installer/">
+              
+              
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/news/" title="News" class="dd-item
+        
+        
+        
+        ">
+        
+        
+    </li>
+  
+
+
+            
+      </ul>
+      <section id="footer">
+        
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+      </section>
+
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable  body-inner-wrapper">
+              
+              <div>
+                <div id="top-bar">
+                
+                  
+                  
+                  
+                  <div id="top-github-link">
+                    <a class="github-link" title='Edit this page' href="https://github.com/gardener/documentation/edit/master/website/documentation/050-tutorials/content/howto/insecure-configuration/_index.md" target="blank">
+                      <i class="fa fa-code-fork"></i>
+                      <span id="top-github-link-text">Edit this page</span>
+                    </a>
+                  </div>
+                  
+                
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                        <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                          <i class="fa fa-bars"></i>
+                        </a>
+                    </span>
+                  
+                  <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+                  
+                  <span class="links">
+                    
+            
+            
+                
+                    
+                    
+            
+            
+                
+                    
+                    
+            
+            
+                
+                    
+                    
+            
+            
+                
+                    
+                    
+            
+            
+                
+                    
+                    
+            
+            
+              <a href='/'>Gardener</a> > <a href='/documentation/'>Documentations</a> > <a href='/tutorials/'>Tutorials</a> > Auditing Kubernetes for Secure Setup
+            
+          
+                
+            
+          
+                
+            
+          
+                
+            
+          
+                
+            
+          
+                
+            
+          
+                  </span>
+                </div>
+                
+                    <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#increasing-the-security-of-all-gardener-stakeholders">Increasing the Security of all Gardener Stakeholders</a></li>
+    <li><a href="#major-findings">Major Findings</a></li>
+    <li><a href="#scenario-1-privilege-escalation-with-insecure-api-server">Scenario 1: Privilege Escalation with Insecure API Server</a></li>
+    <li><a href="#scenario-2-exploration-of-the-control-plane-network-with-malicious-http-redirects">Scenario 2: Exploration of the Control Plane Network with Malicious HTTP-Redirects</a></li>
+    <li><a href="#scenario-3-reading-private-aws-metadata-via-grafana">Scenario 3: Reading Private AWS Metadata via Grafana</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+            </div>
+            <div class="tutorial-last-update">Updated <span>
+  
+    
+    
+      <span id="73c92f4b0aba6df125d172ba75de69d4"></span>
+        <script>$("#73c92f4b0aba6df125d172ba75de69d4").html(moment("2018-12-03T11:35:19Z").fromNow())</script>
+      
+      
+    
+  
+
+</span> by <a href='mailto:a.herz@freegroup.de'>Andreas Herz</a>,<a href='mailto:alban@kinvolk.io'>Alban Crequy</a>,<a href='mailto:andreas.herz@sap.com'>Herz, Andreas</a>,<a href='mailto:jens.haley@sap.com'>JensHaley</a>
+</div>
+
+            
+
+
+        <div id="body-inner">
+
+
+          
+
+
+
+
+<h1 id="auditing-kubernetes-for-secure-setup">Auditing Kubernetes for Secure Setup</h1>
+<pre><code>&lt;object type=&quot;image/svg+xml&quot; data=&quot;./images/teaser.svg&quot; style=&quot;;visibility:hidden; margin: 3rem auto;display: block;&quot; class=&quot;inline reveal-fast drop-shadow&quot;&gt;&lt;/object&gt;
+</code></pre>
+<h2 id="increasing-the-security-of-all-gardener-stakeholders">Increasing the Security of all Gardener Stakeholders</h2>
+<p>In summer 2018, the <a href="https://github.com/gardener/gardener">Gardener project team</a> asked <a href="https://kinvolk.io/">Kinvolk</a> to execute several penetration tests in its role as third-party contractor. The goal of this ongoing work is to increase the security of
+all Gardener stakeholders in the open source community. Following the Gardener architecture, the control plane of a
+Gardener managed shoot cluster resides in the corresponding seed cluster. This is a
+<a href="https://kubernetes.io/blog/2018/05/17/gardener/#kubernetes-control-plane">Control-Plane-as-a-Service</a> with
+a <a href="https://kubernetes.io/blog/2018/05/17/gardener/#network-air-gap">network air gap</a>.</p>
+<p>Along the way we found various kinds of security issues, for example, due to misconfiguration or missing isolation,
+as well as two special problems with upstream Kubernetes and its Control-Plane-as-a-Service
+architecture.</p>
+<h2 id="major-findings">Major Findings</h2>
+<p>From this experience, we’d like to share a few examples of security issues that could happen on a Kubernetes
+installation and how to fix them.</p>
+<p>Alban Crequy (<a href="https://kinvolk.io/">Kinvolk</a>) and Dirk Marwinski (<a href="https://www.sap.com">SAP SE</a>) gave a presentation entitled <a href="https://kccncchina2018english.sched.com/event/H2Hd/hardening-multi-cloud-kubernetes-clusters-as-a-service-dirk-marwinski-sap-se-alban-crequy-kinvolk-gmbh">Hardening Multi-Cloud Kubernetes Clusters as a Service</a> at KubeCon 2018 in Shanghai presenting some of the findings.</p>
+<p>Here is a summary of the findings:</p>
+<ul>
+<li>
+<p>Privilege escalation due to insecure configuration of the Kubernetes
+API server</p>
+<ul>
+<li>Root cause: Same certificate authority (CA) is used for both the
+API server and the proxy that allows accessing the API server.</li>
+<li>Risk: Users can get access to the API server.</li>
+<li>Recommendation: Always use different CAs.</li>
+</ul>
+</li>
+<li>
+<p>Exploration of the control plane network with malicious
+HTTP-redirects</p>
+<ul>
+<li>
+<p>Root cause: See detailed description below.</p>
+</li>
+<li>
+<p>Risk: Provoked error message contains full HTTP payload from an
+existing endpoint which can be exploited. The contents of the
+payload depends on your setup, but can potentially be user data,
+configuration data, and credentials.</p>
+</li>
+<li>
+<p>Recommendation:</p>
+<ul>
+<li>Use the latest version of Gardener</li>
+<li>Ensure the seed cluster's container network supports
+network policies. Clusters that have been created with
+<a href="https://github.com/gardener/kubify">Kubify</a> are not
+protected as Flannel is used there which doesn't support
+network policies.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Reading private AWS metadata via Grafana</p>
+<ul>
+<li>Root cause: It is possible to configuring a new custom data
+source in Grafana, we could send HTTP requests to target the
+control</li>
+<li>Risk: Users can get the &ldquo;user-data&rdquo; for the seed cluster from
+the metadata service and retrieve a kubeconfig for that
+Kubernetes cluster</li>
+<li>Recommendation: Lockdown Grafana features to only what's
+necessary in this setup, block all unnecessary outgoing traffic,
+move Grafana to a different network, lockdown unauthenticated
+endpoints</li>
+</ul>
+</li>
+</ul>
+<h2 id="scenario-1-privilege-escalation-with-insecure-api-server">Scenario 1: Privilege Escalation with Insecure API Server</h2>
+<p>In most configurations, different components connect directly to the Kubernetes API server, often using a <code>kubeconfig</code> with a client
+certificate. The API server is started with the flag:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">/hyperkube apiserver --client-ca-file<span style="color:#f92672">=</span>/srv/kubernetes/ca/ca.crt ...
+</code></pre></div><p>The API server will check whether the client certificate presented by kubectl, kubelet, scheduler or another component
+is really signed by the configured certificate authority for clients.</p>
+<figure>
+    <img src="./images/image3.png" title="The API server can have many clients of various kinds" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">The API server can have many clients of various kinds</figcaption>
+</figure>
+<p>However, it is possible to configure the API server differently for use with an intermediate authenticating proxy. The
+proxy will authenticate the client with its own custom method and then issue HTTP requests to the API server with
+additional HTTP headers specifying the user name and group name. The API server should only accept HTTP requests with HTTP headers  from a legitimate proxy. To allow the API server to check  incoming requests, you need pass on a list of certificate authorities (CAs) to it. Requests coming from a proxy are only accepted if they use a client certificate that is signed by one of the CAs of that list.</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">--requestheader-client-ca-file<span style="color:#f92672">=</span>/srv/kubernetes/ca/ca-proxy.crt
+--requestheader-username-headers<span style="color:#f92672">=</span>X-Remote-User
+--requestheader-group-headers<span style="color:#f92672">=</span>X-Remote-Group
+</code></pre></div><figure>
+    <img src="./images/image2.png" title="API server clients can reach the API server through an authenticating proxy" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">API server clients can reach the API server through an authenticating proxy</figcaption>
+</figure>
+<p>So far, so good. But what happens if malicious user “Mallory” tries to connect directly to the API server and reuses
+the HTTP headers to pretend to be someone else?</p>
+<figure>
+    <img src="./images/image8.png" title="What happens when a client bypasses the proxy, connecting directly to the API server?" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">What happens when a client bypasses the proxy, connecting directly to the API server?</figcaption>
+</figure>
+<p>With a correct configuration, Mallory’s kubeconfig will have a certificate signed by the API server certificate authority
+but not signed by the proxy certificate authority. So the API server will not accept the extra HTTP header
+“X-Remote-Group: system:masters”.</p>
+<p>You only run into an issue when the same certificate authority is used for both the API server and the proxy. Then, any Kubernetes
+client certificate can be used to take the role of different user or group as the API server will accept the user header and
+group header.</p>
+<p>The <code>kubectl</code> tool does not normally add those HTTP headers but it’s pretty easy to generate the corresponding HTTP
+requests manually.</p>
+<p>We worked on <a href="https://github.com/kubernetes/website/pull/10093">improving the Kubernetes documentation</a> to make clearer
+that this configuration should be avoided.</p>
+<h2 id="scenario-2-exploration-of-the-control-plane-network-with-malicious-http-redirects">Scenario 2: Exploration of the Control Plane Network with Malicious HTTP-Redirects</h2>
+<p>The API server is a central component of Kubernetes and many components initiate connections to it, including the Kubelet
+running on worker nodes. Most of the requests from those clients will end up updating Kubernetes objects (pods, services,
+deployments, and so on) in the etcd database but the API server usually does not need to initiate TCP connections itself.</p>
+<figure>
+    <img src="./images/image7.png" title="The API server is mostly a component that receives requests" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">The API server is mostly a component that receives requests</figcaption>
+</figure>
+<p>However, there are exceptions. Some <code>kubectl</code> commands will trigger the API server to open a new
+connection to the Kubelet. <code>Kubectl exec</code> is one of those commands. In order to get the standard I/Os from the pod,
+the API server will start an HTTP connection to the Kubelet on the worker node where the pod is running. Depending on
+the container runtime used, it can be done in different ways, but one way to do it is for the Kubelet to reply with a
+HTTP-302 redirection to the <a href="https://github.com/kubernetes/community/blob/master/contributors/devel/container-runtime-interface.md">Container Runtime Interface (CRI)</a>.
+Basically, the Kubelet is telling the API server to get the streams from CRI itself directly instead of forwarding. The
+redirection from the Kubelet will only change the port and path from the URL; the IP address will not be changed because
+the Kubelet and the CRI component run on the same worker node.</p>
+<figure>
+    <img src="./images/image1.png" title="But the API server also initiates some connections, for example, to worker nodes" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">But the API server also initiates some connections, for example, to worker nodes</figcaption>
+</figure>
+<p>It’s often quite easy for users of a Kubernetes cluster to get access to worker nodes and tamper with the Kubelet. They
+could be given explicit SSH access or they could be given a kubeconfig with enough privileges to create privileged pods
+or even just pods with “host” volumes.</p>
+<p>In contrast, users — even those with “system:masters” permissions or “root” rights — are often not given access to the control plane.
+On setups like for example GKE or Gardener, the control plane is running on separate nodes, with a different administrative
+access. It could be hosted on a different cloud provider account. So users are not free to explore the internal network
+in the control plane.</p>
+<p>What would happen if a user was tampering with the Kubelet to make it maliciously redirect <code>kubectl exec</code> requests to
+a different random endpoint? Most likely the given endpoint would not speak the streaming server protocol, so there would
+be an error. However, the full HTTP payload from the endpoint is included in the error message printed by kubectl exec.</p>
+<figure>
+    <img src="./images/image6.png" title="The API server is tricked to connect to other components" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">The API server is tricked to connect to other components</figcaption>
+</figure>
+<p>The impact of this issue depends on the specific setup. But in many configurations, we could find a metadata service
+(such as the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-metadata.html">AWS metadata service</a>)
+containing user data, configurations and credentials. The setup we explored had a different AWS account and a different
+<a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_use_switch-role-ec2_instance-profiles.html">EC2 instance profile</a>
+for the worker nodes and the control plane. This issue allowed users to get access to the AWS metadata service in the
+context of the control plane, which they should not have access to.</p>
+<p>We have reported this issue to the <a href="https://kubernetes.io/docs/reference/issues-security/security/">Kubernetes Security mailing list</a>
+and the public pull request that addresses the issue has been merged <a href="https://github.com/kubernetes/kubernetes/pull/66516">PR#66516</a>.
+It provides a way to enforce HTTP redirect validation (disabled by default).</p>
+<p>But there are several other ways that users could trigger the API server to generate HTTP requests and get the reply
+payload back, so it is advised to isolate the API server and other components from the network as additional precautious measures.
+Depending on where the API server runs, it could be with <a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Kubernetes Network Policies</a>,
+<a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html">EC2 Security Groups</a> or just
+iptables directly. Following the <a href="https://en.wikipedia.org/wiki/Defense_in_depth_(computing)">defense in depth principle</a>,
+it is a good idea to apply the API server HTTP redirect validation when it is available as well as firewall rules.</p>
+<p>In Gardener, this has been fixed with Kubernetes network policies along with changes to ensure the API server does
+not need to contact the metadata service. You can see more details in the <a href="https://groups.google.com/forum/#!forum/gardener">announcements on the Gardener mailing list</a>.
+This is tracked in <a href="https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2018-2475">CVE-2018-2475</a>.</p>
+<p><em>To be protected from this issue, stakeholders should:</em></p>
+<ul>
+<li><em>Use the latest version of Gardener</em></li>
+<li><em>Ensure the seed cluster’s container network supports network policies. Clusters that have been created with
+<a href="https://github.com/gardener/kubify">Kubify</a> are not protected as Flannel is used there which doesn’t support network
+policies.</em></li>
+</ul>
+<h2 id="scenario-3-reading-private-aws-metadata-via-grafana">Scenario 3: Reading Private AWS Metadata via Grafana</h2>
+<p>For our tests, we had access to a Kubernetes setup where users are not only given access to the API server in the control
+plane, but also to a Grafana instance that is used to gather data from their Kubernetes clusters via Prometheus. The control
+plane is managed and users don’t have access to the nodes that it runs. They can only access the API server and Grafana
+via a load balancer. The internal network of the control plane is therefore hidden to users.</p>
+<figure>
+    <img src="./images/image5.png" title="Prometheus and Grafana can be used to monitor worker nodes" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">Prometheus and Grafana can be used to monitor worker nodes</figcaption>
+</figure>
+<p>Unfortunately, that setup was not protecting the control plane network from nosy users. By configuring a new custom
+data source in Grafana, we could send HTTP requests to target the control plane network, for example the AWS metadata
+service. The reply payload is not displayed on the Grafana Web UI but it is possible to access it from the debugging
+console of the Chrome browser.</p>
+<figure>
+    <img src="./images/image9.png" title="Credentials can be retrieved from the debugging console of Chrome" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">Credentials can be retrieved from the debugging console of Chrome</figcaption>
+</figure>
+<figure>
+    <img src="./images/image4.png" title="Adding a Grafana data source is a way to issue HTTP requests to arbitrary targets" class="drop-shadow reveal-fast" style="max-width:500px;visibility:hidden"/>
+    <figcaption style="text-align: center;font-style: italic;">Adding a Grafana data source is a way to issue HTTP requests to arbitrary targets</figcaption>
+</figure>
+<p>In that installation, users could get the “user-data” for the seed cluster from the metadata service and retrieve a
+kubeconfig for that Kubernetes cluster.</p>
+<p>There are many possible measures to avoid this situation: lockdown Grafana features to only what’s necessary in this setup, block all
+unnecessary outgoing traffic, move Grafana to a different network, lockdown unauthenticated endpoints.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>The three scenarios above show pitfalls with a Kubernetes setup. A lot of them were specific to the Kubernetes
+installation: different cloud providers or different configurations will show different weakness. Users should no longer be given access to Grafana.</p>
+
+
+
+<footer class=" footline" >
+</footer>
+
+
+
+
+        </div> 
+        
+
+      </div>
+
+
+        
+        
+
+        
+            
+            <div class="howto_tickets">
+                <span class="open_github_ticket">
+                    <h3 class="open_github_ticket_header"><img src="https://gardener.cloud/images/branding/github.svg"/> Report an issue</h3>
+                    See a typo? Have a picture to recommend? Want to edit some words/phrases/sentences?
+                    You can simply submit a ticket to request we make the change. If you are github savvy, submit a
+                    pull request.
+                    <a href="#" onclick="return createIssue('https:\/\/github.com\/gardener\/documentation\/issues/new','documentation\/050-tutorials\/content\/howto\/insecure-configuration\/_index.md','https:\/\/github.com\/gardener\/documentation\/edit\/master\/website\/documentation\/050-tutorials\/content\/howto\/insecure-configuration\/_index.md')" target="_blank">Open Github Issue <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                    <br>
+                </span>
+            </div>
+
+        
+
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1589207795"></script>
+    <script src="/js/perfect-scrollbar.min.js?1589207795"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1589207795"></script>
+    <script src="/js/jquery.sticky.js?1589207795"></script>
+    <script src="/js/featherlight.min.js?1589207795"></script>
+    <script src="/js/html5shiv-printshiv.min.js?1589207795"></script>
+    <script src="/js/highlight.pack.js?1589207795"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom.71422.js?1589207795"></script>
+    <script src="/js/learn.js?1589207795"></script>
+    <script src="/js/hugo-learn.js?1589207795"></script>
+
+    <link href="/mermaid/mermaid.css?1589207795" type="text/css" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1589207795"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, htmlLables: true });
+        function createIssue(issueUrl, page, url) {
+            var uri = issueUrl+"?title=Documentation issue on page \""+page+"\"";
+            uri = uri+ "&body=\n\n<- DESCRIBE MISSING OR FAULTY DOCUMENTATION HERE->\n\n---\nPage: ["+ page +"]("+
+            url+ ")\ndon't remove the link to the page. It's required for the processor"
+            var res = encodeURI(uri);
+            res +="&labels=area/documentation"
+            window.open(res,"issue")
+            return false;
+        }
+
+        $(document).ready(function() {
+            var $window = $(window);
+            $window.sr = ScrollReveal({ reset: false});
+            $window.sr.reveal('.reveal-fast', { duration: 2000 });
+            $window.sr.reveal('.reveal-slow', { duration: 2500 });
+            $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'300px' });
+            $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'300px' });
+
+            inlineSVG.init();
+        });
+
+    </script>
+    
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2FGNSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    
+    <script>
+    
+    
+    function setMenuHeight() {
+        $('#sidebar .highlightable').height($('#sidebar').innerHeight() - $('#header-wrapper').height() - 40);
+        $('#sidebar .highlightable').perfectScrollbar('update');
+        var $blockList = $('#sidebar .highlightable');
+        if ($blockList.length && window.localStorage) {
+            var position = localStorage.getItem('blockListScrollPosition');
+            if (position) {
+                $blockList.scrollTop(position);
+            }
+            $(window).on('unload', function () {
+                var scrollPosition = $blockList.scrollTop();
+                localStorage.setItem('blockListScrollPosition', scrollPosition);
+            });
+        }
+    }
+
+    
+    
+    (function () {
+        $("#body-inner a").not(".inline")
+            .each(function () {
+                if (this.hostname != window.location.hostname && this.href.indexOf("mailto:")===-1) {
+                    this.target = '_blank';
+                    $(this).addClass("externalLink");
+                    if($(this).find("img").length===0) {
+                        this.innerHTML += '<i class="fa fa-external-link" aria-hidden="true"></i>';
+                    }
+                }
+            });
+
+
+
+    })();
+
+    </script>
+  </body>
+</html>

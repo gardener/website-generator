@@ -32,7 +32,8 @@
   {{end}}
 
   <script src="{{"js/jquery.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
-
+  <script src="{{"js/clipboard.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  
   <style type="text/css">
     :root #header + #content > #left > #rlblock_left{ 
         display:none !important;
@@ -42,5 +43,6 @@
   {{end}}
 
   <link rel="stylesheet" href="{{"css/custom.css" | relURL}}">
+  
 
 </head>

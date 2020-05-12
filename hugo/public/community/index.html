@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+
+  <head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Project Gardener Website - A Managed Kubernetes Service Done Right"><meta name="copyright" content="Copyright 2019 Gardener project authors.">
+  
+  <title>Community :: Gardener</title>
+  <link rel="icon" type="image/x-icon" href='https://gardener.cloud/images/favicon.ico'>
+  <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-32x32.png' sizes="32x32">
+  <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-16x16.png' sizes="16x16">
+  
+  
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2FGNSX');</script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());    
+    gtag('config', 'UA-165447164-1');
+    </script>
+
+    
+  
+
+  
+  <link href="/css/nucleus.css?1589207795" rel="stylesheet">
+  <link href="/css/font-awesome.min.css?1589207795" rel="stylesheet">
+  <link href="/css/hybrid.css?1589207795" rel="stylesheet">
+  <link href="/css/featherlight.min.css?1589207795" rel="stylesheet">
+  <link href="/css/perfect-scrollbar.min.css?1589207795" rel="stylesheet">
+  <link href="/css/auto-complete.css?1589207795" rel="stylesheet">
+  <link href="/css/skeleton.css?1589207795" rel="stylesheet">
+  <link href="/css/sheetslider.css?1589207795" rel="stylesheet">
+  <script src="/js/fixed.js?1589207795"></script>
+  <script src="/js/moment.js?1589207795"></script>
+  <script src="/js/vivus.js?1589207795"></script>
+  <script src="/js/scrollreveal.js?1589207795"></script>
+  <script src="/js/inlineSVG.js?1589207795"></script>
+  <link href="/css/theme.css?1589207795" rel="stylesheet">
+
+  <link href="/css/hugo-theme.css?1589207795" rel="stylesheet">
+  
+    <link href="/css/theme-gardener.css?1589207795" rel="stylesheet">
+  
+
+  <script src="/js/jquery.min.js?1589207795"></script>
+
+  <style type="text/css">
+    :root #header + #content > #left > #rlblock_left{ 
+        display:none !important;
+    }
+  </style>
+
+  
+
+  <link rel="stylesheet" href="/css/custom.css">
+
+</head>
+
+
+  <body data-url="/community/" class="has-sticky-navigation">
+      
+    <style>
+  .navigation .navbar-collapse .menu .links .link {
+    display: none;
+  }
+  .navigation .navbar-collapse .menu .links .link[data-depth="0"],
+  .navigation .navbar-collapse .menu .links .link[data-depth="1"],
+  .navigation .navbar-collapse .menu .links .link[data-depth="2"] {
+    display: block;
+  }
+  .navigation .navbar-collapse .menu .links .link a {
+    color: #fff;
+  }
+  .navigation .navbar-collapse .menu .links .link.active  {
+    color: inherit;
+  }
+  .navigation .navbar-collapse .menu {
+    display: block;
+  }
+</style>
+<script>
+  $(document).ready(function(){
+    function initStickyNav() {
+      var tln = document.querySelector(".tln");
+      if (!tln) {
+          return;
+      }
+      var bodySelector = document.getElementsByTagName("body")[0];
+      var tlnHeight = tln.clientHeight;
+      var stickyPointEl = document.querySelector(".sticky-nav-point");
+      var stickyPoint = stickyPointEl.clientHeight + stickyPointEl.offsetTop;
+      
+      var stickyNavigation = function() {
+          if (window.pageYOffset + tlnHeight >= stickyPoint) {
+              bodySelector.classList.add("has-sticky-navigation");
+              tln.classList.add("sticky-top");
+          } else {
+              bodySelector.classList.remove("has-sticky-navigation");
+              tln.classList.remove("sticky-top");
+          }
+      }
+  
+      window.onscroll = function() {
+          stickyNavigation();
+      };
+    }
+    initStickyNav();
+  });
+</script>
+<div class="tln fixedsticky"><header class="navigation">
+    <div class="container">
+      <div class="navigation-wrapper">
+        <a href="/" class="logo">
+          <img src="/images/logo.svg" />
+          <span class="title">Gardener</span>
+        </a>
+        <a class="nav-button navbar-toggler" href="#"><span class="icon-menu"></span></a>
+        
+        <div class="navbar-collapse">
+          <ul class="links"><li class="link ">
+              <a class="btn primary" href="/about/">Getting Started</a>
+            </li>
+            <li class="link ">
+              <a href="/blog/">Blogs</a>
+            </li>
+            <li class="link active">
+              <a href="/community/">Community</a>
+            </li>
+            <li class="link ">
+              <a href="/adopter/">Adopters</a>
+            </li>
+            <li class="link has-child ">
+              <a href="/documentation/">Documentation</a>
+              <nav class="container menu">
+                <ul class="topics links">
+                  </ul>
+              </nav>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+<script>
+  
+  $(".navigation .navbar-toggler").click(function(evt){
+    $(".navigation .navbar-collapse").toggle();
+    $(".navigation").toggleClass("collapsed");
+    $(".navigation .search-box").toggle();
+  })
+</script>
+
+
+
+    
+    
+    
+    <div class="main container">
+      
+      <section>
+        <div id="overlay"></div>
+        <div class="highlightable body-inner-wrapper">
+          
+          
+          <div id="body-inner" class="">
+            
+<style>
+    .fixedsticky {
+      position: sticky!important;
+      top: 0;
+      z-index: 1;
+      background: #03ce9a;
+    }
+  </style>
+<style>
+  #body-inner {
+    padding-top: 5rem;
+  }
+  .body-inner-wrapper {
+    min-height: calc(100vh - var(--GITHUB-FOOTER-HEIGHT) - 314px);
+  }
+  #body-inner .title, .subtitle {
+    text-align: center;
+    border: none;
+    margin-bottom: 0;
+    font-size: 3.3rem;
+    padding: 0;
+    color: #222!important;
+    font-family: var(--font-family-regular), sans-serif!important;
+  }
+  #body-inner .subtitle {
+    display: block;
+    font-size: 2rem;
+    color: #555;
+    font-family: var(--font-family-regular), sans-serif;
+  }
+  #body-inner .row:first-of-type {
+    margin-top: 50px;
+  }
+  #body-inner .action-header {
+    display:flex;
+    align-items: center;
+    color: #222;
+    font-family: var(--font-family-regular), sans-serif;
+    cursor: pointer;
+    text-decoration: none;
+    margin-bottom: 12px;
+  }
+  #body-inner .action-header img {
+    margin-right: 22px;
+    width: 40px;
+  }
+  #body-inner .action-header span {
+    font-size: 20px;
+    color: var(--color-emphasis);
+    font-family: var(--font-family-medium);
+  }
+  #body-inner .action-header+*{
+    font-size: 18px;
+    line-height: 1.3;
+    color: #333;
+  }
+  @media (min-width: 750px) {
+    #body-inner .row {
+      margin-top: 50px;
+    }   
+  }
+</style>
+<h1 class="title">Gardener Community</h1>
+<span class="subtitle">Follow - Engage - Contribute</span>
+
+<div class="row">
+    <div class="four columns">
+        <a target="_blank" class="action-header" href="https://twitter.com/GardenerProject">
+            <!-- FIXME -->
+            <img src="/images/branding/twitter-logo-green.svg"><span>@GardenerProject</span>
+        </a>
+        <span>Follow the latest project updates on Twitter</span>
+    </div>
+    <div class="four columns">
+        <a target="_blank" class="action-header" href="https://github.com/gardener/documentation/blob/master/CONTRIBUTING.md#weekly-meeting">
+            <!-- FIXME -->
+            <img src="/images/lp/comms-community-meetings.svg"><span>Community Meetings</span>
+        </a>
+        <span>You are welcome on our community meetings where you can engage with other contributors in person. See calendar for schedule or watch past recordings to get the idea.</span>
+    </div>
+    <div class="four columns">
+        <a target="_blank" class="action-header" href="https://github.com/gardener">
+            <!-- FIXME -->
+            <img src="/images/branding/github-mark-logo-green.svg"><span>GitHub</span>
+        </a>
+        <span>Eveyone is welcome to contribute with what they can - an issue or a pull request. 
+            Check Gardener project there and our contributors guide to help you get started.</span>
+    </div>
+</div>
+<div class="row">
+    <div class="four columns">
+        <a target="_blank" class="action-header" href="https://www.youtube.com/channel/UCwUhwKFREV8Su0gwAJQX7tw">
+            <!-- FIXME -->
+            <img src="/images/branding/youtube-logo-green.svg"><span>Gardener Project</span>
+        </a>
+        <span>Watch videos and community meetings recordings on our YouTube channel</span>
+    </div>
+    <div class="four columns">
+        <a target="_blank" class="action-header" href="https://kubernetes.slack.com/messages/gardener">
+            <!-- FIXME -->
+            <img src="/images/branding/slack-logo-green.svg"><span>#gardener</span>
+        </a>
+        <span>Discuss Gardener on our Slack channel in the Kubernetes workspace</span>
+    </div>
+</div>
+
+<!--div id="page-1" style="background-color: white;">
+    <div class="container">
+        <div class="title-group">
+            <h1 class="center">COMMUNITY</h1>
+            <p class="description">
+                The Gardener development process is an open process. Here are the general communication channels we use to communicate.
+                We work with the wider community to create a strong, vibrant codebase.
+            </p>
+
+            <div class="row  github-stat">
+                <div class="three columns group">
+                    <div class="number">60+</div>
+                    <div class="subject">Committer</div>
+                </div>
+                <div class="three columns group">
+                    <div class="number">1300+</div>
+                    <div class="subject">Merged Pull Requests</div>
+                </div>
+                <div class="three columns group">
+                    <div class="number">1400+</div>
+                    <div class="subject">Github Stars</div>
+                </div>
+                <div class="three columns group">
+                    <div class="number">500+</div>
+                    <div class="subject">Closed Community Issues</div>
+                </div>
+            </div>
+
+            <p class="description">
+                We are cordially inviting interested parties to join our <a href="https://github.com/gardener/documentation/blob/master/CONTRIBUTING.md#weekly-meeting">weekly meetings</a>.
+                Here you can address questions regarding the direction of the project, technical problems and support.
+            </p>
+
+        </div>
+        <div class="row">
+            <div class="one-half column">
+                <h2 class="center"><a href="https://kubernetes.slack.com/messages/gardener" target="_blank"> <img src="/images/branding/slack.png"  height="120"></a></h2>
+                <p class="description">
+                    Our Slack Channel is the best way to contact the experts in all questions about Kubernetes and
+                    the Gardener and share your ideas with them or ask for support.
+                </p>
+            </div>
+
+            <div class="one-half column">
+                <h2 class="center"><a href="https://github.com/gardener/gardener" target="_blank"> <img src="/images/branding/github.png"  height="120"></a></h2>
+                <p class="description">
+                    Find out more about the project and consider making a contribution..
+                </p>
+            </div>
+        </div>
+    </div>
+</div-->
+
+            
+          </div>
+        </div>
+        
+      </section>
+      <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+        <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+      </div>
+    </div><style>
+ 
+</style>
+<footer class="footer">
+  <div class="container footer-wrapper">
+    <ul class="nav"><li><a href="/about/">Getting Started</a></li><li><a href="/blog/">Blogs</a></li><li><a href="/news/">News</a></li><li><a href="/documentation/">Documentation</a></li><li><a href="/community/">Community</a></li></ul>
+    <img src="/images/lp/gardener-logo.svg" alt="Logo Gardener" class="logo"/>
+    <ul class="media-wr">
+      <li>
+        <a target="_blank" href="https://kubernetes.slack.com/archives/CB57N0BFG">
+          <img src="/images/branding/slack-logo-white.svg" class="media-icon"/>
+          <div class="media-text">Slack</div>
+        </a>
+      </li>          
+      <li>
+        <a target="_blank" href="https://github.com/gardener">
+          <img src="/images/branding/github-mark-logo.png" class="media-icon" />
+          <div class="media-text">GitHub</div>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://www.youtube.com/channel/UCwUhwKFREV8Su0gwAJQX7tw">
+          <img src="/images/branding/youtube-logo-dark.svg" class="media-icon" />
+          <div class="media-text">YouTube</div>
+        </a>
+      </li>                      
+      <li>
+        <a target="_blank" href="https://twitter.com/GardenerProject">
+          <img src="/images/branding/twitter-logo-white.svg" class="media-icon" />
+          <div class="media-text">Twitter</div>
+        </a>
+      </li>
+    </ul>
+    <span class="copyright">Copiright 2019 Gardener project authors. Privacy Statement</span>
+  </div>
+</footer>
+    
+    <script src="/js/clipboard.min.js?1589207795"></script>
+    <script src="/js/perfect-scrollbar.min.js?1589207795"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1589207795"></script>
+    <script src="/js/jquery.sticky.js?1589207795"></script>
+    <script src="/js/featherlight.min.js?1589207795"></script>
+    <script src="/js/html5shiv-printshiv.min.js?1589207795"></script>
+    <script src="/js/highlight.pack.js?1589207795"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom.71422.js?1589207795"></script>
+
+    <link href="/mermaid/mermaid.css?1589207795" type="text/css" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1589207795"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true, htmlLables: true });
+      function createIssue(issueUrl, page, url) {
+          var uri = issueUrl+"?title=Documentation issue on page \""+page+"\"";
+          uri = uri+ "&body=\n\n<- DESCRIBE MISSING OR FAULTY DOCUMENTATION HERE->\n\n---\nPage: ["+ page +"]("+
+          url+ ")\ndon't remove the link to the page. It's required for the processor"
+          var res = encodeURI(uri);
+          res +="&labels=area/documentation"
+          window.open(res,"issue")
+          return false;
+      }
+
+      $(document).ready(function() {
+          var $window = $(window);
+          $window.sr = ScrollReveal({ reset: false});
+          $window.sr.reveal('.reveal-fast', { duration: 2000 });
+          $window.sr.reveal('.reveal-slow', { duration: 2500 });
+          $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'300px' });
+          $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'300px' });
+
+          inlineSVG.init();
+      });
+    </script>
+
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2FGNSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+
+  </body>
+</html>

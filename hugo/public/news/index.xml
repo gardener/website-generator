@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>News on Gardener</title>
+    <link>https://gardener.cloud/news/</link>
+    <description>Recent content in News on Gardener</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-US</language>
+    <lastBuildDate>Mon, 11 May 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://gardener.cloud/news/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Gardener Website 2.0</title>
+      <link>https://gardener.cloud/news/002/00/</link>
+      <pubDate>Mon, 11 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://gardener.cloud/news/002/00/</guid>
+      <description>.lity-content .news-item {background: #fff;padding: 30px 20px;}.news-item .green-power {color: #0f674e;font-weight: 700;}.news-item .green-power img {width: 32px;vertical-align: middle;margin-right: 5px;}@media (min-width: 750px) {.news-item .green-power img {width: 48px;} }.news-item .title-2 {font-weight: 700;}New Website, Same Green Power!The Gardener Project just got a brand new website with multiple improvements and we are all very excited!</description>
+    </item>
+    
+    <item>
+      <title>Garden Linux</title>
+      <link>https://gardener.cloud/news/003/00/</link>
+      <pubDate>Sun, 10 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://gardener.cloud/news/003/00/</guid>
+      <description>Garden Linux</description>
+    </item>
+    
+    <item>
+      <title>Gardener 1.3.0 Released</title>
+      <link>https://gardener.cloud/news/001/release/</link>
+      <pubDate>Tue, 21 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://gardener.cloud/news/001/release/</guid>
+      <description>Gardener 1.3.0 Released See what&#39;s new and noteworthy presented by the team on the regular community meeting recording.
+Bookmark the agenda for upcomming community meetings and stay up to date with what&#39;s going on in the project.
+Enjoy!</description>
+    </item>
+    
+  </channel>
+</rss>

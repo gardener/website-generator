@@ -1,4 +1,5 @@
 .idea
 hugo/content
+hugo/public
+hugo/content
 node_modules
-

@@ -1,0 +1,1706 @@
+
+	<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Project Gardener Website - A Managed Kubernetes Service Done Right"><meta name="copyright" content="Copyright 2019 Gardener project authors.">
+  
+    <title>Security Release Process :: Gardener</title>
+    <link rel="icon" type="image/x-icon" href='https://gardener.cloud/images/favicon.ico'>
+    <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-32x32.png' sizes="32x32">
+    <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-16x16.png' sizes="16x16">
+    
+    
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2FGNSX');</script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());    
+    gtag('config', 'UA-165447164-1');
+    </script>
+
+
+    
+    <link href="/css/nucleus.css?1589207796" rel="stylesheet">
+    <link href="/css/fontawesome-all.min.css?1589207796" rel="stylesheet">
+    <link href="/css/hybrid.css?1589207796" rel="stylesheet">
+    <link href="/css/featherlight.min.css?1589207796" rel="stylesheet">
+    <link href="/css/perfect-scrollbar.min.css?1589207796" rel="stylesheet">
+    <link href="/css/auto-complete.css?1589207796" rel="stylesheet">
+    <link href="/css/skeleton.css?1589207796" rel="stylesheet">
+    <link href="/css/sheetslider.css?1589207796" rel="stylesheet">
+
+    <script src="/js/moment.js?1589207796"></script>
+    <script src="/js/vivus.js?1589207796"></script>
+    <script src="/js/scrollreveal.js?1589207796"></script>
+    <script src="/js/inlineSVG.js?1589207796"></script>
+    <link href="/css/theme.css?1589207796" rel="stylesheet">
+    <link href="/css/hugo-theme.css?1589207796" rel="stylesheet">
+
+
+    
+      <link href="/css/theme-gardener.css?1589207796" rel="stylesheet">
+    
+
+    <script src="/js/jquery-2.x.min.js?1589207796"></script>
+    <script src="/js/fixed.js?1589207796"></script>
+    
+    <style type="text/css">
+      :root #header + #content > #left > #rlblock_left{ 
+          display:none !important;
+      }
+    </style>
+
+      <link rel="stylesheet" href="https://gardener.cloud/css/custom.css">
+
+  </head>
+
+
+  <body class="" data-url="/documentation/045_contribute/10_code/12-security_guide/">
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2FGNSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    <nav id="sidebar" class="">
+
+  <div id="header-wrapper">
+    <div id="header">
+      <a id="logo" href="https://gardener.cloud/">
+
+	<svg width="90px" height="90px" viewBox="0 0 90 90" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+		
+		<title>logo</title>
+		<defs>
+			<path d="M41.8864954,0.994901575 C42.8830405,0.514990742 44.5028956,0.516982644 45.4953045,0.994901575 L76.8159138,16.0781121 C77.8124589,16.5580229 78.8208647,17.8257185 79.0659694,18.8995926 L86.8015211,52.7912589 C87.0476474,53.8696088 86.6852538,55.4484075 85.9984855,56.3095876 L64.3239514,83.4885938 C63.6343208,84.3533632 62.1740175,85.0543973 61.0725268,85.0543973 L26.3092731,85.0543973 C25.2031915,85.0543973 23.7446167,84.3497739 23.0578485,83.4885938 L1.38331434,56.3095876 C0.693683723,55.4448182 0.335174016,53.865133 0.580278769,52.7912589 L8.31583044,18.8995926 C8.56195675,17.8212428 9.57347722,16.556031 10.5658861,16.0781121 L41.8864954,0.994901575 Z" id="path-1"></path>
+			<linearGradient x1="12.7542673%" y1="-18.6617048%" x2="88.2666158%" y2="84.6075483%" id="linearGradient-3">
+				<stop stop-color="#FFFFFF" offset="0%"></stop>
+				<stop stop-color="#439246" offset="100%"></stop>
+			</linearGradient>
+			<linearGradient x1="50%" y1="4.93673768%" x2="148.756007%" y2="175.514523%" id="linearGradient-4">
+				<stop stop-color="#FFFFFF" offset="0%"></stop>
+				<stop stop-color="#439246" offset="100%"></stop>
+			</linearGradient>
+			<linearGradient x1="19.1574381%" y1="-9.04800713%" x2="82.2203149%" y2="77.9084293%" id="linearGradient-5">
+				<stop stop-color="#FFFFFF" offset="0%"></stop>
+				<stop stop-color="#439246" offset="100%"></stop>
+			</linearGradient>
+			<linearGradient x1="57.4403751%" y1="26.3148481%" x2="137.966711%" y2="158.080556%" id="linearGradient-6">
+				<stop stop-color="#FFFFFF" offset="0%"></stop>
+				<stop stop-color="#439246" offset="100%"></stop>
+			</linearGradient>
+		</defs>
+		<g id="logo" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+			<g id="Rectangle-2" transform="translate(1.000000, 0.000000)">
+				<mask id="mask-2" fill="white">
+					<use xlink:href="#path-1"></use>
+				</mask>
+				<use id="Mask" fill="#009F76" xlink:href="#path-1"></use>
+				<polygon fill="#000000" opacity="0.289628623" mask="url(#mask-2)" points="-17.6484375 54.5224609 30.8242188 25.0791016 63.4726562 58.5 24.7324219 92.6689453"></polygon>
+			</g>
+			<path d="M56.8508631,39.260019 C56.4193519,40.443987 55.6088085,41.581593 54.6736295,42.1938694 L46.5997298,47.4799783 C45.2142627,48.3870654 42.9749783,48.3916494 41.5825097,47.4799783 L33.50861,42.1938694 C32.123143,41.2867823 31,39.206345 31,37.545932 L31,26.4150304 C31,25.6897174 31.2131118,24.884885 31.5692681,24.1324532 L56.8508631,39.260019 Z" id="Combined-Shape" fill="url(#linearGradient-3)" transform="translate(43.925432, 36.147233) scale(-1, 1) translate(-43.925432, -36.147233) "></path>
+			<path d="M56.0774672,25.1412464 C56.4306829,25.8903325 56.6425556,26.6907345 56.6425556,27.4119019 L56.6425556,38.5428034 C56.6425556,40.2027013 55.5264141,42.2790698 54.1339456,43.1907408 L46.0600459,48.4768498 C44.6745788,49.3839368 42.4352943,49.3885208 41.0428258,48.4768498 L32.9689261,43.1907408 C32.2918101,42.7474223 31.6773514,42.0238435 31.2260376,41.206007 L56.0774672,25.1412464 Z" id="Combined-Shape" fill="url(#linearGradient-4)" transform="translate(43.821278, 37.246598) scale(-1, 1) translate(-43.821278, -37.246598) "></path>
+			<path d="M65.0702134,57.1846889 C64.5985426,58.2007851 63.8367404,59.1236871 62.9788591,59.6189851 L47.37497,68.6278947 C45.9443535,69.4538615 43.6226022,69.4525546 42.1942494,68.6278947 L26.5903603,59.6189851 C25.1597438,58.7930183 24,56.7816693 24,55.1323495 L24,37.1145303 C24,36.3487436 24.249712,35.5060005 24.6599102,34.7400631 L65.0702134,57.1846889 Z" id="Combined-Shape" fill="url(#linearGradient-5)"></path>
+			<path d="M65.0189476,34.954538 C65.3636909,35.6617313 65.5692194,36.42021 65.5692194,37.1145303 L65.5692194,55.1323495 C65.5692194,56.7842831 64.4072119,58.7943252 62.9788591,59.6189851 L47.37497,68.6278947 C45.9443535,69.4538615 43.6226022,69.4525546 42.1942494,68.6278947 L26.5903603,59.6189851 C25.9237304,59.2341061 25.3159155,58.5918431 24.8568495,57.8487596 L65.0189476,34.954538 Z" id="Combined-Shape" fill="url(#linearGradient-6)"></path>
+		</g>
+	</svg>
+	<h1>Gardener</h1>
+	<h2>Universal Kubernetes at Scale</h2>
+</a>
+
+    </div>
+    <div class="searchbox">
+    <label for="search-by"><i class="fas fa-search"></i></label>
+    <input data-search-input id="search-by" type="text" placeholder="Search...">
+    <span data-search-clear=""><i class="fas fa-close"></i></span>
+</div>
+
+<script type="text/javascript" src="/js/lunr.min.js?1589207796"></script>
+<script type="text/javascript" src="/js/auto-complete.js?1589207796"></script>
+<script type="text/javascript">
+    
+        var baseurl = '\/';
+    
+</script>
+<script type="text/javascript" src="/js/search.js?1589207796"></script>
+
+  </div>
+
+
+  <div class="highlightable">
+      <ul class="topics">
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/" title="Documentations" class="dd-item
+        parent
+        
+        
+        ">
+        
+          <a href="/documentation/">
+              
+              Documentations
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/about/" title="Getting Started" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/about/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_started.svg"/>
+              
+              Getting Started
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/030-architecture/" title="Architecture" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/030-architecture/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_architecture.svg"/>
+              
+              Architecture
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/gardener/" title="Gardener" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/gardener/">
+              
+              Gardener
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/gardenctl/" title="gardenctl" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/gardenctl/">
+              
+              gardenctl
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/mcm/" title="Machine Controller Manager" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/mcm/">
+              
+              Machine Controller Manager
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/cert-broker/" title="Cert Broker" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/cert-broker/">
+              
+              Cert Broker
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/dns-cm/" title="DNS Controller Manager" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/dns-cm/">
+              
+              DNS Controller Manager
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/dashboard/" title="Dashboard" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/dashboard/">
+              
+              Dashboard
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/kubify/" title="kubify" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/kubify/">
+              
+              kubify
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/components/bouquet/" title="Bouquet" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/components/bouquet/">
+              
+              Bouquet
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/contribute/" title="Contribute" class="dd-item
+        parent
+        
+        
+        ">
+        
+          <a href="/contribute/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_contribute.svg"/>
+              
+              Contribute
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/contribute/code/" title="Code" class="dd-item
+        parent
+        
+        
+        ">
+        
+          <a href="/contribute/code/">
+              
+              Code
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/10-contribution_guide/" title="Contribution Guide" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/10-contribution_guide/">
+              
+              Contribution Guide
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/12-security_guide/" title="Security Release Process" class="dd-item
+        parent
+        active
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/12-security_guide/">
+              
+              Security Release Process
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/13_env/" title="Enviroment" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/13_env/">
+              
+              Enviroment
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/14_cicd/" title="CI/CD" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/14_cicd/">
+              
+              CI/CD
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/15_conf_secrets/" title="Configuration and Usage" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/15_conf_secrets/">
+              
+              Configuration and Usage
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/20_dependencies/" title="Dependencies" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/20_dependencies/">
+              
+              Dependencies
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/27_deploy_into_cluster/" title="Deploy into a Cluster" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/27_deploy_into_cluster/">
+              
+              Deploy into a Cluster
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/30_deploy_seed_into_aks/" title="Deploy into AKS" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/30_deploy_seed_into_aks/">
+              
+              Deploy into AKS
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/37_process/" title="Process" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/37_process/">
+              
+              Process
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/10_code/40_repositories/" title="Repositories" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/10_code/40_repositories/">
+              
+              Repositories
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/contribute/docs/" title="Documentation" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/contribute/docs/">
+              
+              Documentation
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/20_documentation/10_organisation/" title="Organisation" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/20_documentation/10_organisation/">
+              
+              Organisation
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/20_documentation/20_style/" title="Style Guide" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/20_documentation/20_style/">
+              
+              Style Guide
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/" title="Markdown" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/documentation/045_contribute/20_documentation/25_markup/">
+              
+              Markdown
+          </a>
+          
+          
+            <ul>
+              
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/attachments/" title="Attachments" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/attachments/">
+            Attachments
+        </a>
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/button/" title="Button" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/button/">
+            Button
+        </a>
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/expand/" title="Expand" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/expand/">
+            Expand
+        </a>
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/mermaid/" title="Mermaid" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/mermaid/">
+            Mermaid
+        </a>
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+      <li data-nav-id="/documentation/045_contribute/20_documentation/25_markup/notice/" title="Notice" class="dd-item ">
+        <a href="/documentation/045_contribute/20_documentation/25_markup/notice/">
+            Notice
+        </a>
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/tutorials/" title="Tutorials" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/tutorials/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_tutorials.svg"/>
+              
+              Tutorials
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/using-gardener/administrator/" title="Administrator" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/using-gardener/administrator/">
+              
+              Administrator
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/using-gardener/developer/topic/" title="App Developer" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/using-gardener/developer/topic/">
+              
+              App Developer
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/curated-links/" title="Curated Links" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/curated-links/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_links.svg"/>
+              
+              Curated Links
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/api-reference/" title="API Reference" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/api-reference/">
+              
+              <img class="navigation-icon" src="https://gardener.cloud/images/navigation_tutorials.svg"/>
+              
+              API Reference
+          </a>
+          
+          
+            <ul>
+              
+              
+                
+              
+              
+
+
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/api-reference/core/" title="Core" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/api-reference/core/">
+              
+              Core
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/api-reference/extensions/" title="Extensions" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/api-reference/extensions/">
+              
+              Extensions
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+                
+                    
+
+
+
+
+  
+    
+    <li data-nav-id="/api-reference/settings/" title="Settings" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/api-reference/settings/">
+              
+              Settings
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+                
+              
+
+            </ul>
+        
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/adopter/" title="Adopters" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/adopter/">
+              
+              Adopters
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/blog/" title="Blogs" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/blog/">
+              
+              Blogs
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/community/" title="Community" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/community/">
+              
+              Community
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/installer/" title="" class="dd-item
+        
+        
+        
+        ">
+        
+          <a href="/installer/">
+              
+              
+          </a>
+          
+          
+      
+    </li>
+  
+
+
+            
+                 
+                 
+
+
+
+
+  
+    
+    <li data-nav-id="/news/" title="News" class="dd-item
+        
+        
+        
+        ">
+        
+        
+    </li>
+  
+
+
+            
+      </ul>
+      <section id="footer">
+        
+<script async defer src="https://buttons.github.io/buttons.js"></script>
+
+      </section>
+
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+
+        <section id="body">
+        <div id="overlay"></div>
+        <div class="padding highlightable  body-inner-wrapper">
+
+          <div>
+              <div id="top-bar">
+                
+                    <div id="top-github-link">
+                        <a class="github-link" title='Edit this page'
+                        
+                          href='https://github.com/gardener/documentation/blob/master/security-release-process.md'
+                        
+                         target="blank">
+                        <i class="fa fa-code-fork"></i>
+                          <span id="top-github-link-text">Edit this page</span>
+                        </a>
+                    </div>
+                
+
+                
+                <div id="breadcrumbs" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <span id="sidebar-toggle-span">
+                    <a href="#" id="sidebar-toggle" data-sidebar-toggle="">
+                    <i class="fa fa-bars"></i>
+                    </a>
+                    </span>
+                    
+                    <span id="toc-menu"><i class="fa fa-list-alt"></i></span>
+                    
+                    <span class="links">
+                        
+            
+            
+                
+                    
+                    
+            
+            
+                
+                    
+                    
+            
+            
+                
+                    
+                    
+            
+            
+                
+                    
+                    
+            
+            
+              <a href='/'>Gardener</a> > <a href='/documentation/'>Documentations</a> > <a href='/contribute/'>Contribute</a> > <a href='/contribute/code/'>Code</a> > Security Release Process
+            
+          
+                
+            
+          
+                
+            
+          
+                
+            
+          
+                
+            
+          
+                    </span>
+                </div>
+
+                
+                <div class="progress">
+    <div class="wrapper">
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#gardener-security-team">Gardener Security Team</a></li>
+    <li><a href="#disclosures">Disclosures</a>
+      <ul>
+        <li><a href="#private-disclosure-processes">Private Disclosure Processes</a></li>
+        <li><a href="#public-disclosure-processes">Public Disclosure Processes</a></li>
+      </ul>
+    </li>
+    <li><a href="#patch-release-and-public-communication">Patch, Release, and Public Communication</a>
+      <ul>
+        <li><a href="#fix-team-organization">Fix Team Organization</a></li>
+        <li><a href="#fix-development-process">Fix Development Process</a></li>
+        <li><a href="#fix-disclosure-process">Fix Disclosure Process</a></li>
+        <li><a href="#fix-release-day">Fix Release Day</a></li>
+        <li><a href="#retrospective">Retrospective</a></li>
+        <li><a href="#communication-channel">Communication Channel</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+                
+              </div>
+          </div>
+
+          
+
+          <div id="body-inner">
+
+          
+
+
+
+<br>
+<br>
+
+
+<h1 id="gardener-security-release-process">Gardener Security Release Process</h1>
+<p>Gardener is a growing community of volunteers and users. The Gardener community has adopted this security disclosure and response policy to ensure we responsibly handle critical issues.</p>
+<h2 id="gardener-security-team">Gardener Security Team</h2>
+<p>Security vulnerabilities should be handled quickly and sometimes privately. The primary goal of this process is to reduce the total time users are vulnerable to publicly known exploits.
+The Gardener Security Team is responsible for organizing the entire response including internal communication and external disclosure but will need help from relevant developers and release managers to successfully run this process. The initial Gardener Security Team will consist of the following volunteers:</p>
+<ul>
+<li>Olaf Beier, (<strong><a href="https://github.com/olafbeier">@olafbeier</a></strong>)</li>
+<li>Vasu Chandrasekhara, (<strong><a href="https://github.com/vasu1124">@vasu1124</a></strong>)</li>
+<li>Alban Crequy, (<strong><a href="https://github.com/alban">@alban</a></strong>)</li>
+<li>Norbert Hamann, (<strong><a href="https://github.com/norberthamann">@norberthamann</a></strong>)</li>
+<li>Claudia Hölters, (<strong><a href="https://github.com/hoeltcl">@hoeltcl</a></strong>)</li>
+<li>Oliver Kling, (<strong><a href="https://github.com/oliverkling">@oliverkling</a></strong>)</li>
+<li>Vedran Lerenc, (<strong><a href="https://github.com/vlerenc">@vlerenc</a></strong>)</li>
+<li>Dirk Marwinski, (<strong><a href="https://github.com/marwinski">@marwinski</a></strong>)</li>
+<li>Michael Schubert, (<strong><a href="https://github.com/schu">@schu</a></strong>)</li>
+<li>Matthias Sohn, (<strong><a href="https://github.com/msohn">@msohn</a></strong>)</li>
+<li>Frederik Thormaehlen, (<strong><a href="https://github.com/ThormaehlenFred">@ThormaehlenFred</a></strong>)</li>
+<li>Christian Cwienk (<strong><a href="https://github.com/ccwienk">@ccwienk</a></strong>)</li>
+</ul>
+<h2 id="disclosures">Disclosures</h2>
+<h3 id="private-disclosure-processes">Private Disclosure Processes</h3>
+<p>The Gardener community asks that all suspected vulnerabilities be privately and responsibly disclosed. If you've found a vulnerability or a potential vulnerability in Gardener please let us know by writing an e-mail to <a href="mailto:secure@sap.com">secure@sap.com</a>. We'll send a confirmation e-mail to acknowledge your report, and we'll send an additional e-mail when we've identified the issue positively or negatively.</p>
+<h3 id="public-disclosure-processes">Public Disclosure Processes</h3>
+<p>If you know of a publicly disclosed vulnerability please IMMEDIATELY e-mail to <a href="mailto:secure@sap.com">secure@sap.com</a> to inform the Gardener Security Team about the vulnerability so they may start the patch, release, and communication process.</p>
+<p>If possible the Gardener Security Team will ask the person making the public report if the issue can be handled via a <a href="#private-disclosure-process">private disclosure process</a> (for example if the full exploit details have not yet been published). If the reporter denies the request for private disclosure, the Gardener Security Team will move swiftly with the fix and release process. In extreme cases GitHub can be asked to delete the issue but this generally isn't necessary and is unlikely to make a public disclosure less damaging.</p>
+<h2 id="patch-release-and-public-communication">Patch, Release, and Public Communication</h2>
+<p>For each vulnerability a member of the Gardener Security Team will volunteer to lead coordination with the &ldquo;Fix Team&rdquo; and is responsible for sending disclosure e-mails to the rest of the community. This lead will be referred to as the &ldquo;Fix Lead.&rdquo; The role of the Fix Lead should rotate round-robin across the Gardener Security Team. Note that given the current size of the Gardener community it is likely that the Gardener Security Team is the same as the &ldquo;Fix team.&rdquo; (I.e., all maintainers). The Gardener Security Team may decide to bring in additional contributors for added expertise depending on the area of the code that contains the vulnerability. All of the time lines below are suggestions and assume a private disclosure. The Fix Lead drives the schedule using his best judgment based on severity and development time. If the Fix Lead is dealing with a public disclosure all time lines become ASAP (assuming the vulnerability has a CVSS score &gt;= 7; see below). If the fix relies on another upstream project's disclosure time line, that will adjust the process as well. We will work with the upstream project to fit their time line and best protect our users.</p>
+<h3 id="fix-team-organization">Fix Team Organization</h3>
+<p>The Fix Lead will work quickly to identify relevant engineers from the affected projects and packages and CC those engineers into the disclosure thread. These selected developers are the Fix Team.
+The Fix Lead will give the Fix Team access to a private security repository to develop the fix.</p>
+<h3 id="fix-development-process">Fix Development Process</h3>
+<p>The Fix Lead and the Fix Team will create a <a href="https://www.first.org/cvss/specification-document">CVSS</a> using the <a href="https://www.first.org/cvss/calculator/3.0">CVSS Calculator</a>. The Fix Lead makes the final call on the calculated CVSS; it is better to move quickly than make the CVSS perfect.
+The Fix Team will notify the Fix Lead that work on the fix branch is complete once there are LGTMs on all commits in the private repository from one or more maintainers.
+If the CVSS score is under 7.0 (a <a href="https://www.first.org/cvss/specification-document#i5">medium severity score</a>) the Fix Team can decide to slow the release process down in the face of holidays, developer bandwidth, etc. These decisions must be discussed on the private <a href="#communication-channel">Gardener Security mailing list</a>.</p>
+<h3 id="fix-disclosure-process">Fix Disclosure Process</h3>
+<p>With the fix development underway, the Fix Lead needs to come up with an overall communication plan for the wider community. This Disclosure process should begin after the Fix Team has developed a Fix or mitigation so that a realistic time line can be communicated to users. The Fix Lead will inform the <a href="#communication-channel">Gardener mailing list</a> that a security vulnerability has been disclosed and that a fix will be made available in the future on a certain release date. The Fix Lead will include any mitigating steps users can take until a fix is available. The communication to Gardener users should be actionable. They should know when to block time to apply patches, understand exact mitigation steps, etc.</p>
+<h3 id="fix-release-day">Fix Release Day</h3>
+<p>The Release Managers will ensure all the binaries are built, publicly available, and functional before the Release Date.
+The Release Managers will create a new patch release branch from the latest patch release tag + the fix from the security branch. As a practical example if v0.12.0 is the latest patch release in gardener.git a new branch will be created called v0.12.1 which includes only patches required to fix the issue.
+The Fix Lead will cherry-pick the patches onto the master branch and all relevant release branches. The Fix Team will <a href="https://github.com/lgtmco/lgtm">LGTM</a> and merge.
+The Release Managers will merge these PRs as quickly as possible. Changes shouldn't be made to the commits even for a typo in the CHANGELOG as this will change the git sha of the already built and commits leading to confusion and potentially conflicts as the fix is cherry-picked around branches.
+The Fix Lead will request a CVE from the SAP Product Security Response Team via email to <a href="mailto:cna@sap.com">cna@sap.com</a> with all the relevant information (description, potential impact, affected version, fixed version, CVSS v3 base score and supporting documentation for the CVSS score) for every vulnerability. The Fix Lead will inform the <a href="#communication-channel">Gardener mailing list</a> and announce the new releases, the CVE number (if available), the location of the binaries, and the relevant merged PRs to get wide distribution and user action.</p>
+<p>As much as possible this e-mail should be actionable and include links how to apply the fix to users environments; this can include links to external distributor documentation. The recommended target time is 4pm UTC on a non-Friday weekday. This means the announcement will be seen morning Pacific, early evening Europe, and late evening Asia.
+The Fix Lead will remove the Fix Team from the private security repository.</p>
+<h3 id="retrospective">Retrospective</h3>
+<p>These steps should be completed after the Release Date. The retrospective process <a href="https://landing.google.com/sre/book/chapters/postmortem-culture.html">should be blameless</a>.</p>
+<p>The Fix Lead will send a retrospective of the process to the <a href="#communication-channel">Gardener mailing list</a> including details on everyone involved, the time line of the process, links to relevant PRs that introduced the issue, if relevant, and any critiques of the response and release process.
+The Release Managers and Fix Team are also encouraged to send their own feedback on the process to the <a href="#communication-channel">Gardener mailing list</a>. Honest critique is the only way we are going to get good at this as a community.</p>
+<h3 id="communication-channel">Communication Channel</h3>
+<p>The <a href="#private-disclosure-process">private</a> or <a href="#public-disclosure-process">public disclosure process</a> should be triggered exclusively by writing an e-mail to <a href="mailto:secure@sap.com">secure@sap.com</a>.</p>
+<p>Gardener security announcements will be communicated by the Fix Lead sending an e-mail to the <a href="https://groups.google.com/forum/#!forum/gardener">Gardener mailing list</a> (reachable via <a href="mailto:gardener@googlegroups.com">gardener@googlegroups.com</a>) as well as posting a link in the <a href="https://kubernetes.slack.com/messages/CB57N0BFG/details/">Gardener Slack channel</a>. Public discussions about Gardener security announcements and retrospectives, will primarily happen in the Gardener mailing list. Thus Gardener community members who are interested in participating in discussions related to the Gardener Security Release Process are encouraged to join the Gardener mailing list (<a href="https://support.google.com/groups/answer/1067205?hl=en">how to find and join a group</a>)</p>
+<p>The members of the <a href="#gardener-security-team">Gardener Security Team</a> are subscribed to the private <a href="https://groups.google.com/forum/#!forum/gardener-security">Gardener Security mailing list</a> (reachable via <a href="mailto:gardener-security@googlegroups.com">gardener-security@googlegroups.com</a>).</p>
+
+
+
+
+
+
+        </div> 
+        
+
+      </div>
+
+
+        
+        
+
+        
+            
+            <div class="howto_tickets">
+                <span class="open_github_ticket">
+                    <h3 class="open_github_ticket_header"><img src="https://gardener.cloud/images/branding/github.svg"/> Report an issue</h3>
+                    See a typo? Have a picture to recommend? Want to edit some words/phrases/sentences?
+                    You can simply submit a ticket to request we make the change. If you are github savvy, submit a
+                    pull request.
+                    
+                    
+                    
+                    <a href="#" onclick="return createIssue('https://github.com/gardener/documentation/issues/new','https:\/\/github.com\/gardener\/documentation\/blob\/master\/security-release-process.md','https:\/\/github.com\/gardener\/documentation\/blob\/master\/security-release-process.md')" target="_blank">Open Github Issue <i class="fa fa-external-link" aria-hidden="true"></i></a>
+                    <br>
+                </span>
+            </div>
+        
+
+
+    </section>
+    
+    <div style="left: -1000px; overflow: scroll; position: absolute; top: -1000px; border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;">
+
+      <div style="border: none; box-sizing: content-box; height: 200px; margin: 0px; padding: 0px; width: 200px;"></div>
+    </div>
+    <script src="/js/clipboard.min.js?1589207796"></script>
+    <script src="/js/perfect-scrollbar.min.js?1589207796"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1589207796"></script>
+    <script src="/js/jquery.sticky.js?1589207796"></script>
+    <script src="/js/featherlight.min.js?1589207796"></script>
+    <script src="/js/html5shiv-printshiv.min.js?1589207796"></script>
+    <script src="/js/highlight.pack.js?1589207796"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom.71422.js?1589207796"></script>
+    <script src="/js/learn.js?1589207796"></script>
+    <script src="/js/hugo-learn.js?1589207796"></script>
+
+    <link href="/mermaid/mermaid.css?1589207796" type="text/css" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1589207796"></script>
+    <script>
+        mermaid.initialize({ startOnLoad: true, htmlLables: true });
+        function createIssue(issueUrl, page, url) {
+            var uri = issueUrl+"?title=Documentation issue on page \""+page+"\"";
+            uri = uri+ "&body=\n\n<- DESCRIBE MISSING OR FAULTY DOCUMENTATION HERE->\n\n---\nPage: ["+ page +"]("+
+            url+ ")\ndon't remove the link to the page. It's required for the processor"
+            var res = encodeURI(uri);
+            res +="&labels=area/documentation"
+            window.open(res,"issue")
+            return false;
+        }
+
+        $(document).ready(function() {
+            var $window = $(window);
+            $window.sr = ScrollReveal({ reset: false});
+            $window.sr.reveal('.reveal-fast', { duration: 2000 });
+            $window.sr.reveal('.reveal-slow', { duration: 2500 });
+            $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'300px' });
+            $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'300px' });
+
+            inlineSVG.init();
+        });
+
+    </script>
+    
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2FGNSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+    
+    <script>
+    
+    
+    function setMenuHeight() {
+        $('#sidebar .highlightable').height($('#sidebar').innerHeight() - $('#header-wrapper').height() - 40);
+        $('#sidebar .highlightable').perfectScrollbar('update');
+        var $blockList = $('#sidebar .highlightable');
+        if ($blockList.length && window.localStorage) {
+            var position = localStorage.getItem('blockListScrollPosition');
+            if (position) {
+                $blockList.scrollTop(position);
+            }
+            $(window).on('unload', function () {
+                var scrollPosition = $blockList.scrollTop();
+                localStorage.setItem('blockListScrollPosition', scrollPosition);
+            });
+        }
+    }
+
+    
+    
+    (function () {
+        $("#body-inner a").not(".inline")
+            .each(function () {
+                if (this.hostname != window.location.hostname && this.href.indexOf("mailto:")===-1) {
+                    this.target = '_blank';
+                    $(this).addClass("externalLink");
+                    if($(this).find("img").length===0) {
+                        this.innerHTML += '<i class="fa fa-external-link" aria-hidden="true"></i>';
+                    }
+                }
+            });
+
+
+
+    })();
+
+    </script>
+  </body>
+</html>

@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en" class="js csstransforms3d"></html>
+
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1"><meta name="description" content="Project Gardener Website - A Managed Kubernetes Service Done Right"><meta name="copyright" content="Copyright 2019 Gardener project authors.">
+    <title>Gardener</title>
+    <link rel="icon" type="image/x-icon" href='https://gardener.cloud/images/favicon.ico'>
+    <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-32x32.png' sizes="32x32">
+    <link rel="icon" type="image/png"    href='https://gardener.cloud/images/favicon-16x16.png' sizes="16x16">
+    
+    
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-W2FGNSX');</script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());    
+    gtag('config', 'UA-165447164-1');
+    </script>
+
+    <link rel="stylesheet" href="/css/normalize.css?1589207795">
+    <link rel="stylesheet" href="/css/skeleton.css?1589207795">
+    <link rel="stylesheet" href="/css/font-awesome.css?1589207795">
+    <link rel="stylesheet" href="/css/slick.css?1589207795">
+    <link rel="stylesheet" href="/css/slick-theme.css?1589207795">
+
+    <link rel="preload" href="/fonts/BentonSansBook/BentonSans-Book.woff2?1589207795" as="font" type="font/woff2" crossorigin="anonymous">
+
+    
+    <link rel="stylesheet" href="/css/custom.css?1589207795">
+    <link rel="stylesheet" href="/css/lp.css?1589207795">
+    <link rel="stylesheet" href="/css/news.css?1589207795">
+    <link rel="stylesheet" href="/css/auto-complete.css?1589207795">
+    
+    
+    <script src="/js/resizesensor.js?1589207795"></script>
+    <script src="/js/jquery.min.js?1589207795"></script>
+    <script src="/js/jquery.tmpl.js?1589207795"></script>
+    <script src="/js/vivus.js?1589207795"></script>
+    <script src="/js/jquery.sticky.js?1589207795"></script>
+    <script src="/js/jquery.easing.js?1589207795"></script>
+    <script src="/js/fixed.js?1589207795"></script>
+    <script src="/js/scrollreveal.js?1589207795"></script>
+    <script src="/js/counter.js?1589207795"></script>
+    <script src="/js/slick.js?1589207795"></script>
+    <script src="/js/toastr.js?1589207795"></script>
+    <script src="/js/jso.js?1589207795"></script>
+    <script src="/js/inlineSVG.js?1589207795"></script>
+  </head>
+
+  <body data-url="/">
+
+    <style>
+  .navigation .navbar-collapse .menu .links .link {
+    display: none;
+  }
+  .navigation .navbar-collapse .menu .links .link[data-depth="0"],
+  .navigation .navbar-collapse .menu .links .link[data-depth="1"],
+  .navigation .navbar-collapse .menu .links .link[data-depth="2"] {
+    display: block;
+  }
+  .navigation .navbar-collapse .menu .links .link a {
+    color: #fff;
+  }
+  .navigation .navbar-collapse .menu .links .link.active  {
+    color: inherit;
+  }
+  .navigation .navbar-collapse .menu {
+    display: block;
+  }
+</style>
+<script>
+  $(document).ready(function(){
+    function initStickyNav() {
+      var tln = document.querySelector(".tln");
+      if (!tln) {
+          return;
+      }
+      var bodySelector = document.getElementsByTagName("body")[0];
+      var tlnHeight = tln.clientHeight;
+      var stickyPointEl = document.querySelector(".sticky-nav-point");
+      var stickyPoint = stickyPointEl.clientHeight + stickyPointEl.offsetTop;
+      
+      var stickyNavigation = function() {
+          if (window.pageYOffset + tlnHeight >= stickyPoint) {
+              bodySelector.classList.add("has-sticky-navigation");
+              tln.classList.add("sticky-top");
+          } else {
+              bodySelector.classList.remove("has-sticky-navigation");
+              tln.classList.remove("sticky-top");
+          }
+      }
+  
+      window.onscroll = function() {
+          stickyNavigation();
+      };
+    }
+    initStickyNav();
+  });
+</script>
+<div class="tln fixedsticky"><header class="navigation">
+    <div class="container">
+      <div class="navigation-wrapper">
+        <a href="/" class="logo">
+          <img src="/images/logo.svg" />
+          <span class="title">Gardener</span>
+        </a>
+        <a class="nav-button navbar-toggler" href="#"><span class="icon-menu"></span></a>
+        
+        <div class="navbar-collapse">
+          <ul class="links"><li class="link ">
+              <a class="btn primary" href="/about/">Getting Started</a>
+            </li>
+            <li class="link ">
+              <a href="/blog/">Blogs</a>
+            </li>
+            <li class="link ">
+              <a href="/community/">Community</a>
+            </li>
+            <li class="link ">
+              <a href="/adopter/">Adopters</a>
+            </li>
+            <li class="link has-child ">
+              <a href="/documentation/">Documentation</a>
+              <nav class="container menu">
+                <ul class="topics links">
+                  </ul>
+              </nav>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </header>
+</div>
+<script>
+  
+  $(".navigation .navbar-toggler").click(function(evt){
+    $(".navigation .navbar-collapse").toggle();
+    $(".navigation").toggleClass("collapsed");
+    $(".navigation .search-box").toggle();
+  })
+</script>
+
+
+
+
+    <div class="landingpage">
+
+      <div id="hero">
+        <div class="container">
+          <div class="content">
+            <div class="hero-text">
+              <img src="/images/lp/gardener-logo.svg" alt="Gardener Logo">
+              <div class="sub-title">
+                  Deliver fully-managed clusters at scale everywhere with your own Kubernetes-as-a-Service
+              </div>
+              <div class="hero-actions"><a class="action-btn" href="/about/"><span>Get Started</span></a>
+              </div>
+            </div>
+            <div class="hero-img">
+              <img src="/images/lp/gardener-logo.svg">
+            </div>
+          </div>
+          <div class="news">
+            <ul class="news-feed">
+
+  
+  
+  
+  <li class="news-box">
+    <a href="#0" data-lity>
+      <div class="feed-heading">
+        <span class="name">Gardener Website 2.0</span>
+        <span class="event-date">Live!</span>
+      </div>
+    </a>
+    <div class="content lity-hide" id="0"><div data-url="https://gardener.cloud/news/002/00/"><style>
+.lity-content .news-item {
+  background: #fff;
+  padding: 30px 20px;
+}
+.news-item .green-power {
+  color: #0f674e;
+  font-weight: 700;
+}
+.news-item .green-power img {
+  width: 32px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+@media (min-width: 750px) {
+  .news-item .green-power img  {
+    width: 48px;
+  } 
+}
+
+.news-item .title-2 {
+  font-weight: 700;
+}
+</style>
+<div class="news-item">
+    <h1 class="title-2">New Website, Same <span class="green-power"><img src="../../../images/logo.svg">Green Power</span>!</h1>
+
+    <p>The Gardener Project just got a brand new website with multiple improvements and we are all very excited!</p>
+
+    <p>
+        Go ahead and explore around now and help us spread the word: <a href="https://gardener.cloud" target="_blank">https://gardener.cloud</a>
+        <div  style="margin-top: 10px">
+            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text=" " data-url="https://gardener.cloud" data-hashtags="GardenerProject" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        </div>
+    </p>
+    
+    <p>Read more about changes and plans in the <a href="../../../blog/2020-05-11/00">blog post</a>.</p>
+</div></div></div>
+  </li>
+  
+
+  
+  
+  
+  
+
+  
+  
+  
+  <li class="news-box">
+    <a href="#2" data-lity>
+      <div class="feed-heading">
+        <span class="name">Garden Linux</span>
+        <span class="event-date">Out Now!</span>
+      </div>
+    </a>
+    <div class="content lity-hide" id="2"><div data-url="https://gardener.cloud/news/003/00/">
+<div>
+    <h1 class="title-1">Garden Linux</h1>
+</div></div></div>
+  </li>
+  
+
+  
+  
+  
+  
+  
+  
+  <li class="news-box">
+    <a href="#3" data-lity>
+      <div class="feed-heading">
+        <span class="name">Gardener 1.3.0 Released</span>
+        <span class="event-date">April 16, 2020</span>
+      </div>
+    </a>
+    <div class="content lity-hide" id="3"><div data-url="https://gardener.cloud/news/001/release/"><div class="release-notes">
+<h1 id="gardener-130-released">Gardener 1.3.0 Released</h1>
+<p>See what's new and noteworthy presented by the team on the regular community meeting <a href="https://www.youtube.com/watch?v=bC4b5V_e3Po&amp;t=76s">recording</a>.<br>
+Bookmark the <a href="https://docs.google.com/document/d/1314v8ziVNQPjdBrWp-Y4BYrTDlv7dq2cWDFIa9SMaP4/edit#">agenda</a> for upcomming community meetings and stay up to date with what's going on in the project.</p>
+<p>Enjoy!</p>
+</div></div></div>
+  </li>
+  
+
+</ul>
+
+
+<link href="/lity/lity.css?1589207795" rel="stylesheet">
+<script src="/lity/lity.js?1589207795"></script>
+<script src="/js/clipboard.min.js?1589207795"></script>
+
+<style>
+  .lity-container {
+    margin: 0;
+    overflow: hidden;
+  }
+  .lity-content .content {
+    overflow-y: auto;
+    min-height: 50vh;
+  }
+  .lity-tools {
+    display: block;
+    height: 4rem;
+    padding: 1rem 0;
+    border: 0;
+    z-index: 9994;
+    font-size: 2rem;
+    text-decoration: none;
+    text-align: right;
+    color: #fff;
+    cursor: pointer;
+  }
+  .lity-tools a.tool-btn, .lity-tools a.tool-btn:hover, 
+  .lity-tools a.tool-btn:focus, .lity-tools a.tool-btn:visited {
+    display: inline-block;
+    margin-left: 10px;
+    width: 3rem;
+    height: 2rem;
+    text-align: center;    
+    text-decoration: none;
+    color: #fff;
+  }
+  .lity-tools .status {
+    display: none;
+    font-family: BentonSans, sans-serif;
+    font-size: 2rem;
+    color: #fff;
+  }
+</style>
+
+<script>
+  $(document).on('lity:open', function(event, instance) {
+    var $l = $(event.target);
+    $wr = $('<div class="lity-tools"><span class="status">Link to this news copied</span></div>');
+    $wr.append('<a href="#" class="tool-btn copy" data-clipboard-text="" title="Copy the link to this news"><span class="icon-share"></span></a>');
+    var $close = $l.find('.lity-container button.lity-close').remove();
+    $('<a href="#" class="tool-btn close"><span class="icon-close"></span></a>')
+      .on("click", function(){
+        this.close();
+      }.bind(instance))
+      .appendTo($wr);
+    $l.find('.lity-container').prepend($wr);
+  });
+  $(document).on('lity:ready', function(event, instance) {
+    var url = $(event.target).find('div[data-url]').attr('data-url');
+    $('.tool-btn.copy').attr('data-clipboard-text', url);
+
+    var h = $('.lity-container .lity-content .content').outerHeight() - $('.lity-container .lity-tools').outerHeight();
+    $('.lity-container .lity-content .content').removeAttr('style').css({"max-height": "calc("+h+"px - 10vh)"});
+
+    var clipboard = new ClipboardJS('.tool-btn.copy');
+    clipboard.on('success', function(e) {
+          $('.lity-tools .status').fadeIn(100).fadeOut(700);
+      });
+  });
+  $(document).on('lity:resize', function(event, instance) {
+    var h = $('.lity-container .lity-content .content').outerHeight() - $('.lity-container .lity-tools').outerHeight();
+    $('.lity-container .lity-content .content').removeAttr('style').css({"max-height": "calc("+h+"px - 10vh)"});
+  })
+</script>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="section highlights sticky-nav-point" id="section00" style="background: #0f674e">
+        <div class="container">
+          <h2 class="title-1 is-centered">A Managed Kubernetes Service Done Right</h2>
+          <div class="row is-centered">
+            <div class="four columns">
+              <div class="sub-title">Cloud-Native at Heart</div>
+              <div>Kubernetes is a cloud-native enabler built around the principles for a resilient, manageable, observable, highly automated, loosely coupled system.
+                Gardener is a standard Kubernetes extension and adheres to the same concepts by design.</div>
+            </div>
+            <div class="four columns">
+              <div class="sub-title">Open Community Effort</div>
+              <div>The Gardener project is committed to fostering an open community of collaborators and adopters. We aim to deliver a standard solution that meets the needs of our entire community and ecosystem.</div>
+            </div>
+            <div class="four columns">
+              <div class="sub-title">Solving Authentic Problems</div>
+              <div>Gardener was born as a solution for actual and common problems such as control on the Kubernetes stack, minimize the TCO, infrastructures pervasiveness, operating in restricted/regulated environments or bare metal, massive scale.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="container" id="section01">
+        <div class="highlights-banner">
+          <div class="banner-item">
+            <img class="icon" src="/images/lp/lp-banner-everywhere.svg">
+            <span class="icon-title">Everywhere</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src="/images/lp/lp-banner-homogeneous.svg">
+            <span class="icon-title">Homogeneous</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src="/images/lp/lp-banner-managed.svg">
+            <span class="icon-title">Fully Managed</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src="/images/lp/lp-banner-customizable.svg">
+            <span class="icon-title">Customizable</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src="/images/lp/lp-banner-scalable.svg">
+            <span class="icon-title">Scalable</span>
+          </div>
+        </div>  
+      </div>
+
+      <div class="section has-dark-bg" id="section02">
+        <div class="container is-centered">
+          <h2 class="title-1 has-subtitle">Make It All About Kubernetes Again</h2>
+          <span class="sub-title">Gardener abstracts environment specifics to deliver the same homogeneous Kubernetes-native DevOps experience everywhere</span>    
+          <div class="content">
+              <img class="one-half column image" src="/images/lp/lp-gardener-diagram.svg" style="max-width: 1000px;margin: 0 auto;">
+          </div>
+        </div>
+      </div>
+      <div class="section papercut" id="section02a">
+        <div class="container is-centered">
+          <div class="content">
+            <div class="three columns">
+              <div class="sub-title" style="margin-bottom: 10px"><img src="/images/lp/icon-cluster-hub.svg" style="vertical-align:middle;max-width: 32px;margin-right: 10px"><span>Cluster Fleet Hub</span></div>
+              <div>A single Gardener can scale to register and manage thousands of clusters, regardless of their location - public/private clouds, DC bare metal, regulated environments... anywhere a Gardenlet is deployed.</div>
+            </div>
+            <div class="three columns">
+              <div class="sub-title" style="margin-bottom: 10px"><img src="/images/lp/k8s-green.svg" style="vertical-align:middle;max-width: 32px;margin-right: 10px"><span>Kubernetes Native</span></div>
+              <div>Gardener manages cluster workloads very much like pods are orchestrated in Kubernetes. Cluster workloads are scheduled and Gardenlets, similar to Kubelets, take over to manage them in particular environments in a loosely coupled, controller pattern.</div>
+            </div>
+            <div class="three columns">
+              <div class="sub-title" style="margin-bottom: 10px"><img src="/images/lp/lp-banner-managed.svg" style="vertical-align:middle;max-width: 32px;margin-right: 10px"><span>Fully Managed</span></div>
+              <div>Gardenlets manage control planes, worker nodes (full lifecycle, autohealing and updates) and cluster components, such as network, monitoring and logging or other extensions, to provide automation, resilience and observability.</div>
+            </div>
+            <div class="three columns">
+              <div class="sub-title" style="margin-bottom: 10px"><img src="/images/lp/lp-banner-scalable.svg" style="vertical-align:middle;max-width: 32px;margin-right: 10px"><span>Scalable by Design</span></div>
+              <div>A single Kubernetes cluster can host an enormous amount of control planes. Gardener can always scale up as needed and orchestrate more control plane clusters on each supported infrastructure. In fact those  clusters can also be managed by Gardener for maximum efficency.</div>
+            </div>
+          </div>
+          <a class="call-for-action" href="https://github.com/gardener/gardener/tree/master/docs" target="_blank">Learn more about the concepts behind Gardener</a>
+        </div>
+      </div>
+
+      <div class="section papercut" id="section03">
+        <div class="container is-centered">
+          <h2 class="title-2 has-subtitle">Get The Kubernetes You Really Want</h2>
+          <span class="sub-title">The clusters Gardener provisions are like DIY clusters, except you don’t need to manage it yourself</span>
+          <div class="content is-centered">
+            <img class="one-half column image" src="/images/lp/lp-section-001.svg">
+            <div class="one-half column strong-points right">
+              <div>
+                <span class="subtitle">Configurable</span>
+                <p>Gardener control planes allow you to control a wide range of variables necessary for advanced use cases and integration scenarios.</p>
+              </div>
+              <div>
+                <span class="subtitle">The updates you want, when you want them</span>
+                <p>No more unexpected updates! Gardener allows you to update Kubernetes to the version you want, when you want it, rather than when your cloud provider decides. It even allows you to update your Host OS when desired.</p>
+              </div>
+              <div>
+                <span class="subtitle">100% Kubernetes compliant</span>
+                <p>Gardener is Kubernetes native and is not shy to be completely transparent on its compliance, proudly holding the 100% badge with <a href="https://k8s-testgrid.appspot.com/conformance-gardener">public evidence</a> for that.</p>
+              </div>
+              <div>
+                <span class="subtitle">The one you already know</span>
+                <p>Gardener delivers the same Kubernetes you know from kubernetes.io and are certified for. The same binaries, the same tools; you are already trained to use it.</p>
+              </div>                
+            </div>
+          </div>
+        </div>
+      </div>
+  
+      <div class="section papercut" id="section04">
+        <div class="container is-centered">
+          <h2 class="title-2 has-subtitle">Everywhere You Want It</h2>
+          <span class="sub-title">The compute resources you need, wherever you want them.</span>    
+          <div class="row">
+            <ul class="platforms-container">
+              <li>
+                <img src="/images/lp/platforms/alibaba-cloud.svg" class="platform-icon">
+                <div class="platform-text">Alibaba Cloud</div>
+              </li>
+              <li>
+                <img src="/images/lp/platforms/aws.svg" class="platform-icon">
+                <div class="platform-text">Amazon Web Services</div>
+              </li>
+              <li>
+                <img src="/images/lp/platforms/microsoft-azure.svg" class="platform-icon">
+                <div class="platform-text">Microsoft Azure</div>
+              </li>
+              <li>
+                <img src="/images/lp/platforms/google-cloud-platform.svg" class="platform-icon">
+                <div class="platform-text">Google Cloud Platform</div>
+              </li>
+              <li>
+                <img src="/images/lp/platforms/yours.svg" class="platform-icon emphasized">
+              </li>
+              <li>
+                <img src="/images/lp/platforms/metalstack.svg" class="platform-icon">
+                <div class="platform-text">Metal-Stack</div>
+              </li>
+              <li>
+                <img src="/images/lp/platforms/openstack.svg" class="platform-icon">
+                <div class="platform-text">OpenStack</div>
+              </li>
+              <li>
+                <img src="/images/lp/platforms/packet-rgb.png" class="platform-icon">
+                <div class="platform-text">Packet Cloud</div>
+              </li>
+              <li>
+                <img src="/images/lp/platforms/vmware.svg" class="platform-icon">
+                <div class="platform-text">VMware vSphere</div>
+              </li>
+            </ul>
+          </div>
+          <a href="https://github.com/gardener/gardener/blob/master/docs/development/new-cloud-provider.md" class="call-for-action">New infrastructure use case? Let’s build it together</a>
+        </div>
+      </div>
+      
+      <div class="section papercut" id="section05">
+        <div class="container is-centered">
+          <h2 class="title-2 has-subtitle">However You Want It</h2>
+          <span class="sub-title">Extend And Contribute To Gardener</span>    
+          <div class="content is-centered">
+            <div class="one-half column strong-points left">
+              <div>
+                <span class="subtitle">Extensible By Design</span>
+                <p>Gardener is modular system of managed extensions around a robust core, fully adaptable in multiple dimensions. Extend the existing extension set or add completely new pieces. And while you are at it, why not contribute them back to the community and benefit from contributions of others?</p>
+              </div>
+              <div>
+                <span class="subtitle">Managed Extensions</span>
+                <p>Gardener watches over and manages extensions, automatically reconciling their actual and desired state as designed.</p>
+              </div>
+              <div>
+                <span class="subtitle">Control the Stack</span>
+                <p>You are in control of the setup for the cluster that will be delivered by Gardener. Choose the components you actually need.  </p>
+              </div>
+            </div>
+            <img class="one-half column image" src="/images/lp/extensbility-overview.svg">
+          </div>
+          <a href="https://github.com/gardener/gardener/blob/master/docs/extensions/overview.md" class="call-for-action">Learn more about Gardener’s extensibility</a>
+          </div>
+        </div>
+
+        <div class="section papercut" id="section07">
+          <div class="container is-centered">
+            <span class="title-2 has-subtitle">Featured Success Stories</span>
+            
+            <div class="content success-stories">
+              <div class="column one-third">
+                <img class="image" src="/images/branding/beezlab.png" style="max-width:100px">
+              </div>
+              <div class="column one-third">
+                <img class="image" src="/images/branding/pingcap.jpeg">
+              </div>
+              <div class="column one-third">
+                <img class="image" src="/images/branding/fits.png">
+              </div>
+            </div>
+            
+              <a class="call-for-action" href="/adopter/">Find out more success stories from our community</a>
+            
+              
+          </div>
+        </div>
+  
+        <div class="section" style="padding: 100px 0">
+          <div class="container is-centered">
+            <span class="title-2 has-subtitle">Ready To Get Started?</span>
+            <a href="https://gardener.cloud/installer" class="call-for-action" style="margin: 50px auto"><b>Generate installer</b> now and give it a try!</a>
+          </div>
+        </div>
+
+      </div><style>
+ 
+</style>
+<footer class="footer">
+  <div class="container footer-wrapper">
+    <ul class="nav"><li><a href="/about/">Getting Started</a></li><li><a href="/blog/">Blogs</a></li><li><a href="/news/">News</a></li><li><a href="/documentation/">Documentation</a></li><li><a href="/community/">Community</a></li></ul>
+    <img src="/images/lp/gardener-logo.svg" alt="Logo Gardener" class="logo"/>
+    <ul class="media-wr">
+      <li>
+        <a target="_blank" href="https://kubernetes.slack.com/archives/CB57N0BFG">
+          <img src="/images/branding/slack-logo-white.svg" class="media-icon"/>
+          <div class="media-text">Slack</div>
+        </a>
+      </li>          
+      <li>
+        <a target="_blank" href="https://github.com/gardener">
+          <img src="/images/branding/github-mark-logo.png" class="media-icon" />
+          <div class="media-text">GitHub</div>
+        </a>
+      </li>
+      <li>
+        <a target="_blank" href="https://www.youtube.com/channel/UCwUhwKFREV8Su0gwAJQX7tw">
+          <img src="/images/branding/youtube-logo-dark.svg" class="media-icon" />
+          <div class="media-text">YouTube</div>
+        </a>
+      </li>                      
+      <li>
+        <a target="_blank" href="https://twitter.com/GardenerProject">
+          <img src="/images/branding/twitter-logo-white.svg" class="media-icon" />
+          <div class="media-text">Twitter</div>
+        </a>
+      </li>
+    </ul>
+    <span class="copyright">Copiright 2019 Gardener project authors. Privacy Statement</span>
+  </div>
+</footer>
+<script src="/js/counter.js?1589207795"></script>
+    <script src="/js/main-lp.js?1589207795"></script>
+
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2FGNSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+        
+    <script src="/js/clipboard.min.js?1589207795"></script>
+    <script src="/js/perfect-scrollbar.min.js?1589207795"></script>
+    <script src="/js/perfect-scrollbar.jquery.min.js?1589207795"></script>
+    <script src="/js/jquery.sticky.js?1589207795"></script>
+    <script src="/js/featherlight.min.js?1589207795"></script>
+    <script src="/js/html5shiv-printshiv.min.js?1589207795"></script>
+    <script src="/js/highlight.pack.js?1589207795"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script src="/js/modernizr.custom.71422.js?1589207795"></script>
+
+    <link href="/mermaid/mermaid.css?1589207795" type="text/css" rel="stylesheet" />
+    <script src="/mermaid/mermaid.js?1589207795"></script>
+    <script>
+      mermaid.initialize({ startOnLoad: true, htmlLables: true });
+      function createIssue(issueUrl, page, url) {
+          var uri = issueUrl+"?title=Documentation issue on page \""+page+"\"";
+          uri = uri+ "&body=\n\n<- DESCRIBE MISSING OR FAULTY DOCUMENTATION HERE->\n\n---\nPage: ["+ page +"]("+
+          url+ ")\ndon't remove the link to the page. It's required for the processor"
+          var res = encodeURI(uri);
+          res +="&labels=area/documentation"
+          window.open(res,"issue")
+          return false;
+      }
+
+      $(document).ready(function() {
+          var $window = $(window);
+          $window.sr = ScrollReveal({ reset: false});
+          $window.sr.reveal('.reveal-fast', { duration: 2000 });
+          $window.sr.reveal('.reveal-slow', { duration: 2500 });
+          $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'300px' });
+          $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'300px' });
+
+          inlineSVG.init();
+      });
+    </script>
+
+    
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-W2FGNSX"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    
+
+
+
+  </body>
+  
+</html>
