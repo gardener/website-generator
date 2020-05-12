@@ -60,6 +60,20 @@ fi
 cd ..
 fi
 
+# Setup authentication tokens if not supplied in env
+if [[ -z "$GIT_OAUTH_TOKEN" ]] && [[ -z "$GIT_USER" ]] && [[ -z "$GIT_PASSWORD" ]]; then
+  # Check if gardener-ci is available (in local setup)
+  command -v gardener-ci >/dev/null && gardenci="true" || gardenci=""
+  if [[ $gardenci == "true" ]]; then
+    gardener-ci config attribute --cfg-type github --cfg-name github_com --key technical_users --json > github_com_yaml
+    if [[ -r github_com_yaml ]]; then
+      export GIT_USER=$(echo `jq .[0].username github_com_yaml`)
+      export GIT_PASSWORD=$(echo `jq .[0].password github_com_yaml`)
+      rm github_com_yaml
+    fi
+  fi
+fi
+
 # Run pregeneration: pull remote content
 #
 echo  ;
