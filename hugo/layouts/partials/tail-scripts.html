@@ -1,5 +1,4 @@
     {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
-    <script src="{{"js/clipboard.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
     <script src="{{"js/perfect-scrollbar.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
     <script src="{{"js/perfect-scrollbar.jquery.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
     <script src="{{"js/jquery.sticky.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
@@ -34,6 +33,7 @@
           inlineSVG.init();
       });
     </script>
+    <script>new ClipboardJS('.clipboard-copy');</script>
 
     {{ partial "google-tags-manager-frame.html" . }}
 
