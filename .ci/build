@@ -67,9 +67,8 @@ if [[ -z "$GIT_OAUTH_TOKEN" ]] && [[ -z "$GIT_USER" ]] && [[ -z "$GIT_PASSWORD" 
   if [[ $gardenci == "true" ]]; then
     gardener-ci config attribute --cfg-type github --cfg-name github_com --key technical_users --json > github_com_yaml
     if [[ -r github_com_yaml ]]; then
-      # get credentials and strip lead/trail quotes
-      export GIT_USER=$(sed -e 's/^"//' -e 's/"$//'<<<$(jq .[0].username github_com_yaml))
-      export GIT_PASSWORD=$(sed -e 's/^"//' -e 's/"$//'<<<$(jq .[0].password github_com_yaml))
+      # get auth token and strip lead/trail quotes
+      export GIT_OAUTH_TOKEN=$(sed -e 's/^"//' -e 's/"$//'<<<$(jq .[0].authToken github_com_yaml))
       rm github_com_yaml
     fi
   fi
