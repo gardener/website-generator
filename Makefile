@@ -27,14 +27,16 @@ setup:
 .PHONY: build
 build:
 	@.ci/build
-# `make image-build` builds a new docker image. Use thee $TAG environment variable to specify the image tag. 
-# Example: `$ make image-build TAG=v10`
+# `make image-build` builds a new docker image. Use thee $TAG environment variable to specify the image tag.
+# The tag `latest` is automatically assigned in addition.
+# Example: `$ make image-build TAG=10.0.0`
 .PHONY: image-build
 image-build:
 	@scripts/image-build
 # `make image-push` pushes a local image to the project GCR repository. An installed and authenticated gcloud tool 
-# is required to perform the operation. The image to push is identified by its tag.
-# Example: `$ make image-push TAG=v10`
+# is required to perform the operation. The image to push is identified by its tag. Use semver for tags. Tag `latest`
+# is automatically assigned in addition.
+# Example: `$ make image-push TAG=10.0.0`
 .PHONY: image-push
 image-push:
 	@scripts/image-push

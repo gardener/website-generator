@@ -79,6 +79,7 @@ fi
 echo  ;
 echo "Running pre-site-building tasks" ;
 npm install
+npm prune --production
 export CONTENT=$generator/hugo/content
 node ./node/index.js
 
