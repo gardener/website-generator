@@ -434,6 +434,10 @@ blockquote p {
   display: flex;
 }
 
+#body-inner p{
+    line-height: 1.5em;
+}
+
 .title {
   font-size: calc(20px + 1.5vw);
   text-transform: capitalize;
