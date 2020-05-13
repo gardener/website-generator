@@ -1,23 +1,0 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-  <channel>
-    <title>App Developer on Gardener</title>
-    <link>https://gardener.cloud/using-gardener/developer/topic/</link>
-    <description>Recent content in App Developer on Gardener</description>
-    <generator>Hugo -- gohugo.io</generator>
-    <language>en-US</language>
-    
-	<atom:link href="https://gardener.cloud/using-gardener/developer/topic/index.xml" rel="self" type="application/rss+xml" />
-    
-    
-    <item>
-      <title>By Skill</title>
-      <link>https://gardener.cloud/using-gardener/developer/experience/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://gardener.cloud/using-gardener/developer/experience/</guid>
-      <description>Learning MaterialEverything you need to know about running your software.by Topic by Experience Level </description>
-    </item>
-    
-  </channel>
-</rss>
