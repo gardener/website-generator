@@ -20,15 +20,20 @@
 <script>
   $(document).ready(function(){
     function initStickyNav() {
+      var stickyPoint;
       var tln = document.querySelector(".tln");
       if (!tln) {
           return;
       }
-      var bodySelector = document.getElementsByTagName("body")[0];
-      var tlnHeight = tln.clientHeight;
       var stickyPointEl = document.querySelector(".sticky-nav-point");
-      var stickyPoint = stickyPointEl.clientHeight + stickyPointEl.offsetTop;
-      
+      if (stickyPointEl == null) {
+        stickyPointEl = document.querySelector("body");
+        stickyPoint = 0;
+      } else {
+        stickyPoint = stickyPointEl.clientHeight + stickyPointEl.offsetTop;
+      }
+      var bodySelector = document.getElementsByTagName("body")[0];
+      var tlnHeight = tln.clientHeight;     
       var stickyNavigation = function() {
           if (window.pageYOffset + tlnHeight >= stickyPoint) {
               bodySelector.classList.add("has-sticky-navigation");

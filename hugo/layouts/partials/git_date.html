@@ -1,17 +1,17 @@
 {{ if .Params.publishdate }}
-  <span id="0"></span>
-  <script>$("#0").html(moment("{{- .Params.publishdate -}}").fromNow())</script>
+  <span data-publishdate="{{- .PublishDate.Format "2006-01-02" -}}"></span>
 {{else}}
 {{ with .File }}
   {{ with .Path }}
     {{ $url := print "content/" . ".json"}}
     {{ if (fileExists $url) -}}
       {{ $id := md5 $url}}
-      {{range (first 1 (getJSON $url)) }}
-      {{- if (hasPrefix .commit.message "[int]") -}}
+      {{ $break := false}}
+      {{range (getJSON $url) }}
+      {{- if or ($break)  (hasPrefix .commit.message "[int]")  -}}
       {{- else -}}
-        <span id="{{- $id -}}"></span>
-        <script>$("#{{- $id -}}").html(moment("{{- .commit.author.date -}}").fromNow())</script>
+        {{ $break:= true }}
+        <span data-publishdate="{{- .commit.author.date -}}"></span>
       {{ end }}
       {{ end }}
     {{ end }}
