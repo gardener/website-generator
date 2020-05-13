@@ -23,17 +23,22 @@
       }
 
       $(document).ready(function() {
-          var $window = $(window);
-          $window.sr = ScrollReveal({ reset: false});
-          $window.sr.reveal('.reveal-fast', { duration: 2000 });
-          $window.sr.reveal('.reveal-slow', { duration: 2500 });
-          $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'300px' });
-          $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'300px' });
+        var $window = $(window);
+        $window.sr = ScrollReveal({ reset: false});
+        $window.sr.reveal('.reveal-fast', { duration: 2000 });
+        $window.sr.reveal('.reveal-slow', { duration: 2500 });
+        $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'300px' });
+        $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'300px' });
 
-          inlineSVG.init();
+        inlineSVG.init();
+
+        $("[data-publishdate]").each(function(){
+          $(this).text(moment($(this, "YYYY-MM-DD").attr("data-publishdate")).fromNow());
+        });
+          
+        new ClipboardJS('.clipboard-copy');
       });
     </script>
-    <script>new ClipboardJS('.clipboard-copy');</script>
 
     {{ partial "google-tags-manager-frame.html" . }}
 

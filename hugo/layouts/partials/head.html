@@ -19,19 +19,19 @@
   <link href="{{"css/auto-complete.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   <link href="{{"css/skeleton.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   <link href="{{"css/sheetslider.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
-  <script src="{{"js/fixed.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
-  <script src="{{"js/moment.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
-  <script src="{{"js/vivus.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
-  <script src="{{"js/scrollreveal.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
-  <script src="{{"js/inlineSVG.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   <link href="{{"css/theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
 
   <link href="{{"css/hugo-theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   {{with .Site.Params.themeVariant}}
     <link href="{{(printf "css/theme-%s.css" .) | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   {{end}}
-
+  
+  <script src="{{"js/moment.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{"js/vivus.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{"js/scrollreveal.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{"js/inlineSVG.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   <script src="{{"js/jquery.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{"js/fixed.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   <script src="{{"js/clipboard.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   
   <style type="text/css">

@@ -44,12 +44,16 @@
     {{end}}
     {{end}}
   </div>
-<script src="/js/modernizr.custom.min.js"></script>
-<script src="/js/jsrender.min.js"></script>
-<script src="/js/main.js"></script>
-<script>
-  $('.blogs .clipboard-copy').click(function(e){
-    e.preventDefault();
-  });
-</script>
+
 {{ end }}
+
+{{ define "tails-scripts-custom" }}
+  <script src="/js/modernizr.custom.min.js"></script>
+  <script src="/js/jsrender.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    $('.blogs .clipboard-copy').click(function(e){
+      e.preventDefault();
+    });
+  </script>
+{{end}}
