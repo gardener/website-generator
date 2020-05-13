@@ -1,5 +1,5 @@
 .idea
 hugo/content
 hugo/public
-hugo/content
+hugo/resources
 node_modules
