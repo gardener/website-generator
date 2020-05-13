@@ -30,5 +30,6 @@
     </div>
     {{- partial "footer.html" . -}}
     {{ partial "tail-scripts.html" . }}
+    {{ block "tails-scripts-custom" . }}{{ end }}
   </body>
 </html>

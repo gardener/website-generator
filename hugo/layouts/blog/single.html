@@ -4,53 +4,58 @@
   <script src="/js/moment.js"></script>
   <div class="page blogs">
     <style>
-      .fixedsticky {
-        position: sticky!important;
-        top: 0;
-        z-index: 1;
-        background: #03ce9a;
-      }
-      a.nav-link {
-        font-family: BentonSans, sans-serif;
-        line-height: 1!important;
-        font-size: 1.6rem;
-        margin: 1rem 0;
-        padding: 1rem;
-        color: var(--color-emphasis);
-        border: 1px solid #d5755d;
-        display: inline-block;
-      }
-      a.nav-link:hover {
-        text-decoration: none;
-        color: #fff;
-        background-color: var(--color-emphasis);
-        border-color: #d5755d;
-      }
-      a.nav-link::after {
-          display: none!important;
-      }
-      .blogs .author {
-        display: block;
-        font-size: 1.3rem;
-        text-align: center;
-        line-height: 1;
-        margin: 10px 0 5px;
-      }
-      .blogs .publishdate {
-        display: block;
-        font-size: 1.3rem;
-        text-align: center;
-        line-height: 1;
+      article .wrapper{
+        border-bottom: none!important;
       }
     </style>  
     <div class="page">
       <a href="{{ "blog" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to Blogs</a>
-      {{ .Content }}
+      <article class="post row" data-path="">
+        <div class="wrapper">
+            <div class="two columns">
+                {{$avatar := (trim ( trim (partial "git_avatar.html" .) " \r\n") " ") }}
+                {{$author := (trim (trim (partial "git_author.html" .) " \r\n") " ") }}
+                {{$publishdate := (trim (trim (partial "git_date.html" .) " \r\n") " ")}}
+                {{if gt (len $avatar) 0}}
+                <img {{ printf "src=%q" $avatar | safeHTMLAttr }}
+                    class="user-icon icons"
+                    alt="blog author avatar">
+                {{else}}
+                    <div style="width:10px;height:10px;"></div>
+                {{end}}
+                {{if gt (len $author) 0}}
+                <span class="author">{{$author | safeHTML}}</span>
+                {{end}}
+                {{if gt (len $publishdate) 0}}
+                <span class="publishdate">{{$publishdate | safeHTML}}</span>
+                {{end}}
+            </div>
+            <div class="ten columns">
+                <h2>{{ .Title }}<a href="{{.URL | relURL}}" class="title-link clipboard-copy"><i class="fa fa-link"></i></a></h2>
+                <div class="share-ribbon">
+                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="{{ .Title }}" data-url="{{.URL | absURL}}" data-hashtags="GardenerProject" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                  <!--button class="btn copy-url clipboard-copy" data-clipboard-text="{{.URL | absURL}}" href="{{.URL | absURL}}"><i class="fa fa-copy"></i></button-->
+                </div>
+                <p>
+                    {{.Content}}
+                </p>
+            </div>
+        </div>
+      </article>
       <a href="{{ "blog" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to Blogs</a>
     </div>
   </div>
-<script src="/js/modernizr.custom.min.js"></script>
-<script src="/js/jsrender.min.js"></script>
-<script src="/js/main.js"></script>
-
 {{ end }}
+
+{{ define "tails-scripts-custom" }}
+  <script src="/js/modernizr.custom.min.js"></script>
+  <script src="/js/jsrender.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.blogs .clipboard-copy').click(function(e){
+        e.preventDefault();
+      });
+    })
+  </script>
+{{end}}

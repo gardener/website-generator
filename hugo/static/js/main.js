@@ -54,7 +54,7 @@ $(window).load(function() {
 		$('.menu ul').addClass('active');
 	});
 
-
+/*
 	// reverse the z-index of all "page" elements to ensure that
 	// the stacked page effect works well
 	//
@@ -123,6 +123,7 @@ $(window).load(function() {
 			.addTo(controller);
 		}
 	})
+*/
 
 	$(document).on("click", "a[href^='#']", function (e) {
 		var id = $(this).attr("href");

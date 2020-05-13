@@ -23,13 +23,13 @@
       }
 
       $(document).ready(function() {
-        var $window = $(window);
+/*        var $window = $(window);
         $window.sr = ScrollReveal({ reset: false});
         $window.sr.reveal('.reveal-fast', { duration: 2000 });
         $window.sr.reveal('.reveal-slow', { duration: 2500 });
         $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'300px' });
         $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'300px' });
-
+*/
         inlineSVG.init();
 
         $("[data-publishdate]").each(function(){
@@ -41,5 +41,3 @@
     </script>
 
     {{ partial "google-tags-manager-frame.html" . }}
-
-{{ block "tails-scripts-custom" . }}{{ end }}

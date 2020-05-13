@@ -14,42 +14,60 @@ table, td {
   height:auto;
   text-align: center;
   padding:20px;
+  h1{
+    margin:0;
+    font-size:calc(20px + 2.5vw);
+    font-weight:100;
+    text-align: center;
+    white-space: nowrap;
+  }
+  h2{
+    margin:0 auto;
+    font-size:calc(12px + 0.8vw);
+    font-weight:400;
+    text-align: center;
+    width:90%;
+  }
 }
 
-.blog-header h1{
-  margin:0;
-  font-size:calc(20px + 2.5vw);
-  font-weight:100;
-  text-align: center;
-  white-space: nowrap;
-}
-
-.blog-header h2{
-  margin:0 auto;
-  font-size:calc(12px + 0.8vw);
-  font-weight:400;
-  text-align: center;
-  width:90%;
+.page {
+  a.nav-link {
+    font-family: BentonSans, sans-serif;
+    line-height: 1!important;
+    font-size: 1.6rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    color: var(--color-emphasis);
+    border: 1px solid #d5755d;
+    display: inline-block;
+  }
+  a.nav-link:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: var(--color-emphasis);
+    border-color: #d5755d;
+  }
+  a.nav-link::after {
+      display: none!important;
+  }
 }
 
 .blogs {
   background-color: white;
   padding-top:40px;
   h1, h2, h3, h4 {
+    font-family: var(--font-family-regular)!important;
     text-align: left;
-    font-weight: 300;
     color: #0b8062!important;
   }
   h2{
-    font-size: 2em;
+    font-size: 36px;
     padding-top: 0;
     margin: 0 0 .4em;
   }
   h3{
     font-size: 1.2em;
   }
-
-  
   .author {
     display: block;
     font-size: 1.3rem;
@@ -82,7 +100,7 @@ table, td {
   .share-ribbon > * {
     margin-right: 10px;
   }
-   a.title-link {
+  a.title-link {
     color: #b6b6b6;
     text-decoration: none;
     padding-left: 10px;
@@ -91,11 +109,6 @@ table, td {
   }
   a.title-link:hover{
     color: var(--color-emphasis);
-  }
-  h2 {
-    color: var(--color-font)!important;
-    font-family: var(--font-family-regular)!important;
-    font-size: 36px;
   }
 
   .post {

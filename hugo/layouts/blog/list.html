@@ -52,8 +52,10 @@
   <script src="/js/jsrender.min.js"></script>
   <script src="/js/main.js"></script>
   <script>
-    $('.blogs .clipboard-copy').click(function(e){
-      e.preventDefault();
-    });
+    $(document).ready(function(){
+      $('.blogs .clipboard-copy').click(function(e){
+        e.preventDefault();
+      });
+    })
   </script>
 {{end}}
