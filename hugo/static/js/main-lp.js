@@ -28,7 +28,10 @@ $(document).ready(function () {
         responsive: [
           {
             breakpoint: 1200,
-            settings: "unslick"
+            settings: {
+              slidesToShow: 4,
+              slidesToScroll: 4
+            }
           },
             {
               breakpoint: 900,
@@ -46,13 +49,20 @@ $(document).ready(function () {
             }]
     }
 
+    var newsBoxes = $(".news-feed .news-box");
+    newsSlickSettings.responsive.forEach(breakpoint => {
+      if (newsBoxes.length <= breakpoint.settings.slidesToShow){
+        breakpoint.settings = "unslick";
+      }
+    });
+
     $('#hero .news .news-feed').slick(newsSlickSettings);
 
     // Reslick only if it's not slick()
     $(window).on('resize', function() {
-        if (!$('#hero .news ul').hasClass('slick-initialized')) {
+      if (!$('#hero .news ul').hasClass('slick-initialized')) {
         return $('#hero .news ul').slick(newsSlickSettings);
-        }
+      }
     });
 
     // function initStickyNav() {
