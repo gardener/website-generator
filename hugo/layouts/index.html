@@ -25,7 +25,8 @@
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
     <link rel="stylesheet" href="{{"css/custom.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
     <link rel="stylesheet" href="{{"css/lp.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
-    <link rel="stylesheet" href="{{"css/news.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+    {{ $style := resources.Get "sass/news.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+    <link rel="stylesheet" href="{{ $style.Permalink }}">
     <link rel="stylesheet" href="{{"css/auto-complete.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
     
     <!-- Scripts (web pack required in the future)

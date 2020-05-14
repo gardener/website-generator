@@ -1,33 +1,26 @@
-{{ define "page-toolbar" }}
-  {{ partial "page-topbar.html" . }}
+{{ define "page-topbar" }}
+  <!--a href="{{ "news" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to news</a>
+  <a href="#" class="tool-btn copy" data-clipboard-text="{{.URL | relURL}}" title="Copy the link to this news"><span class="fa fa-clone"></span></a-->
 {{ end }}
 {{ define "page-content" }}
-  <style>
-    .page {
-        padding: 5rem 0;
-    }
-    a.nav-link {
-        font-family: BentonSans, sans-serif;
-        line-height: 1!important;
-        font-size: 1.6rem;
-        margin: 1rem 0;
-        padding: 1rem;
-        color: var(--gd-color-brand-1);
-        border: 1px solid #d5755d;
-    }
-    a.nav-link:hover {
-        text-decoration: none;
-        color: #fff;
-        background-color: var(--gd-color-brand-1);
-        border-color: #d5755d;
-    }
-    a.nav-link::after {
-        display: none!important;
-    }
-  </style>
+  {{ $style := resources.Get "sass/news.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.Permalink }}">
   <div class="page">
-    <a href="{{ "news" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to news</a>
     {{ .Content }}
-    <a href="{{ "news" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to news</a>
   </div>
+  <a href="{{ "news" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to news</a>
 {{ end }}
+{{define "tails-scripts-custom" }}
+<!--
+  <script src="/js/modernizr.custom.min.js"></script>
+  <script src="/js/jsrender.min.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    $(document).ready(function(){
+      $('.clipboard-copy').click(function(e){
+        e.preventDefault();
+      });
+    })
+  </script>
+-->
+{{end}}
