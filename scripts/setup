@@ -34,28 +34,30 @@ fi
 
 if [[ ! -d "${contentRepoPath}" ]]; then
   echo "gardener/documentation repo is not available locally." 
-  git clone "https://github.com/${ghorg}/documentation.git" "$(${READLINK_BIN} -f ../..)/documentation"
-  contentRepoPath="${READLINK_BIN} -f ../../documentation"
+  git clone "https://github.com/${ghorg}/documentation.git" ${contentRepoPath}
 fi
 if [[ ! -d "${websiteRepoPath}" ]]; then
   echo "gardener/website repo is not available locally." 
-  git clone "https://github.com/${ghorg}/website.git" "$(${READLINK_BIN} -f ../..)/website"
-  websiteRepoPath="$(${READLINK_BIN} -f ../../website)"
+  git clone "https://github.com/${ghorg}/website.git" ${websiteRepoPath}
 fi
 
 content=${contentRepoPath}/website
 
 # create symlink hugo/content -> /documentation/website, if it doesn't exists
 #
-if [[ ! -d "hugo/content" ]]; then
+if [[ ! -L "hugo/content" ]]; then
 echo 'linking hugo/content <==> /documentation/website'
 cd hugo
-# WSL users: If the script fails with "You do not have sufficient privilege to perform this operation.", enable the Windows Developer Mode.
-if [[ -z "${WSL_DISTRO_NAME}" ]]; then
-  ../scripts/mklink.sh content $(wslpath -w $content)
-else
+
+if [[ $(uname) == 'Darwin' ]]; then
   ln -s $content $generatorRepoPath/hugo/content
+else
+  # WSL users: If the script fails with "You do not have sufficient privilege to perform this operation.", enable the Windows Developer Mode.
+  if [[ -z "${WSL_DISTRO_NAME}" ]]; then
+    ../scripts/mklink.sh content $(wslpath -w $content)
+  fi
 fi
+
 symlinkoutput="$(ls -lt content)"
 echo "${symlinkoutput}"
 cd ..
