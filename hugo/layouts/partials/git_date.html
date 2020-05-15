@@ -10,7 +10,7 @@
       {{range (getJSON $url) }}
       {{- if or ($break)  (hasPrefix .commit.message "[int]")  -}}
       {{- else -}}
-        {{ $break:= true }}
+        {{ $break = true }}
         <span data-publishdate="{{- .commit.author.date -}}"></span>
       {{ end }}
       {{ end }}
