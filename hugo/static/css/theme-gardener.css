@@ -401,3 +401,8 @@ blockquote p {
     font-size: 1em;
     font-style: normal;
 }
+
+/* Fix for notices shortcode*/
+div.notices p:first-child:after {
+  left: 3rem;
+}
