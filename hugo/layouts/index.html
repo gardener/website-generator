@@ -21,13 +21,14 @@
 
     <link rel="preload" href="{{"fonts/BentonSansBook/BentonSans-Book.woff2" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" as="font" type="font/woff2" crossorigin="anonymous">
 
-    <!-- Custom CSS
+    <!-- Website CSS
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    <link rel="stylesheet" href="{{"css/custom.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
-    {{ $style := resources.Get "sass/lp.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}">
-    {{ $style := resources.Get "sass/news.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}">
+    {{ range (slice "base" "landing-page" "news") }}
+      {{ $options := (dict "targetPath" (print "css/" . ".css") "outputStyle" "compressed" "enableSourceMap" true ) }}
+      {{ $style := resources.Get (print "sass/" . ".scss") | resources.ToCSS $options | resources.Fingerprint }}
+      <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+    {{ end }}
+
     <link rel="stylesheet" href="{{"css/auto-complete.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
     
     <!-- Scripts (web pack required in the future)

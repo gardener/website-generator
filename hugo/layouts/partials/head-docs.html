@@ -19,14 +19,12 @@
   <link href="{{"css/auto-complete.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   <link href="{{"css/skeleton.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   <link href="{{"css/sheetslider.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
-
-  {{ $options := (dict "targetPath" "css/theme-gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
-  {{ $style := resources.Get "sass/theme-gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   
-  {{ $options := (dict "targetPath" "css/base.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
-  {{ $style := resources.Get "sass/base.scss" | resources.ToCSS $options | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+  <link href="{{"css/theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+  <link href="{{"css/hugo-theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+  {{with .Site.Params.themeVariant}}
+    <link href="{{(printf "css/theme-docs-%s.css" .) | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+  {{end}}
   
   <script src="{{"js/moment.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   <script src="{{"js/vivus.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
@@ -36,6 +34,16 @@
   <script src="{{"js/fixed.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   <script src="{{"js/clipboard.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   
+  <style type="text/css">
+    :root #header + #content > #left > #rlblock_left{ 
+        display:none !important;
+    }
+  </style>
+
   {{end}}
+
+  {{ $options := (dict "targetPath" "css/base.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
+  {{ $style := resources.Get "sass/base.scss" | resources.ToCSS $options | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
 </head>

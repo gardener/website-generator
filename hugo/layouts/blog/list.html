@@ -1,6 +1,7 @@
 {{ define "page-content"}}
-  {{ $style := resources.Get "sass/blog.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  {{ $options := (dict "targetPath" "css/blog.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
+  {{ $style := resources.Get "sass/blog.scss" | resources.ToCSS $options | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   <script src="/js/moment.js"></script>
   <div class="page blogs">
     <!-- Ranges through content/blog/*.md -->

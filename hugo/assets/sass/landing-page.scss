@@ -242,7 +242,7 @@ $font-family-bold: var(--font-family-bold);
       text-align: center;
       margin-bottom: 1em;
     }
-    & + .sub-title {
+    + .sub-title {
       margin-top: -0.5em;
     }
   }
@@ -309,7 +309,7 @@ $font-family-bold: var(--font-family-bold);
         font-size: 20px;
         line-height: 1.6;
         color: #222;
-        & + p {
+        + p {
           font-family: $font-family-light;
           font-size: 16px;
           line-height: 1.3;
@@ -327,14 +327,14 @@ $font-family-bold: var(--font-family-bold);
         z-index: 1;
         &.right {
           left: -50px;
-          & + .image {
+          + .image {
             right: -40px;
             /* width: 54%;*/
           }
         }
         &.left {
           right: -50px;
-          & + .image {
+          + .image {
             left: -40px;
           }
         }
@@ -343,7 +343,7 @@ $font-family-bold: var(--font-family-bold);
             color: #fff;
           }
         }
-        & + .image {
+        + .image {
           position: relative;
           margin: 0;
           /* width: 54%;*/
@@ -356,7 +356,7 @@ $font-family-bold: var(--font-family-bold);
         text-decoration: none;
         font-weight: 800; /* Move to using svg/font icon instead of &rarr; */
       }
-      & + .content {
+      + .content {
         margin-top: 55px;
       }
     }
@@ -389,7 +389,7 @@ $font-family-bold: var(--font-family-bold);
       line-height: 1.3;
       font-size: 22px;
       /* font-weight: 600; */
-      & + div {
+      + div {
         font-family: $font-family-light;
         font-size: 18px;
         line-height: 1.3;
@@ -434,7 +434,7 @@ $font-family-bold: var(--font-family-bold);
   }
   #section01 {
     height: 0;
-    & + .section {
+    + .section {
       padding-top: 140px;
     }
   }
