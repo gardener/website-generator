@@ -246,6 +246,14 @@ $font-family-bold: var(--font-family-bold);
       margin-top: -0.5em;
     }
   }
+  .description {
+    font-weight: 300;
+    text-align: left;
+    font-size: 120%;
+    &.is-centered {
+      text-align: center;
+    }
+  }
   .section {
     position: relative;
     padding: 84px 0;
