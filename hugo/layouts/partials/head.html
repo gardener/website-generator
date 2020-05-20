@@ -24,8 +24,8 @@
   {{ $style := resources.Get "sass/theme-gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
   <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   
-  {{ $options := (dict "targetPath" "css/base.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
-  {{ $style := resources.Get "sass/base.scss" | resources.ToCSS $options | resources.Fingerprint }}
+  {{ $options := (dict "targetPath" "css/gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
+  {{ $style := resources.Get "sass/gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
   <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   
   <script src="{{"js/moment.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>

@@ -1,0 +1,18 @@
+.release-notes {
+  background-color: #fff;
+  word-break: break-word;
+  padding: 4rem 3rem;
+  font-family: $font-family-light;
+  h1 {
+    font-size: 4rem;
+  }
+  h3 {
+    font-size: 2.2rem;
+  }
+  ul {
+    margin-left: 15px;
+  }
+  li {
+    list-style: square outside;
+  }
+}

@@ -1,0 +1,52 @@
+.meetup {
+  font-family: $font-family-regular;
+  background-color: #fff;
+  padding: 50px;
+  .hero {
+    position: relative;
+    height: auto;
+    width: fit-content;
+  }
+  .banner {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 8px;
+  }
+  .avatar {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    height: 72px;
+    width: 72px;
+    position: absolute;
+    top: 20px;
+    right: -20px;
+    padding: 3px;
+  }
+  .announcement {
+    margin: 5rem auto;
+    .details-link {
+      display: block;
+      margin: 2rem auto;
+    }
+  }
+  .event-edition {
+    font-size: 2rem;
+    margin: 1rem 0;
+  }
+  .event-edition {
+    .session-title {
+      font-size: 2.5rem;
+      @media (min-width: 1000px) {
+        font-size: 3rem;
+      }
+    }
+    .lead {
+      color: #bc3737;
+      font-weight: 700;
+      letter-spacing: -0.4rem;
+      font-size: 2.5rem;
+      margin-right: 1rem;
+    }
+  }
+}

@@ -42,8 +42,8 @@
 
   {{end}}
 
-  {{ $options := (dict "targetPath" "css/base.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
-  {{ $style := resources.Get "sass/base.scss" | resources.ToCSS $options | resources.Fingerprint }}
+  {{ $options := (dict "targetPath" "css/gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
+  {{ $style := resources.Get "sass/gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
   <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
 </head>

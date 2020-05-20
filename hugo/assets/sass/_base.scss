@@ -1,3 +1,5 @@
+@import "variables";
+
 /*
 This CSS resource incorporates links to font software which is 
 the valuable copyrighted property of WebType LLC, The Font Bureau 
@@ -65,105 +67,27 @@ questions: http://www.webtype.com
 /* .main {
   margin-top: var(--header-height);
 } */
-/* For devices larger than 400px */
-/* .search-box .nav-button.close:hover {
-  border-color: transparent;
-}
-
-.search-box .input {
-  flex: 1 0 auto;
-  margin: 13px 0 12px;
-  border-radius: 0px;
-}
-
-.search-box .input,
-.search-box .nav-button.close {
-  display: none;
-}
-
-.search-box .nav-button.search {
-  display: inline-block;
-}
-
-.navigation.search-active .logo .title {
-  display: block;
-}
-
-.navigation.search-active .search-box {
-  position: fixed;
-  top: var(--header-height);
-  right: 0;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  max-width: inherit;
-  padding: 20% 5%;
-  background-color: #fff;
-}
-
-@media (min-width: 1000px) {
-  .navigation.search-active .search-box {
-    position: relative;
-    top: initial;
-  }
-}
-
-.navigation.search-active .links,
-.navigation.search-active .nav-button {
-  display: none;
-}
-
-.navigation.search-active .search-box .input,
-.navigation.search-active .search-box .nav-button.close {
-  display: inline-block;
-  width: initial;
-}
-
-.navigation.search-active .search-box .nav-button.close {
-  color: var(--color-emphasis);
-}
-
-.search-box .nav-button.close {
-  font-size: 20px;
-}
-.search-box .nav-button.close .icon-close {
-  font-size: inherit;
-  line-height: inherit;
-} */
-/* second level navigation in mobile */
-/* Do not show second level navigation on small screens */
-:root {
-  --color-font: #222222;
-  --color-emphasis: #ec682a;
-  --header-height: 63px;
-  --footer-title-color: #fff;
-  --font-family-regular: BentonSans, sans-serif;
-  --font-family-light: BentonSansLight, sans-serif;
-  --font-family-medium: BentonSansMedium, sans-serif;
-  --font-family-book: BentonSansBook, sans-serif;
-}
 * {
   box-sizing: border-box;
 }
 body {
-  font-family: var(--font-family-regular);
+  font-family: $font-family-regular;
   font-weight: normal;
   font-size: 16px;
   line-height: 24px;
   -webkit-font-smoothing: antialiased;
   background-color: #fff;
-  color: var(--color-font);
+  color: $font-color;
 }
 .brandingColor {
-  color: var(--color-emphasis);
+  color: $color-highlight;
 }
 a {
-  color: var(--color-emphasis);
+  color: $color-highlight;
   text-decoration: none;
-  font-family: var(--font-family-regular);
+  font-family: $font-family-regular;
   &:hover {
-    color: var(--color-emphasis);
+    color: $color-highlight;
     text-decoration: underline;
   }
 }
@@ -173,6 +97,9 @@ a {
 }
 .container {
   max-width: 1200px;
+  @media (min-width: 400px) {
+    width: 90%;
+  }
 }
 .title-1 {
   font-weight: normal;
@@ -190,36 +117,47 @@ a {
   margin-bottom: 0;
   font-size: 25px;
   line-height: 1.2;
+  @media (min-width: 550px) {
+    font-size: 30px;
+  }
+  @media (min-width: 750px) {
+    font-size: 36px;
+  }
   &:not(.has-subtitle) {
     margin-bottom: 42px;
+  }
+}
+.title-3 {
+  font-size: 20px;
+  line-height: 1.2;
+  @media (min-width: 550px) {
+    font-size: 24px;
+  }
+  @media (min-width: 750px) {
+    font-size: 28px;
   }
 }
 .sub-title {
   font-weight: normal;
   letter-spacing: 0;
   margin-bottom: 0;
-  font-family: var(--font-family-book);
+  font-family: $font-family-book;
   font-size: 18px;
   line-height: 1.65;
   margin-top: 12px;
-}
-.title-3 {
-  font-size: 20px;
-  line-height: 1.2;
-}
-b {
-  font-family: BentonSansMedium, sans-serif;
-}
-strong {
-  font-family: BentonSansMedium, sans-serif;
-}
-.sub-title {
+  @media (min-width: 750px) {
+    font-size: 20px;
+  }
   &.has-small-margin-bottom {
     margin-bottom: 1.2em;
   }
   &.no-margin-bottom {
     margin-bottom: 0;
   }
+}
+b,
+strong {
+  font-family: var(--font-family-medium);
 }
 .is-centered {
   text-align: center;
@@ -233,7 +171,7 @@ a.btn {
   padding: 10px 16px !important;
   border-radius: 28px !important;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
-  font-family: var(--font-family-regular), sans-serif !important;
+  font-family: $font-family-regular !important;
   font-size: 13px !important;
   line-height: 1.1 !important;
   vertical-align: middle !important;
@@ -243,39 +181,66 @@ a.btn {
 }
 .btn.primary {
   color: #fff !important;
-  border: 1px solid var(--color-emphasis) !important;
-  background-color: var(--color-emphasis) !important;
+  border: 1px solid $color-highlight !important;
+  background-color: $color-highlight !important;
   &:hover {
-    border: 1px solid var(--color-emphasis) !important;
-    background: var(--color-emphasis) !important;
+    border: 1px solid $color-highlight !important;
+    background: $color-highlight !important;
     color: #fff !important;
   }
 }
-@media (min-width: 400px) {
-  .container {
-    width: 90%;
-  }
-}
-@media (min-width: 550px) {
-  .title-2 {
-    font-size: 30px;
-  }
-  .title-3 {
-    font-size: 24px;
-  }
-}
-@media (min-width: 750px) {
-  .title-2 {
-    font-size: 36px;
-  }
-  .title-3 {
-    font-size: 28px;
-  }
-  .sub-title {
-    font-size: 20px;
-  }
-}
 
-@import "tln";
-@import "sln";
-@import "footer";
+.page {
+  padding: 4rem 0;
+  display: flex;
+  flex-flow: column;
+  align-items: self-start;
+  font-family: $font-family-regular;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin: 1rem 0 0.5rem;
+    font-family: $font-family-regular !important;
+    color: #0b8062 !important;
+  }
+  h2 {
+    font-size: 36px;
+    padding-top: 0;
+    margin: 0 0 0.4em;
+  }
+  h3 {
+    font-size: 1.2em;
+  }
+  .page-title {
+    display: block;
+    background: none;
+    border-bottom: none;
+    padding: 0 !important;
+    margin-bottom: 1rem;
+    text-align: center;
+  }
+  .page-sub-title {
+    display: block;
+  }
+  a.nav-link {
+    font-family: BentonSans, sans-serif;
+    line-height: 1 !important;
+    font-size: 1.6rem;
+    margin: 1rem 0;
+    padding: 1rem;
+    color: $color-highlight;
+    border: 1px solid #d5755d;
+    display: inline-block;
+  }
+  a.nav-link:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: $color-highlight;
+    border-color: #d5755d;
+  }
+  a.nav-link::after {
+    display: none !important;
+  }
+}

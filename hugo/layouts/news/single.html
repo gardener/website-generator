@@ -3,8 +3,9 @@
   <a href="#" class="tool-btn copy" data-clipboard-text="{{.URL | relURL}}" title="Copy the link to this news"><span class="fa fa-clone"></span></a-->
 {{ end }}
 {{ define "page-content" }}
-  {{ $style := resources.Get "sass/news.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $style.Permalink }}">
+  {{ $options := (dict "targetPath" "css/gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
+  {{ $style := resources.Get "sass/gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   <div class="page">
     {{ .Content }}
   </div>

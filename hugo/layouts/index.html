@@ -23,11 +23,9 @@
 
     <!-- Website CSS
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-    {{ range (slice "base" "landing-page" "news") }}
-      {{ $options := (dict "targetPath" (print "css/" . ".css") "outputStyle" "compressed" "enableSourceMap" true ) }}
-      {{ $style := resources.Get (print "sass/" . ".scss") | resources.ToCSS $options | resources.Fingerprint }}
-      <link rel="stylesheet" href="{{ $style.RelPermalink }}">
-    {{ end }}
+    {{ $options := (dict "targetPath" (print "css/gardener.css") "outputStyle" "compressed" "enableSourceMap" true ) }}
+    {{ $style := resources.Get (print "sass/gardener.scss") | resources.ToCSS $options | resources.Fingerprint }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
     <link rel="stylesheet" href="{{"css/auto-complete.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
     
