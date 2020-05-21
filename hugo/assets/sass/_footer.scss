@@ -16,8 +16,12 @@
     justify-content: center;
     flex-wrap: wrap;
     margin-bottom: 3rem;
-    font-size: 18px;
-    line-height: 48px;
+    font-size: 1.2rem;
+    line-height: 1.5;
+    @media (min-width: 750px) {
+      font-size: 18px;
+      line-height: 48px;
+    }
     * {
       margin-bottom: 0;
       &:not(:last-child) {
@@ -59,10 +63,14 @@
     }
   }
   .copyright {
-    font-size: 14px;
-    line-height: 16px;
+    font-size: .9rem;
+    line-height: 1.1rem;
     color: #e1e1e1;
     text-align: center;
+    @media (min-width: 750px) {
+      font-size: 14px;
+      line-height: 16px;
+    }
   }
 }
 .footer-wrapper {
