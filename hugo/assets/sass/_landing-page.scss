@@ -320,6 +320,11 @@ body {
         margin-top: 55px;
       }
     }
+    .sub-title {
+      + .content {
+        margin-top: 55px;
+      }
+    }
     .call-for-action {
       font-family: $font-family-regular;
       font-size: 20px; /*move ot 750px media query. copy from sub-title*/
