@@ -1,0 +1,12 @@
+.adopter {
+  padding-top: 50px;
+  @media (min-width: 750px){
+    padding-top: 150px;
+  }
+  img {
+    max-width: 128px;
+    @media (min-width: 750px) {
+        max-width: 164px;
+    }
+  }
+}

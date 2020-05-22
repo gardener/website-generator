@@ -67,6 +67,11 @@ header {
     flex-flow: wrap;
     align-items: center;
   }
+  &.navigation.collapsed {
+    .links{
+      padding-top: 45px;
+    }
+  }
 }
 .navigation {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);

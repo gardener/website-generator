@@ -20,9 +20,9 @@
   <link href="{{"css/skeleton.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   <link href="{{"css/sheetslider.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
 
-  {{ $options := (dict "targetPath" "css/theme-gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
+  {{/*  {{ $options := (dict "targetPath" "css/theme-gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
   {{ $style := resources.Get "sass/theme-gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}">  */}}
   
   {{ $options := (dict "targetPath" "css/gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
   {{ $style := resources.Get "sass/gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
