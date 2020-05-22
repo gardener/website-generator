@@ -557,28 +557,6 @@ body {
       overflow: auto;
     }
   }
-  #section05 {
-    // .image-wrapper {
-    //   text-align: center;
-    // }
-    // #section05-img-placeholder {
-    //   margin-top: 2.5rem;
-    // }
-    // .image-wrapper {
-    //   &.perspective {
-    //     perspective: 350px;
-    //     img {
-    //       width: 100%;
-    //       max-width: 600px;
-    //       border-radius: 4px;
-    //       transform: rotateY(30deg) translateY(-25px) translateX(100px);
-    //     }
-    //   }
-    //   &:not(.perspective) img {
-    //     max-width: 150px;
-    //   }
-    // }
-  }
   #section06 {
     background: linear-gradient(
       91.39deg,
@@ -622,6 +600,17 @@ body {
           color: #515151;
         }
       }
+    }
+  }
+  #section08 {
+    @media (min-width: 750px) {
+      padding: 80px 0;
+    }
+    @media (min-width: 1000px) {
+      padding: 110px 0;
+    }
+    .call-for-action {
+      margin: 20px auto 10px;
     }
   }
   .platforms-container {
