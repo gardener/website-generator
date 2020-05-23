@@ -76,8 +76,7 @@
         border-radius: 50%;
       }
       img, object[type="image/svg+xml"] {
-        margin-left: auto;
-        margin-right: auto;
+        margin: 3rem auto;
         display: block;
         width: 100%;
         @media (max-width: 320px){
