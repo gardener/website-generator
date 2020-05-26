@@ -3,14 +3,9 @@
 {{else}}
 {{ with .File }}
   {{ with .Path }}
-    {{ $url := print "content/" . ".json" }}
+    {{ $url := print "/data/" . ".json" }}
     {{ if (fileExists $url) -}}
-      {{range  (last 1 (getJSON $url)) }}
-      {{- if (hasPrefix .commit.message "[int]") -}}
-      {{- else -}}
-        {{.author.avatar_url}}
-      {{ end }}
-      {{ end }}
+        {{(getJSON $url).author.avatar_url}}
     {{ end }}
   {{ end }}
 {{ end }}

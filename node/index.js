@@ -3,6 +3,9 @@
  * Environment variables used in this script:
  * CONTENT:         Path to the website source content. Defaults to "../hugo/content", 
  *                  relative to the current directory (`node`).
+ * DATA:            Path to the website internal 'data' directory, which is used to store 
+ *                  site-building relevant data such as commits history. Defaults to 
+ *                  "../hugo/data", relative to the current directory (`node`). 
  * GIT_OAUTH_TOKEN: The GitHub Personal Access Token for OAuth authenticated requests to 
  *                  github.com. GIT_OAUTH_TOKEN takes priority if GIT_USER/PASSWORD are 
  *                  also specified.
@@ -15,15 +18,20 @@
  */
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-if (!process.env.CONTENT) { 
-    process.env.CONTENT = __dirname+'/../hugo/content';
-}
 const glob = require( 'glob' )
 const fs = require('fs')
 const fm = require('front-matter')
 const path = require("path")
 const request = require('sync-request')
 const shuffle = require('shuffle-array')
+const moment = require('moment');
+
+if (!process.env.CONTENT) { 
+    process.env.CONTENT = path.resolve(__dirname, '/../hugo/content');
+}
+if (!process.env.DATA) { 
+    process.env.DATA = path.resolve(__dirname, '../hugo/data');
+}
 
 const rewriteAndCheckUrls = require("./util/rewriteAbsoluteToUrls")
 
@@ -111,21 +119,21 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
             // Get the content of the referenced MD file and append it to the
             // Hugo CMS page
             //
-            let md = "";
             try {
-                md = fm(request("GET", url).getBody().toString()).body
-                md = rewriteAndCheckUrls(url, md, file)
+                var remoteContent = fm(request("GET", url).getBody().toString()).body
+                remoteContent = rewriteAndCheckUrls(url, remoteContent, file)
             } catch(err) {
                 console.error("Unable to get remote content for",url, err)
                 console.log("proceeding with next file")
                 return
             }
 
+            // Finally, write the file
             let newDoc = [
                 "---",
                 content.frontmatter,
                 "---",
-                md].join("\n")
+                content.body].join("\n")
             fs.writeFileSync(file, newDoc, 'utf8');
         }
 
@@ -152,7 +160,7 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
             commitsUrl = ["https://api.github.com/repos", user, project, "commits"].join("/")
 
         } else {
-            relUrl =  file.replace(process.env.CONTENT,"/website")
+            relUrl = file.replace(process.env.CONTENT,"/website")
         }
 
         commitsUrl = commitsUrl + "?path=" + relUrl;
@@ -161,9 +169,67 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
             let commits = request("GET", commitsUrl, requestOptions).getBody().toString()
             if (commits.length > 0) {
                 try {
-                    commits = JSON.stringify(JSON.parse(commits), undefined, 2);
+                    commits = JSON.parse(commits);
                     if (commits.length > 0) {
-                        fs.writeFileSync(file + ".json", commits, 'utf8');
+                        let gitInfo = {};
+                        // Commits are sorted desc by date
+                        // Check for lastmodified date, skipping internal commits
+                        var lastCommit = commits.find( commit => {
+                            return !isInternalCommit(commit.commit)
+                        });
+                        if (lastCommit !== undefined) {
+                            gitInfo["lastmod"] = moment(lastCommit.commit.committer.date).format("YYYY-MM-DD HH:mm:ss");
+                        }
+                        // Update front-matter if necesary
+                        // Find the first committhat is not internal (should be the last element, but let's be sure)
+                        let firstCommit;
+                        for ( var i = commits.length-1; i >= 0; i-- ) {
+                            if (!isInternalCommit(commits[i].commit)) {
+                                firstCommit = commits[i];
+                                break;
+                            }
+                        }
+                        if (firstCommit !== undefined){
+                            gitInfo["publishdate"] = moment(firstCommit.commit.committer.date).format("YYYY-MM-DD HH:mm:ss");
+                            let author = firstCommit.commit.author;
+                            if (author !== undefined && firstCommit.author !== undefined){
+                                author = Object.assign(author, firstCommit.author);
+                            } else {
+                                author = firstCommit.committer;
+                                author = Object.assign(author, firstCommit.author);
+                            } 
+                            gitInfo["author"] = author;
+                        }
+                        if (commits.length > 1) {
+                            gitInfo["contributors"] = commits.map(commit => {
+                                if( !isInternalCommit(commit.commit) ){
+                                    let contributor = commit.commit.author;
+                                    if (contributor !== undefined && commit.author !== undefined){
+                                        contributor = Object.assign(contributor, commit.author);
+                                    } else {
+                                        contributor = commit.commit.committer;
+                                        contributor = Object.assign(contributor, commit.committer);
+                                    } 
+                                    if (contributor.email !== gitInfo["author"].email) {
+                                        return contributor;
+                                    }
+                                }
+                                return
+                            }).filter( (el, index, self) => {
+                                // clean undefineds, backtrack and deduplicate by contributor email or name
+                                return el != undefined && index === self.findIndex( t => {
+                                    if ( t === undefined ){
+                                        return false;
+                                    }
+                                    return t.email === el.email || t.name === el.name
+                                })
+                            });
+                        }
+                        gitInfoStr = JSON.stringify(gitInfo, undefined, 2);
+                        datafilePath = file.replace(process.env.CONTENT, process.env.DATA) + ".json"
+                        fs.mkdirSync(path.dirname(datafilePath), { recursive: true })
+                        fs.writeFileSync(datafilePath, gitInfoStr)
+                        console.debug("Writing git info: ", datafilePath);
                     } else {
                         console.error("Skip commits json update: unexpected json `[]`", commitsUrl);
                         console.log("proceeding with next file")
@@ -186,7 +252,7 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
         }
     })
 
-    // Parse all MarkdownFiles and check if any link reference to an remote site which we have imported.
+    // Parse all MarkdownFiles and check if any link reference to a remote site which we have imported.
     // In this case we REWRITE the link from REMOTE to LOCAL
     //
     glob(process.env.CONTENT + '/**/*.md', function( err, files ) {
@@ -237,3 +303,6 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
     })
 });
 
+function isInternalCommit(commit){
+    return commit.message.startsWith("[int]") || commit.message.indexOf("[skip ci]") > -1;
+}

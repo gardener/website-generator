@@ -4,19 +4,35 @@
 // }
 
 .blogs {
-  .author {
-    display: block;
-    font-size: 1.3rem;
-    text-align: center;
-    line-height: 1;
-    margin: 10px 0 5px;
+  .authors {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    .author {
+      display: flex;
+      flex-flow: column;
+      font-size: 1.3rem;
+      text-align: center;
+      line-height: 1.5;
+    }
+    li.author {
+      margin: 5px;
+    }
+  }
+  ul.authors {
+    margin: 0px;
+    padding-left: 0px !important;
   }
   .publishdate {
     display: block;
     font-size: 1.3rem;
     text-align: center;
     line-height: 1;
-  }
+    margin-top: 5px;
+    color: #555;
+    font-family: $font-family-light;
+  } 
   .share-ribbon {
     display: flex;
     button.btn {
