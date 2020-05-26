@@ -33,7 +33,7 @@
         inlineSVG.init();
 
         $("[data-publishdate]").each(function(){
-          $(this).text(moment($(this, "YYYY-MM-DD").attr("data-publishdate")).fromNow());
+          $(this).text(moment($(this, "YYYY-MM-DD", "YYYY-MM-DD hh:mm:ss").attr("data-publishdate")).fromNow());
         });
           
         new ClipboardJS('.clipboard-copy');

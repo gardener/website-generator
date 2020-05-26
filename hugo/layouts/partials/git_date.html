@@ -1,19 +1,11 @@
-{{ if .Params.publishdate }}
+{{ with .Params.publishdate }}
   <span data-publishdate="{{- .PublishDate.Format "2006-01-02" -}}"></span>
 {{else}}
 {{ with .File }}
   {{ with .Path }}
-    {{ $url := print "content/" . ".json"}}
+    {{ $url := print "/data/" . ".json"}}
     {{ if (fileExists $url) -}}
-      {{ $id := md5 $url}}
-      {{ $break := false}}
-      {{range (getJSON $url) }}
-      {{- if or ($break)  (hasPrefix .commit.message "[int]")  -}}
-      {{- else -}}
-        {{ $break = true }}
-        <span data-publishdate="{{- .commit.author.date -}}"></span>
-      {{ end }}
-      {{ end }}
+      <span data-publishdate="{{- (getJSON $url).publishdate -}}"></span>
     {{ end }}
   {{ end }}
 {{ end }}
