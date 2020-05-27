@@ -3,7 +3,7 @@
   <div class="page blogs">
     <!-- Ranges through content/blog/*.md -->
     {{ with .Site.GetPage "blog" }}
-    {{ range $index, $page :=  ((sort .Pages ".Dir" "desc")) }}
+    {{ range $index, $page :=  sort .Pages ".Params.publishdate" "desc"}}
     {{if $page.Params.aggregate }}
     {{else}}
     <article class="post row" data-path="">
