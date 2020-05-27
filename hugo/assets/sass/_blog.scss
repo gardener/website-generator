@@ -62,11 +62,16 @@
   a.title-link:hover {
     color: $color-highlight;
   }
+  .nav-link+.post {
+    border: none;
+  }
   .post {
     padding: 30px 0;
+    border-bottom: 1px solid #96969633;
+    &:first-of-type {
+      padding-top: 0px;
+    }
     .wrapper {
-      border-bottom: 1px solid #d9d9d9;
-      border-bottom-color: rgba(123, 134, 149, 0.2);
       overflow: hidden;
       td {
         border-bottom: 0;
