@@ -1,34 +1,34 @@
 {{ define "page-content"}}
   <script src="/js/moment.js"></script>
   <div class="page blogs">
-    <!-- Ranges through content/blog/*.md -->
-    {{ with .Site.GetPage "blog" }}
-    {{ range $index, $page :=  sort .Pages ".Params.publishdate" "desc"}}
-    {{if $page.Params.aggregate }}
-    {{else}}
-    <article class="post row" data-path="">
+    <style>
+      article .wrapper{
+        border-bottom: none!important;
+      }
+    </style>  
+    <div class="page">
+      <a href="{{ "blog" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to Blogs</a>
+      <article class="post row" data-path="">
         <div class="wrapper">
             <div class="two columns">
-                {{partial "blog-authors" .}}
+              {{partial "blog-authors" .}}
             </div>
             <div class="ten columns">
-                <h2>{{ .Title }}<a href="{{$page.URL | relURL}}" class="title-link clipboard-copy"><i class="fa fa-link"></i></a></h2>
+                <h2>{{ .Title }}<a href="{{.URL | relURL}}" class="title-link clipboard-copy"><i class="fa fa-link"></i></a></h2>
                 <div class="share-ribbon">
-                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="{{ .Title }}" data-url="{{$page.URL | absURL}}" data-hashtags="GardenerProject" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                  <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="{{ .Title }}" data-url="{{.URL | absURL}}" data-hashtags="GardenerProject" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                   <script type="IN/Share" data-url="https://gardener.cloud"></script>
-                  <!--button class="btn copy-url clipboard-copy" data-clipboard-text="{{$page.URL | absURL}}" href="{{$page.URL | absURL}}"><i class="fa fa-copy"></i></button-->
+                  <!--button class="btn copy-url clipboard-copy" data-clipboard-text="{{.URL | absURL}}" href="{{.URL | absURL}}"><i class="fa fa-copy"></i></button-->
                 </div>
                 <p>
                     {{.Content}}
                 </p>
             </div>
         </div>
-    </article>
-    {{end}}
-    {{end}}
-    {{end}}
+      </article>
+      <a href="{{ "blog" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to Blogs</a>
+    </div>
   </div>
-
 {{ end }}
 
 {{ define "tails-scripts-custom" }}
