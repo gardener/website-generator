@@ -227,13 +227,13 @@ a.btn {
     display: block;
   }
   a.nav-link {
-    font-family: BentonSans, sans-serif;
+    font-family: $font-family-regular;
     line-height: 1 !important;
-    font-size: 1.6rem;
-    margin: 1rem 0;
+    font-size: 90%;
+    margin: 1rem 0 3rem;
     padding: 1rem;
     color: $color-highlight;
-    border: 1px solid #d5755d;
+    border: 1px solid #d5755d4d;
     display: inline-block;
   }
   a.nav-link:hover {
