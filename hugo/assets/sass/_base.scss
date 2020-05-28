@@ -75,6 +75,7 @@ body {
   -webkit-font-smoothing: antialiased;
   background-color: #fff;
   color: $font-color;
+  transition: all 0.50s;
 }
 .brandingColor {
   color: $color-highlight;
@@ -83,7 +84,7 @@ a {
   color: $color-highlight;
   text-decoration: none;
   font-family: $font-family-regular;
-  word-break: break-all;
+  transition: all 0.125s;
   &:hover {
     color: $color-highlight;
     text-decoration: underline;
@@ -105,6 +106,7 @@ a {
   margin-bottom: 0;
   font-size: 2.5rem;
   line-height: 1.2;
+  word-break: normal;
   @media (min-width: 750px) {
     font-size: 3rem;
   }
@@ -208,9 +210,15 @@ a.btn {
     color: #0b8062 !important;
   }
   h2 {
-    font-size: 36px;
+    font-size: 28px;
     padding-top: 0;
     margin: 0 0 0.4em;
+    @media (min-width: 750px) {
+      font-size: 33px;
+    }
+    @media (min-width: 1000px) {
+      font-size: 36px;
+    }
   }
   h3 {
     font-size: 1.2em;
