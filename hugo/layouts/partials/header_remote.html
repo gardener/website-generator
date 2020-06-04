@@ -30,7 +30,9 @@
     {{with .Site.Params.themeVariant}}
       <link href="{{(printf "css/theme-docs-%s.css" .) | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
     {{end}}
-    <link href="{{"css/gardener.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+    {{ $options := (dict "targetPath" "css/gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
+    {{ $style := resources.Get "sass/gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
+    <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
     <script src="{{"js/jquery-2.x.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
     <script src="{{"js/fixed.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
