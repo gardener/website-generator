@@ -1,6 +1,6 @@
 # Gardener Website Generator
 
-This repository contains the build tools, coniguration, web framework for the website and integration with CI/CD. For site source content including documentation, see the [/gardener/documentation](https://github.com/gardener/documentation/) repo. The website home is [/gardener/website/docs](https://github.com/gardener/website/tree/master/docs).
+This repository contains the build tools, configuration, web framework for the website and integration with CI/CD. For site source content including documentation, see the [/gardener/documentation](https://github.com/gardener/documentation/) repo. The website home is [/gardener/website/docs](https://github.com/gardener/website/tree/master/docs).
 
 ## CI/CD Overview
 
