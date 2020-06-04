@@ -25,6 +25,8 @@
   {{with .Site.Params.themeVariant}}
     <link href="{{(printf "css/theme-docs-%s.css" .) | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   {{end}}
+  <link href="{{"highlight/styles/vs.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+  <link href="{{"css/gardener.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
   
   <script src="{{"js/moment.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   <script src="{{"js/vivus.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>

@@ -7,6 +7,7 @@
   --font-family-light: BentonSansLight, sans-serif;
   --font-family-medium: BentonSansMedium, sans-serif;
   --font-family-book: BentonSansBook, sans-serif;
+  --code-color-font: #d14;
 }
 
 $font-family-light: var(--font-family-light);
@@ -18,3 +19,4 @@ $font-color: var(--color-font);
 $color-highlight: var(--color-emphasis);
 $inverted-font-color: var(--footer-title-color);
 $header-height: var(--header-height);
+$code-color-font: var(--code-color-font);
