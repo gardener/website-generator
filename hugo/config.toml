@@ -15,6 +15,11 @@ disableHugoGeneratorInject = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true  
+  [markup.highlight]
+    guessSyntax = true
+    noClasses = false
+    style = "vs"
+    tabWidth = 4
 
 [params]
   editURL = "https://github.com/gardener/documentation/edit/master/website/"
