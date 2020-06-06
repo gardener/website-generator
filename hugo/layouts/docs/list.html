@@ -1,0 +1,33 @@
+{{ define "sln" }}
+  {{ partial "sln" . }}
+{{ end }}
+{{ define "sidebar" }}
+  {{ partial "sidebar-menu" . }}
+{{ end }}
+{{ define "page-content"}}
+<div class="docs">
+  {{if and ((isset .Params "editable") (eq (.Params.editable false)) )}}
+  {{else}}
+  <div class="git-wr">
+    <div class="tutorial-last-update">Updated <span>{{- partial "git_date.html" . -}}</span> by {{- partial "git_author.html" . -}}</div>
+    {{- partial "page-edit.html" . -}}
+  </div>
+  {{end}}
+  {{- if .Params.remote -}}
+  {{- else -}}
+  <h1 class="title">{{ .Title }}</h1>
+  {{- end -}}
+  {{ if isset .Params "trail"}}
+	{{partial "trail-nav" .}}
+	{{end}}  
+
+	{{ .Content }}
+	
+</div>	
+{{ end }}
+{{ define "page-feedback" }}
+  {{if and ((isset .Params "enablefeedback") (eq (.Params.editable false)) )}}
+  {{else}}
+  {{ partial "page-feedback.html" . }}
+  {{end}}
+{{ end }} 

@@ -133,7 +133,8 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
                 "---",
                 content.frontmatter,
                 "---",
-                content.body].join("\n")
+                remoteContent].join("\n")
+            console.log("writing remote content to", file)
             fs.writeFileSync(file, newDoc, 'utf8');
         }
 
@@ -296,6 +297,7 @@ glob( process.env.CONTENT+'/**/*.md', function( err, files ) {
                     content.frontmatter,
                     "---",
                     md].join("\n")
+                console.log("updating content in", file)
                 fs.writeFileSync(file, newDoc, 'utf8');
             }
         })

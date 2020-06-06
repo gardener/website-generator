@@ -1,0 +1,29 @@
+{{ define "sln" }}
+  {{ partial "sln" . }}
+{{ end }}
+
+{{ define "page-content" }}
+  <style>
+    .docs .title {
+      margin: 0 0 4rem;
+    }
+  </style>
+  <div class="docs">
+    <div class="git-wr">
+      <div class="tutorial-last-update">Updated <span>{{- partial "git_date.html" . -}}</span> by {{- partial "git_author.html" . -}}</div>
+      {{- partial "page-edit.html" . -}}
+    </div>
+    {{- if .Params.remote -}}
+    {{- else -}}
+    <h1 class="title">{{ .Title }}</h1>
+    {{- end -}}
+    {{ if isset .Params "trail"}}
+    {{partial "trail-nav" .}}
+    {{end}}    
+    {{ .Content }}
+  </div>
+{{ end }}
+
+{{ define "page-feedback" }}
+  {{ partial "page-feedback.html" . }}
+{{ end }}

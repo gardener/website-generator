@@ -1,0 +1,94 @@
+/* Documentation homepage styles*/
+#body-inner {
+  .docs {
+    &.home {
+      display: flex;
+      flex-flow: column;
+      margin-top: 2rem;
+      > * {
+        flex: 1 1 auto;
+      }
+      h1 {
+        font-family: $font-family-regular;
+      }
+      section {
+        margin: 2rem 0;
+        text-align: center;
+        @media (min-width: 750px) {
+          text-align: initial;
+        }
+      }
+      ul {
+        margin: 0;
+      }
+      //Home page navigation tiles
+      .list {
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+        @media (min-width: 750px) {
+          margin-top: 5rem;
+        }
+        .tile {
+          flex: 1 1 auto;
+          height: auto;
+          min-height: 150px;
+          width: 100%;
+          border: 1px solid $uiLightGray;
+          padding: 1.5rem;
+          margin: 0 10px 40px;
+          background-color: #fff;
+          color: $uiStandardTextColor;
+          transition: all 0.5s;
+          @media (min-width: 750px) {
+            max-width: calc(50% - 20px);
+            padding: 2rem;
+            margin: 0 10px 40px;
+          }
+          @media (min-width: 1000px) {
+            max-width: calc(33.33% - 20px);
+          }
+          h1 {
+            font-size: 1.8rem;
+            letter-spacing: -0.1rem;
+            padding-top: 0;
+            @media (min-width: 750px) {
+              font-size: 2rem;
+            }
+          }
+          // > a {
+          //   display: block;
+          //   width: 100%;
+          //   height: 100%;
+          //   color: initial;
+          //   font-family: $font-family-regular;
+          //   text-decoration: none;
+          //   .description {
+          //     font-size: 1.6rem !important;
+          //     font-family: $font-family-light;
+          //     line-height: 1.1;
+          //     word-break: break-word;
+          //     color: $uiStandardTextColor;
+          //   }
+          //   h3 {
+          //     font-size: 1.6rem !important;
+          //     font-family: $font-family-light;
+          //     line-height: 1.1;
+          //   }
+          // }
+          ul.description {
+            margin-bottom: 0;
+            li {
+              list-style: none;
+              margin-left: 5px !important;
+            }
+          }
+          li {
+            list-style: none;
+            margin-left: 5px !important;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+            <div class="howto_tickets">
+                {{ $currentNode := . }}
+                {{ $pageName := $currentNode.Title }}
+                {{ $pageUrl := $currentNode.Params.remote}}
+                {{ $gitHubIssueUrl:= (printf "%s/%s" $.Site.Params.issueURL "new") }}
+                {{ with $currentNode.Params.remote }}
+                    {{ $array:= (split . "/") }}
+                    {{ $host:= printf "%s//%s" (index $array 0) (index $array 2) }}
+                    {{ $org:= (index $array 3) }}
+                    {{ $repo:= (replace (index $array 4) ".git" "/issues/new") }}
+                    {{ $gitHubIssueUrl = (printf "%s/%s/%s" $host $org $repo)}}
+                {{ else }}
+                    {{$pageUrl = (print .Site.Params.editURL ( replace .File.Dir "\\" "/" ) .File.LogicalName)}}
+                {{ end }}
+                <a href="#" onclick="return createIssue('{{$gitHubIssueUrl}}','{{$pageName}}','{{$pageUrl}}')" target="_blank">
+                    <span>Let us know how can we improve.</span>
+                    <span>Open <img src="{{.Site.BaseURL}}images/branding/github-mark-logo-green.svg"/> GitHub Issue <i class="fa fa-external-link" aria-hidden="true"></i></span>
+                </a>
+            </div>

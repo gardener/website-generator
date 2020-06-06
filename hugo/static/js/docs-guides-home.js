@@ -194,7 +194,7 @@ $(document).ready(function(){
         $(this).toggleClass("active");
         $(".collapsible").toggle();
       });
-      toggleCollapsible();
+      //toggleCollapsible();
 
       $("input[data-filter]").on('elements-filter:complete', function(evt, total, filtered, visible){
         $('.records-shown').text(visible);
@@ -357,7 +357,7 @@ $(document).ready(function(){
         $(this).addClass("active");
         $('.sort svg.icon use').attr("xlink:href", "../../images/icons/icons.svg#sort");
         var sortIcon = "sort";
-        //Getting ready for support for sort order aasc/desc. Not there yet.
+        //Getting ready for support for sort order asc/desc. Not there yet.
         var sortOrder=1;
         if (sortOrder > 0){
           sortIcon+="-asc";

@@ -1,0 +1,193 @@
+#body-inner {
+  // typeahead comboboxes styles
+  .custom-combobox {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    background: #fff;
+    .custom-combobox-input {
+      width: 100%;
+      margin: 0;
+      padding: 5px 10px;
+      background: #fff;
+    }
+    .custom-combobox-toggle {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      margin-right: -1px;
+      padding: 0;
+      right: 0;
+      background: #f6f6f6;
+      &.ui-button {
+        color: #555;
+        padding: 7px 8px 0;
+        :active:focus {
+          border: 1px solid #ccc;
+          background: #ededed;
+          color: #000;
+        }
+        .icon-arrow-down {
+          display: inline-block;
+          font: normal normal normal 14px/1 FontAwesome;
+          font-size: inherit;
+          text-rendering: auto;
+          -webkit-font-smoothing: antialiased;
+          &::before {
+            content: "\f107";
+          }
+        }
+      }
+    }
+  }
+  .docs {
+    /*Documentation Guides styles */
+    &.tutorials {
+      .page-head {
+        margin-bottom: 40px;
+        display: flex;
+        flex-flow: column;
+        .records-stats {
+          align-self: flex-end;
+          font-family: $font-family-light;
+          .records-shown {
+            &::after {
+              content: "/";
+            }
+          }
+        }
+      }
+      .controls {
+        display: flex;
+        flex-flow: column;
+        padding-bottom: 10px;
+        border-bottom: 1px solid $uiLightGray;
+        //background-color: #fbfbfb;
+        .controls-collapse {
+          &.toggle {
+            display: inline-block;
+            margin-left: 10px;
+            &:not(.active) {
+              .icon {
+                &.filter {
+                  --outline-color: #888;
+                  fill: #fff;
+                }
+              }
+              &:hover {
+                .icon {
+                  --outline-color: $color-highlight;
+                }
+              }
+            }
+            &.active {
+              .icon {
+                &.filter {
+                  --outline-color: var(--color-emphasis);
+                  fill: #fff;
+                }
+              }
+            }
+          }
+        }
+        .control {
+          flex: 1 0 100%;
+          margin: 0 0 20px 0;
+          @media (min-width: 750px) {
+            flex: 1 0 auto;
+            margin: 0;
+          }
+          &.search {
+            display: flex;
+            @media (min-width: 1000px) {
+              width: 100%;
+              max-width: 400px;
+              align-self: flex-end;
+            }
+            input {
+              padding-right: 35px;
+            }
+            .icon-search {
+              font-size: 2.4rem;
+              padding: 8px 4px 4px;
+              margin-left: -35px;
+              color: $uiLightGray;
+            }
+          }
+        }
+        .filters {
+          flex: 1 0 auto;
+          display: flex;
+          flex-wrap: wrap;
+          max-width: 100%;
+          @media (min-width: 750px) {
+            justify-content: flex-start;
+          }
+          .control {
+            align-items: center;
+            @media (min-width: 750px) {
+              margin: 0 30px 0 0;
+            }
+            label {
+              margin-right: 10px;
+              font-family: $font-family-light;
+              font-weight: normal;
+            }
+          }
+          .custom-combobox {
+            @media (min-width: 750px) {
+              margin-bottom: 20px;
+            }
+          }
+        }
+      }
+      .sort {
+        color: $uiStandardTextColor;
+        font-family: $font-family-light;
+        font-weight: normal;
+        &.active {
+          font-family: BentonSans;
+        }
+      }
+      a.sort {
+        text-decoration: none;
+      }
+      .subcontrols {
+        display: flex;
+        justify-content: flex-end;
+      }
+      .list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+        .tile {
+          @media (min-width: 750px) {
+            max-width: calc(50% - 20px);
+            min-height: 180px;
+          }
+          @media (min-width: 1000px) {
+            max-width: calc(33.333% - 20px);
+          }
+        }
+      }
+    }
+    svg {
+      &.icon {
+        vertical-align: middle;
+        fill: currentColor;
+        width: 24px;
+        height: 24px;
+        --outline-color: $uiStandardTextColor;
+        fill: $uiStandardTextColor;
+        &.filter {
+          width: 35px;
+          height: 4rem;
+        }
+        &.sort {
+          width: 23px;
+          height: 1em;
+        }
+      }
+    }
+  }
+}

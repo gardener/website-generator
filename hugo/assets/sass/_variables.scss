@@ -8,6 +8,10 @@
   --font-family-medium: BentonSansMedium, sans-serif;
   --font-family-book: BentonSansBook, sans-serif;
   --code-color-font: #d14;
+  --feedback-height: 70px;
+  --tile-title-background-color: #0b8062;
+  --tile-subtitle-background-color: #caeae2;
+  --tile-subtitle-background-color: #cceae2;
 }
 
 $font-family-light: var(--font-family-light);
@@ -20,3 +24,6 @@ $color-highlight: var(--color-emphasis);
 $inverted-font-color: var(--footer-title-color);
 $header-height: var(--header-height);
 $code-color-font: var(--code-color-font);
+$feedback-height: var(--feedback-height);
+$tile-title-background-color: var(--tile-title-background-color);
+$tile-subtitle-background-color: var(--tile-subtitle-background-color);

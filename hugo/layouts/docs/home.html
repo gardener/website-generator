@@ -1,0 +1,85 @@
+{{ define "sln" }}
+  {{ partial "sln" . }}
+{{ end }}
+{{ define "page-content"}}
+{{- $assetBusting := not .Site.Params.disableAssetsBusting -}}
+<link rel="stylesheet" href="{{"css/slick.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+<link rel="stylesheet" href="{{"css/slick-theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+{{ .Content }}    
+<div class="docs home">
+    <h1 class="title">Documentation</h1>
+    <section>
+        Deploy, manage, and scale containerized applications on Kubernetes, powered by Gardener.
+    </section>
+    <div class="list">
+    {{ $currentPage:= . }}
+    {{ range $idx,$page := sort .Parent.Pages "Weight" }}
+    {{ if eq $page.UniqueID $currentPage.UniqueID }}
+    {{ else if ne $page.Params.menu "sln" }}
+    {{ else}}
+      <a class="tile" href="{{.RelPermalink}}">
+        <h1>{{.Title}}</h1>
+        <div class="description">
+        {{.Description}}
+        </div>
+      </a>
+    {{ end }}
+    {{ end }}
+    </div>
+    <div class="featured">
+        <h1 class="title">Latest material</h1>
+        <ul class="tiles">
+          {{ $list:= .Site.GetPage "section" "documentation/015-tutorials" }}
+          {{ range $index, $page := first 3 ( where $list.Pages.ByPublishDate.Reverse "Type" "tutorial-page")}}
+          <a class="tile guide" href="{{.RelPermalink}}" {{with .Params.level -}}data-filter-level="{{.}}"{{- end -}} {{with .Params.scope -}}data-filter-scope="{{.}}"{{- end -}}>
+              <h1 data-filter-freetext>
+                <span>{{.Title}}</span>
+                {{ if  in .Params.tags "tutorial"}}
+                <svg class="icon tutorial" aria-hidden="true" focusable="false">
+                  <use xlink:href="{{"images/icons/icons.svg#tutorial-o"| relURL}}"></use>
+                </svg>
+                {{end}}
+                {{ if  in .Params.tags "task"}}
+                <svg class="icon task" aria-hidden="true" focusable="false">
+                  <use xlink:href="{{"images/icons/icons.svg#task-o"| relURL}}"></use>
+                </svg>
+                {{end}}
+              </h1>
+                {{ if or (isset .Params "level") (isset .Params "scope") }}
+                <div class="properties">
+                    <div class="level">{{.Params.level}}</div>
+                    <div class="audience">{{.Params.scope}}</div>
+                </div>
+                {{ end }}
+                {{ if or (isset .Params "description") }}
+                <div class="description" data-filter-freetext>
+                    {{.Description}}
+                </div>
+                {{ end }}
+                {{- with .Params.tags -}}
+                <ul class="tags" data-filter-tags="{{- range . -}}{{ . }} {{end -}}">
+                    {{range .}}
+                    <li>#{{.}}</li>
+                    {{end}}
+                </ul>
+                {{- end -}}
+          </a>
+          {{end}}
+          {{ $list:= .Site.GetPage "section" "documentation/resources/030-release-notes" }}
+          {{ range $index, $page := first 3 ( where $list.Pages.ByPublishDate "Type" "docs")}}
+            <li>
+                <a href="{{.URL}}">
+                    <h1>Release Notes: {{ .Title }}</h1>
+                    <div class="description">
+                    {{.Description}}
+                    </div>
+                    <!--span class="publish-date">{{ .Date.Format "Jan 2, 2006" }}</span-->
+                </a>
+            </li>
+          {{end}}
+        </ul> 
+    </div>    
+</div>
+<script src="{{"js/slick.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script src="{{"js/docs.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+{{ end }}

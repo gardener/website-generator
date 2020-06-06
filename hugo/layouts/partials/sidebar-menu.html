@@ -1,6 +1,4 @@
 <nav id="sidebar" class="collapsed container menu">
-    {{ $style := resources.Get "sass/sidebar.scss" | resources.ToCSS | resources.Minify | resources.Fingerprint }}
-    <link rel="stylesheet" href="{{ $style.Permalink }}">
 {{ $currentNode := . }}
     <div class="highlightable">
         <ul class="topics">
@@ -14,7 +12,7 @@
         </ul>
     </div>
 </nav>
-<a href="#" class="menu-toggler"><span class="icon-arrowright"></span></a>
+<a href="#" class="menu-toggler"><i class="fa fa-angle-double-left"></i></a>
 
 <!-- templates -->
 {{- define "sidebar-tree-nav" -}}
@@ -38,9 +36,9 @@
         {{- if (ne $treeDepth 0) -}}
             {{- if $isContainer }} 
             {{- if $isParent }}
-            <span class="toggle icon-arrowdown"></span>
+            <span class="toggle fa fa-angle-down"></span>
             {{- else -}}
-            <span class="toggle icon-arrowright"></span>
+            <span class="toggle fa fa-angle-right"></span>
             {{- end -}}
             {{- else -}}
             <span class="toggle"></span>
@@ -81,8 +79,8 @@
         //collapsed sidebar button
         $(".menu-toggler").click(function(evt){
             $("#sidebar").toggleClass("collapsed");
-            $(".menu-toggler span").toggleClass("icon-arrowleft");
-            $(".menu-toggler span").toggleClass("icon-arrowright");
+            $(".menu-toggler span").toggleClass("fa-angle-double-left");
+            $(".menu-toggler span").toggleClass("fa-angle-double-right");
         });
     })
 </script>

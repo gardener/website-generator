@@ -1,0 +1,190 @@
+{{ define "sln" }}
+  {{ partial "sln" . }}
+{{ end }}
+
+{{ define "page-content" }}
+
+{{ $assetBusting := not .Site.Params.disableAssetsBusting }}
+<script src="{{"jquery-ui-1.12.1/jquery-ui.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<link rel="stylesheet" href="{{"jquery-ui-1.12.1/jquery-ui.min.css"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+<link rel="stylesheet" href="{{"css/slick.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+<link rel="stylesheet" href="{{"css/slick-theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+
+<div class="docs tutorials">
+
+  <!--div class="featured">
+    <h1 class="title">Featured</h1>
+    <ul class="tiles">
+      {{ range $idx, $page := where .Site.Pages "Params.featured" true }}  
+      <div class="tile guide" {{with .Params.level -}}data-filter-level="{{.}}"{{- end -}} {{with .Params.scope -}}data-filter-scope="{{.}}"{{- end -}}>
+        <a href="{{.RelPermalink}}">
+          <h1 data-filter-freetext>
+            <span>{{.Title}}</span>
+            {{ if  in .Params.tags "tutorial"}}
+            <svg class="icon tutorial" aria-hidden="true" focusable="false">
+              <use xlink:href="{{"images/icons/icons.svg#tutorial-o"| relURL}}"></use>
+            </svg>
+            {{end}}
+            {{ if  in .Params.tags "task"}}
+            <svg class="icon task" aria-hidden="true" focusable="false">
+              <use xlink:href="{{"images/icons/icons.svg#task-o"| relURL}}"></use>
+            </svg>
+            {{end}}
+          </h1>
+          {{ if or (isset .Params "level") (isset .Params "scope") }}
+          <div class="properties">
+            <div class="level">{{.Params.level}}</div>
+            <div class="audience">{{.Params.scope}}</div>
+          </div>
+          {{ end }}
+          {{ if or (isset .Params "description") }}
+          <div class="description" data-filter-freetext>
+              {{.Description}}
+          </div>
+          {{ end }}
+          {{- with .Params.tags -}}
+          <ul class="tags" data-filter-tags="{{- range . -}}{{ . }} {{end -}}">
+            {{range .}}
+            <li>#{{.}}</li>
+            {{end}}
+          </ul>
+          {{- end -}}
+        </a>
+      </div>
+      {{end}}
+    </ul> 
+  </div-->
+
+  <div class="page-head">
+    <div class="controls">
+      <div class="control search">
+        <input type="text" placeholder="type to filter" data-filter=".list .tile" data-filter-scope="freetext tags level"/>
+        <span class="icon-search fa fa-search"></span>
+        <!-- <span class="controls-collapse toggle active" title="Filtering and sorting options">
+          <svg class="icon filter" aria-hidden="true" focusable="false">
+            <use xlink:href="{{"images/icons/icons.svg#filter-o"| relURL}}"></use>
+          </svg>
+        </span> -->
+      </div>
+      <div class="collapsible filters">
+        <div class="control">
+          <label>
+            <a class="sort by-category" href="#">
+              <svg class="icon sort" aria-hidden="true" focusable="false">
+                <use xlink:href="{{"images/icons/icons.svg#sort"| relURL}}"></use>
+              </svg>
+              Category
+            </a>
+          </label>
+          <select class="combobox" class="filter autocomplete" data-filter=".list .tile" data-filter-scope="category"></select>
+        </div>
+        <div class="control">
+          <label>
+            <a class="sort by-audience" href="#">
+              <svg class="icon sort" aria-hidden="true" focusable="false">
+                <use xlink:href="{{"images/icons/icons.svg#sort"| relURL}}"></use>
+              </svg>
+              Audience
+            </a>
+          </label>
+          <select class="combobox" class="filter autocomplete" data-filter=".list .tile" data-filter-scope="scope"></select>
+        </div>
+        <div class="control">
+          <label>
+            <a class="sort by-expertise" href="#">
+              <svg class="icon sort" aria-hidden="true" focusable="false">
+                <use xlink:href="{{"images/icons/icons.svg#sort"| relURL}}"></use>
+              </svg>
+              Expertise
+            </a>
+          </label>
+          <select class="combobox" class="filter autocomplete" data-filter=".list .tile" data-filter-scope="level"></select>
+        </div>
+        <div class="control">
+          <label>
+            <a class="sort by-name" href="#">
+              <svg class="icon sort" aria-hidden="true" focusable="false">
+                <use xlink:href="{{"images/icons/icons.svg#sort"| relURL}}"></use>
+              </svg>
+              By Title
+            </a>
+          <label>
+        </div>
+        <div class="control">
+          <label>
+            <a class="sort by-publishdate" href="#">
+              <svg class="icon sort" aria-hidden="true" focusable="false">
+                <use xlink:href="{{"images/icons/icons.svg#sort"| relURL}}"></use>
+              </svg>
+              By Date
+            </a>
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="subcontrols">
+      <div class="records-stats">
+        <span class="records-shown"></span><span class="records-total"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="list">
+    {{ $currentPage := . }}
+    {{ $scratch := newScratch }}
+    {{ range .Site.Pages }}
+    {{/* apparently $currentPage.IsDescendant $currentPage returns true in Hugo 0.60 so we need the dummy check if not self */}}
+    {{ if and (.IsDescendant $currentPage) (ne . $currentPage) }}
+      {{ $scratch.Add "pages" (slice . ) }}
+    {{ end }}
+    {{ end }}
+    {{ $alldocs := where (where (where .Site.Pages "Type" "in" (slice "docs" "tutorial-page" "single-page")) ".Params.hidden" "!=" true) "Params.aggregate" "!=" true }}
+    {{ $pages := $scratch.Get "pages" }}
+    {{ $filtered := $alldocs | intersect $pages }}
+    {{ range $filtered }}
+    <section>
+      <h3 class="title"></h3>
+      <ul class="tiles">
+        <a class="tile guide" href="{{.RelPermalink}}" {{with .Params.level -}}data-filter-level="{{.}}"{{- end -}} {{with .Params.category -}}data-filter-category="{{.}}"{{- end -}} {{with .Params.scope -}}data-filter-scope="{{.}}"{{- end -}} {{with .Params.publishdate -}}data-filter-publishdate="{{.}}"{{- end -}}>
+          <h1 data-filter-freetext>
+            <span>{{.Title}}</span>
+            {{ if  in .Params.tags "tutorial"}}
+            <svg class="icon tutorial" aria-hidden="true" focusable="false">
+              <use xlink:href="{{"images/icons/icons.svg#tutorial-o"| relURL}}"></use>
+            </svg>
+            {{end}}
+            {{ if  in .Params.tags "task"}}
+            <svg class="icon task" aria-hidden="true" focusable="false">
+              <use xlink:href="{{"images/icons/icons.svg#task-o"| relURL}}"></use>
+            </svg>
+            {{end}}
+          </h1>
+          {{ if or (isset .Params "level") (isset .Params "scope") }}
+          <div class="properties">
+            <div class="level">{{.Params.level}}</div>
+            <div class="audience">{{.Params.scope}}</div>
+          </div>
+          {{ end }}
+          <div class="description" data-filter-freetext>
+              {{.Description}}
+          </div>
+          {{- with .Params.tags -}}
+          <ul class="tags" data-filter-tags="{{- range . -}}{{ . }} {{end -}}">
+            {{range .}}
+            <li>#{{.}}</li>
+            {{end}}
+          </ul>
+          {{- end -}}
+        </a>
+      </ul>  
+    </section>
+    {{ end }}
+  </div>
+  
+</div>
+<script src="{{"js/combobox.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script src="{{"js/filters.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script src="{{"js/docs.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script src="{{"js/docs-guides-home.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script src="{{"js/slick.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+{{ end }}

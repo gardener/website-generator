@@ -1,0 +1,28 @@
+          <style>
+            #top-bar {
+              margin-top: 4rem;
+            }
+          </style>
+          <div id="top-bar">
+          {{ partial "page-edit.html" . }}
+          {{ partial "breadcrumb.html" . }}
+          </div>
+        {{ if .Params.remote }}
+          {{ if strings.HasSuffix  .Params.remote ".git" }}
+            {{ $url    := urls.Parse .Params.remote}}
+            {{ $host   := $url.Host }}
+            {{ $scheme := $url.Scheme }}
+            {{ $prefix := print $scheme "://" $host "/" }}
+            {{ $array  := (split (replace .Params.remote  $prefix "") "/") }}
+            {{ $org    := (index $array 0) }}
+            {{ $repo   := (replace (index $array 1) ".git" "/") }}
+          <div id="githubFactsheet">
+            <span id="githubLink"><i class="fa fa-github"></i><a target="_blank" href="{{$prefix}}{{$org}}/{{$repo}}">{{$prefix}}{{$org}}/{{$repo}}</a></span>
+            <a class="github-button" href="{{$prefix}}{{$org}}" aria-label="Follow @gardener on GitHub">Follow @{{$repo}}</a>
+            <a class="github-button" href="{{$prefix}}{{$org}}/{{$repo}}" data-show-count="true" aria-label="Star gardener/gardener on GitHub">Star</a>
+            <div class="tutorial-last-update">Updated <span>{{ partial "git_date.html" . }}</span> by {{ partial "git_author.html" . }}</div>
+          </div>
+          {{ end }}
+        {{ else }}
+          <div class="tutorial-last-update">Updated <span>{{ partial "git_date.html" . }}</span> by {{ partial "git_author.html" . }}</div>
+        {{end}}

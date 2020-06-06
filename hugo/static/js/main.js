@@ -1,11 +1,11 @@
 $(document).ready(function(){
 	// Variables
-	var $window = $(window);
-	$window.sr = ScrollReveal({ reset: false});
-	$window.sr.reveal('.reveal-fast', { duration: 2000 });
-	$window.sr.reveal('.reveal-slow', { duration: 2500 });
-	$window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'30px' });
-	$window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'30px' });
+	// var $window = $(window);
+	// $window.sr = ScrollReveal({ reset: false});
+	// $window.sr.reveal('.reveal-fast', { duration: 2000 });
+	// $window.sr.reveal('.reveal-slow', { duration: 2500 });
+	// $window.sr.reveal('.reveal-right', { duration: 2000, origin:'right', distance:'30px' });
+	// $window.sr.reveal('.reveal-left', { duration: 2000, origin:'left', distance:'30px' });
 
 
 	/* Compenste header height (adaptive to screenwidths) while scrolling anchor (#) links.
@@ -139,5 +139,6 @@ $(window).load(function() {
 			}
 		}
 	});
+
 });
 

@@ -1,0 +1,30 @@
+            <div id="top-github-link">
+                <a class="github-link" title='{{T "Edit-this-page"}}'
+                    href='{{ template "print-edit-link" . }}'
+                    target="blank">
+                <i class="fa fa-code-fork"></i>
+                <span id="top-github-link-text">{{T "Edit-this-page"}}</span>
+                </a>
+            </div>
+
+
+<!-- templates
+{{/*  {{
+  Usage: {{ template "print-edit-link" . }}
+}}  */}}
+-->
+{{ define "print-edit-link" }}
+{{- if isset .Params "remote" -}}
+  {{- if (strings.HasSuffix  .Params.remote ".git" ) -}}
+    {{- printf "%s" (replace .Params.remote ".git" "/edit/master/README.md") -}}
+  {{- else -}}
+    {{- printf "%s" .Params.remote -}}
+  {{- end -}}
+{{- else -}}
+  {{- $File := .File -}}
+  {{- $Site := .Site -}}
+  {{- with $File -}}
+    {{- printf "%s%s%s" $Site.Params.editURL (replace $File.Dir "\\" "/") $File.LogicalName -}}
+  {{- end -}}  
+{{- end -}}
+{{ end }}

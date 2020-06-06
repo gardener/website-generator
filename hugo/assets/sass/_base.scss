@@ -100,6 +100,12 @@ a {
     width: 90%;
   }
 }
+.main {
+  display: flex;
+  > section {
+    flex: 1;
+  }
+}
 .title-1 {
   font-weight: normal;
   letter-spacing: 0;
@@ -367,7 +373,8 @@ code,
 kbd,
 pre,
 samp {
-  font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 80%;
   vertical-align: text-bottom;
   word-break: normal;
@@ -389,7 +396,8 @@ pre {
   tab-size: 4;
   hyphens: none;
   overflow: auto;
-  background: inherit;  line-height: 1.15;
+  background: inherit;
+  line-height: 1.15;
   box-shadow: 1px 1px 5px -1px #000;
   color: var(--textCodeColor);
   code {
@@ -414,7 +422,7 @@ pre {
         top: 0;
       }
     }
-  }  
+  }
 }
 
 // #body-inner .title, .subtitle {
@@ -426,3 +434,32 @@ pre {
 //   font-size: 2rem;
 //   color: #555;
 // }
+
+.howto_tickets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 70px auto 30px;
+  height: $feedback-height;
+  background-color: #f6f6f6;
+  vertical-align: middle;
+  span {
+    display: block;
+    @media (min-width: 750px){
+      display: initial;
+    }
+  }
+  @media (min-width: 750px){
+    width: 75%;
+
+  }
+  a {
+    color: $color-highlight;
+    padding: 0 10px;
+    text-align: center;
+  }
+  img {
+    width: 32px;
+    vertical-align: middle;
+  }
+}

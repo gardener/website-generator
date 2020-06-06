@@ -1,0 +1,295 @@
+// $uiDarkYellow: #de9e00;
+// $carrot-orange: #ed931d;
+$tango-2: #ea6621;
+$uiLightGray: #dddddd;
+// $uiBlack: #000;
+$uiStandardTextColor: #111;
+// a::after {
+//   display: none !important;
+// }
+div.notices p:first-child:after {
+  left: 3rem;
+}
+#body-inner {
+  ul {
+    padding-left: 1.6rem;
+    li {
+      margin-left: 0;
+      list-style: outside square;
+    }
+  }
+  p {
+    line-height: 1.4;
+  }
+  // code:not(.hljs) {
+  //   padding: 2px 3px;
+  //   border-radius: unset;
+  //   color: #222;
+  // }
+  .docs {
+    .featured {
+      .tile {
+        &.guide {
+          @media (min-width: 750px) {
+            min-height: 180px;
+          }
+          .description {
+            @media (min-width: 750px) {
+              display: initial;
+            }
+          }
+        }
+      }
+      .tile {
+        ul {
+          > li {
+            list-style: none;
+          }
+        }
+      }
+    }
+    .tile {
+      ul {
+        > li {
+          list-style: none;
+        }
+      }
+    }
+  }
+}
+#body-inner {
+  .docs {
+    font-family: $font-family-regular;
+    b,
+    strong {
+      font-family: $font-family-regular;
+      font-weight: 700;
+    }
+    .git-wr {
+      display: flex;
+      justify-content: space-between;
+      margin: 0 0 1.5rem;
+    }
+    #top-bar {
+      background: none;
+      margin: 0;
+    }
+    #top-github-link {
+      z-index: initial;
+      -webkit-transform: none;
+    }
+    .tutorial-last-update {
+      font-family: $font-family-regular;
+      font-size: 1.3rem;
+    }
+    a {
+      .github-link {
+        font-family: $font-family-regular;
+        font-size: 1.6rem;
+      }
+    }
+    .title {
+      margin: 0 0 2rem 0;
+      padding: 0;
+      font-family: $font-family-regular;
+      font-size: 3rem;
+      line-height: 1;
+      letter-spacing: normal;
+      text-align: left;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+    }
+    .list {
+      display: flex;
+      flex-flow: column;
+      section {
+        margin-bottom: 2rem;
+        max-width: 100%;
+        &.hidden {
+          display: none !important;
+        }
+        > .title {
+          border-bottom: 1px solid #eee;
+          font-size: 2.4rem;
+          padding: 0.5rem 0;
+          margin: 0 0 5rem;
+          text-transform: capitalize;
+        }
+      }
+    }
+    .tiles {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      margin: 0;
+    }
+    .featured {
+      height: auto;
+      min-height: 150px;
+      width: 100%;
+      padding: 0;
+      margin: 0 0px 40px;
+      color: $font-color;
+      transition: all 0.5s;
+      font-family: $font-family-regular;
+      .title {
+        padding: 0 0 0 5px;
+        margin-bottom: 10px !important;
+        line-height: 1.6;
+        vertical-align: middle;
+        font-size: 2rem;
+        font-family: $font-family-regular;
+        text-transform: uppercase;
+        border: none;
+      }
+      ul {
+        > li {
+          list-style: none;
+        }
+      }
+      li > * {
+        width: 100%;
+      }
+      .tiles {
+        /* Hide slick-slider content until slick is initialized to reduce the flickering */
+        &:not(.slick-initialized) {
+          display: none;
+        }
+        .tile {
+          .description {
+            display: none;
+          }
+        }
+      }
+      ul {
+        .tile {
+          margin: 0 10px;
+        }
+      }
+      .slick-slider {
+        .slick-list {
+          width: 100%;
+        }
+        button {
+          font-size: 3rem;
+          line-height: inherit;
+          height: 100%;
+          opacity: 0.5;
+          background-color: rgba(0, 0, 0, 0.08);
+          border-radius: 0;
+          color: var(--gd-color-font);
+          margin-bottom: 0;
+          z-index: 1;
+          &:hover {
+            opacity: 1;
+            transition: opacity 0.2s;
+          }
+          &::before {
+            display: none;
+          }
+        }
+        &.slick-initialized {
+          .slick-prev {
+            width: 50px;
+            display: inline-block;
+            left: 10px;
+          }
+          .slick-next {
+            width: 50px;
+            display: inline-block;
+            right: 10px;
+          }
+        }
+      }
+    }
+    a.tile {
+      text-decoration: none;
+    }
+    .tile {
+      // Style for tiles for guides
+      > a {
+        text-decoration: none;
+      }
+      &.guide {
+        display: flex !important;
+        flex-flow: column;
+        flex: 1 1 auto;
+        height: auto;
+        min-height: 140px;
+        width: 100%;
+        border: 1px solid $tile-title-background-color;
+        padding: 0;
+        margin: 0 10px 20px;
+        background-color: #fff;
+        color: $font-color;
+        transition: all 0.5s;
+        // height: 100%;
+        min-height: inherit;
+        > h1 {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: 1em 1.5rem 1rem;
+          margin: 0;
+          font-size: 18px !important;
+          font-family: $font-family-regular;
+          background-color: $tile-title-background-color;
+          color: #fff !important;
+          border-bottom-color: $tile-title-background-color;
+          .icon {
+            margin: 0 0 5px 5px;
+          }
+          svg {
+            &.icon {
+              --outline-color: #fff;
+              fill: #fff;
+              width: 32px;
+              height: 32px;
+            }
+          }
+        }
+        .properties {
+          display: flex;
+          padding: 0.5rem 1.5rem 0.5rem;
+          font-size: 1.35rem;
+          font-family: $font-family-regular;
+          color: $font-color;
+          background-color: $tile-subtitle-background-color;
+          border-bottom: 1px solid $tile-subtitle-background-color;
+          > * {
+            margin-right: 5px;
+          }
+          .level {
+            text-transform: lowercase;
+          }
+          .audience {
+            text-transform: lowercase;
+          }
+        }
+        .description {
+          padding: 1rem 1.5rem 1.5rem;
+          color: $font-color;
+          font-family: $font-family-light;
+          line-height: 1.3;
+          font-size: 1.45rem;
+        }
+        .tags {
+          margin: 0;
+          display: flex;
+          flex-wrap: wrap;
+          padding: 0 1.5rem 1rem;
+          margin-top: auto;
+          font-family: $font-family-regular;
+          li {
+            list-style: none;
+            color: $tango-2;
+            font-size: 1.3rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+@import "docs-home";
+@import "docs-guides";
