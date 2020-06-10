@@ -4,12 +4,20 @@
     &.home {
       display: flex;
       flex-flow: column;
-      margin-top: 2rem;
       > * {
         flex: 1 1 auto;
       }
-      h1 {
-        font-family: $font-family-regular;
+      > h1 {
+        text-align: center;
+        @media (min-width: 750px) {
+          text-align: left;
+        }
+        &+section {
+          text-align: center;
+          @media (min-width: 750px) {
+            text-align: left;
+          }
+        }
       }
       section {
         margin: 2rem 0;
@@ -32,21 +40,31 @@
         .tile {
           flex: 1 1 auto;
           height: auto;
-          min-height: 150px;
+          min-height: 100px;
           width: 100%;
           border: 1px solid $uiLightGray;
           padding: 1.5rem;
-          margin: 0 10px 40px;
-          background-color: #fff;
+          margin: 0 10px 10px;
+          background-color: #fefefe;
           color: $uiStandardTextColor;
-          transition: all 0.5s;
+          transition: all 0.25s;
           @media (min-width: 750px) {
+            min-height: 150px;
             max-width: calc(50% - 20px);
             padding: 2rem;
             margin: 0 10px 40px;
           }
           @media (min-width: 1000px) {
             max-width: calc(33.33% - 20px);
+          }
+          &:hover {
+            color: #fff;
+            background-color: #033829;
+            border-color: #033829;
+            text-decoration: none;
+            h1 {
+              color: #fff;
+            }
           }
           h1 {
             font-size: 1.8rem;
@@ -56,38 +74,14 @@
               font-size: 2rem;
             }
           }
-          // > a {
-          //   display: block;
-          //   width: 100%;
-          //   height: 100%;
-          //   color: initial;
-          //   font-family: $font-family-regular;
-          //   text-decoration: none;
-          //   .description {
-          //     font-size: 1.6rem !important;
-          //     font-family: $font-family-light;
-          //     line-height: 1.1;
-          //     word-break: break-word;
-          //     color: $uiStandardTextColor;
-          //   }
-          //   h3 {
-          //     font-size: 1.6rem !important;
-          //     font-family: $font-family-light;
-          //     line-height: 1.1;
-          //   }
-          // }
-          ul.description {
-            margin-bottom: 0;
-            li {
-              list-style: none;
-              margin-left: 5px !important;
-            }
-          }
-          li {
-            list-style: none;
-            margin-left: 5px !important;
-          }
         }
+      }
+      .license {
+        text-align: center;
+        margin: 50px auto;
+        font-size: 1.3rem;
+        color: #555;
+        font-family: $font-family-book;
       }
     }
   }

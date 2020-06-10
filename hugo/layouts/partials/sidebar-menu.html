@@ -47,7 +47,7 @@
             <span class="menu-item-text">{{- or .Params.menuTitle .LinkTitle .Title -}}{{- safeHTML .Params.Post -}}</span>
         </a>
         {{- $numberOfPages := len .Pages -}}
-        {{- if (and (not .Params.aggregate) (ne $numberOfPages 0)) -}}
+        {{- if ne $numberOfPages 0 -}}
             <ul {{- if .Parent.IsHome }} style="padding-left:0"{{ end -}}>
             {{- range .Pages -}}
                 {{- if .Params.hidden -}}

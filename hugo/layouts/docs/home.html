@@ -9,24 +9,22 @@
 <div class="docs home">
     <h1 class="title">Documentation</h1>
     <section>
-        Deploy, manage, and scale containerized applications on Kubernetes, powered by Gardener.
+        Learn how to deploy, operate, use and extend Gardener.
     </section>
     <div class="list">
     {{ $currentPage:= . }}
     {{ range $idx,$page := sort .Parent.Pages "Weight" }}
     {{ if eq $page.UniqueID $currentPage.UniqueID }}
-    {{ else if ne $page.Params.menu "sln" }}
+    {{ else if ne $page.Params.menus "sln" }}
     {{ else}}
       <a class="tile" href="{{.RelPermalink}}">
         <h1>{{.Title}}</h1>
-        <div class="description">
-        {{.Description}}
-        </div>
+        <div class="description">{{.Description}}</div>
       </a>
     {{ end }}
     {{ end }}
     </div>
-    <div class="featured">
+    {{/*  <div class="featured">
         <h1 class="title">Latest material</h1>
         <ul class="tiles">
           {{ $list:= .Site.GetPage "section" "documentation/015-tutorials" }}
@@ -78,7 +76,11 @@
             </li>
           {{end}}
         </ul> 
-    </div>    
+    </div>      */}}
+
+    <div class="license">
+      Documentation license: <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>
+    </div>
 </div>
 <script src="{{"js/slick.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 <script src="{{"js/docs.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>

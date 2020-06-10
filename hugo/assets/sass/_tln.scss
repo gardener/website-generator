@@ -245,14 +245,13 @@ a.nav-button {
     flex: 1 0 auto;
     display: inline-block;
     max-width: min-content;
-    padding: 20px 0 11px;
+    padding: 16px 0 11px;
     margin: 0 5px;
     border-bottom: 4px solid transparent;
     text-align: center;
     vertical-align: middle;
     color: #fff;
     font-size: 2.5rem;
-    line-height: 2.5rem;
     &:hover {
       color: var(--color-emphasis);
       border-color: var(--color-emphasis);

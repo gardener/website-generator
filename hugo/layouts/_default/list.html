@@ -1,9 +1,3 @@
-{{ partial "header_blank.html" . }}
-
-{{ .Content }}
-
-<footer class=" footline" >
-</footer>
-
-
-{{ partial "footer-doc.html" . }}
+{{ define "page-content"}}
+  {{.Content}}
+{{ end }}

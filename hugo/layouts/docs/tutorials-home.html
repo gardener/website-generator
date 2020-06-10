@@ -1,9 +1,7 @@
 {{ define "sln" }}
   {{ partial "sln" . }}
 {{ end }}
-{{ define "sidebar" }}
-  {{ partial "sidebar-menu" . }}
-{{ end }}
+
 {{ define "page-content" }}
 
 {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
@@ -12,7 +10,7 @@
 <link rel="stylesheet" href="{{"css/slick.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
 <link rel="stylesheet" href="{{"css/slick-theme.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
 
-<div class="docs guides list-page">
+<div class="docs tutorials list-page">
 
   <!--div class="featured">
     <h1 class="title">Featured</h1>
@@ -143,7 +141,7 @@
       {{ $scratch.Add "pages" (slice . ) }}
     {{ end }}
     {{ end }}
-    {{ $alldocs := where (where (where .Site.Pages "Type" "in" (slice "docs" "single-page")) ".Params.hidden" "!=" true) "Params.aggregate" "!=" true }}
+    {{ $alldocs := where (where (where .Site.Pages "Type" "in" (slice "docs" "tutorial-page" "single-page")) ".Params.hidden" "!=" true) "Params.aggregate" "!=" true }}
     {{ $pages := $scratch.Get "pages" }}
     {{ $filtered := $alldocs | intersect $pages }}
     {{ range $filtered }}
@@ -153,7 +151,7 @@
         <a class="tile guide" href="{{.RelPermalink}}" {{with .Params.level -}}data-filter-level="{{.}}"{{- end -}} {{with .Params.category -}}data-filter-category="{{.}}"{{- end -}} {{with .Params.scope -}}data-filter-scope="{{.}}"{{- end -}} {{with .Params.publishdate -}}data-filter-publishdate="{{.}}"{{- end -}}>
           <h1 data-filter-freetext>
             <span>{{.Title}}</span>
-            {{/*  {{ if  in .Params.tags "tutorial"}}
+            {{ if  in .Params.tags "tutorial"}}
             <svg class="icon tutorial" aria-hidden="true" focusable="false">
               <use xlink:href="{{"images/icons/icons.svg#tutorial-o"| relURL}}"></use>
             </svg>
@@ -162,7 +160,7 @@
             <svg class="icon task" aria-hidden="true" focusable="false">
               <use xlink:href="{{"images/icons/icons.svg#task-o"| relURL}}"></use>
             </svg>
-            {{end}}  */}}
+            {{end}}
           </h1>
           {{ if or (isset .Params "level") (isset .Params "scope") }}
           <div class="properties">
@@ -170,16 +168,16 @@
             <div class="audience">{{.Params.scope}}</div>
           </div>
           {{ end }}
-          {{/*  <div class="description" data-filter-freetext>
+          <div class="description" data-filter-freetext>
               {{.Description}}
-          </div>  */}}
-          {{/*  {{- with .Params.tags -}}
+          </div>
+          {{- with .Params.tags -}}
           <ul class="tags" data-filter-tags="{{- range . -}}{{ . }} {{end -}}">
             {{range .}}
             <li>#{{.}}</li>
             {{end}}
           </ul>
-          {{- end -}}  */}}
+          {{- end -}}
         </a>
       </ul>  
     </section>
@@ -190,6 +188,6 @@
 <script src="{{"js/combobox.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 <script src="{{"js/filters.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 <script src="{{"js/docs.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
-<script src="{{"js/docs-guides-home.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script src="{{"js/docs-tutorials-home.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 <script src="{{"js/slick.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 {{ end }}
