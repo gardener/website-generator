@@ -68,30 +68,112 @@ header {
     align-items: center;
   }
   &.navigation.collapsed {
-    .links{
+    .links {
       padding-top: 45px;
     }
   }
 }
+.nav-button {
+  a {
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  @media (min-width: 550px) {
+    margin: 0 13px;
+  }
+}
+a.nav-button {
+  &:hover {
+    text-decoration: none;
+  }
+}
 .navigation {
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  // border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  &.collapsed {
+    .logo {
+      .title {
+        display: block;
+      }
+    }
+  }
+  .nav-button.navbar-toggler {
+    @media (min-width: 1000px) {
+      display: none;
+    }
+  }
+  .navbar-collapse {
+    display: none;
+    flex: 1 0 auto;
+    position: fixed;
+    top: var(--header-height);
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    background-color: #272e36;
+    text-transform: uppercase;
+    font-size: 1.7rem;
+    @media (min-width: 1000px) {
+      display: flex !important;
+      position: initial;
+      justify-content: flex-end;
+      margin: 0;
+      min-width: 0;
+      background-color: inherit;
+      text-transform: initial;
+    }
+    .menu {
+      display: block;
+      @media (min-width: 1000px) {
+        display: none;
+      }
+      .links {
+        .link[data-depth="0"],
+        .link[data-depth="1"],
+        .link[data-depth="2"] {
+          display: block;
+        }
+        .link {
+          display: none;
+          &.active {
+            color: inherit;
+          }
+          a {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
   .links {
     position: relative;
     margin: 0;
+    @media (min-width: 1000px) {
+      text-align: right;
+      flex: 6 0 auto;
+    }
     .link {
       position: relative;
       display: block;
       margin: 0 5%;
+      @media (min-width: 1000px) {
+        margin: 0 7.5px;
+        display: inline-block;
+      }
       a {
         display: block;
         color: #fff;
         text-decoration: none;
         flex: 1;
+        @media (min-width: 1000px) {
+          font-size: 18px;
+        }
       }
       > a {
         font-family: var(--font-family-regular);
         padding: 18px 10px 17px;
-        border-bottom: 4px solid transparent;
+        border-bottom: 5px solid transparent;
         transition: all 0.3s;
         &:hover {
           border-color: var(--color-emphasis);
@@ -163,14 +245,13 @@ header {
     flex: 1 0 auto;
     display: inline-block;
     max-width: min-content;
-    padding: 20px 0 11px;
+    padding: 16px 0 11px;
     margin: 0 5px;
     border-bottom: 4px solid transparent;
     text-align: center;
     vertical-align: middle;
     color: #fff;
     font-size: 2.5rem;
-    line-height: 2.5rem;
     &:hover {
       color: var(--color-emphasis);
       border-color: var(--color-emphasis);
@@ -220,76 +301,6 @@ header {
     display: none !important;
   }
 }
-.nav-button {
-  a {
-    &:hover {
-      text-decoration: none;
-    }
-  }
-  @media (min-width: 550px) {
-    margin: 0 13px;
-  }
-}
-a.nav-button {
-  &:hover {
-    text-decoration: none;
-  }
-}
-.navbar-collapse {
-  display: none;
-  flex: 1 0 auto;
-  position: fixed;
-  top: var(--header-height);
-  left: 0;
-  right: 0;
-  bottom: 0;
-  overflow-y: auto;
-  background-color: #272e36;
-  text-transform: uppercase;
-  font-size: 1.7rem;
-}
-.navigation.collapsed {
-  .logo {
-    .title {
-      display: block;
-    }
-  }
-}
-@media (min-width: 1000px) {
-  .navigation {
-    .navbar-collapse {
-      .menu {
-        display: none;
-      }
-    }
-    .links {
-      text-align: right;
-      flex: 6 0 auto;
-      .link {
-        margin: 0 7.5px;
-        display: inline-block;
-        a {
-          font-size: 18px;
-        }
-      }
-    }
-    .navbar-toggler {
-      display: none;
-    }
-  }
-  .navbar-collapse {
-    display: flex !important;
-    position: initial;
-    justify-content: flex-end;
-    margin: 0;
-    min-width: 0;
-    background-color: inherit;
-    text-transform: initial;
-  }
-}
-
-
-
 
 /* For devices larger than 400px */
 /* .search-box .nav-button.close:hover {

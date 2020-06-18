@@ -1,0 +1,160 @@
+// $uiDarkYellow: #de9e00;
+// $carrot-orange: #ed931d;
+$tango-2: #ea6621;
+$uiLightGray: #dddddd;
+// $uiBlack: #000;
+$uiStandardTextColor: #111;
+div.notices p:first-child:after {
+  left: 3rem;
+}
+#body-inner {
+  ul {
+    padding-left: 1.6rem;
+    li {
+      margin-left: 0;
+      list-style: outside square;
+    }
+  }
+  p {
+    line-height: 1.4;
+  }
+  // code:not(.hljs) {
+  //   padding: 2px 3px;
+  //   border-radius: unset;
+  //   color: #222;
+  // }
+  .docs {
+    .featured {
+      .tile {
+        &.guide {
+          @media (min-width: 750px) {
+            min-height: 180px;
+          }
+          .description {
+            @media (min-width: 750px) {
+              display: initial;
+            }
+          }
+        }
+      }
+      .tile {
+        ul {
+          > li {
+            list-style: none;
+          }
+        }
+      }
+    }
+    .tile {
+      ul {
+        > li {
+          list-style: none;
+        }
+      }
+    }
+  }
+}
+#body-inner {
+  .docs {
+    b,
+    strong {
+      font-family: $font-family-medium;
+    }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      color: #0b8062;
+    }
+    .title {
+      text-align: left;
+    }
+    .featured {
+      height: auto;
+      min-height: 150px;
+      width: 100%;
+      padding: 0;
+      margin: 0 0px 40px;
+      color: $font-color;
+      transition: all 0.5s;
+      font-family: $font-family-regular;
+      .title {
+        padding: 0 0 0 5px;
+        margin-bottom: 10px !important;
+        line-height: 1.6;
+        vertical-align: middle;
+        font-size: 2rem;
+        font-family: $font-family-regular;
+        text-transform: uppercase;
+        border: none;
+      }
+      ul {
+        > li {
+          list-style: none;
+        }
+      }
+      li > * {
+        width: 100%;
+      }
+      .tiles {
+        /* Hide slick-slider content until slick is initialized to reduce the flickering */
+        &:not(.slick-initialized) {
+          display: none;
+        }
+        .tile {
+          .description {
+            display: none;
+          }
+        }
+      }
+      ul {
+        .tile {
+          margin: 0 10px;
+        }
+      }
+      .slick-slider {
+        .slick-list {
+          width: 100%;
+        }
+        button {
+          font-size: 3rem;
+          line-height: inherit;
+          height: 100%;
+          opacity: 0.5;
+          background-color: rgba(0, 0, 0, 0.08);
+          border-radius: 0;
+          color: var(--gd-color-font);
+          margin-bottom: 0;
+          z-index: 1;
+          &:hover {
+            opacity: 1;
+            transition: opacity 0.2s;
+          }
+          &::before {
+            display: none;
+          }
+        }
+        &.slick-initialized {
+          .slick-prev {
+            width: 50px;
+            display: inline-block;
+            left: 10px;
+          }
+          .slick-next {
+            width: 50px;
+            display: inline-block;
+            right: 10px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@import "docs-home";
+@import "docs-listpage-head";
+@import "docs-listpage";
+@import "docs-tutorials";
+@import "docs-page";

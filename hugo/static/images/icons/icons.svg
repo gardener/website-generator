@@ -26,4 +26,19 @@
     <circle cx="7.5" cy="24.5" r="2.5" fill="var(--outline-color, black)"/>
     <rect x="1.5" y="1.5" width="27" height="29" stroke="var(--outline-color, black)"/>
   </symbol>
+  <symbol id="level-1" viewBox="0 0 26 35" fill="none" stroke-width="1">
+    <path d="M23.7237 33H17.7237V2H23.7237V33Z" stroke="var(--outline-color, black)"/>
+    <path d="M15.7763 33H9.77631V10H15.7763V33Z" stroke="var(--outline-color, black)"/>
+    <path d="M7 33H7.5V32.5V17.5V17H7H3H2.5V17.5V32.5V33H3H7Z" fill="var(--fill, black)" stroke="var(--outline-color, black)"/>
+  </symbol>
+  <symbol id="level-2" viewBox="0 0 26 35" fill="none" stroke-width="1">
+    <path d="M23.7237 33H17.7237V2H23.7237V33Z" stroke="var(--outline-color, black)"/>
+    <path d="M16.2763 33.5H9.27631V9.5H16.2763V33.5Z" fill="var(--fill, black)" fill-rule="evenodd" clip-rule="evenodd"/>
+    <path d="M7 33H7.5V32.5V17.5V17H7H3H2.5V17.5V32.5V33H3H7Z" fill="var(--fill, black)" stroke="var(--outline-color, black)"/>
+  </symbol>
+  <symbol id="level-3" viewBox="0 0 26 35" fill="none" stroke-width="1">
+    <path d="M24.2237 33.5H17.2237V1.5H24.2237V33.5Z" fill="var(--outline-color, black)"/>
+    <path d="M16.2763 33.5H9.27631V9.5H16.2763V33.5Z" fill="var(--fill, black)" fill-rule="evenodd" clip-rule="evenodd" />
+    <path d="M7 33H7.5V32.5V17.5V17H7H3H2.5V17.5V32.5V33H3H7Z" fill="var(--fill, black)" stroke="var(--outline-color, black)" fill-rule="evenodd" clip-rule="evenodd" />
+  </symbol>
 </svg>

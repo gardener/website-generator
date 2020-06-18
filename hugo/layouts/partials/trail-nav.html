@@ -1,0 +1,73 @@
+<style>
+    .trail-nav {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 3rem;
+    }
+    .trail-nav > * {
+        flex: 1 0 50%;
+    }
+    .trail-nav a {
+        font-family: BentonSans;
+        text-decoration: none;
+    }
+    .trail-nav a::after{
+        display:none!important;
+    }
+    .trail-nav .trail-prev,
+    .trail-nav .trail-next {
+      display: flex!important;
+      align-items: center;
+      word-break: break-word;
+    }
+    .trail-nav .trail-prev {
+      justify-content: flex-start;
+    }
+    .trail-nav .trail-next {
+      justify-content: flex-end;
+    }
+    .trail-nav .trail-title {
+      line-height: 1.1;
+    }
+    .trail-nav .trail-prev .trail-title {
+      text-align: start;
+    }
+    .trail-nav .trail-next .trail-title {
+      text-align: end;
+    }
+    .trail-nav [class^="icon-"] {
+      line-height: 0;
+    }
+</style>
+<div class="trail-nav">
+{{$currentPage:= .}}
+{{with .Params.trail.prevUrl}}
+  {{$prevUrl := .}}
+  {{$prevTitle := ""}}
+  {{with $currentPage.Params.trail.prevTitle}}
+  {{$prevTitle = .}}
+  {{else}}
+    {{ with $.Site.GetPage $prevUrl }}
+    {{$prevTitle = .Title}}
+    {{end}}
+  {{end}}
+  <a class="trail-prev" href="{{$prevUrl | relURL}}"><span class="icon-arrowleft"></span> <span class="trail-title">{{$prevTitle}}</span></a>
+{{else}}
+<span></span>
+{{end}}
+{{with .Params.trail.nextUrl}}
+  {{$nextUrl := .}}
+  {{$nextTitle := ""}}
+  {{$nextTitle:=""}}
+  {{with $currentPage.Params.trail.nextTitle}}
+  {{$nextTitle = .}}
+  {{else}}
+    {{ with $.Site.GetPage $nextUrl }}
+    {{$nextTitle = .Title}}
+    {{end}}
+  {{end}}  
+  <a class="trail-next" href="{{$nextUrl | relURL}}"><span class="trail-title">{{$nextTitle}}</span> <span class="icon-arrowright"></span></a>
+{{else}}
+<span></span>
+{{end}}
+</div>

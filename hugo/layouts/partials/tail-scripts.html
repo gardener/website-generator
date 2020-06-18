@@ -8,6 +8,7 @@
 
     <link href="{{"mermaid/mermaid.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" type="text/css" rel="stylesheet" />
     <script src="{{"mermaid/mermaid.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+    <script src="{{"js/code-snippets.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
     <script>
       mermaid.initialize({ startOnLoad: true, htmlLables: true });
       function createIssue(issueUrl, page, url) {
@@ -35,6 +36,8 @@
         });
           
         new ClipboardJS('.clipboard-copy');
+
+        $("body").codeSnippets();
       });
     </script>
 

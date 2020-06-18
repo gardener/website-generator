@@ -1,9 +1,6 @@
 {{ define "page-content"}}
-  {{ $options := (dict "targetPath" "css/gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
-  {{ $style := resources.Get "sass/gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   <div class="page news-feed">
-    <h2 class="page-title">News Feed</h2>
+    <h1 class="title">News Feed</h1>
     <!-- <span class="page-sub-title">Explore the news feed</span> -->
     <ul class="news-feed twelve columns">
       <!-- Ranges through content/news/*.md -->
@@ -17,7 +14,7 @@
               {{with .Params.publishdate}} 
               <span class="publish-date">{{ .Format "Monday, Jan 2, 2006" }}</span>
               {{end}}          
-              <h3>{{ .Title }} <span class="arrow-right">&rarr;</span></h3>
+              <h4>{{ .Title }} <span class="arrow-right">&rarr;</span></h4>
               <span class="eventdate">{{ .Params.eventdate }}</span>
             </a>
           </li>

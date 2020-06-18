@@ -108,8 +108,8 @@ $(document).ready(function(){
     }
     initTiles();
 
-    $(".combobox[data-filter-scope]", ".guides").combobox();
-    $(".combobox[data-filter-scope]  #toggle", ".guides").on( "click", function() {
+    $(".combobox[data-filter-scope]", ".tutorials").combobox();
+    $(".combobox[data-filter-scope]  #toggle", ".tutorials").on( "click", function() {
       $( ".combobox" ).toggle();
     });
 
@@ -174,7 +174,7 @@ $(document).ready(function(){
           $(this).attr('data-filter-scope', scope);
         });
         $(this).on('comboboxselect', function(evt, ui){
-          $("input[data-filter-scope]", ".guides").not($(this)).val('');
+          $("input[data-filter-scope]", ".tutorials").not($(this)).val('');
           var input = $(this).parent('.control').find('input');
           $(input).val(ui.item.label || ui.item.value);
           $(input).attr('data-filter-value', ui.item.value);
@@ -185,7 +185,7 @@ $(document).ready(function(){
           return false;
         });
       });
-      $("input[data-filter-scope]", ".guides").on('input', function(evt, ui){
+      $("input[data-filter-scope]", ".tutorials").on('input', function(evt, ui){
         $(this).attr('data-filter-value', $(this).val());
       });
 
@@ -214,7 +214,7 @@ $(document).ready(function(){
         return false;
       });
       
-      $(".autocomplete[data-filter-scope]", ".guides").on('keyup', function(evt){
+      $(".autocomplete[data-filter-scope]", ".tutorials").on('keyup', function(evt){
         var val = $(this).val();
         if ($(this).val().length < 1){
           $(this).attr('data-filter-value') = "";

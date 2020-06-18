@@ -6,7 +6,7 @@
     if (text.length > options.minTextLength) {
       // chroma does not always do a good job recognizing bash scripts atomatically so let's help it a bit
       if (!code.hasClass("language-bash") && text.trim().startsWith("$")) {
-        code.removeClass("language-fallback").addClass("language-bash");
+        code.removeClass("language-fallback").addClass("language-bash").attr("data-lang", "bash");
       }
 
       var toolbox = $('<div class="toolbox"></div>')

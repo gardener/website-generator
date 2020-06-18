@@ -1,0 +1,127 @@
+#body-inner {
+  .docs {
+    &.page {
+      display: block;
+      padding: 0 0 4rem;
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin: 1rem 0 0.5rem;
+        color: #0b8062;
+      }
+      h2 {
+        padding-top: 0;
+        margin: 0 0 0.4em;
+      }
+      .git-wr {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 0 3.5rem;
+        font-family: $font-family-light;
+        font-size: 1.3rem;
+        .page-contributors {
+          font-family: $font-family-light;
+          .contributors-list {
+            display: flex;
+            align-items: center;
+            .user-icon {
+              display: block;
+              margin: 1px;
+              width: 100%;
+              max-width: 32px;
+              height: auto;
+              border-radius: 50%;
+            }
+            > * {
+              // flex: 1 0 auto;
+              &:not(:first-child) {
+                &:not(.contributors-count) {
+                  display: none;
+                  @media (min-width: 750px) {
+                    display: initial;
+                    margin-left: -10px;
+                  }
+                }
+              }
+              &.contributors-count {
+                margin-left: 4px;
+                @media (min-width: 750px) {
+                  display: none;
+                }
+              }
+            }
+          }
+        }
+        .page-edit {
+          text-align: right;
+          margin-left: auto;
+          #top-github-link {
+            .github-link {
+              z-index: initial;
+              -webkit-transform: none;
+              font-size: 2.5rem;
+              color: #555;
+              :hover {
+                color: $color-highlight;
+              }
+            }
+          }
+        }
+      }
+      h1 {
+        margin: 0 0 2rem 0;
+        padding: 0 0 4px;
+        line-height: 1;
+        letter-spacing: normal;
+        @media (min-width: 750px) {
+          border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        }
+      }
+      .properties {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        margin-top: -1rem;
+        margin-bottom: 4rem;
+        .tags {
+          flex: 1 0 auto;
+          display: flex;
+          list-style: none;
+          padding-left: 0;
+          margin-bottom: 0;
+          .tag {
+            list-style: none;
+            margin-right: 5px;
+            margin-bottom: 0;
+            padding: 1px 3px;
+            border-radius: 5px;
+            background: #cceae2;
+            color: #555;
+            font-size: 1.2rem;
+          }
+        }
+        .expertise-level {
+          margin-left: auto;
+          .label {
+            display: inline;
+            vertical-align: bottom;
+            font-size: 1.4rem;
+            font-family: var(--font-family-light);
+            line-height: 1;
+          }
+          svg {
+            &.icon {
+              --outline-color: #e88150;
+              --fill: #e88150;
+              width: 18px;
+              height: 18px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

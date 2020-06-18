@@ -1,69 +1,3 @@
-@import "variables";
-
-/*
-This CSS resource incorporates links to font software which is 
-the valuable copyrighted property of WebType LLC, The Font Bureau 
-and/or their suppliers. You may not 
-attempt to copy, install, redistribute, convert, modify or reverse 
-engineer this font software. Please contact WebType with any 
-questions: http://www.webtype.com 
-*/
-@font-face {
-  font-family: "BentonSans";
-  src: url("../fonts/Benton-Sans-Regular_WesternEurope/b36a47f4-8876-40cb-b31a-d02f16a88d78-2.eot");
-  src: url("../fonts/Benton-Sans-Regular_WesternEurope/b36a47f4-8876-40cb-b31a-d02f16a88d78-2.eot?")
-      format("embedded-opentype"),
-    url("../fonts/Benton-Sans-Regular_WesternEurope/b36a47f4-8876-40cb-b31a-d02f16a88d78-3.woff")
-      format("woff"),
-    url("../fonts/Benton-Sans-Regular_WesternEurope/b36a47f4-8876-40cb-b31a-d02f16a88d78-1.ttf")
-      format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: "BentonSansMedium";
-  src: url("../fonts/Benton-Sans-Medium_WesternEurope/71592d14-e584-4c00-bbb9-8f1da5b98bf9-2.eot");
-  src: url("../fonts/Benton-Sans-Medium_WesternEurope/71592d14-e584-4c00-bbb9-8f1da5b98bf9-2.eot?")
-      format("embedded-opentype"),
-    url("../fonts/Benton-Sans-Medium_WesternEurope/71592d14-e584-4c00-bbb9-8f1da5b98bf9-3.woff")
-      format("woff"),
-    url("../fonts/Benton-Sans-Medium_WesternEurope/71592d14-e584-4c00-bbb9-8f1da5b98bf9-1.ttf")
-      format("truetype");
-  font-style: normal;
-  font-weight: bold;
-}
-@font-face {
-  font-family: "BentonSansBook";
-  src: url("../fonts/BentonSansBook/BentonSans-Book.woff2") format("woff2"),
-    url("../fonts/BentonSansBook/BentonSans-Book.woff") format("woff"),
-    url("../fonts/BentonSansBook/BentonSans-Book.ttf") format("truetype");
-  font-weight: normal;
-  font-style: normal;
-}
-@font-face {
-  font-family: "BentonSansLight";
-  src: url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-2.eot");
-  src: url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-2.eot?")
-      format("embedded-opentype"),
-    url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-3.woff")
-      format("woff"),
-    url("../fonts/BentonSansLight/56fead03-cbb4-48e8-bc4c-512c795fc3c9-1.ttf")
-      format("truetype");
-  font-style: normal;
-  font-weight: normal;
-}
-@font-face {
-  font-family: "BentonSansBold";
-  src: url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-2.eot");
-  src: url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-2.eot?")
-      format("embedded-opentype"),
-    url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-3.woff")
-      format("woff"),
-    url("../fonts/BentonSansBold/90a77a6d-79fe-4845-96a8-b6dadd7d52a4-1.ttf")
-      format("truetype");
-  font-style: normal;
-  font-weight: bold;
-}
 * {
   box-sizing: border-box;
 }
@@ -90,6 +24,39 @@ a {
     text-decoration: underline;
   }
 }
+ol,
+ul {
+  padding-left: 1.5rem;
+  list-style: decimal outside;
+}
+#body-inner {
+  blockquote {
+    border: 0;
+    padding: 10px;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.05);
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+    position: relative;
+    padding-left: 60px;
+    &:before {
+      content: "!";
+      font-weight: bold;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      background-color: #00a273;
+      color: white;
+      vertical-align: middle;
+      margin: auto;
+      width: 36px;
+      font-size: 30px;
+      text-align: center;
+    }
+  }
+}
 .image {
   width: 100%;
   height: auto;
@@ -98,6 +65,18 @@ a {
   max-width: 1200px;
   @media (min-width: 400px) {
     width: 90%;
+  }
+}
+.main {
+  display: flex;
+  > section {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    .body-inner-wrapper {
+      flex: 1;
+      min-height: calc(100vh - 410px);
+    }
   }
 }
 .title-1 {
@@ -194,66 +173,56 @@ a.btn {
   }
 }
 
-.page {
-  padding: 0 0 4rem;
-  display: flex;
-  flex-flow: column;
-  align-items: self-start;
-  font-family: $font-family-regular;
-  h1,
-  h2,
-  h3,
-  h4,
-  h5 {
-    margin: 1rem 0 0.5rem;
-    font-family: $font-family-regular !important;
-    color: #0b8062 !important;
-  }
-  h2 {
-    font-size: 28px;
-    padding-top: 0;
-    margin: 0 0 0.4em;
-    @media (min-width: 750px) {
-      font-size: 33px;
-    }
-    @media (min-width: 1000px) {
-      font-size: 36px;
-    }
-  }
-  h3 {
-    font-size: 1.2em;
-  }
-  .page-title {
-    display: block;
-    background: none;
-    border-bottom: none;
-    padding: 0 !important;
-    margin-bottom: 1rem;
-    text-align: center;
-  }
-  .page-sub-title {
-    display: block;
-  }
-  a.nav-link {
-    font-family: $font-family-regular;
-    line-height: 1 !important;
-    font-size: 90%;
-    margin: 1rem 0 3rem;
-    padding: 1rem;
-    color: $color-highlight;
-    border: 1px solid #d5755d4d;
-    display: inline-block;
-  }
-  a.nav-link:hover {
-    text-decoration: none;
-    color: #fff;
-    background-color: $color-highlight;
-    border-color: #d5755d;
-  }
-  a.nav-link::after {
-    display: none !important;
-  }
-}
+// .page {
+//   padding: 0 0 4rem;
+//   display: flex;
+//   flex-flow: column;
+//   align-items: self-start;
+//   font-family: $font-family-regular;
+//   h1,
+//   h2,
+//   h3,
+//   h4,
+//   h5,
+//   h6 {
+//     margin: 1rem 0 0.5rem;
+//     color: #0b8062 !important;
+//   }
+//   h2 {
+//     padding-top: 0;
+//     margin: 0 0 0.4em;
+//   }
+//   .page-title {
+//     display: block;
+//     background: none;
+//     border-bottom: none;
+//     padding: 0 !important;
+//     margin-bottom: 1rem;
+//     text-align: center;
+//   }
+//   .page-sub-title {
+//     display: block;
+//   }
+//   a.nav-link {
+//     font-family: $font-family-regular;
+//     line-height: 1 !important;
+//     font-size: 90%;
+//     margin: 1rem 0 3rem;
+//     padding: 1rem;
+//     color: $color-highlight;
+//     border: 1px solid #d5755d4d;
+//     display: inline-block;
+//   }
+//   a.nav-link:hover {
+//     text-decoration: none;
+//     color: #fff;
+//     background-color: $color-highlight;
+//     border-color: #d5755d;
+//   }
+//   a.nav-link::after {
+//     display: none !important;
+//   }
+// }
 
 .column,
 .columns {
@@ -290,9 +259,6 @@ a.btn {
     width: 22%;
   }
 }
-.body-inner-wrapper {
-  min-height: calc(100vh - 410px);
-}
 #body-inner {
   padding-top: 5rem;
   .title {
@@ -302,7 +268,6 @@ a.btn {
     margin-bottom: 0;
     font-size: 2.5rem;
     padding: 0;
-    font-family: var(--font-family-regular) !important;
     @media (min-width: 550px) {
       font-size: 25px;
     }
@@ -347,75 +312,73 @@ a.btn {
       margin: 100px auto 4rem;
     }
   }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #0b8062;
+  }
 }
 
-// Code snippets
-code {
-  background: #eee;
-  color: #747474;
-  border-radius: 4px;
-  display: inline-block;
-  font-size: 80%;
-  line-height: 1;
-  padding: 5px 7px;
-  position: relative;
-  top: -2px;
-  border: 0;
-  cursor: pointer;
-}
+// Inline code
 code,
 kbd,
 pre,
 samp {
-  font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 80%;
   vertical-align: text-bottom;
   word-break: normal;
   color: var(--code-color-font);
   background-color: inherit;
   padding: 0;
-}
-pre {
-  min-width: 12em;
-  max-height: 31em;
-  margin: 1em;
   border: 0;
-  border-radius: 2px;
-  font-size: 87.5%;
-  white-space: pre;
-  word-spacing: normal;
-  word-break: normal;
-  word-wrap: normal;
-  tab-size: 4;
-  hyphens: none;
-  overflow: auto;
-  background: inherit;  line-height: 1.15;
-  box-shadow: 1px 1px 5px -1px #000;
-  color: var(--textCodeColor);
-  code {
-    padding: 0px 2px;
-    border: 0;
-    margin: 0;
-    padding: 8px 7px;
-    border-radius: 2px;
-    white-space: nowrap;
-    overflow: auto;
-    font-size: inherit;
-    color: inherit;
-    .hljs {
-      line-height: 1.3;
-      & + span.copy-to-clipboard {
-        display: initial;
-        margin-left: -1px;
-        border-left: 0 !important;
-        font-size: inherit !important;
-        vertical-align: middle;
-        height: 21px;
-        top: 0;
-      }
-    }
-  }  
+  position: relative;
 }
+// pre {
+//   min-width: 12em;
+//   max-height: 31em;
+//   margin: 1em;
+//   border: 0;
+//   border-radius: 2px;
+//   font-size: 87.5%;
+//   white-space: pre;
+//   word-spacing: normal;
+//   word-break: normal;
+//   word-wrap: normal;
+//   tab-size: 4;
+//   hyphens: none;
+//   overflow: auto;
+//   background: inherit;
+//   line-height: 1.15;
+//   box-shadow: 1px 1px 5px -1px #000;
+//   code {
+//     padding: 0px 2px;
+//     border: 0;
+//     margin: 0;
+//     padding: 8px 7px;
+//     border-radius: 2px;
+//     white-space: nowrap;
+//     overflow: auto;
+//     font-size: inherit;
+//     color: inherit;
+// .hljs {
+//   line-height: 1.3;
+//   & + span.copy-to-clipboard {
+//     display: initial;
+//     margin-left: -1px;
+//     border-left: 0 !important;
+//     font-size: inherit !important;
+//     vertical-align: middle;
+//     height: 21px;
+//     top: 0;
+//   }
+// }
+//   }
+// }
 
 // #body-inner .title, .subtitle {
 //   margin-bottom: 0;
@@ -426,3 +389,36 @@ pre {
 //   font-size: 2rem;
 //   color: #555;
 // }
+
+.howto_tickets {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 70px 10% 50px;
+  height: $feedback-height;
+  background-color: #f6f6f6;
+  vertical-align: middle;
+  a {
+    // color: $color-highlight;
+    padding: 0 10px;
+    text-align: center;
+    text-decoration: none;
+    color: #666;
+    &:hover {
+      color: #111;
+    }
+    span {
+      display: block;
+      @media (min-width: 750px) {
+        display: initial;
+      }
+    }
+    @media (min-width: 750px) {
+      width: 75%;
+    }
+    img {
+      width: 32px;
+      vertical-align: middle;
+    }
+  }
+}
