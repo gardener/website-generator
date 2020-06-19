@@ -30,6 +30,8 @@ disableHugoGeneratorInject = true
   themeVariant = "gardener"
   # Google Tag Manager container
   googleTagsManager = "GTM-W2FGNSX"
+  # Google Search Console site verification tag
+  googleSiteVerificationTag = "9EoGiMwk2aq0E_tVh16iJgJbp7fbyqkfWH9b5sGybl0"
 
 [outputs]
 home = [ "HTML", "RSS", "JSON"]
