@@ -20,7 +20,7 @@
       <li><a href="{{ .URL }}">{{.Title}}</a></li>
       {{- end -}}
       {{- with .Site.GetPage "section" "documentation" -}}
-      <li><a href="{{ .URL }}">Documentation</a></li>
+      <li><a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation</a></li>
       {{- end -}}
     </ul>
     <img src="{{"images/lp/gardener-logo.svg" | relURL}}" alt="Logo Gardener" class="logo"/>
