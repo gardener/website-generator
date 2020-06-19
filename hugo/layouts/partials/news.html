@@ -20,7 +20,7 @@
     <a href="{{ if $isNewsBox }}#{{$index}}" data-lity{{else}}{{$page.RelPermalink}}"{{end}}>
       <div class="feed-heading">
         <span class="name">{{or $page.LinkTitle $page.Title}}</span>
-        <span class="event-date">{{$page.Params.eventdate}}</span>
+        <span class="event-date">{{$page.Params.newsSubtitle}}</span>
       </div>
     </a>
     {{ if $isNewsBox }}
