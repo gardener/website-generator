@@ -33,25 +33,6 @@
     color: #555;
     font-family: $font-family-light;
   } 
-  .share-ribbon {
-    display: flex;
-    button.btn {
-      height: 20px;
-      padding: 1px 8px 1px !important;
-      color: $color-highlight !important;
-      border-radius: 3px !important;
-      box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2) !important;
-    }
-    button.btn:active {
-      background-color: $color-highlight !important;
-      color: #fff !important;
-      box-shadow: none;
-      transform: scale(0.99);
-    }
-  }
-  .share-ribbon > * {
-    margin-right: 10px;
-  }
   a.title-link {
     color: #b6b6b6;
     text-decoration: none;

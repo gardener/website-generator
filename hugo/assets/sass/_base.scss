@@ -389,7 +389,54 @@ samp {
 //   font-size: 2rem;
 //   color: #555;
 // }
-
+.share-ribbon {
+  display: flex;
+  button.btn {
+    height: 20px;
+    padding: 1px 8px 1px !important;
+    color: $color-highlight !important;
+    border-radius: 3px !important;
+    box-shadow: 0px 2px 4px 1px rgba(0, 0, 0, 0.2) !important;
+  }
+  button.btn:active {
+    background-color: $color-highlight !important;
+    color: #fff !important;
+    box-shadow: none;
+    transform: scale(0.99);
+  }
+}
+.share-ribbon > * {
+  margin-right: 10px;
+}
+#body-inner {
+  a.nav-link {
+    font-family: $font-family-regular;
+    line-height: 1 !important;
+    font-size: 90%;
+    margin: 1rem 0 3rem;
+    padding: 1rem;
+    color: $color-highlight;
+    border: 1px solid #d5755d4d;
+    display: inline-block;
+    &:hover {
+      text-decoration: none;
+      color: #fff;
+      background-color: $color-highlight;
+      border-color: #d5755d;
+    }
+    &.back {
+      &:before {
+        content: "\f104";
+        display: inline-block;
+        margin-right: 5px;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased
+      }
+    }
+  }
+}
 .howto_tickets {
   display: flex;
   align-items: center;
