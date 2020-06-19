@@ -3,13 +3,18 @@
   <a href="#" class="tool-btn copy" data-clipboard-text="{{.URL | relURL}}" title="Copy the link to this news"><span class="fa fa-clone"></span></a-->
 {{ end }}
 {{ define "page-content" }}
-  {{ $options := (dict "targetPath" "css/gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
-  {{ $style := resources.Get "sass/gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
-  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
   <div class="page">
+    <div class="top-bar">
+      <a href="{{ "news" | relURL}}" class="nav-link back">Back to news</a>
+    </div>
     {{ .Content }}
+    <div class="share-ribbon">
+      <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="{{ .Title }}" data-url="{{.URL | absURL}}" data-hashtags="GardenerProject" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      <script type="IN/Share" data-url="{{.Permalink}}"></script>
+      <!--button class="btn copy-url clipboard-copy" data-clipboard-text="{{.URL | absURL}}" href="{{.URL | absURL}}"><i class="fa fa-copy"></i></button-->
+    </div>
   </div>
-  <a href="{{ "news" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to news</a>
+  <!-- <a href="{{ "news" | relURL}}" class="nav-link"><span class="icon-arrow-left"></span> Back to news</a> -->
 {{ end }}
 {{define "tails-scripts-custom" }}
 <!--

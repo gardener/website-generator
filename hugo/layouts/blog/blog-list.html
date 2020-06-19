@@ -4,6 +4,9 @@
     <!-- Ranges through content/blog/*.md -->
     {{ with .Site.GetPage "blog" }}
     {{ range $index, $page :=  sort (where (where .Site.Pages "Type" "in" (slice "blog" "Blog")) "Params.aggregate" "!=" true) ".Params.publishdate" "desc"}}
+    {{if $page.Params.publishdate}}
+      {{$publishTime := time $page.Params.publishdate}}
+      {{if $publishTime.Before now}}
     <article class="post row" data-path="">
       <div class="wrapper">
           <div class="two columns">
@@ -17,11 +20,13 @@
                 <!--button class="btn copy-url clipboard-copy" data-clipboard-text="{{$page.URL | absURL}}" href="{{$page.URL | absURL}}"><i class="fa fa-copy"></i></button-->
               </div>
               <p>
-                  {{.Content}}
+                {{.Content}}
               </p>
           </div>
       </div>
     </article>
+      {{end}}
+    {{end}}
     {{end}}
     {{end}}
   </div>

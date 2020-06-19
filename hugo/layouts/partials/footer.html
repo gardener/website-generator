@@ -13,11 +13,14 @@
       {{- with .Site.GetPage "section" "news" -}}
       <li><a href="{{ .URL }}">{{.Title}}</a></li>
       {{- end -}}
-      {{- with .Site.GetPage "section" "documentation" -}}
-      <li><a href="{{ .URL }}">Documentation</a></li>
-      {{- end -}}
       {{- with .Site.GetPage "section" "community" -}}
       <li><a href="{{ .URL }}">{{.Title}}</a></li>
+      {{- end -}}
+      {{- with .Site.GetPage "section" "adopter" -}}
+      <li><a href="{{ .URL }}">{{.Title}}</a></li>
+      {{- end -}}
+      {{- with .Site.GetPage "section" "documentation" -}}
+      <li><a href="{{ .URL }}">Documentation</a></li>
       {{- end -}}
     </ul>
     <img src="{{"images/lp/gardener-logo.svg" | relURL}}" alt="Logo Gardener" class="logo"/>
