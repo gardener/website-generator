@@ -1,20 +1,31 @@
 <ul class="news-feed">
-{{ range $index, $page :=  (where $.Site.Pages "Type" "news") }}
+{{ range $index, $page :=  (where $.Site.Pages "Type" "in" "news blogs") }}
   {{$isExpired:= false}}
   {{with $page.Params.archivedate}}
-  {{$exp := time $page.Params.archivedate}}
-  {{$isExpired = $exp.Before now}}
+    {{$exp := time $page.Params.archivedate}}
+    {{$isExpired = $exp.Before now}}
   {{end}}
-  {{if or $isExpired (eq $page.Params.aggregate true) }}
+  {{$isNotPublishTime:= false}}
+  {{with $page.Params.publishdate}}
+    {{$d := time $page.Params.publishdate}}
+    {{$isNotPublishTime = $d.After now}}
+  {{end}}
+  {{if or $isExpired $isNotPublishTime (eq $page.Params.aggregate true) }}
   {{else}}
+    {{$isNewsBox := false}}
+    {{if eq $page.Type "news"}}
+      {{$isNewsBox = true}}
+    {{end}}
   <li class="news-box">
-    <a href="#{{$index}}" data-lity>
+    <a href="{{ if $isNewsBox }}#{{$index}}" data-lity{{else}}{{$page.RelPermalink}}"{{end}}>
       <div class="feed-heading">
-        <span class="name">{{$page.Title}}</span>
+        <span class="name">{{or $page.LinkTitle $page.Title}}</span>
         <span class="event-date">{{$page.Params.eventdate}}</span>
       </div>
     </a>
+    {{ if $isNewsBox }}
     <div class="content lity-hide" id="{{$index}}"><div data-url="{{$page.URL | absURL}}">{{$page.Content}}</div></div>
+    {{ end }}
   </li>
   {{end}}
 {{end}}
