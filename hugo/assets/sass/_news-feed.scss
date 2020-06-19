@@ -52,7 +52,6 @@
   }
   .news-box {
     display: flex;
-    height: 3.5rem;
     /* border-left: 4px solid #e8e8e8; */
     margin: 0 0 0 5px;
     cursor: pointer;
@@ -63,7 +62,6 @@
       text-decoration: none;
       display: flex;
       flex-flow: column;
-      justify-content: center;
       * {
         text-decoration: none;
       }
