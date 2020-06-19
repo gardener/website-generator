@@ -1,5 +1,5 @@
 <ul class="news-feed">
-{{ range $index, $page :=  (where $.Site.Pages "Type" "in" "news blogs") }}
+{{ range $index, $page := sort (where $.Site.Pages "Type" "in" "news blogs") ".Params.publishdate" }}
   {{$isExpired:= false}}
   {{with $page.Params.archivedate}}
     {{$exp := time $page.Params.archivedate}}
