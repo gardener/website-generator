@@ -1,5 +1,6 @@
 #body-inner {
   .page {
+    padding-bottom: 4rem;
     .page-title {
       display: block;
       background: none;
@@ -80,5 +81,6 @@
 }
 
 @import "news-feed";
+@import "news-item";
 @import "news-meetup";
 @import "news-releasenotes";
