@@ -20,7 +20,7 @@
     <a href="{{ if $isNewsBox }}#{{$index}}" data-lity{{else}}{{$page.RelPermalink}}"{{end}}>
       <div class="feed-heading">
         <span class="name">{{or $page.LinkTitle $page.Title}}</span>
-        <span class="event-date">{{$page.Params.newsSubtitle}}</span>
+        <span class="sub-title">{{$page.Params.newsSubtitle}}</span>
       </div>
     </a>
     {{ if $isNewsBox }}
@@ -40,10 +40,17 @@
   .lity-container {
     margin: 0;
     overflow: hidden;
+    min-width: 50%;
   }
   .lity-content .content {
+    display: flex;
     overflow-y: auto;
-    min-height: 50vh;
+    min-height: 25vh;
+  }
+  .lity-content .content [data-url] {
+    flex: 1 0 100%;
+    background: #fff;
+    padding: 1.5rem;
   }
   .lity-tools {
     display: block;
@@ -69,7 +76,7 @@
   }
   .lity-tools .status {
     display: none;
-    font-family: BentonSans, sans-serif;
+    font-family: var(--font-family-regular);
     font-size: 2rem;
     color: #fff;
   }
