@@ -24,7 +24,7 @@
       </div>
     </a>
     {{ if $isNewsBox }}
-    <div class="content lity-hide" id="{{$index}}"><div data-url="{{$page.URL | absURL}}">{{$page.Content}}</div></div>
+    <div class="content lity-hide" id="{{$index}}"><div data-url="{{$page.URL | absURL}}" class="{{or $page.Params.newsType "news-item"}}">{{$page.Content}}</div></div>
     {{ end }}
   </li>
   {{end}}
@@ -46,11 +46,12 @@
     display: flex;
     overflow-y: auto;
     min-height: 25vh;
+    background-color: #fff;
   }
   .lity-content .content [data-url] {
     flex: 1 0 100%;
-    background: #fff;
-    padding: 1.5rem;
+    height: 100%;
+    padding: 3rem 3rem 4rem;
   }
   .lity-tools {
     display: block;
