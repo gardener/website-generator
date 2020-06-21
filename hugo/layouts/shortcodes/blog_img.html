@@ -1,8 +1,26 @@
 <!-- {{/*
-Usage: {{% img "title" "URL" %}}
+Usage: {{< img title="title" link="URL" >}}
 */}}-->
-{{ if (strings.HasSuffix  (.Get 1) ".svg" )}}
-    <object type="image/svg+xml" data="../{{.Page.Dir}}{{ .Get 1 }}" style="margin: 3rem auto;display: block;" class="drop-shadow"></object>
+
+{{- $link := .Get "link" -}}
+{{- $caption := .Get "caption" -}}
+{{- $title := or (.Get "title") (.Get "caption") -}}
+{{- $alt := or (.Get "alt") (.Get "title") (.Get "caption") -}}
+
+{{- if not (or (hasPrefix $link "/") (hasPrefix $link "https://") (strings.HasPrefix $link "http://")) -}}
+    {{ $pageDir := path.Dir .Page.File.Path }}
+
+    {{- if (hasPrefix $link "../") -}}
+        {{- $link = printf "/%s/%s" $pageDir (slicestr $link 3) -}}
+    {{- else if (hasPrefix $link "./") -}}
+        {{- $link = printf "/%s/%s" $pageDir (slicestr $link 2) -}}
+    {{- else -}}
+        {{- $link = printf "/%s/%s" $pageDir $link -}}
+    {{- end -}}
+{{- end -}}
+
+{{ if (strings.HasSuffix  $link ".svg" )}}
+    <object type="image/svg+xml" data="{{- $link -}}" style="margin: 3rem auto;display: block;" class="drop-shadow"></object>
 {{else}}
-    <img src="../{{.Page.Dir}}{{ .Get 1 }}" title="{{.Get 0}}" width="100%" class="drop-shadow reveal-fast" style=""/>
+    <img src="{{- $link -}}" title="{{- $title -}}" width="100%" class="drop-shadow reveal-fast" style="" alt="{{- $alt -}}"/>
 {{end}}
