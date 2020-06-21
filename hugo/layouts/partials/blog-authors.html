@@ -14,7 +14,7 @@
 <ul class="authors">
 {{ with .Params.authors }}
     {{ range . }}
-    {{- template "author" dict "name" .name "email" .email "avatar" .avatar -}}
+    {{- template "blog-author" dict "name" .name "email" .email "avatar" .avatar -}}
     {{ end }}
 {{else}}
 {{- with .File -}}
@@ -23,7 +23,7 @@
     {{- if (fileExists $url) -}}
       {{- $data := (getJSON $url) -}}
       {{ with $data.author }}
-      {{- template "author" dict "name" .name "email" .email "avatar" .avatar_url -}}
+      {{- template "blog-author" dict "name" .name "email" .email "avatar" .avatar_url -}}
       {{- end -}}
     {{- end -}}
   {{- end -}}
@@ -34,23 +34,22 @@
 <span class="publishdate" data-publishdate="{{ . | safeHTMLAttr }}">{{. | safeHTML}}</span>
 {{end}}
 
-{{- define "author" -}}
+{{- define "blog-author" -}}
 {{- $name := .name -}}
 {{- $email := .email -}}
 {{- $avatar := .avatar -}}
 {{- $publishdate := .publishdate -}}
-
 <li class="author">
 {{with $avatar}}
 {{with $email }}<a href="mailto:{{$email | safeHTMLAttr }}">{{end}}
-<img {{ printf "src=%q" . | safeHTMLAttr }}
+  <img {{ printf "src=%q" . | safeHTMLAttr }}
     class="user-icon icons"
     alt="blog author avatar">
 {{else}}
-    <div style="width:10px;height:10px;"></div>
+  <div style="width:10px;height:10px;"></div>
 {{end}}
 {{with $name }}
-<span class="name">{{ $name | safeHTML}}</span>
+  <span class="name">{{ $name | safeHTML}}</span>
 {{with $email }}</a>{{end}}
 {{end}}
 </li>

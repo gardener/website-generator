@@ -1,47 +1,133 @@
 {{ define "page-content"}}
-  <script src="/js/moment.js"></script>
-  <div class="page blogs">
-    <!-- Ranges through content/blog/*.md -->
-    {{ with .Site.GetPage "blog" }}
-    {{ range $index, $page :=  sort (where (where .Site.Pages "Type" "in" (slice "blog" "Blog")) "Params.aggregate" "!=" true) ".Params.publishdate" "desc"}}
-    {{if $page.Params.publishdate}}
-      {{$publishTime := time $page.Params.publishdate}}
-      {{if $publishTime.Before now}}
-    <article class="post row" data-path="">
-      <div class="wrapper">
-          <div class="two columns">
-              {{partial "blog-authors" .}}
-          </div>
-          <div class="ten columns">
-              <h2>{{ .Title }}<a href="{{$page.URL | relURL}}" class="title-link clipboard-copy"><i class="fa fa-link"></i></a></h2>
-              <div class="share-ribbon">
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-text="{{ .Title }}" data-url="{{$page.URL | absURL}}" data-hashtags="GardenerProject" data-dnt="true" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                <script type="IN/Share" data-url="{{.Permalink}}"></script>
-                <!--button class="btn copy-url clipboard-copy" data-clipboard-text="{{$page.URL | absURL}}" href="{{$page.URL | absURL}}"><i class="fa fa-copy"></i></button-->
-              </div>
-              <p>
-                {{.Content}}
-              </p>
-          </div>
+  <!-- <script src="/js/moment.js"></script> -->
+  {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
+  <script src="{{"jquery-ui-1.12.1/jquery-ui.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <link rel="stylesheet" href="{{"jquery-ui-1.12.1/jquery-ui.min.css"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
+  <div class="blogs home">
+    <div class="list">
+      <div class="topbar controls">
+        <a href="#" class="menu-toggler"><i class="fa fa-angle-double-left"></i></a>
+        <div class="control search">
+          <input type="text" placeholder="type to filter blogs by title or text" data-filter=".blogs article" data-filter-scope="freetext tags"/>
+          <svg class="icon filter" aria-hidden="true" focusable="false">
+            <use xlink:href="{{"images/icons/icons.svg#filter-o"| relURL}}"></use>
+          </svg>
+        </div>
+        <!-- TODO -->
+        <!--a href="#" class="nav-link">Write a Blog Post</a-->
       </div>
-    </article>
+      <div class="wr">
+      <!-- Ranges through content/blog/*.md -->
+      {{ with .Site.GetPage "blog" }}
+      {{ range $index, $page :=  sort (where (where .Site.Pages "Type" "in" (slice "blog" "Blog")) "Params.aggregate" "!=" true) ".Params.publishdate" "desc"}}
+      {{if $page.Params.publishdate}}
+        {{$publishTime := time $page.Params.publishdate}}
+        {{if $publishTime.Before now}}
+        <article class="row">
+          <h4 data-filter-freetext class="blog-title"><a href="{{.RelPermalink}}">{{ .Title }}</a></h4>
+          <div class="blog-details">
+            {{partial "blog-authors" .}}
+            {{with .Params.publishdate}}
+            <span class="blog-publish-date"><i class="fa fa-calendar" aria-hidden="true"></i> {{.Format "Jan 06, 2006"}}</span>
+            {{end}}
+            <span class="readtime"><i class="fa fa-clock-o" aria-hidden="true"></i> Read Time: {{.ReadingTime}} min</span>
+          </div>
+          <div data-filter-freetext class="annotation">
+            {{ or .Description .Content | truncate 200 }}
+          </div>
+          <a href="{{.RelPermalink}}" class="readmore">Continue reading</a>
+        </article>
+        {{end}}
       {{end}}
-    {{end}}
-    {{end}}
-    {{end}}
+      {{end}}
+      {{end}}
+      </div>
+    </div>
+    <div class="page-nav">
+      <nav class="collapsed menu">
+        <a href="#" class="menu-toggler"><i class="fa fa-angle-double-right"></i></a>
+        <div class="highlightable">
+          <ul class="blogs-list">
+          {{ $pages :=  sort (where (where .Site.Pages "Type" "in" (slice "blog" "Blog")) "Params.aggregate" "!=" true) ".Params.publishdate" "desc"}}
+          {{ range $pages.GroupByPublishDate "Jan 2006" }}
+          <h4>{{.Key}}</h4>
+          <ul>
+            {{ range .Pages }}
+            {{- $hiddenChildrenCount:= len (where .Pages ".Params.hidden" true) -}}
+            {{- $childrenCount:= (len .Pages) -}}
+            {{- $isContainer := and (gt $childrenCount 0) (gt $childrenCount $hiddenChildrenCount) -}}
+            <li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item{{- if $isContainer }} collapsible{{end -}}">
+              {{- if $isContainer }} 
+              <span class="toggle fa fa-angle-right"></span>
+              {{- else -}}
+              <span class="toggle"></span>
+              {{- end -}}
+              <a href="{{ .Permalink }}">
+              {{- if $isContainer }} 
+                <span class="toggle fa fa-angle-right"></span>
+              {{- else -}}
+                <span class="toggle"></span>
+              {{- end -}}
+                <span class="menu-item-text">{{- or .Params.menuTitle .LinkTitle .Title -}}{{- safeHTML .Params.Post -}}</span>
+              </a>
+              <!--div class="meta">{{ .Date.Format "Mon, Jan 2, 2006" }}</div-->
+            </li>
+            {{ end }}
+          </ul>
+          {{- end -}}
+          </ul>
+        </div>
+      </nav>
+    </div>
   </div>
 
-{{ end }}
-
-{{ define "tails-scripts-custom" }}
-  <script src="/js/modernizr.custom.min.js"></script>
-  <script src="/js/jsrender.min.js"></script>
-  <script src="/js/main.js"></script>
+  <script src="{{"js/filters.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
   <script>
     $(document).ready(function(){
-      $('.blogs .clipboard-copy').click(function(e){
-        e.preventDefault();
+      // hide sections that have no child tiles
+      function hideSectionIfEmpty(){
+        $('.docs .list section').each(function(){
+          var els = $(".tile", this).filter(function(){
+            return $(this).css('display') !== 'none';
+          })
+          if (els.length < 1) {
+            $(this).addClass("hidden");
+          } else {
+            $(this).removeClass("hidden");
+          }
+        });
+      }
+      $("input[data-filter-scope]", ".guides").on('input', function(evt, ui){
+        $(this).attr('data-filter-value', $(this).val());
       });
-    })
+      $("input[data-filter]").on('elements-filter:complete', function(evt, total, filtered, visible){
+        $('.records-shown').text(visible);
+        $('.records-total').text(total);
+        $("input[data-filter]").not($(this)).val('');
+        $('.docs .list section').show();
+        hideSectionIfEmpty();
+        var queryString = new URLSearchParams(window.location.search);
+        queryString.set("filter-value",$(this).attr("data-filter-value"))
+        if($(this).attr("data-filter-scope").indexOf("freetext") < 0) {
+          queryString.set("filter-name",$(this).attr("data-filter-scope"));
+        }
+        if (history.pushState) {
+          var newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" + queryString.toString();
+          window.history.pushState({path:newurl},'',newurl);
+        }
+        return false;
+      });
+      $("input[data-filter]").filterControl();
+
+      $(".blogs .menu-toggler").click(function() {
+        $(".blogs .menu").toggleClass("collapsed")
+        var togglerIcon = $(".blogs .menu-toggler .fa");
+        if($(".blogs .menu").hasClass("collapsed")) {
+          togglerIcon.removeClass("fa-angle-double-right").addClass("fa-angle-double-left");
+        } else {
+          togglerIcon.removeClass("fa-angle-double-left").addClass("fa-angle-double-right");
+        }
+      })
+    });
   </script>
 {{end}}
