@@ -9,7 +9,6 @@ Usage: {{< img title="title" link="URL" >}}
 
 {{- if not (or (hasPrefix $link "/") (hasPrefix $link "https://") (strings.HasPrefix $link "http://")) -}}
     {{ $pageDir := path.Dir .Page.File.Path }}
-
     {{- if (hasPrefix $link "../") -}}
         {{- $link = printf "/%s/%s" $pageDir (slicestr $link 3) -}}
     {{- else if (hasPrefix $link "./") -}}

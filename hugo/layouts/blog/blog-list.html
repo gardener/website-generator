@@ -27,15 +27,25 @@
           <h4 data-filter-freetext class="blog-title"><a href="{{.RelPermalink}}">{{ .Title }}</a></h4>
           <div class="blog-details">
             {{partial "blog-authors" .}}
-            {{with .Params.publishdate}}
-            <span class="blog-publish-date"><i class="fa fa-calendar" aria-hidden="true"></i> {{.Format "Jan 06, 2006"}}</span>
-            {{end}}
-            <span class="readtime"><i class="fa fa-clock-o" aria-hidden="true"></i> Read Time: {{.ReadingTime}} min</span>
+            <div class="one-liner">
+              {{with .Params.publishdate}}
+              <span class="blog-publish-date"><i class="fa fa-calendar" aria-hidden="true"></i> {{.Format "Jan 06, 2006"}}</span>
+              {{end}}
+              <span class="readtime"><i class="fa fa-clock-o" aria-hidden="true"></i> Read Time: {{.ReadingTime}} min</span>
+            </div>
           </div>
           <div data-filter-freetext class="annotation">
             {{ or .Description .Content | truncate 200 }}
           </div>
           <a href="{{.RelPermalink}}" class="readmore">Continue reading</a>
+          {{with .Params.Tags }}
+          <div class="tags">
+            <i class="fa fa-tag" aria-hidden="true"></i>
+            {{range first 5 .}}
+              <span>{{.}}</span>
+            {{end}}
+          </div>
+          {{end}}
         </article>
         {{end}}
       {{end}}

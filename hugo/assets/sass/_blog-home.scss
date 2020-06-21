@@ -182,13 +182,19 @@
             .publishdate {
               display: none;
             }
-            span {
-              font-size: 1.4rem;
-              display: block;
-              font-family: var(--font-family-light);
-              margin-top: 4px;
-              .fa {
-                margin-right: 5px;
+            .one-liner {
+              display: flex;
+              & > *:not(:last-child) {
+                margin-right: 25px;
+              }
+              span {
+                font-size: 1.4rem;
+                display: block;
+                font-family: var(--font-family-light);
+                margin-top: 4px;
+                .fa {
+                  margin-right: 5px;
+                }
               }
             }
             .authors {
@@ -285,6 +291,16 @@
               font-size: inherit;
               text-rendering: auto;
               -webkit-font-smoothing: antialiased;
+            }
+          }
+          .tags {
+            font-size: 1.2rem;
+            font-family: var(--font-family-book);
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 5px;
+            & > *:not(:last-child) {
+              margin-right: 4px;
             }
           }
         }
