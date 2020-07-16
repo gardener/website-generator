@@ -108,18 +108,18 @@ function transformGitLog(log, users) {
     if (!commits || commits.length < 1) {
         return
     }
-    //sort by date desc (newest first)
-    commits = commits.sort((a, b) => moment(b.date).format('YYYYMMDD') - moment(a.date).format('YYYYMMDD'))
+    //sort by date asc (newest last)
+    commits = commits.sort((a, b) => moment(a.date).format('YYYYMMDD') - moment(b.date).format('YYYYMMDD'))
     gitInfo = {
-        "lastmod": moment(commits[0].date, "YYYY-MM-DD").format("YYYY-MM-DD"),
-        "publishdate": moment(commits[commits.length - 1].date, "YYYY-MM-DD").format("YYYY-MM-DD")
+        "lastmod": moment(commits[commits.length - 1].date, "YYYY-MM-DD").format("YYYY-MM-DD"),
+        "publishdate": moment(commits[0].date, "YYYY-MM-DD").format("YYYY-MM-DD")
     };
     // transform into contributors list enriched with GitHub user details
     contributors = commits.map(commit => {
         return users.get(commit)
     })
-    // store the author (last in the sorted by desc date list)
-    gitInfo["author"] = contributors[commits.length - 1];
+    // store the author (the first contributor)
+    gitInfo["author"] = contributors[0];
     // clean undefineds, remove author, backtrack and deduplicate by contributor email or name
     // and store in contributors list
     gitInfo["contributors"] = contributors.filter((contributor, index, self) => {
@@ -364,7 +364,7 @@ function processContent() {
         })
 
         let contributorsFile = process.env.DATA + "/contributors.json"
-        let contributors = Object.values(users);
+        let contributors = Object.values(users.cache());
         if (contributors) {
             fs.writeFileSync(contributorsFile, JSON.stringify(contributors, null, 2), 'utf8')
         }

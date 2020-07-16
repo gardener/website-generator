@@ -8,8 +8,10 @@ set -e
 # Usage: gitlog.sh content-folder-path(website-generator/hugo/content) file-path(documentation/website/documentation/_index.md)
 # All paths are absolute
 function gitlog {
-cd $(readlink -f "$1")
+content=$(readlink -f "$1")
 file=$(readlink -f "$2")
+file=${file#$(echo $content)/}
+cd $content
 if [[ -f $file ]]
 then
   git log --date=short --pretty=format:'{%n  "sha": "%H",%n  "author": "%aN <%aE>",%n  "date": "%ad",%n  "message": "%s",%n  "email": "%aE",%n  "name": "%aN"%n },' --follow $file | perl -pe 'BEGIN{print "["}; END{print "]\n"}' | perl -pe 's/},]/}]/'
