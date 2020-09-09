@@ -135,10 +135,10 @@ function transformGitLog(log, users) {
 
 function saveGitInfoLocal(file, users) {
     console.log(`saving git history for local file ${file}`)
-    let gitlog
+    let gitlog, data
     try {
         gitlog = spawnSync(".ci/gitlog.sh", [process.env.CONTENT, file], { shell: "/bin/bash", timeout: 5 * 60000 });
-        let data = gitlog.stdout.toString();
+        data = gitlog.stdout.toString();
         if (data && data.length) {
             let gitInfo = transformGitLog(data, users);
             if (gitInfo && Object.values(gitInfo)) {
@@ -153,6 +153,7 @@ function saveGitInfoLocal(file, users) {
         }
     } catch (err) {
         console.error(`updating git info for ${file} failed: ${err}`);
+        console.error(`${data}\n`);
     }
 }
 
