@@ -32,7 +32,7 @@ else
   contentRepoPath="$(${READLINK_BIN} -f "${GARDENER_DOCUMENTATION_PATH}")";
 fi
 if [[ ! -d "${contentRepoPath}" ]]; then
-  echo "Source content directory path not specified. Set $GARDENER_DOCUMENTATION_PATH or run from website-generator cloned repo." 
+  echo "Source content directory path not specified. Set GARDENER_DOCUMENTATION_PATH environment variable or run from website-generator cloned repo." 
   exit 1
 fi
 

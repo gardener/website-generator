@@ -6,7 +6,7 @@
 {{ end }}
 {{ define "page-content"}}
 <div class="docs page">
-  {{if and ((isset .Params "editable") (eq (.Params.editable false)) )}}
+  {{if and (isset .Params "editable") (eq .Params.editable false) }}
   {{else}}
   {{ partial "page-topbar.html" . }}
   {{end}}
@@ -50,7 +50,7 @@
 </div>	
 {{ end }}
 {{ define "page-feedback" }}
-  {{if and ((isset .Params "enablefeedback") (eq (.Params.editable false)) )}}
+  {{if and (isset .Params "enablefeedback") (eq .Params.editable false) }}
   {{else}}
   {{ partial "page-feedback.html" . }}
   {{end}}

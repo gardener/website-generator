@@ -18,7 +18,7 @@ gardener-website-generator:
     head-update:
       steps:
         build:
-          image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.0.0'
+          image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.0.1'
           publish_to: ['gardener_website', 'gardener_documentation']
       traits:
         cronjob:
