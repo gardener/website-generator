@@ -1,19 +1,19 @@
 
 /**
  * Environment variables used in this script:
- * CONTENT:         Path to the website source content. Defaults to "../hugo/content", 
+ * CONTENT:         Path to the website source content. Defaults to "../hugo/content",
  *                  relative to the current directory (`node`).
- * DATA:            Path to the website internal 'data' directory, which is used to store 
- *                  site-building relevant data such as commits history. Defaults to 
- *                  "../hugo/data", relative to the current directory (`node`). 
- * GIT_OAUTH_TOKEN: The GitHub Personal Access Token for OAuth authenticated requests to 
- *                  github.com. GIT_OAUTH_TOKEN takes priority if GIT_USER/PASSWORD are 
+ * DATA:            Path to the website internal 'data' directory, which is used to store
+ *                  site-building relevant data such as commits history. Defaults to
+ *                  "../hugo/data", relative to the current directory (`node`).
+ * GIT_OAUTH_TOKEN: The GitHub Personal Access Token for OAuth authenticated requests to
+ *                  github.com. GIT_OAUTH_TOKEN takes priority if GIT_USER/PASSWORD are
  *                  also specified.
- * GIT_USER:        The GitHub user for Basic authenticated requests to github.com. Useful 
+ * GIT_USER:        The GitHub user for Basic authenticated requests to github.com. Useful
  *                  to avoid hitting GitHub API's rate limit. Always used with GIT_PASSWORD.
  *                  Deprecation notice: GitHub deprecated Basic authentication.
  * GIT_PASSWORD:    The GitHub user password for Basic authenticated requests to github.com.
- *                  Always used with GIT_USER. 
+ *                  Always used with GIT_USER.
  *                  Deprecation notice: GitHub deprecated Basic authentication.
  */
 
@@ -59,7 +59,7 @@ if ('GIT_OAUTH_TOKEN' in process.env) {
 
 function Users() {
     let userMap = {}
-    this.get = function(commit) {
+    this.get = function (commit) {
         if (userMap[commit.email] === undefined) {
             console.log("fetching <" + commit.email + "> details from GitHub")
             let fetchedCommit = JSON.parse(request("GET", repoCommits + "/" + commit.sha, requestOptions).getBody().toString());
@@ -67,10 +67,10 @@ function Users() {
         }
         return userMap[commit.email]
     }
-    this.set = function(identity, userDetails){
+    this.set = function (identity, userDetails) {
         userMap[identity] = userDetails
     }
-    this.cache = function(){
+    this.cache = function () {
         return userMap;
     }
 }

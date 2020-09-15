@@ -1,18 +1,20 @@
-        {{ $currentNode := . }}
-        <div class="sln">
-            <div class="overlay-band">
-                <ul class="nav-list container">
-                {{- range $index, $page := .Site.Menus.sln -}}
-                    {{with .Page}}
-                    {{if (eq $currentNode.Section .Section) }}
-                    <li title="{{.Title}}">
-                        {{- $isActive:= (or (eq .UniqueID $currentNode.UniqueID) (.IsAncestor $currentNode)) -}}
-                        {{- $url:= (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL -}}
-                        <a class="navbar-link{{- if  $isActive }} is-active{{- end -}}" href="{{$url}}" {{- if .Params.remoteUrl }}target="_blank"{{ end -}}>{{safeHTML .Params.Pre}}{{or .Params.menuTitle .LinkTitle .Title}}{{safeHTML .Params.Post}}</a>
-                    </li>
-                    {{- end }}
-                    {{- end }}
-                {{- end }}
-                </ul>
-            </div>
-        </div>
+{{ $currentNode := . }}
+<div class="sln">
+    <div class="overlay-band">
+        <ul class="nav-list container">
+            {{- range $index, $page := where .Site.Pages ".Params.menu" "=" "sln"  -}}
+            {{with .Page}}
+            {{if (eq $currentNode.Section .Section) }}
+            <li title="{{.Title}}">
+                {{- $isActive:= (or (eq .UniqueID $currentNode.UniqueID) (.IsAncestor $currentNode)) -}}
+                {{- $url:= (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL -}}
+                <a class="navbar-link{{- if  $isActive }} is-active{{- end -}}" href="{{$url}}"
+                    {{- if .Params.remoteUrl }}target="_blank"
+                    {{ end -}}>{{safeHTML .Params.Pre}}{{or .Params.menuTitle .LinkTitle .Title}}{{safeHTML .Params.Post}}</a>
+            </li>
+            {{- end }}
+            {{- end }}
+            {{- end }}
+        </ul>
+    </div>
+</div>

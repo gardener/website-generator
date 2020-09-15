@@ -1,10 +1,10 @@
 <script>
-  $(document).ready(function(){
+  $(document).ready(function () {
     function initStickyNav() {
       var stickyPoint;
       var tln = document.querySelector(".tln");
       if (!tln) {
-          return;
+        return;
       }
       var stickyPointEl = document.querySelector(".sticky-nav-point");
       if (stickyPointEl == null) {
@@ -14,24 +14,38 @@
         stickyPoint = stickyPointEl.clientHeight + stickyPointEl.offsetTop;
       }
       var bodySelector = document.getElementsByTagName("body")[0];
-      var tlnHeight = tln.clientHeight;     
-      var stickyNavigation = function() {
-          if (window.pageYOffset + tlnHeight >= stickyPoint) {
-              bodySelector.classList.add("has-sticky-navigation");
-              tln.classList.add("sticky-top");
-          } else {
-              bodySelector.classList.remove("has-sticky-navigation");
-              tln.classList.remove("sticky-top");
-          }
+      var tlnHeight = tln.clientHeight;
+      var stickyNavigation = function () {
+        if (window.pageYOffset + tlnHeight >= stickyPoint) {
+          bodySelector.classList.add("has-sticky-navigation");
+          tln.classList.add("sticky-top");
+        } else {
+          bodySelector.classList.remove("has-sticky-navigation");
+          tln.classList.remove("sticky-top");
+        }
       }
-  
-      window.onscroll = function() {
-          stickyNavigation();
+
+      window.onscroll = function () {
+        stickyNavigation();
       };
     }
     initStickyNav();
+
+    function closeAllSelect() {
+      document.getElementById("docOptions").classList.remove("show");
+    }
+
+    function show(e) {
+      e.stopPropagation();
+      document.getElementById("docOptions").classList.add("show");
+    }
+
+    document.addEventListener("click", closeAllSelect);
+    document.getElementById("docSelector").addEventListener("click", show);
   });
+
 </script>
+
 <div class="tln fixedsticky sticky-top">
   {{- $currentPage:= . -}}
   <header class="navigation">
@@ -47,40 +61,48 @@
           <ul class="links">
             {{- with .Site.GetPage "section" "documentation/020_getting-started" -}}
             <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
-              <a class="btn primary" href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">{{ .Title }}</a>
+              <a class="btn primary"
+                href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">{{ .Title }}</a>
             </li>
-            {{- end -}}            
+            {{- end -}}
             {{ with .Site.GetPage "section" "blog" }}
             <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
               <a href="{{ .URL }}">{{ .Title }}</a>
             </li>
-            {{- end -}} 
+            {{- end -}}
             {{ with .Site.GetPage "section" "community" }}
             <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
               <a href="{{ .URL }}">{{ .Title }}</a>
             </li>
-            {{- end -}} 
+            {{- end -}}
             {{ with .Site.GetPage "section" "adopter" }}
             <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
               <a href="{{ .URL }}">{{ .Title }}</a>
             </li>
-            {{- end -}} 
-            {{ with .Site.GetPage "section" "documentation" }}
-            <li class="link has-child {{if .IsAncestor $currentPage -}}active{{- end -}}">
-              <a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation{{/*.Title*/}}</a>
-              <nav class="container menu">
-                <ul class="topics links">
-                  {{ $currentNode := .  }}
-                  {{- range $index, $page := .Site.Menus.sln -}}
-                    {{with .Page}}
-                      {{if (eq $currentNode.Section .Section) }}
-                  {{- template "tln-nav-tree" dict "sect" . "currentnode" $currentNode "maxTreeDepth" 5 "treeDepth" 0 -}}
-                      {{- end -}} 
-                    {{- end -}} 
-                  {{- end -}} 
-                </ul>
-              </nav>
+            {{- end -}}
+            {{-  $url := print "/data/revisions.json"  -}}
+            {{ $versions := slice }}
+            {{- if (fileExists $url) -}}
+            {{- $revisions := (getJSON $url) -}}
+            {{- $.Scratch.Set "revisions" $revisions -}}
+            {{- range $revision := $revisions -}}
+            {{ $versions = $versions | append $revision.version }}
+            {{end}}
+            {{- end -}}
+            {{- if or (in .Page.Section "documentation") (in  $versions .Page.Section ) -}}
+            <li class="link has-child active">
+              {{- if le (len $versions) 1 -}}
+              <a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation</a>
+              {{- else -}}
+              {{ partial "revisions.html" . }}
+              {{ end }}
             </li>
+            {{ else }}
+            {{ with .Site.GetPage "section" "documentation" }}
+            <li class="link has-child">
+              <a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation</a>
+            </li>
+            {{- end -}}
             {{- end -}}
             {{ with .Site.GetPage "section" "contact" }}
             <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
@@ -95,7 +117,7 @@
 </div>
 <script>
   //collapsed TLN button
-  $(".navigation .navbar-toggler").click(function(evt){
+  $(".navigation .navbar-toggler").click(function (evt) {
     $(".navigation .navbar-collapse").toggle();
     $(".navigation").toggleClass("collapsed");
     $(".navigation .search-box").toggle();
@@ -108,40 +130,84 @@
 {{ $maxTreeDepth := .maxTreeDepth }}
 {{ $treeDepth := .treeDepth }}
 {{with .sect}}
-  {{if .IsSection}}
-  {{ $isParent:= or (.IsAncestor $currentNode) (.Params.alwaysopen) }}
-  {{ $hiddenChildrenCount:= len (where .Pages ".Params.hidden" true) }}
-  {{ $childrenCount:= (len .Pages)}}
-  {{ $isContainer:= and (gt $childrenCount 0) (gt $childrenCount $hiddenChildrenCount) }}
-  <li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item link
+{{if .IsSection}}
+{{ $isParent:= or (.IsAncestor $currentNode) (.Params.alwaysopen) }}
+{{ $hiddenChildrenCount:= len (where .Pages ".Params.hidden" true) }}
+{{ $childrenCount:= (len .Pages)}}
+{{ $isContainer:= and (gt $childrenCount 0) (gt $childrenCount $hiddenChildrenCount) }}
+<li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item link
       {{- if eq .UniqueID $currentNode.UniqueID }} active{{- end -}}
       {{- if (eq $treeDepth 1) }} top-level{{- end -}}
       {{- if (eq $treeDepth 0) }} root {{ end -}}
       " data-depth="{{$treeDepth}}">
-      <a href="{{- (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL -}}">
-          <span class="menu-item-text">{{- or .Params.menuTitle .LinkTitle .Title -}}{{- safeHTML .Params.Post -}}</span>            
-      </a>
-      {{ $numberOfPages := len .Pages }}
-      {{- if (and (not .Params.aggregate) (ne $numberOfPages 0)) -}}
-          <ul {{- if .Parent.IsHome }} style="padding-left:0"{{ end -}}>
-          {{- range sort .Pages ".Dir" -}}
-              {{ if .Params.hidden}}
-              {{else}}
-                  {{ $depth := (add $treeDepth 1) }}
-                  {{ if not (gt $depth $maxTreeDepth) }}
-                  {{ template "tln-nav-tree" dict "sect" . "currentnode" $currentNode "maxTreeDepth" $maxTreeDepth "treeDepth" $depth}}
-                  {{ end }}
-              {{end}}
-          {{- end -}}
-          </ul>
-      {{- end -}}
-  </li>
-  {{else}}
-      <li data-nav-id="{{.URL}}" title="{{.Title}}" class="dd-item{{- if eq .UniqueID $currentNode.UniqueID}} active{{end -}}">
-      <a href="{{- (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL -}}">
-          <span class="toggle"></span><span class="menu-item-text"></span>{{- safeHTML .Params.head -}}{{- or .Params.menuTitle .LinkTitle .Title -}}{{- safeHTML .Params.Post -}}</span></a>
-      </a>
-  </li>
-  {{end}}
+  <a href="{{- (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL -}}">
+    <span class="menu-item-text">{{- or .Params.menuTitle .LinkTitle .Title -}}{{- safeHTML .Params.Post -}}</span>
+  </a>
+  {{ $numberOfPages := len .Pages }}
+  {{- if (and (not .Params.aggregate) (ne $numberOfPages 0)) -}}
+  <ul {{- if .Parent.IsHome }} style="padding-left:0" {{ end -}}>
+    {{- range sort .Pages ".Dir" -}}
+    {{ if .Params.hidden}}
+    {{else}}
+    {{ $depth := (add $treeDepth 1) }}
+    {{ if not (gt $depth $maxTreeDepth) }}
+    {{ template "tln-nav-tree" dict "sect" . "currentnode" $currentNode "maxTreeDepth" $maxTreeDepth "treeDepth" $depth}}
+    {{ end }}
+    {{end}}
+    {{- end -}}
+  </ul>
+  {{- end -}}
+</li>
+{{else}}
+<li data-nav-id="{{.URL}}" title="{{.Title}}"
+  class="dd-item{{- if eq .UniqueID $currentNode.UniqueID}} active{{end -}}">
+  <a href="{{- (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL -}}">
+    <span class="toggle"></span><span
+      class="menu-item-text"></span>{{- safeHTML .Params.head -}}{{- or .Params.menuTitle .LinkTitle .Title -}}{{- safeHTML .Params.Post -}}</span></a>
+  </a>
+</li>
+{{end}}
 {{ end }}
 {{ end }}
+
+
+<style>
+  #docSelector {
+    cursor: pointer;
+  }
+
+  .doc-options {
+    position: fixed;
+    background-color: #0b8062;
+    text-align: left;
+    display: none;
+  }
+
+  .doc-options ul li {
+    margin-bottom: 0;
+  }
+
+  .doc-options ul li a:hover {
+    background-color: #0c694f;
+  }
+
+  .doc-options ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    text-align: left;
+  }
+
+  .doc-options ul li a {
+    padding: 10px;
+    margin: 0;
+  }
+
+  .doc-options .activeVersion {
+    background-color: #ec682a;
+  }
+
+  .show {
+    display: block;
+  }
+</style>
