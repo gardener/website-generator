@@ -7,104 +7,85 @@ else
 fi
 
 if [[ -z "${HUGO}" ]]; then
-  HUGO=hugo;
+  HUGO=hugo
 fi
 
 if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH}" ]]; then
   generatorRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/..)"
 else
-  generatorRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_GENERATOR_PATH}")";
+  generatorRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_GENERATOR_PATH}")"
 fi
 if [[ ! -d "${generatorRepoPath}" ]]; then
-  echo "website-generator directory path is invalid [`${generatorRepoPath}`]. Set $GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo." 
+  echo "website-generator directory path is invalid ["${generatorRepoPath}"]. Set $GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo."
   exit 1
 fi
 if [[ -z "${GARDENER_WEBSITE_PATH}" ]]; then
   # Fallback to "website" repo cloned as peer directory to "website-generator"
   websiteRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/../../website)"
 else
-  websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")";
-fi
-if [[ -z "${GARDENER_DOCUMENTATION_PATH}" ]]; then
-  # Fallback to "documentation" repo cloned as peer directory to "website-generator"
-  contentRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/../../documentation)"
-else
-  contentRepoPath="$(${READLINK_BIN} -f "${GARDENER_DOCUMENTATION_PATH}")";
-fi
-if [[ ! -d "${contentRepoPath}" ]]; then
-  echo "Source content directory path not specified. Set GARDENER_DOCUMENTATION_PATH environment variable or run from website-generator cloned repo." 
-  exit 1
+  websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")"
 fi
 
-content=${contentRepoPath}/website
+# TODO: swilen-iwanow
+# This is to ensure that if none of the env vars are set, we build the site from the master branch
+# for backwards compatibility. We can clear some of this logic after we make the documentation repo
+# versioned.
+if [[ -z "${LATESTVERSION}" && -z "${BUILDSINGLEBRANCH}" ]]; then
+  export BUILDSINGLEBRANCH=true
+  if [[ -z "${BRANCH}" ]]; then
+    export BRANCH=master
+  fi
+fi
+
+if [[ -z "${FORK}" ]]; then
+  export FORK=gardener
+fi
+
 generator=${generatorRepoPath}
 website=${websiteRepoPath}/docs
-echo "Content directory: ${content}" ;
-echo "Generated site directory: ${website}" ;
+echo "Content directory: ${content}"
+echo "Generated site directory: ${website}"
 
 cd ${generator}
-
-# create symlink hugo/content -> /documentation/website, if it doesn't exists
-#
-if [[ ! -d "hugo/content" ]]; then
-echo 'linking hugo/content <==> /documentation/website'
-cd hugo
-# WSL users: If the script fails with "You do not have sufficient privilege to perform this operation.", enable the Windows Developer Mode.
-if [[ -z "${WSL_DISTRO_NAME}" ]]; then
-  ln -s $content content
-else
-  ../scripts/mklink.sh content $(wslpath -w $content)
-fi
-# symlinkoutput="$(ls -lt content)"
-# echo "${symlinkoutput}"
-cd ..
-fi
 
 # Setup authentication tokens if not supplied in env
 if [[ -z "$GIT_OAUTH_TOKEN" ]] && [[ -z "$GIT_USER" ]] && [[ -z "$GIT_PASSWORD" ]]; then
   # Check if gardener-ci is available (in local setup)
   command -v gardener-ci >/dev/null && gardenci="true" || gardenci=""
   if [[ $gardenci == "true" ]]; then
-    gardener-ci config attribute --cfg-type github --cfg-name github_com --key technical_users --json > github_com_yaml
+    gardener-ci config attribute --cfg-type github --cfg-name github_com --key technical_users --json >github_com_yaml
     if [[ -r github_com_yaml ]]; then
       # get auth token and strip lead/trail quotes
-      export GIT_OAUTH_TOKEN=$(sed -e 's/^"//' -e 's/"$//'<<<$(jq .[0].authToken github_com_yaml))
+      export GIT_OAUTH_TOKEN=$(sed -e 's/^"//' -e 's/"$//' <<<$(jq .[0].authToken github_com_yaml))
       rm github_com_yaml
     fi
   fi
 fi
 
-# Run pregeneration: pull remote content
-#
-echo  ;
-echo "Running pre-site-building tasks" ;
-npm install
-npm prune --production
-export CONTENT=$generator/hugo/content
-node ./node/index.js
+./.ci/clone_doc_version.sh
 
 cd hugo
 
 # Generate site from ${content} into ${website}
 #
-echo ;
+echo
 hugo --minify --destination ${website}
 
-# if [[ -z ${AUTO_PUBLISH+x} ]]; then 
-if [[ $AUTO_PUBLISH != 'false' ]]; then  
-echo "Publishing build results" ;
-cd ${contentRepoPath}
-echo
-echo "Adding changed JSON git history to repo for faster site generation the next time"
-git add . -A
-git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse [skip ci]'
-# git log --name-status HEAD^..HEAD | cat
+# if [[ -z ${AUTO_PUBLISH+x} ]]; then
+if [[ $AUTO_PUBLISH != 'false' ]]; then
+  echo "Publishing build results"
+  cd ${contentRepoPath}
+  echo
+  echo "Adding changed JSON git history to repo for faster site generation the next time"
+  git add . -A
+  git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse [skip ci]'
+  # git log --name-status HEAD^..HEAD | cat
 
-cd ${websiteRepoPath}
-echo
-echo "Committing website changes"
-git add . -A
-git commit -m 'Automatic build triggered by last commit [skip ci]'
+  cd ${websiteRepoPath}
+  echo
+  echo "Committing website changes"
+  git add . -A
+  git commit -m 'Automatic build triggered by last commit [skip ci]'
 # git log --name-status HEAD^..HEAD | cat
 # fi
 fi
