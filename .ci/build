@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 if [[ $(uname) == 'Darwin' ]]; then
   READLINK_BIN="greadlink"
@@ -26,27 +27,35 @@ else
   websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")"
 fi
 
-# TODO: swilen-iwanow
-# This is to ensure that if none of the env vars are set, we build the site from the master branch
-# for backwards compatibility. We can clear some of this logic after we make the documentation repo
-# versioned.
-if [[ -z "${LATESTVERSION}" && -z "${BUILDSINGLEBRANCH}" ]]; then
-  export BUILDSINGLEBRANCH=true
-  if [[ -z "${BRANCH}" ]]; then
-    export BRANCH=master
-  fi
-fi
-
-if [[ -z "${FORK}" ]]; then
-  export FORK=gardener
-fi
-
 generator=${generatorRepoPath}
 website=${websiteRepoPath}/docs
 echo "Content directory: ${content}"
 echo "Generated site directory: ${website}"
 
 cd ${generator}
+
+if [[ $BUILD == "release" ]]; then
+  if [ -f "./latestDocVersions" ]; then
+    versions=$(cat ./latestDocVersions)
+    export LATESTVERSIONS=($versions) # make it arr
+  fi
+fi
+
+# TODO: swilen-iwanow
+# This is to ensure that if none of the env vars are set, we build the site from the master branch
+# for backwards compatibility. We can clear some of this logic after we make the documentation repo
+# versioned.
+if [[ -z "${LATESTVERSIONS}" ]]; then
+  if [[ -z "${BRANCH}" ]]; then
+    export BRANCH=master
+  fi
+  echo "Building from single branch ${BRANCH}"
+  export BUILDSINGLEBRANCH=true
+fi
+
+if [[ -z "${FORK}" ]]; then
+  export FORK=gardener
+fi
 
 # Setup authentication tokens if not supplied in env
 if [[ -z "$GIT_OAUTH_TOKEN" ]] && [[ -z "$GIT_USER" ]] && [[ -z "$GIT_PASSWORD" ]]; then
@@ -62,8 +71,76 @@ if [[ -z "$GIT_OAUTH_TOKEN" ]] && [[ -z "$GIT_USER" ]] && [[ -z "$GIT_PASSWORD" 
   fi
 fi
 
-./.ci/clone_doc_version.sh
+#
+CLONE="temp"
+CLONED_WEBSITE_DIR="${CLONE}/website/*"
+CLONED_DOCUMENTATION_PATH="${CLONE}/website/documentation"
+HUGO_CONTENT=hugo/content
+HUGO_DOCUMENTATION=$HUGO_CONTENT/documentation
+#
 
+# Clear from previous runs
+rm -rf $HUGO_CONTENT
+rm -rf $CLONE
+
+npm install
+npm prune --production
+
+echo "Cloning from ${FORK}"
+git clone "https://github.com/${FORK}/documentation.git" $CLONE
+git fetch -t
+
+if [[ $BRANCH != "master" && ! -z $BRANCH ]]; then
+  echo "Building site from documentation version ${BRANCH}"
+  (cd $CLONE && git checkout origin/${BRANCH})
+fi
+
+# Copy website contents like blogs adopters etc. from desired branch
+mkdir $HUGO_CONTENT
+cp -r $CLONED_WEBSITE_DIR $HUGO_CONTENT
+
+if [[ -d $HUGO_DOCUMENTATION ]]; then
+  rm -rf $HUGO_DOCUMENTATION
+fi
+
+if [[ "$BUILDSINGLEBRANCH" = "true" ]]; then
+  # Copy desired doc into hugo/content/documentation
+  cp -r $CLONED_DOCUMENTATION_PATH $HUGO_DOCUMENTATION
+
+  # Run docforge to download external files
+  docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT --resources-download-path __resources --hugo --github-oauth-token $GIT_OAUTH_TOKEN
+
+  export REMOTE=$HUGO_CONTENT
+  export CONTENT=CLONE/website
+  export DATA=hugo/data
+  node ./node/index.js
+else
+  echo "Building site from the last ${n} documentation versions"
+  n=3
+  for ((r = 0; r < n; r++)); do
+    version=${LATESTVERSIONS[$r]}
+    echo "Getting docs from: ${version}"
+    # Switch to desired release version
+    (cd $CLONE && git checkout "tags/${version}")
+
+    export REMOTE=$HUGO_CONTENT
+    export CONTENT=$CLONE/website/documentation
+    export DATA=hugo/data
+
+    # In case the latest documentation version set as root.
+    if [ $r = 0 ]; then
+      version="documentation"
+      export CONTENT=$CLONE/website
+    fi
+
+    cp -r $CLONED_DOCUMENTATION_PATH $HUGO_CONTENT/$version
+    docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT/$version --hugo --github-oauth-token $GIT_OAUTH_TOKEN
+    node ./node/index.js
+  done
+  node ./node/generateVersioningFile.js
+fi
+
+rm -rf ${website}
 cd hugo
 
 # Generate site from ${content} into ${website}
@@ -71,21 +148,12 @@ cd hugo
 echo
 hugo --minify --destination ${website}
 
-# if [[ -z ${AUTO_PUBLISH+x} ]]; then
 if [[ $AUTO_PUBLISH != 'false' ]]; then
-  echo "Publishing build results"
-  cd ${contentRepoPath}
-  echo
-  echo "Adding changed JSON git history to repo for faster site generation the next time"
-  git add . -A
-  git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse [skip ci]'
-  # git log --name-status HEAD^..HEAD | cat
-
   cd ${websiteRepoPath}
   echo
   echo "Committing website changes"
   git add . -A
-  git commit -m 'Automatic build triggered by last commit [skip ci]'
-# git log --name-status HEAD^..HEAD | cat
-# fi
+  git commit -m 'Automatic build triggered by last commit'
 fi
+
+rm -rf $CLONE
