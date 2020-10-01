@@ -26,6 +26,12 @@ else
   websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")"
 fi
 
+if [ -f "./latestDocVersion" ]; then
+  export LATESTVERSION=$(cat ./latestDocVersion)
+else
+  echo "Building from single branch file doesn't exist: $(pwd)/latestDocVersion"
+fi
+
 # TODO: swilen-iwanow
 # This is to ensure that if none of the env vars are set, we build the site from the master branch
 # for backwards compatibility. We can clear some of this logic after we make the documentation repo

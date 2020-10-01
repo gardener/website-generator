@@ -1,25 +1,24 @@
 #!/bin/bash
 set -e
 
-FORK="swilen-iwanow"
-r=$OLDESTVERSION
+n=1
+r=$((LATESTVERSION - n))
 
 # Clear from previous runs
 rm -rf hugo/content
 rm -rf temp
 
-echo "Running pre-site-building tasks"
 mkdir hugo/content
 npm install
 npm prune --production
-root=$(pwd)
 
-CLONE="temp/"
+CLONE="temp"
+echo "Cloning from ${FORK}"
 git clone "https://github.com/${FORK}/documentation.git" "$CLONE"
 if [ "$BUILDSINGLEBRANCH" = "true" ]; then
-  echo "Building site with version ${BRANCH}"
+  echo "Building site from documentation version ${BRANCH}"
   (cd $CLONE && git checkout "tags/${BRANCH}" -b ${BRANCH})
-  dir="${CLONE}website/*"
+  dir="${CLONE}/website/*"
   docforge -f "${CLONE}/doc.yaml" -d hugo/content/ --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true
   # with single branch we can directly move the contents of the repo inside
   # hugo/content because we don't use the repo later.
@@ -28,6 +27,7 @@ if [ "$BUILDSINGLEBRANCH" = "true" ]; then
   export DATA="hugo/data/"
   node ./node/index.js
 else
+  echo "Building site from the last ${n} documentation versions"
   while [[ $r -le $LATESTVERSION ]]; do
     echo 'Getting docs from: v1.'"${r}"'.0'
     version="v1.${r}.0"
@@ -35,7 +35,7 @@ else
     export CONTENT="$CLONE/website/documentation"
     export DATA="hugo/data/v1.${r}.0"
     if [ "$r" = "$LATESTVERSION" ]; then
-      dir="${CLONE}website/*"
+      dir="${CLONE}/website/*"
       cp -r $dir hugo/content
       version="documentation"
       export CONTENT="$CLONE/website/"
@@ -48,7 +48,6 @@ else
 fi
 
 node ./node/generateVersioningFile.js
-find . -type f -path './hugo/content/*/_index.md' -exec sed -i "s/menus\:\ sln/menu\:\ sln/g" {} +
 
 echo 'Cleaning up temp directory used during this site build.'
 rm -rf temp

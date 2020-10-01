@@ -7,19 +7,31 @@ gardener-website-generator:
     repos:
     - name: 'gardener_website'
       path: 'gardener/website'
-      branch: 'master'
+      branch: 'test_update'
       cfg_name: 'github_com'
-    - name: 'gardener_documentation'
-      path: 'gardener/documentation'
-      branch: 'master'
-      cfg_name: 'github_com'
-      trigger: true
   jobs:
     head-update:
+      repos:
+        - name: 'gardener_documentation'
+          path: 'gardener/documentation'
+          branch: 'test_update'
+          cfg_name: 'github_com'
+          trigger: true
       steps:
         build:
           image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.0.1'
           publish_to: ['gardener_website', 'gardener_documentation']
+    documentation-release:
       traits:
+        update_component_deps:
+          merge_policy: AUTO
+          after_merge_callback: build
+          vars:
+            BUILD_RELEASE: 1
+        component_descriptor: ~
         cronjob:
-          interval: '24h'
+          interval: '15m'
+      steps:
+        build:
+          image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.0.1'
+          publish_to: ['gardener_website', 'gardener_documentation']
