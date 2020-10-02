@@ -33,8 +33,6 @@ if (!process.env.DATA) {
     process.env.DATA = path.resolve(__dirname, '../hugo/data');
 }
 
-const rewriteAndCheckUrls = require("./util/rewriteAbsoluteToUrls")
-
 // to avoid some TLS Cert problems for our internal github
 //
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
@@ -133,29 +131,29 @@ function transformGitLog(log, users) {
     return gitInfo;
 }
 
-function saveGitInfoLocal(file, users) {
-    console.log(`saving git history for local file ${file}`)
-    let gitlog, data
-    try {
-        gitlog = spawnSync(".ci/gitlog.sh", [process.env.CONTENT, file], { shell: "/bin/bash", timeout: 5 * 60000 });
-        data = gitlog.stdout.toString();
-        if (data && data.length) {
-            let gitInfo = transformGitLog(data, users);
-            if (gitInfo && Object.values(gitInfo)) {
-                let gitInfoFilePath = file.replace(process.env.CONTENT, process.env.DATA) + ".json"
-                fs.mkdirSync(path.dirname(gitInfoFilePath), { recursive: true })
-                fs.writeFileSync(gitInfoFilePath, JSON.stringify(gitInfo, null, 2), "utf8");
-            } else {
-                console.log(`no git info for ${file}`);
-            }
-        } else {
-            throw Error('failed to get valid git log output');
-        }
-    } catch (err) {
-        console.error(`updating git info for ${file} failed: ${err}`);
-        console.error(`${data}\n`);
-    }
-}
+// function saveGitInfoLocal(file, users) {
+//     console.log(`saving git history for local file ${file}`)
+//     let gitlog, data
+//     try {
+//         gitlog = spawnSync(".ci/gitlog.sh", [process.env.CONTENT, file], { shell: "/bin/bash", timeout: 5 * 60000 });
+//         data = gitlog.stdout.toString();
+//         if (data && data.length) {
+//             let gitInfo = transformGitLog(data, users);
+//             if (gitInfo && Object.values(gitInfo)) {
+//                 let gitInfoFilePath = file.replace(process.env.CONTENT, process.env.DATA) + ".json"
+//                 fs.mkdirSync(path.dirname(gitInfoFilePath), { recursive: true })
+//                 fs.writeFileSync(gitInfoFilePath, JSON.stringify(gitInfo, null, 2), "utf8");
+//             } else {
+//                 console.log(`no git info for ${file}`);
+//             }
+//         } else {
+//             throw Error('failed to get valid git log output');
+//         }
+//     } catch (err) {
+//         console.error(`updating git info for ${file} failed: ${err}`);
+//         console.error(`${data}\n`);
+//     }
+// }
 
 // ====================================================
 // try to fetch the github changes for the file
@@ -298,70 +296,9 @@ function processContent() {
                 console.log("proceeding with next file")
                 return
             }
-            if (content.attributes.remote) {
-                // transformGitLog a normal URL of a file to the RAW version.
-                //
-                let url = content.attributes.remote
 
-                // we reference a complete repository. In this case we fetch the README.md and inline them
-                //
-                if (url.endsWith(".git")) {
-                    url = url.replace(".git", "/blob/master/README.md")
-                }
-
-                // The url points to an external github wiki.
-                // works just for external GITHUB
-                //
-                if (url.indexOf("/wiki/") !== -1) {
-                    // Check if we got a link to a GitHub wiki page. In this case we must transform them
-                    // to the RAW version as well
-                    // e.g. IN: https://github.com/gardener/documentation/wiki/Architecture
-                    //     OUT: https://raw.githubusercontent.com/wiki/gardener/documentation/Architecture.md
-                    let segments = url.replace("https://github.com/", "").split("/")
-                    let user = segments[0]
-                    let project = segments[1]
-                    let doc = segments.slice(3).join("/") + ".md"
-                    url = "https://raw.githubusercontent.com/wiki/" + user + "/" + project + "/" + doc
-                }
-                else {
-                    // Required to fetch the plain MarkDown instead of the rendered version
-                    // Replace the "normal" github URL with the "RAW" API Link
-                    //
-                    url = url
-                        .replace("https://github.com/", "https://raw.githubusercontent.com/")
-                        .replace("/blob/master/", "/master/")
-                        .replace("/tree/master/", "/master/")
-                }
-
-                // Get the content of the referenced MD file and append it to the
-                // Hugo CMS page
-                //
-                try {
-                    var remoteContent = fm(request("GET", url).getBody().toString()).body
-                    remoteContent = rewriteAndCheckUrls(url, remoteContent, file)
-                } catch (err) {
-                    console.error("Unable to get remote content for", url, err)
-                    console.log("proceeding with next file")
-                    return
-                }
-
-                // Finally, write the file
-                let newDoc = [
-                    "---",
-                    content.frontmatter,
-                    "---",
-                    remoteContent].join("\n")
-                console.log("writing remote content to", file)
-                fs.writeFileSync(file, newDoc, 'utf8');
-
-                saveGitInfoRemote(file, content.attributes.remote, users)
-
-            } else {
-
-                // Update git info for local files
-                saveGitInfoLocal(file, users);
-            }
-
+            saveGitInfoRemote(file, content.attributes.remote, users)
+            // saveGitInfoLocal(file, users);
         })
 
         let contributorsFile = process.env.DATA + "/contributors.json"
@@ -369,58 +306,7 @@ function processContent() {
         if (contributors) {
             fs.writeFileSync(contributorsFile, JSON.stringify(contributors, null, 2), 'utf8')
         }
-
-        // Parse all MarkdownFiles and check if any link reference to a remote site which we have imported.
-        // In this case we REWRITE the link from REMOTE to LOCAL
-        //
-        glob(process.env.CONTENT + '/**/*.md', function (err, files) {
-            var docPath = path.normalize(process.env.CONTENT)
-            var importedMarkdownFiles = []
-            // collect all remote links in the "front matter" annotations
-            //
-            files.forEach(function (file) {
-                let content;
-                try {
-                    content = fm(fs.readFileSync(file, 'utf8'));
-                } catch (err) {
-                    console.error("Failed to read front-matter from", file, err);
-                    console.log("proceeding with next file")
-                    return
-                }
-                if (content.attributes.remote) {
-                    importedMarkdownFiles.push({ file: file.replace(docPath, "/"), remote: content.attributes.remote })
-                }
-            })
-
-            // check if any MD files referer to a imported page. In this case we rewrite the link to the
-            // internal document
-            //
-            files.forEach(function (file) {
-                let content;
-                try {
-                    content = fm(fs.readFileSync(file, 'utf8'));
-                } catch (err) {
-                    console.error("Failed to read front-matter from", file, err);
-                    console.log("proceeding with next file")
-                    return
-                }
-                if (content.attributes.remote) {
-                    let md = content.body;
-                    importedMarkdownFiles.forEach(function (entry) {
-                        md = md.split(entry.remote).join("{{< ref \"" + entry.file + "\" >}}")
-                    })
-                    let newDoc = [
-                        "---",
-                        content.frontmatter,
-                        "---",
-                        md].join("\n")
-                    console.log("updating content in", file)
-                    fs.writeFileSync(file, newDoc, 'utf8');
-                }
-            })
-
-        })
     });
 }
 
-processContent();
+// processContent();
