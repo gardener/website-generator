@@ -87,14 +87,14 @@ if [[ $AUTO_PUBLISH != 'false' ]]; then
   echo
   echo "Adding changed JSON git history to repo for faster site generation the next time"
   git add . -A
-  git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse [skip ci]'
+  git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse'
   # git log --name-status HEAD^..HEAD | cat
 
   cd ${websiteRepoPath}
   echo
   echo "Committing website changes"
   git add . -A
-  git commit -m 'Automatic build triggered by last commit [skip ci]'
+  git commit -m 'Automatic build triggered by last commit'
 # git log --name-status HEAD^..HEAD | cat
 # fi
 fi
