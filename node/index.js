@@ -24,7 +24,7 @@ const fm = require('front-matter')
 const path = require("path")
 const request = require('sync-request')
 const moment = require('moment');
-const { spawnSync } = require("child_process");
+// const { spawnSync } = require("child_process");
 
 if (!process.env.CONTENT) {
     process.env.CONTENT = path.resolve(__dirname, '/../hugo/content');
@@ -73,63 +73,64 @@ function Users() {
     }
 }
 
-function isGitlogInternalCommit(commit) {
-    return commit.message.startsWith("[int]") || commit.message.indexOf("[skip ci]") > -1 || commit.email.startsWith("gardener.ci");
-}
 
-function escapeJSONString(json) {
-    return json.split("\n").map(function (l) {
-        if (l.indexOf(":") < 0)
-            return l
-        s = l.split(":")
-        v = s[1].trim();
-        if (v.length > 0 && v.startsWith('"') && (v.endsWith('",'))) {
-            s[1] = '"' + v.substring(1, v.lastIndexOf('"')).replace(/"/g, "'") + '",';
-        }
-        l = s.join(":")
-        return l;
-    }).join("\n")
-}
+// function isGitlogInternalCommit(commit) {
+//     return commit.message.startsWith("[int]") || commit.message.indexOf("[skip ci]") > -1 || commit.email.startsWith("gardener.ci");
+// }
+
+// function escapeJSONString(json) {
+//     return json.split("\n").map(function (l) {
+//         if (l.indexOf(":") < 0)
+//             return l
+//         s = l.split(":")
+//         v = s[1].trim();
+//         if (v.length > 0 && v.startsWith('"') && (v.endsWith('",'))) {
+//             s[1] = '"' + v.substring(1, v.lastIndexOf('"')).replace(/"/g, "'") + '",';
+//         }
+//         l = s.join(":")
+//         return l;
+//     }).join("\n")
+// }
 
 /* Transforms Git log JSON output to Git info model */
-function transformGitLog(log, users) {
-    let escF = escapeJSONString(log);
-    let commits = JSON.parse(escF);
-    if (!commits || !Array.isArray(commits)) {
-        throw Error('bad input obect type:' + (typeof commits))
-    }
-    let gitInfo;
-    // Clean up from internal commits
-    commits = commits.filter(function (commit) {
-        return commit.email !== undefined && !isGitlogInternalCommit(commit);
-    });
-    if (!commits || commits.length < 1) {
-        return
-    }
-    //sort by date asc (newest last)
-    commits = commits.sort((a, b) => moment(a.date).format('YYYYMMDD') - moment(b.date).format('YYYYMMDD'))
-    gitInfo = {
-        "lastmod": moment(commits[commits.length - 1].date, "YYYY-MM-DD").format("YYYY-MM-DD"),
-        "publishdate": moment(commits[0].date, "YYYY-MM-DD").format("YYYY-MM-DD")
-    };
-    // transform into contributors list enriched with GitHub user details
-    contributors = commits.map(commit => {
-        return users.get(commit)
-    })
-    // store the author (the first contributor)
-    gitInfo["author"] = contributors[0];
-    // clean undefineds, remove author, backtrack and deduplicate by contributor email or name
-    // and store in contributors list
-    gitInfo["contributors"] = contributors.filter((contributor, index, self) => {
-        return contributor != undefined && contributor.email !== gitInfo["author"].email && index === self.findIndex(t => {
-            if (t === undefined) {
-                return false;
-            }
-            return t.email === contributor.email || t.name === contributor.name
-        })
-    });
-    return gitInfo;
-}
+//     function transformGitLog(log, users) {
+//     let escF = escapeJSONString(log);
+//     let commits = JSON.parse(escF);
+//     if (!commits || !Array.isArray(commits)) {
+//         throw Error('bad input obect type:' + (typeof commits))
+//     }
+//     let gitInfo;
+//     // Clean up from internal commits
+//     commits = commits.filter(function (commit) {
+//         return commit.email !== undefined && !isGitlogInternalCommit(commit);
+//     });
+//     if (!commits || commits.length < 1) {
+//         return
+//     }
+//     //sort by date asc (newest last)
+//     commits = commits.sort((a, b) => moment(a.date).format('YYYYMMDD') - moment(b.date).format('YYYYMMDD'))
+//     gitInfo = {
+//         "lastmod": moment(commits[commits.length - 1].date, "YYYY-MM-DD").format("YYYY-MM-DD"),
+//         "publishdate": moment(commits[0].date, "YYYY-MM-DD").format("YYYY-MM-DD")
+//     };
+//     // transform into contributors list enriched with GitHub user details
+//     contributors = commits.map(commit => {
+//         return users.get(commit)
+//     })
+//     // store the author (the first contributor)
+//     gitInfo["author"] = contributors[0];
+//     // clean undefineds, remove author, backtrack and deduplicate by contributor email or name
+//     // and store in contributors list
+//     gitInfo["contributors"] = contributors.filter((contributor, index, self) => {
+//         return contributor != undefined && contributor.email !== gitInfo["author"].email && index === self.findIndex(t => {
+//             if (t === undefined) {
+//                 return false;
+//             }
+//             return t.email === contributor.email || t.name === contributor.name
+//         })
+//     });
+//     return gitInfo;
+// }
 
 // function saveGitInfoLocal(file, users) {
 //     console.log(`saving git history for local file ${file}`)
@@ -303,6 +304,9 @@ function processContent() {
 
         let contributorsFile = process.env.DATA + "/contributors.json"
         let contributors = Object.values(users.cache());
+        if (!fs.existsSync(process.env.DATA)) {
+            fs.mkdirSync(process.env.DATA)
+        }
         if (contributors) {
             fs.writeFileSync(contributorsFile, JSON.stringify(contributors, null, 2), 'utf8')
         }

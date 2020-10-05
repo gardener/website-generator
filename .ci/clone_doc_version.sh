@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-n=1
+n=2
 r=$((LATESTVERSION - n))
 
 # Clear from previous runs
@@ -17,14 +17,16 @@ echo "Cloning from ${FORK}"
 git clone "https://github.com/${FORK}/documentation.git" "$CLONE"
 if [ "$BUILDSINGLEBRANCH" = "true" ]; then
   echo "Building site from documentation version ${BRANCH}"
-  (cd $CLONE && git checkout "tags/${BRANCH}" -b ${BRANCH})
+  (cd $CLONE && git checkout "origin/$BRANCH" -b ${BRANCH})
   dir="${CLONE}/website/*"
+  echo "docforge -f "${CLONE}/doc.yaml" -d hugo/content/ --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true"
   docforge -f "${CLONE}/doc.yaml" -d hugo/content/ --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true
   # with single branch we can directly move the contents of the repo inside
   # hugo/content because we don't use the repo later.
   mv $dir hugo/content
   export CONTENT="$CLONE/website/"
   export DATA="hugo/data/"
+  echo "Calling nojeds script with \$DATA=$DATA and CONTENT=$CONTENT"
   node ./node/index.js
 else
   echo "Building site from the last ${n} documentation versions"
@@ -41,7 +43,9 @@ else
       export CONTENT="$CLONE/website/"
       export DATA="hugo/data/"
     fi
+    echo "docforge -f "${CLONE}/doc.yaml" -d "hugo/content/${version}" --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true"
     docforge -f "${CLONE}/doc.yaml" -d "hugo/content/${version}" --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true
+    echo "Calling nojeds script with \$DATA=$DATA and CONTENT=$CONTENT"
     node ./node/index.js
     ((r = r + 1))
   done

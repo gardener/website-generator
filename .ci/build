@@ -38,11 +38,11 @@ fi
 # This is to ensure that if none of the env vars are set, we build the site from the master branch
 # for backwards compatibility. We can clear some of this logic after we make the documentation repo
 # versioned.
-if [[ -z "${LATESTVERSION}" && -z "${BUILDSINGLEBRANCH}" ]]; then
-  export BUILDSINGLEBRANCH=true
+if [[ -z "${LATESTVERSION}" ]]; then
   if [[ -z "${BRANCH}" ]]; then
     export BRANCH=master
   fi
+  export BUILDSINGLEBRANCH=true
 fi
 
 if [[ -z "${FORK}" ]]; then

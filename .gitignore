@@ -3,3 +3,4 @@ hugo/content
 hugo/public
 hugo/resources
 node_modules
+dev/
