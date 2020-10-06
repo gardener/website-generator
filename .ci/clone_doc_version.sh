@@ -19,7 +19,7 @@ dir="${CLONE}/website/*"
 cp -r $dir hugo/content
 
 # In case of head update we just have to copy blogs and adopters from the master
-if [[ -z $BUILD || $BUILD == "head-update" ]]; then
+if [[ -z $BUILD || $BUILD == "head_update" ]]; then
   exit 0
 fi
 

@@ -26,6 +26,13 @@ else
   websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")"
 fi
 
+generator=${generatorRepoPath}
+website=${websiteRepoPath}/docs
+echo "Content directory: ${content}"
+echo "Generated site directory: ${website}"
+
+cd ${generator}
+
 if [ -f "./latestDocVersion" ]; then
   v=$(cat ./latestDocVersion)
   semver=(${v//./ })
@@ -49,13 +56,6 @@ if [[ -z "${FORK}" ]]; then
   export FORK=swilen-iwanow
   # export FORK=gardener
 fi
-
-generator=${generatorRepoPath}
-website=${websiteRepoPath}/docs
-echo "Content directory: ${content}"
-echo "Generated site directory: ${website}"
-
-cd ${generator}
 
 # Setup authentication tokens if not supplied in env
 if [[ -z "$GIT_OAUTH_TOKEN" ]] && [[ -z "$GIT_USER" ]] && [[ -z "$GIT_PASSWORD" ]]; then
