@@ -33,12 +33,14 @@ echo "Generated site directory: ${website}"
 
 cd ${generator}
 
-if [ -f "./latestDocVersion" ]; then
-  v=$(cat ./latestDocVersion)
-  semver=(${v//./ })
-  export LATESTVERSION=${semver[1]}
-else
-  echo "Building from single branch file doesn't exist: $(pwd)/latestDocVersion"
+if [[ $BUILD == "release" ]]; then
+  if [ -f "./latestDocVersion" ]; then
+    v=$(cat ./latestDocVersion)
+    semver=(${v//./ })
+    export LATESTVERSION=${semver[1]}
+  else
+    echo "Building from single branch file doesn't exist: $(pwd)/latestDocVersion"
+  fi
 fi
 
 # TODO: swilen-iwanow
@@ -82,12 +84,12 @@ hugo --minify --destination ${website}
 
 # if [[ -z ${AUTO_PUBLISH+x} ]]; then
 if [[ $AUTO_PUBLISH != 'false' ]]; then
-  echo "Publishing build results"
-  cd ${contentRepoPath}
-  echo
-  echo "Adding changed JSON git history to repo for faster site generation the next time"
-  git add . -A
-  git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse'
+  # echo "Publishing build results"
+  # cd ${contentRepoPath}
+  # echo
+  # echo "Adding changed JSON git history to repo for faster site generation the next time"
+  # git add . -A
+  # git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse'
   # git log --name-status HEAD^..HEAD | cat
 
   cd ${websiteRepoPath}
