@@ -39,7 +39,7 @@ if [[ $BUILD == "release" ]]; then
     semver=(${v//./ })
     export LATESTVERSION=${semver[1]}
   else
-    echo "Building from single branch file doesn't exist: $(pwd)/latestDocVersion"
+    echo "Building from single branch, file doesn't exist: $(pwd)/latestDocVersion"
   fi
 fi
 
@@ -55,8 +55,7 @@ if [[ -z "${LATESTVERSION}" ]]; then
 fi
 
 if [[ -z "${FORK}" ]]; then
-  export FORK=swilen-iwanow
-  # export FORK=gardener
+  export FORK=gardener
 fi
 
 # Setup authentication tokens if not supplied in env
@@ -84,14 +83,6 @@ hugo --minify --destination ${website}
 
 # if [[ -z ${AUTO_PUBLISH+x} ]]; then
 if [[ $AUTO_PUBLISH != 'false' ]]; then
-  # echo "Publishing build results"
-  # cd ${contentRepoPath}
-  # echo
-  # echo "Adding changed JSON git history to repo for faster site generation the next time"
-  # git add . -A
-  # git commit -m 'Add git history by CI/CD pipeline for fast lookup for hugo site generation. Done by concourse'
-  # git log --name-status HEAD^..HEAD | cat
-
   cd ${websiteRepoPath}
   echo
   echo "Committing website changes"

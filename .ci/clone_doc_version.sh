@@ -1,69 +1,89 @@
 #!/bin/bash
-set -e
+
+#
+CLONE="temp"
+CLONED_WEBSITE_DIR="${CLONE}/website/*"
+CLONED_DOCUMENTATION_PATH="${CLONE}/website/documentation"
+HUGO_CONTENT=hugo/content
+HUGO_DOCUMENTATION=$HUGO_CONTENT/documentation
+#
 
 n=2
 r=$((LATESTVERSION - n))
 
 # Clear from previous runs
-rm -rf hugo/content
-rm -rf temp
+rm -rf $HUGO_CONTENT
+rm -rf $CLONE
 
-mkdir hugo/content
 npm install
 npm prune --production
 
-CLONE="temp"
 echo "Cloning from ${FORK}"
-git clone "https://github.com/${FORK}/documentation.git" "$CLONE"
-dir="${CLONE}/website/*"
-cp -r $dir hugo/content
+git clone "https://github.com/${FORK}/documentation.git" $CLONE
 
-# In case of head update we just have to copy blogs and adopters from the master
-if [[ -z $BUILD || $BUILD == "head_update" ]]; then
-  exit 0
+if [[ $BRANCH != "master" ]]; then
+  echo "Building site from documentation version ${BRANCH}"
+  (cd $CLONE && git checkout origin/${BRANCH} -b ${BRANCH})
 fi
 
-if [[ "$BUILDSINGLEBRANCH" = "true" ]]; then
-  # Switch to the desired branch.
-  if [[ $BRANCH != "master" ]]; then
-    echo "Building site from documentation version ${BRANCH}"
-    (cd $CLONE && git checkout "origin/$BRANCH" -b ${BRANCH})
-  fi
+# Copy website contents like blogs adopters etc. from desired branch
+mkdir $HUGO_CONTENT
+cp -r $CLONED_WEBSITE_DIR $HUGO_CONTENT
 
-  dir="${CLONE}/website/*"
-  echo "docforge -f "${CLONE}/doc.yaml" -d hugo/content/ --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true"
-  docforge -f "${CLONE}/doc.yaml" -d hugo/content/ --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true
-  export CONTENT="$CLONE/website/"
-  export DATA="hugo/data/"
-  echo "Calling nojeds script with \$DATA=$DATA and CONTENT=$CONTENT"
-  node ./node/index.js
-else
-  echo "Building site from the last ${n} documentation versions"
-  while [[ $r -le $LATESTVERSION ]]; do
-    echo 'Getting docs from: v1.'"${r}"'.0'
-    # Switch to desired release version
-    version="v1.${r}.0"
-    (cd $CLONE && git checkout "tags/${version}" -b ${version})
+# Remove documentation, if it is not release we should not replace it
+if [[ -d $HUGO_DOCUMENTATION ]]; then
+  rm -rf $HUGO_DOCUMENTATION
+fi
 
-    export CONTENT="$CLONE/website/documentation"
-    export DATA="hugo/data/v1.${r}.0"
-
-    # In case the latest documentation version set as root.
-    if [ "$r" = "$LATESTVERSION" ]; then
-      version="documentation"
-      export CONTENT="$CLONE/website/"
-      export DATA="hugo/data/"
+if [[ $BUILD == "release" ]]; then
+  if [[ "$BUILDSINGLEBRANCH" = "true" ]]; then
+    # Switch to the desired branch. We might be already switched to do test if this is not set
+    if [[ $BRANCH != "master" ]]; then
+      echo "Building site from documentation version ${BRANCH}"
+      (cd $CLONE && git checkout origin/${BRANCH} -b ${BRANCH})
     fi
 
-    echo "docforge -f "${CLONE}/doc.yaml" -d "hugo/content/${version}" --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true"
-    docforge -f "${CLONE}/doc.yaml" -d "hugo/content/${version}" --hugo --github-oauth-token $GIT_OAUTH_TOKEN --markdownfmt=true
+    # Copy desired doc into hugo/content/documentation
+    cp -r $CLONED_DOCUMENTATION_PATH $HUGO_DOCUMENTATION
+
+    # Run docforge to download external files
+    echo "docforge -f "${CLONE}/doc.yaml" -d hugo/content/ --hugo --github-oauth-token $GIT_OAUTH_TOKEN"
+    docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT/documentation --resources-download-path __resources --hugo --github-oauth-token $GIT_OAUTH_TOKEN
+
+    export CONTENT="$CLONE/website/"
+    export DATA="hugo/data/"
     echo "Calling nojeds script with \$DATA=$DATA and CONTENT=$CONTENT"
     node ./node/index.js
-    ((r = r + 1))
-  done
-fi
+  else
+    echo "Building site from the last ${n} documentation versions"
+    while [[ $r -le $LATESTVERSION ]]; do
+      echo 'Getting docs from: v1.'"${r}"'.0'
+      # Switch to desired release version
+      version="v1.${r}.0"
+      (cd $CLONE && git checkout "tags/${version}" -b ${version})
 
-node ./node/generateVersioningFile.js
+      # export CONTENT="$CLONE/website/documentation"
+      # export DATA="hugo/data/v1.${r}.0"
+
+      # In case the latest documentation version set as root.
+      if [ "$r" = "$LATESTVERSION" ]; then
+        version="documentation"
+        # export CONTENT="$CLONE/website/"
+        # export DATA="hugo/data/"
+      fi
+
+      # Copy desired doc into hugo/content/documentation
+      cp -r $CLONED_DOCUMENTATION_PATH $HUGO_DOCUMENTATION/$version
+      echo "docforge -f "${CLONE}/doc.yaml" -d "hugo/content/${version}" --hugo --github-oauth-token $GIT_OAUTH_TOKEN"
+      docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT/$version --hugo --github-oauth-token $GIT_OAUTH_TOKEN
+
+      # echo "Calling nojeds script with \$DATA=$DATA and CONTENT=$CONTENT"
+      # node ./node/index.js
+      ((r = r + 1))
+    done
+    node ./node/generateVersioningFile.js
+  fi
+fi
 
 echo 'Cleaning up temp directory used during this site build.'
 rm -rf temp

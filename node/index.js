@@ -162,6 +162,10 @@ function Users() {
 // e.g. https://api.github.com/repos/gardener/gardener/commits?path=README.md
 //
 function saveGitInfoRemote(file, remoteUrl, users) {
+    if (!remoteUrl || remoteUrl == null) {
+        return
+    }
+
     let commitsUrl = repoCommits
     let relUrl = ""
     if (remoteUrl.endsWith(".git")) {
@@ -283,8 +287,6 @@ function transformGitHubCommits(commits, users) {
 }
 
 function processContent() {
-    // Parse all files and inline remote MarkDown content.
-    //
     glob(process.env.CONTENT + '/**/*.md', function (err, files) {
         console.log("Fetching content and commits history. This will take a minute..")
         let users = new Users;
@@ -299,9 +301,9 @@ function processContent() {
             }
 
             saveGitInfoRemote(file, content.attributes.remote, users)
-            // saveGitInfoLocal(file, users);
         })
 
+        // saveGitInfoLocal(file, users);
         let contributorsFile = process.env.DATA + "/contributors.json"
         let contributors = Object.values(users.cache());
         if (!fs.existsSync(process.env.DATA)) {
@@ -313,4 +315,5 @@ function processContent() {
     });
 }
 
-// processContent();
+
+processContent();
