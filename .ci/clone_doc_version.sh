@@ -37,22 +37,16 @@ fi
 
 if [[ $BUILD == "release" ]]; then
   if [[ "$BUILDSINGLEBRANCH" = "true" ]]; then
-    # Switch to the desired branch. We might be already switched to do test if this is not set
-    if [[ $BRANCH != "master" ]]; then
-      echo "Building site from documentation version ${BRANCH}"
-      (cd $CLONE && git checkout origin/${BRANCH} -b ${BRANCH})
-    fi
-
     # Copy desired doc into hugo/content/documentation
     cp -r $CLONED_DOCUMENTATION_PATH $HUGO_DOCUMENTATION
 
     # Run docforge to download external files
-    echo "docforge -f "${CLONE}/doc.yaml" -d hugo/content/ --hugo --github-oauth-token $GIT_OAUTH_TOKEN"
-    docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT/documentation --resources-download-path __resources --hugo --github-oauth-token $GIT_OAUTH_TOKEN
+    docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT --resources-download-path __resources --hugo --github-oauth-token $GIT_OAUTH_TOKEN
 
-    export CONTENT="$CLONE/website/"
-    export DATA="hugo/data/"
-    echo "Calling nojeds script with \$DATA=$DATA and CONTENT=$CONTENT"
+    export REMOTE=$HUGO_CONTENT
+    export CONTENT=CLONE/website
+    export DATA=hugo/data
+    echo "Calling nodejs script with \$DATA=$DATA and CONTENT=$CONTENT"
     node ./node/index.js
   else
     echo "Building site from the last ${n} documentation versions"
@@ -74,7 +68,6 @@ if [[ $BUILD == "release" ]]; then
 
       # Copy desired doc into hugo/content/documentation
       cp -r $CLONED_DOCUMENTATION_PATH $HUGO_DOCUMENTATION/$version
-      echo "docforge -f "${CLONE}/doc.yaml" -d "hugo/content/${version}" --hugo --github-oauth-token $GIT_OAUTH_TOKEN"
       docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT/$version --hugo --github-oauth-token $GIT_OAUTH_TOKEN
 
       # echo "Calling nojeds script with \$DATA=$DATA and CONTENT=$CONTENT"
@@ -85,5 +78,5 @@ if [[ $BUILD == "release" ]]; then
   fi
 fi
 
-echo 'Cleaning up temp directory used during this site build.'
-rm -rf temp
+# echo 'Cleaning up temp directory used during this site build.'
+# rm -rf temp

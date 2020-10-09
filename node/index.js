@@ -37,7 +37,7 @@ if (!process.env.DATA) {
 //
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
-const repoCommits = "https://api.github.com/repos/gardener/documentation/commits"
+const repoCommits = "https://api.github.com/repos/gardener/gardener/commits"
 
 let requestOptions = {
     timeout: 10000,
@@ -74,87 +74,87 @@ function Users() {
 }
 
 
-// function isGitlogInternalCommit(commit) {
-//     return commit.message.startsWith("[int]") || commit.message.indexOf("[skip ci]") > -1 || commit.email.startsWith("gardener.ci");
-// }
+function isGitlogInternalCommit(commit) {
+    return commit.message.startsWith("[int]") || commit.message.indexOf("[skip ci]") > -1 || commit.email.startsWith("gardener.ci");
+}
 
-// function escapeJSONString(json) {
-//     return json.split("\n").map(function (l) {
-//         if (l.indexOf(":") < 0)
-//             return l
-//         s = l.split(":")
-//         v = s[1].trim();
-//         if (v.length > 0 && v.startsWith('"') && (v.endsWith('",'))) {
-//             s[1] = '"' + v.substring(1, v.lastIndexOf('"')).replace(/"/g, "'") + '",';
-//         }
-//         l = s.join(":")
-//         return l;
-//     }).join("\n")
-// }
+function escapeJSONString(json) {
+    return json.split("\n").map(function (l) {
+        if (l.indexOf(":") < 0)
+            return l
+        s = l.split(":")
+        v = s[1].trim();
+        if (v.length > 0 && v.startsWith('"') && (v.endsWith('",'))) {
+            s[1] = '"' + v.substring(1, v.lastIndexOf('"')).replace(/"/g, "'") + '",';
+        }
+        l = s.join(":")
+        return l;
+    }).join("\n")
+}
 
-/* Transforms Git log JSON output to Git info model */
-//     function transformGitLog(log, users) {
-//     let escF = escapeJSONString(log);
-//     let commits = JSON.parse(escF);
-//     if (!commits || !Array.isArray(commits)) {
-//         throw Error('bad input obect type:' + (typeof commits))
-//     }
-//     let gitInfo;
-//     // Clean up from internal commits
-//     commits = commits.filter(function (commit) {
-//         return commit.email !== undefined && !isGitlogInternalCommit(commit);
-//     });
-//     if (!commits || commits.length < 1) {
-//         return
-//     }
-//     //sort by date asc (newest last)
-//     commits = commits.sort((a, b) => moment(a.date).format('YYYYMMDD') - moment(b.date).format('YYYYMMDD'))
-//     gitInfo = {
-//         "lastmod": moment(commits[commits.length - 1].date, "YYYY-MM-DD").format("YYYY-MM-DD"),
-//         "publishdate": moment(commits[0].date, "YYYY-MM-DD").format("YYYY-MM-DD")
-//     };
-//     // transform into contributors list enriched with GitHub user details
-//     contributors = commits.map(commit => {
-//         return users.get(commit)
-//     })
-//     // store the author (the first contributor)
-//     gitInfo["author"] = contributors[0];
-//     // clean undefineds, remove author, backtrack and deduplicate by contributor email or name
-//     // and store in contributors list
-//     gitInfo["contributors"] = contributors.filter((contributor, index, self) => {
-//         return contributor != undefined && contributor.email !== gitInfo["author"].email && index === self.findIndex(t => {
-//             if (t === undefined) {
-//                 return false;
-//             }
-//             return t.email === contributor.email || t.name === contributor.name
-//         })
-//     });
-//     return gitInfo;
-// }
+// Transforms Git log JSON output to Git info model * /
+function transformGitLog(log, users) {
+    let escF = escapeJSONString(log);
+    let commits = JSON.parse(escF);
+    if (!commits || !Array.isArray(commits)) {
+        throw Error('bad input obect type:' + (typeof commits))
+    }
+    let gitInfo;
+    // Clean up from internal commits
+    commits = commits.filter(function (commit) {
+        return commit.email !== undefined && !isGitlogInternalCommit(commit);
+    });
+    if (!commits || commits.length < 1) {
+        return
+    }
+    //sort by date asc (newest last)
+    commits = commits.sort((a, b) => moment(a.date).format('YYYYMMDD') - moment(b.date).format('YYYYMMDD'))
+    gitInfo = {
+        "lastmod": moment(commits[commits.length - 1].date, "YYYY-MM-DD").format("YYYY-MM-DD"),
+        "publishdate": moment(commits[0].date, "YYYY-MM-DD").format("YYYY-MM-DD")
+    };
+    // transform into contributors list enriched with GitHub user details
+    contributors = commits.map(commit => {
+        return users.get(commit)
+    })
+    // store the author (the first contributor)
+    gitInfo["author"] = contributors[0];
+    // clean undefineds, remove author, backtrack and deduplicate by contributor email or name
+    // and store in contributors list
+    gitInfo["contributors"] = contributors.filter((contributor, index, self) => {
+        return contributor != undefined && contributor.email !== gitInfo["author"].email && index === self.findIndex(t => {
+            if (t === undefined) {
+                return false;
+            }
+            return t.email === contributor.email || t.name === contributor.name
+        })
+    });
+    return gitInfo;
+}
 
-// function saveGitInfoLocal(file, users) {
-//     console.log(`saving git history for local file ${file}`)
-//     let gitlog, data
-//     try {
-//         gitlog = spawnSync(".ci/gitlog.sh", [process.env.CONTENT, file], { shell: "/bin/bash", timeout: 5 * 60000 });
-//         data = gitlog.stdout.toString();
-//         if (data && data.length) {
-//             let gitInfo = transformGitLog(data, users);
-//             if (gitInfo && Object.values(gitInfo)) {
-//                 let gitInfoFilePath = file.replace(process.env.CONTENT, process.env.DATA) + ".json"
-//                 fs.mkdirSync(path.dirname(gitInfoFilePath), { recursive: true })
-//                 fs.writeFileSync(gitInfoFilePath, JSON.stringify(gitInfo, null, 2), "utf8");
-//             } else {
-//                 console.log(`no git info for ${file}`);
-//             }
-//         } else {
-//             throw Error('failed to get valid git log output');
-//         }
-//     } catch (err) {
-//         console.error(`updating git info for ${file} failed: ${err}`);
-//         console.error(`${data}\n`);
-//     }
-// }
+function saveGitInfoLocal(file, users) {
+    console.log(`saving git history for local file ${file}`)
+    let gitlog, data
+    try {
+        gitlog = spawnSync(".ci/gitlog.sh", [process.env.CONTENT, file], { shell: "/bin/bash", timeout: 5 * 60000 });
+        data = gitlog.stdout.toString();
+        if (data && data.length) {
+            let gitInfo = transformGitLog(data, users);
+            if (gitInfo && Object.values(gitInfo)) {
+                let gitInfoFilePath = file.replace(process.env.CONTENT, process.env.DATA) + ".json"
+                fs.mkdirSync(path.dirname(gitInfoFilePath), { recursive: true })
+                fs.writeFileSync(gitInfoFilePath, JSON.stringify(gitInfo, null, 2), "utf8");
+            } else {
+                console.log(`no git info for ${file}`);
+            }
+        } else {
+            throw Error('failed to get valid git log output');
+        }
+    } catch (err) {
+        console.error(`updating git info for ${file} failed: ${err}`);
+        console.error(`${data}\n`);
+    }
+}
 
 // ====================================================
 // try to fetch the github changes for the file
@@ -162,10 +162,6 @@ function Users() {
 // e.g. https://api.github.com/repos/gardener/gardener/commits?path=README.md
 //
 function saveGitInfoRemote(file, remoteUrl, users) {
-    if (!remoteUrl || remoteUrl == null) {
-        return
-    }
-
     let commitsUrl = repoCommits
     let relUrl = ""
     if (remoteUrl.endsWith(".git")) {
@@ -189,7 +185,7 @@ function saveGitInfoRemote(file, remoteUrl, users) {
             let gitInfo = transformGitHubCommits(commits, users);
             if (gitInfo) {
                 gitInfoStr = JSON.stringify(gitInfo, undefined, 2);
-                let datafilePath = file.replace(process.env.CONTENT, process.env.DATA) + ".json"
+                let datafilePath = file.replace(process.env.REMOTE, process.env.DATA) + ".json"
                 fs.mkdirSync(path.dirname(datafilePath), { recursive: true })
                 console.debug("Writing git info: ", datafilePath);
                 fs.writeFileSync(datafilePath, gitInfoStr, "utf8")
@@ -300,10 +296,9 @@ function processContent() {
                 return
             }
 
-            saveGitInfoRemote(file, content.attributes.remote, users)
+            saveGitInfoLocal(file, users);
         })
 
-        // saveGitInfoLocal(file, users);
         let contributorsFile = process.env.DATA + "/contributors.json"
         let contributors = Object.values(users.cache());
         if (!fs.existsSync(process.env.DATA)) {
@@ -316,4 +311,122 @@ function processContent() {
 }
 
 
-processContent();
+////
+function processContent2() {
+    // Parse all files and inline remote MarkDown content.
+    //
+    console.log("Fetching content and commits history. This will take a minute..")
+    let users = new Users;
+    glob(process.env.REMOTE + '/**/*.md', function (err, files) {
+        files.forEach(file => {
+            let content;
+            try {
+                content = fm(fs.readFileSync(file, 'utf8'))
+            } catch (err) {
+                console.error("Failed to read front-matter from", file, err);
+                console.log("proceeding with next file")
+                return
+            }
+            if (content.attributes.remote) {
+                console.log("Remote file " + file)
+                saveGitInfoRemote(file, content.attributes.remote, users)
+
+            }
+        })
+    })
+
+    glob(process.env.CONTENT + '/**/*.md', function (err, files) {
+        files.forEach(file => {
+            let content;
+            try {
+                content = fm(fs.readFileSync(file, 'utf8'))
+            } catch (err) {
+                console.error("Failed to read front-matter from", file, err);
+                console.log("proceeding with next file")
+                return
+            }
+            if (content.attributes.remote) {
+
+
+                saveGitInfoRemote(file, content.attributes.remote, users)
+
+            } else {
+
+                // Update git info for local files
+                saveGitInfoLocal(file, users);
+            }
+
+            let contributorsFile = process.env.DATA + "/contributors.json"
+            let contributors = Object.values(users.cache());
+            if (contributors) {
+                fs.writeFileSync(contributorsFile, JSON.stringify(contributors, null, 2), 'utf8')
+            }
+        })
+
+
+        // Parse all MarkdownFiles and check if any link reference to a remote site which we have imported.
+        // In this case we REWRITE the link from REMOTE to LOCAL
+        //
+        glob(process.env.CONTENT + '/**/*.md', function (err, files) {
+            var docPath = path.normalize(process.env.CONTENT)
+            var importedMarkdownFiles = []
+            // collect all remote links in the "front matter" annotations
+            //
+            files.forEach(function (file) {
+                let content;
+                try {
+                    content = fm(fs.readFileSync(file, 'utf8'));
+                } catch (err) {
+                    console.error("Failed to read front-matter from", file, err);
+                    console.log("proceeding with next file")
+                    return
+                }
+                if (content.attributes.remote) {
+                    importedMarkdownFiles.push({ file: file.replace(docPath, "/"), remote: content.attributes.remote })
+                }
+            })
+
+            // check if any MD files referer to a imported page. In this case we rewrite the link to the
+            // internal document
+            //
+            files.forEach(function (file) {
+                let content;
+                try {
+                    content = fm(fs.readFileSync(file, 'utf8'));
+                } catch (err) {
+                    console.error("Failed to read front-matter from", file, err);
+                    console.log("proceeding with next file")
+                    return
+                }
+                if (content.attributes.remote) {
+                    let md = content.body;
+                    importedMarkdownFiles.forEach(function (entry) {
+                        md = md.split(entry.remote).join("{{< ref \"" + entry.file + "\" >}}")
+                    })
+                    let newDoc = [
+                        "---",
+                        content.frontmatter,
+                        "---",
+                        md].join("\n")
+                    console.log("updating content in", file)
+                    fs.writeFileSync(file, newDoc, 'utf8');
+                }
+            })
+
+            let contributorsFile = process.env.DATA + "/contributors.json"
+            let contributors = Object.values(users.cache());
+            if (contributors) {
+                fs.writeFileSync(contributorsFile, JSON.stringify(contributors, null, 2), 'utf8')
+            }
+        })
+
+
+    });
+}
+
+
+
+processContent2();
+
+
+
