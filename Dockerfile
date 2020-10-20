@@ -10,9 +10,9 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && curl -fsSL --compressed https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_checksums.txt | grep " ${HUGO_ID}_Linux-64bit.tar.gz\$" | sha256sum -c - \
     && tar -xzf ${HUGO_ID}_Linux-64bit.tar.gz \
     && mkdir -p /usr/local/bin \
-    && mv ./hugo /usr/local/bin/hugo 
+    && mv ./hugo /usr/local/bin/hugo
 
-FROM eu.gcr.io/gardener-project/cc/job-image:1.778.0
+FROM eu.gcr.io/gardener-project/cc/job-image:1.816.0
 
 COPY --from=base /usr/local/bin/hugo /usr/local/bin/hugo
 
