@@ -107,7 +107,7 @@ if [[ "$BUILDSINGLEBRANCH" = "true" ]]; then
   cp -r $CLONED_DOCUMENTATION_PATH $HUGO_DOCUMENTATION
 
   # Run docforge to download external files
-  docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT --resources-download-path __resources --hugo --github-oauth-token $GIT_OAUTH_TOKEN
+  docforge -f ${CLONE}/documentation.yaml -d $HUGO_DOCUMENTATION --resources-download-path __resources --hugo --github-oauth-token $GIT_OAUTH_TOKEN
 
   export REMOTE=$HUGO_CONTENT
   export CONTENT=CLONE/website
