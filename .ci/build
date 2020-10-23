@@ -88,7 +88,6 @@ npm prune --production
 
 echo "Cloning from ${FORK}"
 git clone "https://github.com/${FORK}/documentation.git" $CLONE
-git fetch -t
 
 if [[ $BRANCH != "master" && ! -z $BRANCH ]]; then
   echo "Building site from documentation version ${BRANCH}"
