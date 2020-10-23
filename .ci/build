@@ -139,7 +139,7 @@ else
   node ./node/generateVersioningFile.js
 fi
 
-rm -rf ${website}
+rm -rf ${website}/docs
 cd hugo
 
 # Generate site from ${content} into ${website}
