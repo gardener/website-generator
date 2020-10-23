@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+SOURCE_PATH="$(readlink -f "$(dirname ${0})/..")"
+GARDENER_DOCUMENTATION_VERSION_PATH="$SOURCE_PATH/latestDocVersions"
+versions=$(cat $GARDENER_DOCUMENTATION_VERSION_PATH)
+versionsArray=($versions)
+
+${ADD_DEPENDENCIES_CMD} \
+    --component-dependencies \
+    '{"name": "github.com/gardener/documentation", "version": "'${versionsArray[0]}'"}'
+
+cp "${BASE_DEFINITION_PATH}" "${COMPONENT_DESCRIPTOR_PATH}"

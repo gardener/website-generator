@@ -24,7 +24,7 @@ const fm = require('front-matter')
 const path = require("path")
 const request = require('sync-request')
 const moment = require('moment');
-const { spawnSync } = require("child_process");
+// const { spawnSync } = require("child_process");
 
 if (!process.env.CONTENT) {
     process.env.CONTENT = path.resolve(__dirname, '/../hugo/content');
@@ -33,13 +33,11 @@ if (!process.env.DATA) {
     process.env.DATA = path.resolve(__dirname, '../hugo/data');
 }
 
-const rewriteAndCheckUrls = require("./util/rewriteAbsoluteToUrls")
-
 // to avoid some TLS Cert problems for our internal github
 //
 process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
 
-const repoCommits = "https://api.github.com/repos/gardener/documentation/commits"
+const repoCommits = "https://api.github.com/repos/gardener/gardener/commits"
 
 let requestOptions = {
     timeout: 10000,
@@ -75,6 +73,7 @@ function Users() {
     }
 }
 
+
 function isGitlogInternalCommit(commit) {
     return commit.message.startsWith("[int]") || commit.message.indexOf("[skip ci]") > -1 || commit.email.startsWith("gardener.ci");
 }
@@ -93,7 +92,7 @@ function escapeJSONString(json) {
     }).join("\n")
 }
 
-/* Transforms Git log JSON output to Git info model */
+// Transforms Git log JSON output to Git info model * /
 function transformGitLog(log, users) {
     let escF = escapeJSONString(log);
     let commits = JSON.parse(escF);
@@ -186,7 +185,7 @@ function saveGitInfoRemote(file, remoteUrl, users) {
             let gitInfo = transformGitHubCommits(commits, users);
             if (gitInfo) {
                 gitInfoStr = JSON.stringify(gitInfo, undefined, 2);
-                let datafilePath = file.replace(process.env.CONTENT, process.env.DATA) + ".json"
+                let datafilePath = file.replace(process.env.REMOTE, process.env.DATA) + ".json"
                 fs.mkdirSync(path.dirname(datafilePath), { recursive: true })
                 console.debug("Writing git info: ", datafilePath);
                 fs.writeFileSync(datafilePath, gitInfoStr, "utf8")
@@ -286,9 +285,9 @@ function transformGitHubCommits(commits, users) {
 function processContent() {
     // Parse all files and inline remote MarkDown content.
     //
-    glob(process.env.CONTENT + '/**/*.md', function (err, files) {
-        console.log("Fetching content and commits history. This will take a minute..")
-        let users = new Users;
+    console.log("Fetching content and commits history. This will take a minute..")
+    let users = new Users;
+    glob(process.env.REMOTE + '/**/*.md', function (err, files) {
         files.forEach(file => {
             let content;
             try {
@@ -299,60 +298,25 @@ function processContent() {
                 return
             }
             if (content.attributes.remote) {
-                // transformGitLog a normal URL of a file to the RAW version.
-                //
-                let url = content.attributes.remote
+                console.log("Remote file " + file)
+                saveGitInfoRemote(file, content.attributes.remote, users)
 
-                // we reference a complete repository. In this case we fetch the README.md and inline them
-                //
-                if (url.endsWith(".git")) {
-                    url = url.replace(".git", "/blob/master/README.md")
-                }
+            }
+        })
+    })
 
-                // The url points to an external github wiki.
-                // works just for external GITHUB
-                //
-                if (url.indexOf("/wiki/") !== -1) {
-                    // Check if we got a link to a GitHub wiki page. In this case we must transform them
-                    // to the RAW version as well
-                    // e.g. IN: https://github.com/gardener/documentation/wiki/Architecture
-                    //     OUT: https://raw.githubusercontent.com/wiki/gardener/documentation/Architecture.md
-                    let segments = url.replace("https://github.com/", "").split("/")
-                    let user = segments[0]
-                    let project = segments[1]
-                    let doc = segments.slice(3).join("/") + ".md"
-                    url = "https://raw.githubusercontent.com/wiki/" + user + "/" + project + "/" + doc
-                }
-                else {
-                    // Required to fetch the plain MarkDown instead of the rendered version
-                    // Replace the "normal" github URL with the "RAW" API Link
-                    //
-                    url = url
-                        .replace("https://github.com/", "https://raw.githubusercontent.com/")
-                        .replace("/blob/master/", "/master/")
-                        .replace("/tree/master/", "/master/")
-                }
+    glob(process.env.CONTENT + '/**/*.md', function (err, files) {
+        files.forEach(file => {
+            let content;
+            try {
+                content = fm(fs.readFileSync(file, 'utf8'))
+            } catch (err) {
+                console.error("Failed to read front-matter from", file, err);
+                console.log("proceeding with next file")
+                return
+            }
+            if (content.attributes.remote) {
 
-                // Get the content of the referenced MD file and append it to the
-                // Hugo CMS page
-                //
-                try {
-                    var remoteContent = fm(request("GET", url).getBody().toString()).body
-                    remoteContent = rewriteAndCheckUrls(url, remoteContent, file)
-                } catch (err) {
-                    console.error("Unable to get remote content for", url, err)
-                    console.log("proceeding with next file")
-                    return
-                }
-
-                // Finally, write the file
-                let newDoc = [
-                    "---",
-                    content.frontmatter,
-                    "---",
-                    remoteContent].join("\n")
-                console.log("writing remote content to", file)
-                fs.writeFileSync(file, newDoc, 'utf8');
 
                 saveGitInfoRemote(file, content.attributes.remote, users)
 
@@ -362,13 +326,13 @@ function processContent() {
                 saveGitInfoLocal(file, users);
             }
 
+            let contributorsFile = process.env.DATA + "/contributors.json"
+            let contributors = Object.values(users.cache());
+            if (contributors) {
+                fs.writeFileSync(contributorsFile, JSON.stringify(contributors, null, 2), 'utf8')
+            }
         })
 
-        let contributorsFile = process.env.DATA + "/contributors.json"
-        let contributors = Object.values(users.cache());
-        if (contributors) {
-            fs.writeFileSync(contributorsFile, JSON.stringify(contributors, null, 2), 'utf8')
-        }
 
         // Parse all MarkdownFiles and check if any link reference to a remote site which we have imported.
         // In this case we REWRITE the link from REMOTE to LOCAL
@@ -419,7 +383,14 @@ function processContent() {
                 }
             })
 
+            let contributorsFile = process.env.DATA + "/contributors.json"
+            let contributors = Object.values(users.cache());
+            if (contributors) {
+                fs.writeFileSync(contributorsFile, JSON.stringify(contributors, null, 2), 'utf8')
+            }
         })
+
+
     });
 }
 

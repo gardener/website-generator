@@ -12,8 +12,11 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && mkdir -p /usr/local/bin \
     && mv ./hugo /usr/local/bin/hugo
 
+FROM eu.gcr.io/gardener-project/docforge@sha256:3d440396f0e7bec664bc2c6302a0f3cdd4ff3545155c877c6a6f7738865dc840 as docforge
+
 FROM eu.gcr.io/gardener-project/cc/job-image:1.816.0
 
+COPY --from=docforge /usr/local/bin/docforge /usr/local/bin/docforge
 COPY --from=base /usr/local/bin/hugo /usr/local/bin/hugo
 
 RUN apk add --update bash asciidoctor libc6-compat libstdc++ nodejs npm perl \

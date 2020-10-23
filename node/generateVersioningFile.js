@@ -1,9 +1,6 @@
 const fs = require('fs')
 
-const latest = process.env.LATESTVERSION
-const oldest = process.env.OLDESTVERSION
 var versions = []
-
 if (process.env.BUILDSINGLEBRANCH == "true") {
     versions.push({
         version: process.env.BRANCH,
@@ -12,12 +9,17 @@ if (process.env.BUILDSINGLEBRANCH == "true") {
     })
 }
 else {
-    for (let i = oldest; i <= latest; i++) {
-        version = "v1." + i + ".0"
+    var file = fs.readFileSync('latestDocVersions').toString()
+    var versionsFromFile = file.split("\n")
+    var data = versionsFromFile.filter(function (version) {
+        return version != null || version.length > 0
+    });
+    for (let i = 0; i < 3; i++) {
+        version = data[i]
         versions.push({
             version: version,
-            dirPath: i == latest ? "documentation" : version,
-            url: i == latest ? "/documentation" : "/" + version,
+            dirPath: i == 0 ? "documentation" : version,
+            url: i == 0 ? "/documentation" : "/" + version,
         })
     }
 }
