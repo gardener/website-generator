@@ -329,7 +329,7 @@ pre,
 samp {
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
     "Courier New", monospace;
-  font-size: 80%;
+  font-size: 95%;
   vertical-align: baseline;
   word-break: normal;
   color: var(--code-color-font);
@@ -338,6 +338,28 @@ samp {
   border: 0;
   position: relative;
 }
+
+
+// Inline code in headings
+h1 code,
+h1 kbd,
+h1 pre,
+h1 samp {
+  font-size: 100%;
+}
+h2 code,
+h2 kbd,
+h2 pre,
+h2 samp {
+  font-size: 100%;
+}
+h3 code,
+h3 kbd,
+h3 pre,
+h3 samp {
+  font-size: 100%;
+}
+
 // pre {
 //   min-width: 12em;
 //   max-height: 31em;
