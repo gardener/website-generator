@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
 sourceFilePath="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
-filePath=$sourceFilePath/../latestDocVersion
+filePath=$sourceFilePath/../latestDocVersions
 versions=$(cat $filePath)
 
 if [[ -f $filePath ]]; then
-    echo ${DEPENDENCY_VERSION} >$sourceFilePath/../latestDocVersion && exit 0
+    echo ${DEPENDENCY_VERSION} >$sourceFilePath/../latestDocVersions && exit 0
 fi
 
 semver=(${DEPENDENCY_VERSION//./ })
