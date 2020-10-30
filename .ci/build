@@ -115,7 +115,7 @@ if [[ "$BUILDSINGLEBRANCH" = "true" ]]; then
   node ./node/index.js
 else
   echo "Building site from the last ${n} documentation versions"
-  n=3
+  n=${RELEASES_COUNT}
   for ((r = 0; r < n; r++)); do
     version=${LATESTVERSIONS[$r]}
     echo "Getting docs from: ${version}"
