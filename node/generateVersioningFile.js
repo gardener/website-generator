@@ -1,5 +1,7 @@
 const fs = require('fs')
 
+
+
 var versions = []
 if (process.env.BUILDSINGLEBRANCH == "true") {
     versions.push({
@@ -14,7 +16,14 @@ else {
     var data = versionsFromFile.filter(function (version) {
         return version != null || version.length > 0
     });
-    for (let i = 0; i < 3; i++) {
+    var n = 1
+    if (process.env.RELEASES_COUNT) {
+        n = process.env.RELEASES_COUNT
+    }
+    if (data.length < n) {
+        n = data.length
+    }
+    for (let i = 0; i < n; i++) {
         version = data[i]
         versions.push({
             version: version,

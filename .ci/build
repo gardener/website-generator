@@ -116,6 +116,10 @@ if [[ "$BUILDSINGLEBRANCH" = "true" ]]; then
 else
   echo "Building site from the last ${n} documentation versions"
   n=${RELEASES_COUNT}
+  if [[ ${#LATESTVERSIONS[@]} -lt $n ]]; then
+    n=${#LATESTVERSIONS[@]}
+    echo "Releases count $n"
+  fi
   for ((r = 0; r < n; r++)); do
     version=${LATESTVERSIONS[$r]}
     echo "Getting docs from: ${version}"
