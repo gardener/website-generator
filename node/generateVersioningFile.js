@@ -14,10 +14,10 @@ else {
     var file = fs.readFileSync('latestDocVersions').toString()
     var versionsFromFile = file.split("\n")
     var data = versionsFromFile.filter(function (version) {
-        return version != null || version.length > 0
+        return version.length > 0
     });
     var n = 1
-    if (process.env.RELEASES_COUNT) {
+    if (process.env.RELEASES_COUNT != undefined && process.env.RELEASES_COUNT > 0) {
         n = process.env.RELEASES_COUNT
     }
     if (data.length < n) {
