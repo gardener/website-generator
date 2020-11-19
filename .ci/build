@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -exu
 
 if [[ $(uname) == 'Darwin' ]]; then
   READLINK_BIN="greadlink"
@@ -7,11 +7,11 @@ else
   READLINK_BIN="readlink"
 fi
 
-if [[ -z "${HUGO}" ]]; then
-  HUGO=hugo
-fi
+HUGO=${HUGO:-hugo}
+FORK=${FORK:-gardener}
+BRANCH=${BRANCH:-master}
 
-if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH}" ]]; then
+if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH:-}" ]]; then
   generatorRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/..)"
 else
   generatorRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_GENERATOR_PATH}")"
@@ -20,7 +20,7 @@ if [[ ! -d "${generatorRepoPath}" ]]; then
   echo "website-generator directory path is invalid ["${generatorRepoPath}"]. Set $GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo."
   exit 1
 fi
-if [[ -z "${GARDENER_WEBSITE_PATH}" ]]; then
+if [[ -z "${GARDENER_WEBSITE_PATH:-}" ]]; then
   # Fallback to "website" repo cloned as peer directory to "website-generator"
   websiteRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/../../website)"
 else
@@ -29,32 +29,13 @@ fi
 
 generator=${generatorRepoPath}
 website=${websiteRepoPath}/docs
-echo "Content directory: ${content}"
 echo "Generated site directory: ${website}"
 
 cd ${generator}
 
-if [[ $BUILD == "release" ]]; then
-  if [ -f "./latestDocVersions" ]; then
-    versions=$(cat ./latestDocVersions)
-    export LATESTVERSIONS=($versions) # make it arr
-  fi
-fi
-
-# TODO: swilen-iwanow
-# This is to ensure that if none of the env vars are set, we build the site from the master branch
-# for backwards compatibility. We can clear some of this logic after we make the documentation repo
-# versioned.
-if [[ -z "${LATESTVERSIONS}" ]]; then
-  if [[ -z "${BRANCH}" ]]; then
-    export BRANCH=master
-  fi
-  echo "Building from single branch ${BRANCH}"
-  export BUILDSINGLEBRANCH=true
-fi
-
-if [[ -z "${FORK}" ]]; then
-  export FORK=gardener
+if [ ! -f "./latestDocVersions" ]; then
+  echo "build failed: missing latestDocVersions file"
+  exit -1
 fi
 
 # Setup authentication tokens if not supplied in env
@@ -73,18 +54,13 @@ fi
 
 #
 CLONE="temp"
-CLONED_WEBSITE_DIR="${CLONE}/website/*"
-CLONED_DOCUMENTATION_PATH="${CLONE}/website/documentation"
 HUGO_CONTENT=hugo/content
-HUGO_DOCUMENTATION=$HUGO_CONTENT/documentation
 #
 
 # Clear from previous runs
 rm -rf $HUGO_CONTENT
 rm -rf $CLONE
-
-npm install
-npm prune --production
+rm -rf hugo/data
 
 echo "Cloning from ${FORK}"
 git clone "https://github.com/${FORK}/documentation.git" $CLONE
@@ -94,56 +70,10 @@ if [[ $BRANCH != "master" && ! -z $BRANCH ]]; then
   (cd $CLONE && git checkout origin/${BRANCH})
 fi
 
-# Copy website contents like blogs adopters etc. from desired branch
-mkdir $HUGO_CONTENT
-cp -r $CLONED_WEBSITE_DIR $HUGO_CONTENT
+docforge -f ${CLONE}/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --github-info-destination ../data || true
+python scripts/generateVersioningFile.py
+rm -rf $CLONE
 
-if [[ -d $HUGO_DOCUMENTATION ]]; then
-  rm -rf $HUGO_DOCUMENTATION
-fi
-
-if [[ "$BUILDSINGLEBRANCH" = "true" ]]; then
-  # Copy desired doc into hugo/content/documentation
-  cp -r $CLONED_DOCUMENTATION_PATH $HUGO_DOCUMENTATION
-
-  # Run docforge to download external files
-  docforge -f ${CLONE}/documentation.yaml -d $HUGO_DOCUMENTATION --resources-download-path __resources --hugo --github-oauth-token $GIT_OAUTH_TOKEN
-
-  export REMOTE=$HUGO_CONTENT
-  export CONTENT=CLONE/website
-  export DATA=hugo/data
-  node ./node/index.js
-else
-  echo "Building site from the last ${n} documentation versions"
-  n=${RELEASES_COUNT}
-  if [[ ${#LATESTVERSIONS[@]} -lt $n ]]; then
-    n=${#LATESTVERSIONS[@]}
-    echo "Releases count $n"
-  fi
-  for ((r = 0; r < n; r++)); do
-    version=${LATESTVERSIONS[$r]}
-    echo "Getting docs from: ${version}"
-    # Switch to desired release version
-    (cd $CLONE && git checkout "tags/${version}")
-
-    export REMOTE=$HUGO_CONTENT
-    export CONTENT=$CLONE/website/documentation
-    export DATA=hugo/data
-
-    # In case the latest documentation version set as root.
-    if [ $r = 0 ]; then
-      version="documentation"
-      export CONTENT=$CLONE/website
-    fi
-
-    cp -r $CLONED_DOCUMENTATION_PATH $HUGO_CONTENT/$version
-    docforge -f ${CLONE}/documentation.yaml -d $HUGO_CONTENT/$version --hugo --github-oauth-token $GIT_OAUTH_TOKEN
-    node ./node/index.js
-  done
-  node ./node/generateVersioningFile.js
-fi
-
-rm -rf ${website}/docs
 cd hugo
 
 # Generate site from ${content} into ${website}
@@ -151,12 +81,10 @@ cd hugo
 echo
 hugo --minify --destination ${website}
 
-if [[ $AUTO_PUBLISH != 'false' ]]; then
+if [[ ${AUTO_PUBLISH:-true} != 'false' ]]; then
   cd ${websiteRepoPath}
   echo
   echo "Committing website changes"
   git add . -A
   git commit -m 'Automatic build triggered by last commit'
 fi
-
-rm -rf $CLONE

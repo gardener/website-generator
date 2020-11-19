@@ -5,7 +5,8 @@
 {{else}}
 {{- with .File -}}
   {{- with .Path -}}
-    {{- $url := print "/data/" . ".json" -}}
+    {{- $path := strings.TrimSuffix ".md" . -}}
+    {{- $url := print "/data/" $path ".json" -}}
     {{- if (fileExists $url) -}}
       {{- $scratch := newScratch -}}
       {{- $data := (getJSON $url) -}}
