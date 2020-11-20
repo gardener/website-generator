@@ -72,7 +72,7 @@ if [[ $BRANCH != "master" && ! -z $BRANCH ]]; then
 fi
 
 docforge -f ${CLONE}/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --github-info-destination ../data || true
-python scripts/generateVersioningFile.py
+python3 scripts/generateVersioningFile.py
 rm -rf $CLONE
 
 cd hugo
