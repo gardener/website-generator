@@ -39,7 +39,7 @@ if [ ! -f "./latestDocVersions" ]; then
 fi
 
 # Setup authentication tokens if not supplied in env
-if [[ -z "$GIT_OAUTH_TOKEN" ]] && [[ -z "$GIT_USER" ]] && [[ -z "$GIT_PASSWORD" ]]; then
+if [[ -z "${GIT_OAUTH_TOKEN:-}" ]] && [[ -z "${GIT_USER:-}" ]] && [[ -z "${GIT_PASSWORD:-}" ]]; then
   # Check if gardener-ci is available (in local setup)
   command -v gardener-ci >/dev/null && gardenci="true" || gardenci=""
   if [[ $gardenci == "true" ]]; then
@@ -51,6 +51,7 @@ if [[ -z "$GIT_OAUTH_TOKEN" ]] && [[ -z "$GIT_USER" ]] && [[ -z "$GIT_PASSWORD" 
     fi
   fi
 fi
+test $GIT_OAUTH_TOKEN #fail fast
 
 #
 CLONE="temp"
@@ -70,7 +71,7 @@ if [[ $BRANCH != "master" && ! -z $BRANCH ]]; then
   (cd $CLONE && git checkout origin/${BRANCH})
 fi
 
-docforge -f ${CLONE}/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --github-info-destination ../data || true
+docforge -f ${CLONE}/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $gitOAuthToken --github-info-destination ../data || true
 python scripts/generateVersioningFile.py
 rm -rf $CLONE
 
