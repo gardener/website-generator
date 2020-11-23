@@ -1,5 +1,5 @@
 {{ with .Params.publishdate }}
-  <span data-publishdate="{{- .PublishDate.Format "2006-01-02" -}}"></span>
+  <span data-publishdate="{{- .Format "2006-01-02" -}}"></span>
 {{else}}
 {{ with .File }}
   {{ with .Path }}
