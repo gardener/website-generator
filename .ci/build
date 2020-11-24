@@ -63,15 +63,9 @@ rm -rf $HUGO_CONTENT
 rm -rf $CLONE
 rm -rf hugo/data
 
-echo "Cloning from ${FORK}"
-git clone "https://github.com/${FORK}/documentation.git" $CLONE
-
-if [[ $BRANCH != "master" && ! -z $BRANCH ]]; then
-  echo "Building site from documentation version ${BRANCH}"
-  (cd $CLONE && git checkout origin/${BRANCH})
-fi
-
-docforge -f ${CLONE}/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --github-info-destination ../data || true
+mkdir hugo/data
+versions=$(cat latestDocVersions | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
+docforge2 -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "versions=${versions}" --github-info-destination ../data || true
 python3 scripts/generateVersioningFile.py
 rm -rf $CLONE
 
