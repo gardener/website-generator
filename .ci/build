@@ -1,5 +1,5 @@
 #!/bin/bash
-set -exu
+set -eu
 
 if [[ $(uname) == 'Darwin' ]]; then
   READLINK_BIN="greadlink"
