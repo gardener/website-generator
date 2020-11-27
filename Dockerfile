@@ -1,4 +1,4 @@
-FROM  alpine:3.11 as base
+FROM eu.gcr.io/gardener-project/3rd/alpine:3.12.1 as base
 
 RUN apk add curl
 
