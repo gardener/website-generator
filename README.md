@@ -1,17 +1,19 @@
 # Gardener Website Generator
 
-This repository contains the build tools, configuration, web framework for the website and integration with CI/CD. For site source content including documentation, see the [/gardener/documentation](https://github.com/gardener/documentation/) repo. The website home is [/gardener/website/docs](https://github.com/gardener/website/tree/master/docs).
+This repository is wired via CI/CD and scripts to listen to component dependencies and upon their release to build a new version of the documentation for them and publish it. 
+## Website Build/Publish Overview
 
-## CI/CD Overview
+<img style="width:50%;margin:0,auto" src="images/documentation-build-overview.svg">
 
-<img style="width:50%" src="images/overview.svg">
+The repositories involved in the process are:
+- [/gardener/website-generator](https://github.com/gardener/website-generator) (this repository). It contains the CI/CD pipeline definition and related scripts, configuration for building the website with HUGO, including all common framework html, styles, javascript and images, as well as the scripts and build configuration for the build environment container image.
+- [/gardener/component](https://github.com/gardener/documentation/) is any repository in the Gardener organization contributing Docforge documentation manifest, for which /gardener/website-generator is configured to listen for releases. The repository [/gardener/documentation](https://github.com/gardener/documentation/) is one such example. It contains the source content for the website, used by the builder to produce the static HTML to be served. 
+  > Currently, [/gardener/documentation](https://github.com/gardener/documentation/) is configured to deliver the Gardener (core) documentation along with the other website content assets (blogs/adopters/community), but it is transitioning to a repository dedicated to only crosscutting documentation, such as tutorials and website content. The [Gardener repository](https://github.com/gardener/gardener) will be configured to contribute its own documentation upon release. All other components wil follow using the same scheme depicted on the diagram.
+- [/gardener/website](https://github.com/gardener/website/) is the home repository for the https://gradener.cloud website. It hosts the website content produced by the website-generator and is configured to have it served by GitHub Pages.
 
-The repositories involved in the CI/CD are:
-- [/gardener/documentation](https://github.com/gardener/documentation/) is the **Website Source Content** repository. It contains the source content for the website, used by the builder to produce the static HTML to be served. This is the **primary repository for contributions**.
-- [/gardener/website-generator](https://github.com/gardener/website-generator)(this repository) is the **Website Generator** repository. It contains the tools, the scripts and build configuration for the website, including all common framework html, styles, javascript and images, as well as the scripts and build configuration for the build environment container image.
-- [/gardener/website](https://github.com/gardener/website/) is the **Website** home repository. It hosts the produced website content and is configured to serve it using GitHub Pages.
+The website builds and deployments are orchestrated by Concourse CI/CD [pipeline](https://concourse.ci.gardener.cloud/teams/gardener/pipelines/gardener-website-generator-master) and triggered upon depending component release or upon changes in [/gardener/documentation](https://github.com/gardener/documentation) or [/gardener/website-generator](https://github.com/gardener/website-generator) repositories. The build results are then pushed to [/gardener/website/docs](https://github.com/gardener/website/tree/master/docs) and served as [GitHub Pages](https://pages.github.com/) site.
 
-The website builds and deployments are orchestrated by Concourse CI/CD [pipeline](https://concourse.ci.gardener.cloud/teams/gardener/pipelines/gardener-website-generator-master) and triggered regularly (every 24h) or upon changes in [/gardener/documentation](https://github.com/gardener/documentation) or [/gardener/website-generator](https://github.com/gardener/website-generator) repos. The build results are then pushed to [/gardener/website/docs](https://github.com/gardener/website/tree/master/docs) and served as [GitHub Pages](https://pages.github.com/) site.
+## Note: WiP! We are transitioning the documentation build process. The text below is not up-to-date. We are working to catch up the documentation with the latest development. 
 
 ## Build
 The build and deployment triggered by Concourse goes through the stages described here. Except the first two stages, the rest are all orchestrated by the [./ci/build](https://github.com/gardener/website-generator/blob/master/.ci/build) script.
