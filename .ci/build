@@ -68,7 +68,7 @@ versions=$(cat latestDocVersions | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
 docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "versions=${versions}" --github-info-destination ../data || true
 python3 scripts/generateVersioningFile.py
 rm -rf $CLONE
-
+rm -rf ${website}/*
 cd hugo
 
 # Generate site from ${content} into ${website}
