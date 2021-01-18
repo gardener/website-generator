@@ -76,6 +76,8 @@ cd hugo
 echo
 hugo --minify --destination ${website}
 
+echo gardener.cloud >${website}/CNAME
+
 if [[ ${AUTO_PUBLISH:-true} != 'false' ]]; then
   cd ${websiteRepoPath}
   echo
