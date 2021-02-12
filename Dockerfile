@@ -2,7 +2,7 @@ FROM  alpine:3.11 as base
 
 RUN apk add curl
 
-ENV HUGO_VERSION=0.74.3
+ENV HUGO_VERSION=0.80.0
 ENV HUGO_TYPE=_extended
 ENV HUGO_ID=hugo${HUGO_TYPE}_${HUGO_VERSION}
 
