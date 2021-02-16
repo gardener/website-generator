@@ -83,7 +83,7 @@
         </div>
         <div class="control">
           <label>
-            <a class="sort by-audience" href="#">
+            <a class="sort by-audience by-scope" href="#">
               <svg class="icon sort" aria-hidden="true" focusable="false">
                 <use xlink:href="{{"images/icons/icons.svg#sort"| relURL}}"></use>
               </svg>
@@ -94,7 +94,7 @@
         </div>
         <div class="control">
           <label>
-            <a class="sort by-expertise" href="#">
+            <a class="sort by-expertise by-level" href="#">
               <svg class="icon sort" aria-hidden="true" focusable="false">
                 <use xlink:href="{{"images/icons/icons.svg#sort"| relURL}}"></use>
               </svg>
@@ -188,6 +188,12 @@
 <script src="{{"js/combobox.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 <script src="{{"js/filters.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 <script src="{{"js/docs.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
-<script src="{{"js/docs-tutorials-home.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script src="{{"js/docs-listcontrol.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script src="{{"js/docs-listpage.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+<script>
+  $(document).ready(function () {
+    listpage($(".docs.tutorials"));
+  });
+</script>
 <script src="{{"js/slick.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
 {{ end }}
