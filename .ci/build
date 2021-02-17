@@ -38,19 +38,20 @@ if [ ! -f "./latestDocVersions" ]; then
   exit -1
 fi
 
-# Setup authentication tokens if not supplied in env
-if [[ -z "${GIT_OAUTH_TOKEN:-}" ]] && [[ -z "${GIT_USER:-}" ]] && [[ -z "${GIT_PASSWORD:-}" ]]; then
+getGitHubToken() {
   # Check if gardener-ci is available (in local setup)
   command -v gardener-ci >/dev/null && gardenci="true" || gardenci=""
   if [[ $gardenci == "true" ]]; then
-    gardener-ci config attribute --cfg-type github --cfg-name github_com --key technical_users --json >github_com_yaml
-    if [[ -r github_com_yaml ]]; then
+    # Get a (round-robin) random technical GitHub user credentials
+    technicalUser=$(gardener-ci config model_element --cfg-type github --cfg-name "${1}" --key credentials | sed -e "s/^GithubCredentials //" -e "s/'/\"/g")
+    if [[ -n "${technicalUser}" ]]; then
       # get auth token and strip lead/trail quotes
-      export GIT_OAUTH_TOKEN=$(sed -e 's/^"//' -e 's/"$//' <<<$(jq .[0].authToken github_com_yaml))
-      rm github_com_yaml
+      echo $(sed -e 's/"//g' <<<$(jq -n '$c.authToken' --argjson c "$technicalUser"))
     fi
   fi
-fi
+}
+GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN:-$(getGitHubToken github_com)}
+
 test $GIT_OAUTH_TOKEN #fail fast
 
 #
