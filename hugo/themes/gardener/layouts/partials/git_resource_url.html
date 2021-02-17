@@ -1,0 +1,19 @@
+{{ $version := print (partial "component_version.html" .FirstSection) }}
+{{- if isset .Params "remote" -}}
+  {{ $url := urls.Parse .Params.remote }}
+  {{ $path := $url.Path }}
+  {{ $pathSegments := split $path "/" }}
+  {{ $org := index $pathSegments 1 }}
+  {{ $repo := (replace (index $pathSegments 2) ".git" "") }}
+  {{ printf "%s://%s/%s/%s" $url.Scheme $url.Host $org $repo }}
+{{ else }}
+{{ with .File }}
+  {{ with .Path }}
+    {{ $url := print "/data/" . ".json"}}
+    {{ if (fileExists $url) -}}
+      {{ $json := (getJSON $url)}}
+      {{ printf "%s/blob/%s/%s" $json.weburl $version $json.path -}}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ end }}
