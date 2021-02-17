@@ -1,6 +1,6 @@
 baseURL = "https://gardener.cloud/"
 title = "Gardener"
-theme = "learn"
+theme = "gardener"
 metaDataFormat = "yaml"
 languageCode = "en-US"
 defaultContentLanguage = "en"
@@ -22,17 +22,23 @@ disableHugoGeneratorInject = true
     tabWidth = 4
 
 [params]
+  defaultURL = "https://github.com/kubernetes/documentation/tree/master/website/"
   editURL = "https://github.com/gardener/documentation/edit/master/website/"
   issueURL = "https://github.com/gardener/documentation/issues"
   copyright = "Copyright 2019 Gardener project authors."
+  privacyPolicyURL = ""
   description = "Project Gardener Website - A Managed Kubernetes Service Done Right"
-  showVisitedLinks = true
-  themeVariant = "gardener"
   # Google Tag Manager container
   googleTagsManager = "GTM-W2FGNSX"
   # Google Search Console site verification tag
   googleSiteVerificationTag = "9EoGiMwk2aq0E_tVh16iJgJbp7fbyqkfWH9b5sGybl0"
+  [params.pageTopBar]
+    display = true
+    displayContributors = true
+    displayLastUpdate = true
+    displayEdit = true
+    displayOriginURL = false
 
 [outputs]
-home = [ "HTML", "RSS", "JSON"]
+home = [ "HTML", "RSS" ]
 

@@ -23,7 +23,7 @@
       <li><a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation</a></li>
       {{- end -}}
     </ul>
-    <img src="{{"images/lp/gardener-logo.svg" | relURL}}" alt="Logo Gardener" class="logo"/>
+    <img src="{{"/images/gardener-logo.svg" | relURL}}" alt="Logo Gardener" class="logo"/>
     <ul class="media-wr">
       <li>
         <a target="_blank" href="https://kubernetes.slack.com/archives/CB57N0BFG">

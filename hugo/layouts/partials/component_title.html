@@ -1,0 +1,10 @@
+{{- with .File -}}
+  {{- $logicalName:= .LogicalName -}}
+  {{- with .Path -}}
+    {{- $path := strings.TrimSuffix $logicalName . -}}
+    {{- $url := print "/data/" $path "component.json" -}}
+    {{- if (fileExists $url) -}}
+      {{- (getJSON $url).title -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}

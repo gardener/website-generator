@@ -1,0 +1,40 @@
+{{ with .Params.authors}}
+  {{ range where . ".avatar" "!=" nil  }}
+  {{- template "author" dict "name" .name "email" .email "avatar" .avatar -}}
+  {{ end }}
+{{else}}
+{{- with .File -}}
+  {{- with .Path -}}
+    {{- $url := print "/data/" . ".json" -}}
+    {{- if (fileExists $url) -}}
+      {{- $scratch := newScratch -}}
+      {{- $data := (getJSON $url) -}}
+      {{ with $data.author }}
+      {{- $scratch.Add "authors" (slice .) -}}
+      {{end}}
+      {{- range $data.contributors -}}
+      {{- $scratch.Add  "authors" (slice .) -}}
+      {{end}}
+      {{- with ($scratch.Get "authors") -}}
+      {{- range .  -}}
+      {{- template "author" dict "name" .name "email" .email "avatar" .avatar_url -}}
+      {{end}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+{{- end }}
+{{- end }}
+
+{{- define "author" -}}
+{{ $name:= .name}}
+{{ $email:= .email}}
+{{ $avatar:= .avatar}}
+{{ $hasEmail:= and (ne $email nil) (ne (strings.HasSuffix $email "@users.noreply.github.com") true) }}
+{{ if $hasEmail }}
+<a href="mailto:{{$email}}">
+{{ end }}
+<img class="user-icon" src="{{$avatar}}" title="{{$name}}">
+{{ if $hasEmail }}
+</a>
+{{end}}
+{{end}}
