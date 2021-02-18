@@ -1,0 +1,55 @@
+{{if and (eq .Site.Params.pageTopBar.display false) }}
+{{else}}
+<div class="git-wr">
+  {{if and (isset .Params "displayContributors") (eq .Params.displayContributors false)}}
+  {{else if eq .Site.Params.pageTopBar.displayContributors false }}
+  {{else}}
+  {{ $contributors := print (partial "git_author.html" .) (partial "git_contributors_count.html" .) }}
+  {{ $contributors = trim $contributors " \n\t"}}
+  {{ if gt (len $contributors) 0 }}
+  <div class="page-contributors">Contributors to this page
+    <div class="contributors-list">{{- partial "git_author.html" . -}}{{- partial "git_contributors_count.html" . -}}</div>
+  </div>
+  {{end}}
+  {{end}}
+  {{if and (isset .Params "editable") (eq .Params.editable false)}}
+  {{else if eq .Site.Params.pageTopBar.displayEdit false }}
+  {{else}}
+  <div class="origin-tools">
+    <div class="page-edit">
+      {{if and (isset .Params "displayLastUpdate") (eq .Params.displayLastUpdate false)}}
+      {{else if eq .Site.Params.pageTopBar.displayLastUpdate false }}
+      {{else}}
+      {{ $lastUpdate:= print (partial "git_date.html" .)}}
+      {{ $lastUpdate = trim $lastUpdate " \n\t"}}
+      {{ if gt (len $lastUpdate) 0 }}
+      <span class="last-update">Last update: {{- partial "git_date.html" . -}}</span>
+      {{end}}
+      {{end}}
+      {{if and (isset .Params "displayEdit") (eq .Params.displayEdit false)}}
+      {{else if eq .Site.Params.pageTopBar.displayEdit false }}
+      {{else}}
+      {{- partial "page-edit.html" . -}}
+      {{end}}
+    </div>
+    {{ $originURL := ""}}
+    {{if and (isset .Params "displayOriginURL") (eq .Params.displayOriginURL false)}}
+    {{else if eq .Site.Params.pageTopBar.displayOriginURL false }}
+    {{else}}
+      {{ $currentNode := . }}
+      {{ $originURL = print (partial "git_resource_url.html" $currentNode) }}
+      {{ $originURL = trim $originURL " \n\t"}}
+      {{ if eq (len $originURL) 0 }}
+          {{ $originURL = .Site.Params.defaultURL }}
+      {{ end }}
+    {{ end }}
+    {{ if gt (len $originURL) 0 }}
+    <a href="{{$originURL}}" target="_blank" title="Visit on GitHub">
+      <img src="{{.Site.BaseURL}}images/branding/github-mark-32px.png"/>
+    </a>
+    {{end}}    
+  </div>
+
+  {{end}}
+</div>
+{{end}}
