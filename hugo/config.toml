@@ -11,10 +11,10 @@ enableGitInfo = true
 googleAnalytics = "UA-165447164-1"
 disableHugoGeneratorInject = true
 
-[markup] 
+[markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
-      unsafe = true  
+      unsafe = true
   [markup.highlight]
     guessSyntax = true
     noClasses = false
@@ -25,8 +25,8 @@ disableHugoGeneratorInject = true
   defaultURL = "https://github.com/kubernetes/documentation/tree/master/website/"
   editURL = "https://github.com/gardener/documentation/edit/master/website/"
   issueURL = "https://github.com/gardener/documentation/issues"
-  copyright = "Copyright 2019 Gardener project authors."
-  privacyPolicyURL = ""
+  copyright = "Copyright 2019-2021 Gardener project authors."
+  privacyPolicyURL = "https://www.sap.com/corporate/en/legal/privacy.html"
   description = "Project Gardener Website - A Managed Kubernetes Service Done Right"
   # Google Tag Manager container
   googleTagsManager = "GTM-W2FGNSX"
