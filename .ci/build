@@ -65,7 +65,9 @@ rm -rf $CLONE
 rm -rf hugo/data
 
 mkdir hugo/data
-versions=$(cat latestDocVersions | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
+
+# Parse $RELEASES_COUNT number of versions and separate them by comma `,`.
+versions=$(cat latestDocVersions | head -${RELEASES_COUNT} | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
 docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "versions=${versions}" --github-info-destination ../data || true
 python3 scripts/generateVersioningFile.py
 rm -rf $CLONE
