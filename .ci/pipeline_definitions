@@ -9,6 +9,7 @@ gardener-website-generator:
     repo:
       name: 'gardener_website_generator'
       trigger: true
+      cfg_name: 'github_com'
     repos:
     - name: 'gardener_website'
       path: 'gardener/website'
@@ -31,3 +32,9 @@ gardener-website-generator:
       traits:
         cronjob:
           interval: '24h'
+    # update-deps:
+    #   traits:
+    #     update_component_deps:
+    #       merge_policy: auto_merge
+    #     cronjob:
+    #       interval: '15m'
