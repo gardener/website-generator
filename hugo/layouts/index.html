@@ -27,7 +27,6 @@
     {{ $style := resources.Get (print "sass/gardener.scss") | resources.ToCSS $options | resources.Fingerprint }}
     <link rel="stylesheet" href="{{ $style.RelPermalink }}">
 
-    <link rel="stylesheet" href="{{"css/auto-complete.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}">
     
     <!-- Scripts (web pack required in the future)
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
@@ -51,7 +50,6 @@
     {{ partial "tln.html" . }}
 
     <div class="landingpage">
-
       <div id="hero">
         <div class="container">
           <div class="content">
@@ -255,37 +253,9 @@
           <a href="https://github.com/gardener/gardener/blob/master/docs/extensions/overview.md" class="call-for-action">Learn more about Gardener’s extensibility</a>
           </div>
         </div>
-
-        <!--div class="section papercut" id="section07">
-          <div class="container is-centered">
-            <span class="title-2 has-subtitle">Featured Success Stories</span>
-            <div class="content success-stories">
-              <div class="column one-third">
-                <img class="image" src="{{"images/branding/beezlab.png" | relURL }}" style="max-width:100px">
-              </div>
-              <div class="column one-third">
-                <img class="image" src="{{"images/branding/pingcap.jpeg" | relURL }}">
-              </div>
-              <div class="column one-third">
-                <img class="image" src="{{"images/branding/fits.png" | relURL }}">
-              </div>
-            </div>
-            {{ with .Site.GetPage "section" "adopter" }}
-              <a class="call-for-action" href="{{ .URL }}">Find out more success stories from our community</a>
-            {{end}}
-          </div>
-        </div-->
-  
-        <!-- <div class="section" id="section08">
-          <div class="container is-centered">
-            <span class="title-2 has-subtitle">Ready To Get Started?</span>
-            <a href="https://gardener.cloud/installer" class="call-for-action"><b>Generate installer</b> now and give it a try!</a>
-          </div>
-        </div> -->
-
       </div>
       
-      {{- partial "footer.html" . -}}
+      {{- partial "gardener_footer.html" . -}}
     
     <script src="{{"js/counter.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
     <script src="{{"js/main-lp.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>

@@ -1,0 +1,37 @@
+<head>
+  {{ partial "meta.html" . }}
+
+  <title>{{ with .Title }}{{ . }} :: {{ end }}{{ with .Site.Title }}{{ . }}{{ end }}</title>
+  <link rel="icon" type="image/x-icon" href='{{"images/favicon.ico" | absURL }}'>
+  <link rel="icon" type="image/png" href='{{"images/favicon-32x32.png" | absURL }}' sizes="32x32">
+  <link rel="icon" type="image/png" href='{{"images/favicon-16x16.png" | absURL }}' sizes="16x16">
+
+  {{ partial "google-tags-manager.html" . }}
+
+  {{ block "head-content" . }}
+
+  {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
+  <link href="{{" css/font-awesome.min.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+  <link href="{{" css/skeleton.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}" rel="stylesheet">
+  <link rel="preload" href="{{" fonts/sap-icofonts/sap-icofonts.woff" | relURL}}" as="font" type="font/woff"
+    crossorigin="anonymous" />
+  <link rel="preload" href="{{" fonts/sapcom-icons/sapcom-icons.woff" | relURL}}" as="font" type="font/woff"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="{{" css/sapcom-icons.css" | relURL}}">
+  <link rel="stylesheet" href="{{" css/normalize.css" | relURL}}">
+
+  {{ $options := (dict "targetPath" "css/gardener.css" "outputStyle" "compressed" "enableSourceMap" true ) }}
+  {{ $style := resources.Get "sass/gardener.scss" | resources.ToCSS $options | resources.Fingerprint }}
+  <link rel="stylesheet" href="{{ $style.RelPermalink }}">
+
+  <script src="{{" js/moment.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{" js/inlineSVG.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{" js/jquery.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{" jquery-ui-1.12.1/jquery-ui.min.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{" js/fixed.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+  <script src="{{" js/clipboard.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}"></script>
+
+  <script src="https://platform.linkedin.com/in.js" type="text/javascript">lang: en_US</script>
+  {{end}}
+
+</head>

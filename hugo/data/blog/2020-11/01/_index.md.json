@@ -1,0 +1,29 @@
+{
+  "lastmod": "2020-11-18 11:05:44",
+  "publishdate": "2020-11-18 11:05:44",
+  "author": {
+    "login": "Gerrit91",
+    "id": 15035165,
+    "node_id": "MDQ6VXNlcjE1MDM1MTY1",
+    "avatar_url": "https://avatars.githubusercontent.com/u/15035165?v=4",
+    "html_url": "https://github.com/Gerrit91",
+    "gravatar_id": "",
+    "name": "Gerrit",
+    "email": "tirreg91@googlemail.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/Gerrit91",
+    "events_url": "https://api.github.com/users/Gerrit91/events{/privacy}",
+    "following_url": "https://api.github.com/users/Gerrit91/following{/other_user}",
+    "followers_url": "https://api.github.com/users/Gerrit91/followers",
+    "gists_url": "https://api.github.com/users/Gerrit91/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/Gerrit91/orgs",
+    "received_events_url": "https://api.github.com/users/Gerrit91/received_events",
+    "repos_url": "https://api.github.com/users/Gerrit91/repos",
+    "starred_url": "https://api.github.com/users/Gerrit91/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/Gerrit91/subscriptions"
+  },
+  "weburl": "https://github.com/gardener/documentation",
+  "shaalias": "master",
+  "path": "website/blog/2020-11/01/_index.md"
+}

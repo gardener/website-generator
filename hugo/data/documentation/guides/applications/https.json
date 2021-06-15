@@ -1,0 +1,29 @@
+{
+  "lastmod": "2018-08-14 15:56:20",
+  "publishdate": "2018-08-07 12:48:55",
+  "author": {
+    "login": "freegroup",
+    "id": 1155039,
+    "node_id": "MDQ6VXNlcjExNTUwMzk=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/1155039?v=4",
+    "html_url": "https://github.com/freegroup",
+    "gravatar_id": "",
+    "name": "Herz, Andreas",
+    "email": "a.herz@freegroup.de",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/freegroup",
+    "events_url": "https://api.github.com/users/freegroup/events{/privacy}",
+    "following_url": "https://api.github.com/users/freegroup/following{/other_user}",
+    "followers_url": "https://api.github.com/users/freegroup/followers",
+    "gists_url": "https://api.github.com/users/freegroup/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/freegroup/orgs",
+    "received_events_url": "https://api.github.com/users/freegroup/received_events",
+    "repos_url": "https://api.github.com/users/freegroup/repos",
+    "starred_url": "https://api.github.com/users/freegroup/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/freegroup/subscriptions"
+  },
+  "weburl": "https://github.com/freegroup/kube-https",
+  "shaalias": "master",
+  "path": "README.md"
+}

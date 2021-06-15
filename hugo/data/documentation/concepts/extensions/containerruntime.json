@@ -1,0 +1,53 @@
+{
+  "lastmod": "2020-04-06 11:00:30",
+  "publishdate": "2020-03-23 14:54:15",
+  "author": {
+    "login": "nimrodoron",
+    "id": 11078650,
+    "node_id": "MDQ6VXNlcjExMDc4NjUw",
+    "avatar_url": "https://avatars.githubusercontent.com/u/11078650?v=4",
+    "html_url": "https://github.com/nimrodoron",
+    "gravatar_id": "",
+    "name": "Nimrod Oron",
+    "email": "nimrod.oron@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/nimrodoron",
+    "events_url": "https://api.github.com/users/nimrodoron/events{/privacy}",
+    "following_url": "https://api.github.com/users/nimrodoron/following{/other_user}",
+    "followers_url": "https://api.github.com/users/nimrodoron/followers",
+    "gists_url": "https://api.github.com/users/nimrodoron/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/nimrodoron/orgs",
+    "received_events_url": "https://api.github.com/users/nimrodoron/received_events",
+    "repos_url": "https://api.github.com/users/nimrodoron/repos",
+    "starred_url": "https://api.github.com/users/nimrodoron/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/nimrodoron/subscriptions"
+  },
+  "contributors": [
+    {
+      "login": "danielfoehrKn",
+      "id": 33809186,
+      "node_id": "MDQ6VXNlcjMzODA5MTg2",
+      "avatar_url": "https://avatars.githubusercontent.com/u/33809186?v=4",
+      "html_url": "https://github.com/danielfoehrKn",
+      "gravatar_id": "",
+      "name": "d060239",
+      "email": "daniel.foehr@sap.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/danielfoehrKn",
+      "events_url": "https://api.github.com/users/danielfoehrKn/events{/privacy}",
+      "following_url": "https://api.github.com/users/danielfoehrKn/following{/other_user}",
+      "followers_url": "https://api.github.com/users/danielfoehrKn/followers",
+      "gists_url": "https://api.github.com/users/danielfoehrKn/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/danielfoehrKn/orgs",
+      "received_events_url": "https://api.github.com/users/danielfoehrKn/received_events",
+      "repos_url": "https://api.github.com/users/danielfoehrKn/repos",
+      "starred_url": "https://api.github.com/users/danielfoehrKn/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/danielfoehrKn/subscriptions"
+    }
+  ],
+  "weburl": "https://github.com/gardener/gardener",
+  "shaalias": "master",
+  "path": "docs/extensions/containerruntime.md"
+}

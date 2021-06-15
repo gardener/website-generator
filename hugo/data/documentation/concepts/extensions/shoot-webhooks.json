@@ -1,0 +1,29 @@
+{
+  "lastmod": "2020-04-06 04:49:39",
+  "publishdate": "2019-08-05 15:50:37",
+  "author": {
+    "login": "rfranzke",
+    "id": 19169361,
+    "node_id": "MDQ6VXNlcjE5MTY5MzYx",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19169361?v=4",
+    "html_url": "https://github.com/rfranzke",
+    "gravatar_id": "",
+    "name": "Rafael Franzke",
+    "email": "rafael.franzke@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/rfranzke",
+    "events_url": "https://api.github.com/users/rfranzke/events{/privacy}",
+    "following_url": "https://api.github.com/users/rfranzke/following{/other_user}",
+    "followers_url": "https://api.github.com/users/rfranzke/followers",
+    "gists_url": "https://api.github.com/users/rfranzke/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/rfranzke/orgs",
+    "received_events_url": "https://api.github.com/users/rfranzke/received_events",
+    "repos_url": "https://api.github.com/users/rfranzke/repos",
+    "starred_url": "https://api.github.com/users/rfranzke/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/rfranzke/subscriptions"
+  },
+  "weburl": "https://github.com/gardener/gardener",
+  "shaalias": "master",
+  "path": "docs/extensions/shoot-webhooks.md"
+}

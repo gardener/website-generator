@@ -1,6 +1,6 @@
 baseURL = "https://gardener.cloud/"
 title = "Gardener"
-theme = "gardener"
+theme = "docsy"
 metaDataFormat = "yaml"
 languageCode = "en-US"
 defaultContentLanguage = "en"
@@ -10,6 +10,25 @@ enableGitInfo = true
 # Google Analytics Track ID
 googleAnalytics = "UA-165447164-1"
 disableHugoGeneratorInject = true
+
+[menu]
+  [[menu.main]]
+      name = "Blog"
+      weight = 40
+      url = "/blog"
+  [[menu.main]]
+      name = "Community"
+      weight = 40
+      url = "/community"
+  [[menu.main]]
+      name = "Adopters"
+      weight = 40
+      url = "/adopters"
+  [[menu.main]]
+      name = "Documentation"
+      weight = 40
+      url = "/docs"
+
 
 [markup]
   [markup.goldmark]
@@ -22,6 +41,7 @@ disableHugoGeneratorInject = true
     tabWidth = 4
 
 [params]
+  github_repo = "https://github.com/google/docsy"
   defaultURL = "https://github.com/kubernetes/documentation/tree/master/website/"
   editURL = "https://github.com/gardener/documentation/edit/master/website/"
   issueURL = "https://github.com/gardener/documentation/issues"
@@ -38,7 +58,19 @@ disableHugoGeneratorInject = true
     displayLastUpdate = true
     displayEdit = true
     displayOriginURL = false
+  [params.links]
+
 
 [outputs]
 home = [ "HTML", "RSS" ]
+
+# Docsy: User interface configuration
+[params.ui]
+# Docsy: Enable to show the side bar menu in its compact state.
+sidebar_menu_compact = true
+# Docsy: Disable the search box in the side bar.
+sidebar_search_disable = false
+#  Docsy: Set to true to disable breadcrumb navigation.
+breadcrumb_disable = true
+navbar_logo = true
 

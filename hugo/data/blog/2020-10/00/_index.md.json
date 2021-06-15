@@ -1,0 +1,29 @@
+{
+  "lastmod": "2020-10-19 13:51:42",
+  "publishdate": "2020-11-20 12:43:54",
+  "author": {
+    "login": "stoyanr",
+    "id": 1867702,
+    "node_id": "MDQ6VXNlcjE4Njc3MDI=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/1867702?v=4",
+    "html_url": "https://github.com/stoyanr",
+    "gravatar_id": "",
+    "name": "Stoyan Rachev",
+    "email": "s.rachev@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/stoyanr",
+    "events_url": "https://api.github.com/users/stoyanr/events{/privacy}",
+    "following_url": "https://api.github.com/users/stoyanr/following{/other_user}",
+    "followers_url": "https://api.github.com/users/stoyanr/followers",
+    "gists_url": "https://api.github.com/users/stoyanr/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/stoyanr/orgs",
+    "received_events_url": "https://api.github.com/users/stoyanr/received_events",
+    "repos_url": "https://api.github.com/users/stoyanr/repos",
+    "starred_url": "https://api.github.com/users/stoyanr/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/stoyanr/subscriptions"
+  },
+  "weburl": "https://github.com/gardener/documentation",
+  "shaalias": "master",
+  "path": "website/blog/2020-10/00/_index.md"
+}

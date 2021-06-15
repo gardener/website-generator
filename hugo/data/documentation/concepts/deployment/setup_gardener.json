@@ -1,0 +1,53 @@
+{
+  "lastmod": "2020-11-02 16:17:55",
+  "publishdate": "2020-07-22 11:47:38",
+  "author": {
+    "login": "danielfoehrKn",
+    "id": 33809186,
+    "node_id": "MDQ6VXNlcjMzODA5MTg2",
+    "avatar_url": "https://avatars.githubusercontent.com/u/33809186?v=4",
+    "html_url": "https://github.com/danielfoehrKn",
+    "gravatar_id": "",
+    "name": "Daniel Foehr",
+    "email": "daniel.foehr@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/danielfoehrKn",
+    "events_url": "https://api.github.com/users/danielfoehrKn/events{/privacy}",
+    "following_url": "https://api.github.com/users/danielfoehrKn/following{/other_user}",
+    "followers_url": "https://api.github.com/users/danielfoehrKn/followers",
+    "gists_url": "https://api.github.com/users/danielfoehrKn/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/danielfoehrKn/orgs",
+    "received_events_url": "https://api.github.com/users/danielfoehrKn/received_events",
+    "repos_url": "https://api.github.com/users/danielfoehrKn/repos",
+    "starred_url": "https://api.github.com/users/danielfoehrKn/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/danielfoehrKn/subscriptions"
+  },
+  "contributors": [
+    {
+      "login": "timuthy",
+      "id": 40451181,
+      "node_id": "MDQ6VXNlcjQwNDUxMTgx",
+      "avatar_url": "https://avatars.githubusercontent.com/u/40451181?v=4",
+      "html_url": "https://github.com/timuthy",
+      "gravatar_id": "",
+      "name": "Tim Usner",
+      "email": "tim.usner@sap.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/timuthy",
+      "events_url": "https://api.github.com/users/timuthy/events{/privacy}",
+      "following_url": "https://api.github.com/users/timuthy/following{/other_user}",
+      "followers_url": "https://api.github.com/users/timuthy/followers",
+      "gists_url": "https://api.github.com/users/timuthy/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/timuthy/orgs",
+      "received_events_url": "https://api.github.com/users/timuthy/received_events",
+      "repos_url": "https://api.github.com/users/timuthy/repos",
+      "starred_url": "https://api.github.com/users/timuthy/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/timuthy/subscriptions"
+    }
+  ],
+  "weburl": "https://github.com/gardener/gardener",
+  "shaalias": "master",
+  "path": "docs/deployment/setup_gardener.md"
+}

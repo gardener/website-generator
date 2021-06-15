@@ -1,0 +1,53 @@
+{
+  "lastmod": "2021-06-01 14:33:26",
+  "publishdate": "2020-06-17 19:34:37",
+  "author": {
+    "login": "g-pavlov",
+    "id": 52317188,
+    "node_id": "MDQ6VXNlcjUyMzE3MTg4",
+    "avatar_url": "https://avatars.githubusercontent.com/u/52317188?v=4",
+    "html_url": "https://github.com/g-pavlov",
+    "gravatar_id": "",
+    "name": "Georgi Pavlov",
+    "email": "georgi.pavlov@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/g-pavlov",
+    "events_url": "https://api.github.com/users/g-pavlov/events{/privacy}",
+    "following_url": "https://api.github.com/users/g-pavlov/following{/other_user}",
+    "followers_url": "https://api.github.com/users/g-pavlov/followers",
+    "gists_url": "https://api.github.com/users/g-pavlov/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/g-pavlov/orgs",
+    "received_events_url": "https://api.github.com/users/g-pavlov/received_events",
+    "repos_url": "https://api.github.com/users/g-pavlov/repos",
+    "starred_url": "https://api.github.com/users/g-pavlov/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/g-pavlov/subscriptions"
+  },
+  "contributors": [
+    {
+      "login": "jguipi",
+      "id": 11049349,
+      "node_id": "MDQ6VXNlcjExMDQ5MzQ5",
+      "avatar_url": "https://avatars.githubusercontent.com/u/11049349?v=4",
+      "html_url": "https://github.com/jguipi",
+      "gravatar_id": "",
+      "name": "Juste G",
+      "email": "juste.guipi@sap.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/jguipi",
+      "events_url": "https://api.github.com/users/jguipi/events{/privacy}",
+      "following_url": "https://api.github.com/users/jguipi/following{/other_user}",
+      "followers_url": "https://api.github.com/users/jguipi/followers",
+      "gists_url": "https://api.github.com/users/jguipi/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/jguipi/orgs",
+      "received_events_url": "https://api.github.com/users/jguipi/received_events",
+      "repos_url": "https://api.github.com/users/jguipi/repos",
+      "starred_url": "https://api.github.com/users/jguipi/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/jguipi/subscriptions"
+    }
+  ],
+  "weburl": "https://github.com/gardener/documentation",
+  "shaalias": "master",
+  "path": "website/documentation/guides/applications/service-access/_index.md"
+}

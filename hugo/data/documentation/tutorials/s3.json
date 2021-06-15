@@ -1,0 +1,29 @@
+{
+  "lastmod": "2018-03-07 08:05:10",
+  "publishdate": "2018-03-06 08:42:49",
+  "author": {
+    "login": "freegroup",
+    "id": 1155039,
+    "node_id": "MDQ6VXNlcjExNTUwMzk=",
+    "avatar_url": "https://avatars.githubusercontent.com/u/1155039?v=4",
+    "html_url": "https://github.com/freegroup",
+    "gravatar_id": "",
+    "name": "Herz, Andreas",
+    "email": "andreas.herz@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/freegroup",
+    "events_url": "https://api.github.com/users/freegroup/events{/privacy}",
+    "following_url": "https://api.github.com/users/freegroup/following{/other_user}",
+    "followers_url": "https://api.github.com/users/freegroup/followers",
+    "gists_url": "https://api.github.com/users/freegroup/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/freegroup/orgs",
+    "received_events_url": "https://api.github.com/users/freegroup/received_events",
+    "repos_url": "https://api.github.com/users/freegroup/repos",
+    "starred_url": "https://api.github.com/users/freegroup/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/freegroup/subscriptions"
+  },
+  "weburl": "https://github.com/freegroup/kube-s3",
+  "shaalias": "master",
+  "path": "README.md"
+}

@@ -41,7 +41,10 @@
     }
 
     document.addEventListener("click", closeAllSelect);
-    document.getElementById("docSelector").addEventListener("click", show);
+    var element = document.getElementById("docSelector")
+    if (element != undefined) {
+     element.addEventListener("click", show);
+    }  
   });
 
 </script>
@@ -61,8 +64,7 @@
           <ul class="links">
             {{- with .Site.GetPage "section" "documentation/020_getting-started" -}}
             <li class="link {{if .IsAncestor $currentPage -}}active{{- end -}}">
-              <a class="btn primary"
-                href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">{{ .Title }}</a>
+              <a class="btn primary" href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">{{.Title }}</a>
             </li>
             {{- end -}}
             {{ with .Site.GetPage "section" "blog" }}
@@ -80,7 +82,7 @@
               <a href="{{ .URL }}">{{ .Title }}</a>
             </li>
             {{- end -}}
-            {{-  $url := print "/data/revisions.json"  -}}
+            {{- $url := print "/data/revisions.json" -}}
             {{ $versions := slice }}
             {{- if (fileExists $url) -}}
             {{- $revisions := (getJSON $url) -}}
@@ -89,7 +91,7 @@
             {{ $versions = $versions | append $revision.version }}
             {{end}}
             {{- end -}}
-            {{- if or (in .Page.Section "documentation") (in  $versions .Page.Section ) -}}
+            {{- if or (in .Page.Section "docs") (in $versions .Page.Section ) -}}
             <li class="link has-child active">
               {{- if le (len $versions) 1 -}}
               <a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation</a>
@@ -98,7 +100,7 @@
               {{ end }}
             </li>
             {{ else }}
-            {{ with .Site.GetPage "section" "documentation" }}
+            {{ with .Site.GetPage "section" "docs" }}
             <li class="link has-child">
               <a href="{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}">Documentation</a>
             </li>

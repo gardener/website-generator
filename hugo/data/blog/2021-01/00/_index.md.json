@@ -1,0 +1,29 @@
+{
+  "lastmod": "2021-02-09 17:32:57",
+  "publishdate": "2021-01-25 17:36:02",
+  "author": {
+    "login": "AxiomSamarth",
+    "id": 32246441,
+    "node_id": "MDQ6VXNlcjMyMjQ2NDQx",
+    "avatar_url": "https://avatars.githubusercontent.com/u/32246441?v=4",
+    "html_url": "https://github.com/AxiomSamarth",
+    "gravatar_id": "",
+    "name": "Samarth Deyagond",
+    "email": "deyagondsamarth@gmail.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/AxiomSamarth",
+    "events_url": "https://api.github.com/users/AxiomSamarth/events{/privacy}",
+    "following_url": "https://api.github.com/users/AxiomSamarth/following{/other_user}",
+    "followers_url": "https://api.github.com/users/AxiomSamarth/followers",
+    "gists_url": "https://api.github.com/users/AxiomSamarth/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/AxiomSamarth/orgs",
+    "received_events_url": "https://api.github.com/users/AxiomSamarth/received_events",
+    "repos_url": "https://api.github.com/users/AxiomSamarth/repos",
+    "starred_url": "https://api.github.com/users/AxiomSamarth/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/AxiomSamarth/subscriptions"
+  },
+  "weburl": "https://github.com/gardener/documentation",
+  "shaalias": "master",
+  "path": "website/blog/2021-01/00/_index.md"
+}

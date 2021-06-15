@@ -1,0 +1,53 @@
+{
+  "lastmod": "2020-11-18 16:10:47",
+  "publishdate": "2020-09-11 12:25:26",
+  "author": {
+    "login": "rfranzke",
+    "id": 19169361,
+    "node_id": "MDQ6VXNlcjE5MTY5MzYx",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19169361?v=4",
+    "html_url": "https://github.com/rfranzke",
+    "gravatar_id": "",
+    "name": "Rafael Franzke",
+    "email": "rafael.franzke@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/rfranzke",
+    "events_url": "https://api.github.com/users/rfranzke/events{/privacy}",
+    "following_url": "https://api.github.com/users/rfranzke/following{/other_user}",
+    "followers_url": "https://api.github.com/users/rfranzke/followers",
+    "gists_url": "https://api.github.com/users/rfranzke/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/rfranzke/orgs",
+    "received_events_url": "https://api.github.com/users/rfranzke/received_events",
+    "repos_url": "https://api.github.com/users/rfranzke/repos",
+    "starred_url": "https://api.github.com/users/rfranzke/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/rfranzke/subscriptions"
+  },
+  "contributors": [
+    {
+      "login": "g-pavlov",
+      "id": 52317188,
+      "node_id": "MDQ6VXNlcjUyMzE3MTg4",
+      "avatar_url": "https://avatars.githubusercontent.com/u/52317188?v=4",
+      "html_url": "https://github.com/g-pavlov",
+      "gravatar_id": "",
+      "name": "Georgi Pavlov",
+      "email": "georgi.pavlov@sap.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/g-pavlov",
+      "events_url": "https://api.github.com/users/g-pavlov/events{/privacy}",
+      "following_url": "https://api.github.com/users/g-pavlov/following{/other_user}",
+      "followers_url": "https://api.github.com/users/g-pavlov/followers",
+      "gists_url": "https://api.github.com/users/g-pavlov/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/g-pavlov/orgs",
+      "received_events_url": "https://api.github.com/users/g-pavlov/received_events",
+      "repos_url": "https://api.github.com/users/g-pavlov/repos",
+      "starred_url": "https://api.github.com/users/g-pavlov/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/g-pavlov/subscriptions"
+    }
+  ],
+  "weburl": "https://github.com/gardener/documentation",
+  "shaalias": "master",
+  "path": "website/blog/2020-09/_index.md"
+}

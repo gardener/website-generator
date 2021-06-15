@@ -1,0 +1,53 @@
+{
+  "lastmod": "2021-04-15 06:15:57",
+  "publishdate": "2019-02-11 12:55:54",
+  "author": {
+    "login": "rfranzke",
+    "id": 19169361,
+    "node_id": "MDQ6VXNlcjE5MTY5MzYx",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19169361?v=4",
+    "html_url": "https://github.com/rfranzke",
+    "gravatar_id": "",
+    "name": "Rafael Franzke",
+    "email": "rafael.franzke@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/rfranzke",
+    "events_url": "https://api.github.com/users/rfranzke/events{/privacy}",
+    "following_url": "https://api.github.com/users/rfranzke/following{/other_user}",
+    "followers_url": "https://api.github.com/users/rfranzke/followers",
+    "gists_url": "https://api.github.com/users/rfranzke/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/rfranzke/orgs",
+    "received_events_url": "https://api.github.com/users/rfranzke/received_events",
+    "repos_url": "https://api.github.com/users/rfranzke/repos",
+    "starred_url": "https://api.github.com/users/rfranzke/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/rfranzke/subscriptions"
+  },
+  "contributors": [
+    {
+      "login": "MSSedusch",
+      "id": 5032476,
+      "node_id": "MDQ6VXNlcjUwMzI0NzY=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5032476?v=4",
+      "html_url": "https://github.com/MSSedusch",
+      "gravatar_id": "",
+      "name": "Sebastian Max Dusch",
+      "email": "sedusch@microsoft.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/MSSedusch",
+      "events_url": "https://api.github.com/users/MSSedusch/events{/privacy}",
+      "following_url": "https://api.github.com/users/MSSedusch/following{/other_user}",
+      "followers_url": "https://api.github.com/users/MSSedusch/followers",
+      "gists_url": "https://api.github.com/users/MSSedusch/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/MSSedusch/orgs",
+      "received_events_url": "https://api.github.com/users/MSSedusch/received_events",
+      "repos_url": "https://api.github.com/users/MSSedusch/repos",
+      "starred_url": "https://api.github.com/users/MSSedusch/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/MSSedusch/subscriptions"
+    }
+  ],
+  "weburl": "https://github.com/gardener/gardener",
+  "shaalias": "master",
+  "path": "docs/deployment/image_vector.md"
+}

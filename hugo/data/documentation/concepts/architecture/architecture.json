@@ -1,0 +1,29 @@
+{
+  "lastmod": "2021-04-26 06:30:04",
+  "publishdate": "2021-04-23 06:12:15",
+  "author": {
+    "login": "berendt",
+    "id": 419091,
+    "node_id": "MDQ6VXNlcjQxOTA5MQ==",
+    "avatar_url": "https://avatars.githubusercontent.com/u/419091?v=4",
+    "html_url": "https://github.com/berendt",
+    "gravatar_id": "",
+    "name": "Christian Berendt",
+    "email": "berendt@23technologies.cloud",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/berendt",
+    "events_url": "https://api.github.com/users/berendt/events{/privacy}",
+    "following_url": "https://api.github.com/users/berendt/following{/other_user}",
+    "followers_url": "https://api.github.com/users/berendt/followers",
+    "gists_url": "https://api.github.com/users/berendt/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/berendt/orgs",
+    "received_events_url": "https://api.github.com/users/berendt/received_events",
+    "repos_url": "https://api.github.com/users/berendt/repos",
+    "starred_url": "https://api.github.com/users/berendt/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/berendt/subscriptions"
+  },
+  "weburl": "https://github.com/gardener/gardener",
+  "shaalias": "master",
+  "path": "docs/concepts/architecture.md"
+}

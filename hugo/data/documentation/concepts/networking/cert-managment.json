@@ -1,0 +1,57 @@
+{
+  "lastmod": "2021-03-26 10:28:17",
+  "publishdate": "2019-08-14 13:39:45",
+  "author": {
+    "name": "Gardener Development Community",
+    "email": "gardener.opensource@sap.com"
+  },
+  "contributors": [
+    {
+      "login": "MartinWeindel",
+      "id": 3703277,
+      "node_id": "MDQ6VXNlcjM3MDMyNzc=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3703277?v=4",
+      "html_url": "https://github.com/MartinWeindel",
+      "gravatar_id": "",
+      "name": "Martin Weindel",
+      "email": "martin.weindel@sap.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/MartinWeindel",
+      "events_url": "https://api.github.com/users/MartinWeindel/events{/privacy}",
+      "following_url": "https://api.github.com/users/MartinWeindel/following{/other_user}",
+      "followers_url": "https://api.github.com/users/MartinWeindel/followers",
+      "gists_url": "https://api.github.com/users/MartinWeindel/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/MartinWeindel/orgs",
+      "received_events_url": "https://api.github.com/users/MartinWeindel/received_events",
+      "repos_url": "https://api.github.com/users/MartinWeindel/repos",
+      "starred_url": "https://api.github.com/users/MartinWeindel/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/MartinWeindel/subscriptions"
+    },
+    {
+      "login": "msohn",
+      "id": 143355,
+      "node_id": "MDQ6VXNlcjE0MzM1NQ==",
+      "avatar_url": "https://avatars.githubusercontent.com/u/143355?v=4",
+      "html_url": "https://github.com/msohn",
+      "gravatar_id": "",
+      "name": "Matthias Sohn",
+      "email": "matthias.sohn@sap.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/msohn",
+      "events_url": "https://api.github.com/users/msohn/events{/privacy}",
+      "following_url": "https://api.github.com/users/msohn/following{/other_user}",
+      "followers_url": "https://api.github.com/users/msohn/followers",
+      "gists_url": "https://api.github.com/users/msohn/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/msohn/orgs",
+      "received_events_url": "https://api.github.com/users/msohn/received_events",
+      "repos_url": "https://api.github.com/users/msohn/repos",
+      "starred_url": "https://api.github.com/users/msohn/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/msohn/subscriptions"
+    }
+  ],
+  "weburl": "https://github.com/gardener/cert-management",
+  "shaalias": "master",
+  "path": "README.md"
+}

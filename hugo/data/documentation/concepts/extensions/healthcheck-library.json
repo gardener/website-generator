@@ -1,0 +1,53 @@
+{
+  "lastmod": "2020-05-13 06:43:49",
+  "publishdate": "2020-04-07 05:00:11",
+  "author": {
+    "login": "rfranzke",
+    "id": 19169361,
+    "node_id": "MDQ6VXNlcjE5MTY5MzYx",
+    "avatar_url": "https://avatars.githubusercontent.com/u/19169361?v=4",
+    "html_url": "https://github.com/rfranzke",
+    "gravatar_id": "",
+    "name": "Rafael Franzke",
+    "email": "rafael.franzke@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/rfranzke",
+    "events_url": "https://api.github.com/users/rfranzke/events{/privacy}",
+    "following_url": "https://api.github.com/users/rfranzke/following{/other_user}",
+    "followers_url": "https://api.github.com/users/rfranzke/followers",
+    "gists_url": "https://api.github.com/users/rfranzke/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/rfranzke/orgs",
+    "received_events_url": "https://api.github.com/users/rfranzke/received_events",
+    "repos_url": "https://api.github.com/users/rfranzke/repos",
+    "starred_url": "https://api.github.com/users/rfranzke/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/rfranzke/subscriptions"
+  },
+  "contributors": [
+    {
+      "login": "ialidzhikov",
+      "id": 9372594,
+      "node_id": "MDQ6VXNlcjkzNzI1OTQ=",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9372594?v=4",
+      "html_url": "https://github.com/ialidzhikov",
+      "gravatar_id": "",
+      "name": "ialidzhikov",
+      "email": "i.alidjikov@gmail.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/ialidzhikov",
+      "events_url": "https://api.github.com/users/ialidzhikov/events{/privacy}",
+      "following_url": "https://api.github.com/users/ialidzhikov/following{/other_user}",
+      "followers_url": "https://api.github.com/users/ialidzhikov/followers",
+      "gists_url": "https://api.github.com/users/ialidzhikov/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/ialidzhikov/orgs",
+      "received_events_url": "https://api.github.com/users/ialidzhikov/received_events",
+      "repos_url": "https://api.github.com/users/ialidzhikov/repos",
+      "starred_url": "https://api.github.com/users/ialidzhikov/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/ialidzhikov/subscriptions"
+    }
+  ],
+  "weburl": "https://github.com/gardener/gardener",
+  "shaalias": "master",
+  "path": "docs/extensions/healthcheck-library.md"
+}

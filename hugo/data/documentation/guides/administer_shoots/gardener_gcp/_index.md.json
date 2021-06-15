@@ -1,0 +1,53 @@
+{
+  "lastmod": "2021-02-19 12:24:21",
+  "publishdate": "2020-06-17 19:34:37",
+  "author": {
+    "login": "g-pavlov",
+    "id": 52317188,
+    "node_id": "MDQ6VXNlcjUyMzE3MTg4",
+    "avatar_url": "https://avatars.githubusercontent.com/u/52317188?v=4",
+    "html_url": "https://github.com/g-pavlov",
+    "gravatar_id": "",
+    "name": "Georgi Pavlov",
+    "email": "georgi.pavlov@sap.com",
+    "type": "User",
+    "site_admin": false,
+    "url": "https://api.github.com/users/g-pavlov",
+    "events_url": "https://api.github.com/users/g-pavlov/events{/privacy}",
+    "following_url": "https://api.github.com/users/g-pavlov/following{/other_user}",
+    "followers_url": "https://api.github.com/users/g-pavlov/followers",
+    "gists_url": "https://api.github.com/users/g-pavlov/gists{/gist_id}",
+    "organizations_url": "https://api.github.com/users/g-pavlov/orgs",
+    "received_events_url": "https://api.github.com/users/g-pavlov/received_events",
+    "repos_url": "https://api.github.com/users/g-pavlov/repos",
+    "starred_url": "https://api.github.com/users/g-pavlov/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/g-pavlov/subscriptions"
+  },
+  "contributors": [
+    {
+      "login": "Maksimiliana",
+      "id": 69342522,
+      "node_id": "MDQ6VXNlcjY5MzQyNTIy",
+      "avatar_url": "https://avatars.githubusercontent.com/u/69342522?v=4",
+      "html_url": "https://github.com/Maksimiliana",
+      "gravatar_id": "",
+      "name": "Petrova",
+      "email": "maksimiliana.petrova@sap.com",
+      "type": "User",
+      "site_admin": false,
+      "url": "https://api.github.com/users/Maksimiliana",
+      "events_url": "https://api.github.com/users/Maksimiliana/events{/privacy}",
+      "following_url": "https://api.github.com/users/Maksimiliana/following{/other_user}",
+      "followers_url": "https://api.github.com/users/Maksimiliana/followers",
+      "gists_url": "https://api.github.com/users/Maksimiliana/gists{/gist_id}",
+      "organizations_url": "https://api.github.com/users/Maksimiliana/orgs",
+      "received_events_url": "https://api.github.com/users/Maksimiliana/received_events",
+      "repos_url": "https://api.github.com/users/Maksimiliana/repos",
+      "starred_url": "https://api.github.com/users/Maksimiliana/starred{/owner}{/repo}",
+      "subscriptions_url": "https://api.github.com/users/Maksimiliana/subscriptions"
+    }
+  ],
+  "weburl": "https://github.com/gardener/documentation",
+  "shaalias": "master",
+  "path": "website/documentation/guides/administer_shoots/gardener_gcp/_index.md"
+}
