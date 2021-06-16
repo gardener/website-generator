@@ -67,6 +67,9 @@ $ git clone https://github.com/gardener/website-generator.git
 # Change to the cloned repo 
 cd website-generator
 
+# Update needed submodules
+git submodule update --init --recursive
+
 # Run make (or make setup) to have all necessary repos cloned, and setup (linked) for you automatically as necessary (if they do not exist).
 $ make
 

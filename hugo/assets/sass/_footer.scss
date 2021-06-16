@@ -1,4 +1,5 @@
 .footer {
+  min-height: auto !important;
   background-image: url(../images/footer-green-blur.svg);
   background-position: center;
   background-size: cover;
@@ -80,7 +81,7 @@
 }
 @media (min-width: 750px) {
   .footer {
-    .nav {
+     .nav {
       line-height: 24px;
     }
     .logo {

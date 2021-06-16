@@ -1,41 +1,38 @@
-{{ with .Params.authors}}
-  {{ range where . ".avatar" "!=" nil  }}
-  {{- template "author" dict "name" .name "email" .email "avatar" .avatar -}}
-  {{ end }}
-{{else}}
-{{- with .File -}}
-  {{- with .Path -}}
-    {{- $path := strings.TrimSuffix ".md" . -}}
-    {{- $url := print "/data/" $path ".json" -}}
-    {{- if (fileExists $url) -}}
-      {{- $scratch := newScratch -}}
-      {{- $data := (getJSON $url) -}}
-      {{ with $data.author }}
-      {{- $scratch.Add "authors" (slice .) -}}
-      {{end}}
-      {{- range $data.contributors -}}
-      {{- $scratch.Add  "authors" (slice .) -}}
-      {{end}}
-      {{- with ($scratch.Get "authors") -}}
-      {{- range .  -}}
-      {{- template "author" dict "name" .name "email" .email "avatar" .avatar_url -}}
-      {{end}}
-      {{- end -}}
-    {{- end -}}
-  {{- end -}}
-{{- end }}
-{{- end }}
+{{ with .File }}
+    {{ with .Path }}
+        {{ $url := print "data/" . ".json"}}
+        {{ if (fileExists $url) -}}
+            {{ $scratch := newScratch }}
+            {{ with getJSON $url }}
+                {{ $email:= .author.email}}
+                {{ $name:= .author.name}}
+                {{ $avatar:= .author.avatar_url}}
+                {{ $hasEmail:= and (ne $name nil) (ne (strings.HasSuffix $email "@users.noreply.github.com") true) }}
+                {{ $hasAvatar:= (ne $avatar nil) }}
+                {{ if $hasEmail }}
+                  {{ if $hasAvatar }}
+                  {{ $scratch.Add "contributors" (slice (printf "<a href='mailto:%s'><img class='user-icon' src='%s' title='%s'>" .author.email .author.avatar_url  .author.name)) }}
+                  {{ else }}
+                  {{ $scratch.Add "contributors" (slice (printf "<img class='user-icon' src='/images/gardener-logo.svg' title='%s'>" .author.name)) }}
+                  {{ end }}
+                {{ end }}
+                {{ range .contributors}}
+                  {{ $email:= .email}}
+                  {{ $name:= .name}}
 
-{{- define "author" -}}
-{{ $name:= .name}}
-{{ $email:= .email}}
-{{ $avatar:= .avatar}}
-{{ $hasEmail:= and (ne $email nil) (ne (strings.HasSuffix $email "@users.noreply.github.com") true) }}
-{{ if $hasEmail }}
-<a href="mailto:{{$email}}">
+                    {{ $avatar:= .avatar_url}}
+                    {{ $hasEmail:= and (ne $name nil) (ne (strings.HasSuffix $email "@users.noreply.github.com") true) }}
+                    {{ $hasAvatar:= (ne $avatar nil) }}
+                    {{ if $hasEmail }}
+                      {{ if $hasAvatar }}
+                      {{ $scratch.Add "contributors" (slice (printf "<a href='mailto:%s'><img class='user-icon' src='%s' title='%s'>" .email .avatar_url  .name)) }}
+                      {{ else }}
+                      {{ $scratch.Add "contributors" (slice (printf "<img class='user-icon' src='/images/gardener-logo.svg' title='%s'>" .avatar_url)) }}
+                      {{ end }}
+                    {{ end }}
+                 {{end}}
+            {{ end }}
+            {{- delimit (uniq ($scratch.Get "contributors")) "" -}}
+        {{ end }}
+    {{ end }}
 {{ end }}
-<img class="user-icon" src="{{$avatar}}" title="{{$name}}">
-{{ if $hasEmail }}
-</a>
-{{end}}
-{{end}}

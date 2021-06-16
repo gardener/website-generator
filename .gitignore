@@ -4,3 +4,5 @@ hugo/public
 hugo/resources
 node_modules
 dev/
+hugo/data
+*.DS_Store
