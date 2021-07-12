@@ -18,7 +18,16 @@ FROM registry-1.docker.io/gardenerci/cc-job-image:1.1299.0
 COPY --from=docforge /usr/local/bin/docforge /usr/local/bin/docforge
 COPY --from=base /usr/local/bin/hugo /usr/local/bin/hugo
 
-RUN apk add --update bash asciidoctor libc6-compat libstdc++
+RUN apk add --update bash asciidoctor libc6-compat libstdc++ gcompat
+
+ARG NODE_VERSION=v16.4.2
+
+RUN NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
+    curl --fail --silent --output - "https://nodejs.org/dist/latest/node-${NODE_VERSION}-linux-x64.tar.gz" \
+     | tar -xzv -f - -C "${NODE_HOME}" && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/node" /usr/local/bin/node && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npm" /usr/local/bin/npm && \
+    ln -s "${NODE_HOME}/node-${NODE_VERSION}-linux-x64/bin/npx" /usr/local/bin/
 
 VOLUME /src
 VOLUME /output

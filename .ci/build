@@ -77,6 +77,7 @@ cd hugo
 # Generate site from ${content} into ${website}
 #
 echo
+npm install postcss-cli
 hugo --minify --destination ${website}
 
 echo gardener.cloud >${website}/CNAME
