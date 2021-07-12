@@ -74,7 +74,7 @@
       .name {
         margin: 0;
         max-width: 280px;
-        font-size: 1.3rem;
+        font-size: 1rem;
         font-family: $font-family-regular;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -91,7 +91,7 @@
       }
       .sub-title {
         display: block;
-        font-size: 1.3rem;
+        font-size: 1rem;
         margin: 0;
         flex: 1 0 auto;
         @media (min-width: 750px) {
