@@ -24,4 +24,12 @@
             font-weight: 400;
         }
     }
+
+    .td-rss-button {
+        top: 2rem;
+
+        @media (max-width: 750px) {
+            top: -1.8rem;
+        }
+    }
 }
