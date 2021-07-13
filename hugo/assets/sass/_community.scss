@@ -5,6 +5,9 @@
   .row {
     margin-top: 50px;
   }
+  .col-4 {
+    min-width: 250px;
+  }
   .action-header {
     display: flex;
     align-items: center;
