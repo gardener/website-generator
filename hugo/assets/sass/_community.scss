@@ -2,11 +2,12 @@
 .community {
   padding-top: 5rem;
   padding-bottom: 7rem;
-  .row {
+  .row:first-child {
     margin-top: 50px;
   }
   .col-4 {
     min-width: 250px;
+    padding-bottom: 3rem;
   }
   .action-header {
     display: flex;

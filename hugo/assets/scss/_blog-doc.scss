@@ -29,7 +29,7 @@
         top: 2rem;
 
         @media (max-width: 768px) {
-            top: -1.8rem;
+            display: none !important;
         }
     }
 }
