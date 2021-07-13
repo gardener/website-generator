@@ -41,6 +41,15 @@
             display: table-cell;
             line-height: 1.5rem;
             vertical-align: top;
+            min-width: 11rem;
+            @media (max-width: 576px) {
+                display: block;
+            }
+
+            @media (max-width: 768px) {
+                display: block;
+            }
+              
 
             img {
                 max-width: 10rem;
