@@ -1,5 +1,5 @@
 <ul class="news-feed">
-  {{ range $index, $page := sort (where $.Site.Pages "Type" "in" "news blogs") ".Params.publishdate" }}
+  {{ range $index, $page := sort (where $.Site.Pages "Section" "==" "blog") ".Params.publishdate" }}
   {{$isExpired:= false}}
   {{with $page.Params.archivedate}}
   {{$exp := time $page.Params.archivedate}}
@@ -12,10 +12,7 @@
   {{end}}
   {{if or $isExpired $isNotPublishTime (eq $page.Params.aggregate true) }}
   {{else}}
-  {{$isNewsBox := false}}
-  {{if eq $page.Type "news"}}
-  {{$isNewsBox = true}}
-  {{end}}
+  {{$isNewsBox := true}}
   <li class="news-box">
     <a href='{{ if $isNewsBox }}#{{$index}}' data-lity{{else}}{{$page.RelPermalink}}'{{end}}>
       <div class="feed-heading">
