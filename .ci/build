@@ -54,7 +54,6 @@ getGitHubToken() {
   fi
 }
 GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN:-$(getGitHubToken github_com)}
-echo "GIT_OAUTH_TOKEN is: ${GIT_OAUTH_TOKEN}"
 test $GIT_OAUTH_TOKEN #fail fast
 
 #
@@ -76,7 +75,7 @@ docforgeCacheDir="$(${READLINK_BIN} -f $(dirname ${0})/../.docforge)"
 if [[ ! -d "${docforgeCacheDir}" ]]; then
   echo "creating cache dir: ${docforgeCacheDir}"
   mkdir -p "${docforgeCacheDir}"
-else
+fi
 
 export DOCFORGE_CACHE_DIR="${docforgeCacheDir}"
 echo "cache dir is set to: ${docforgeCacheDir}"
