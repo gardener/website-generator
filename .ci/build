@@ -54,7 +54,7 @@ getGitHubToken() {
   fi
 }
 GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN:-$(getGitHubToken github_com)}
-
+echo "GIT_OAUTH_TOKEN is: ${GIT_OAUTH_TOKEN}"
 test $GIT_OAUTH_TOKEN #fail fast
 
 #
