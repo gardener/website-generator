@@ -25,10 +25,11 @@ gardener-website-generator:
     head-update:
       steps:
         build:
-          image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.13.0'
+          image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.14.0'
           publish_to: ['gardener_website', 'gardener_documentation']
           vars:
               RELEASES_COUNT: '1'
+          cache_paths: ['.docforge/cache']
       traits:
         cronjob:
           interval: '24h'
