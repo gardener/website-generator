@@ -46,7 +46,10 @@ getGitHubToken() {
     technicalUser=$(gardener-ci config model_element --cfg-type github --cfg-name "${1}" --key credentials | sed -e "s/^GithubCredentials //" -e "s/'/\"/g")
     if [[ -n "${technicalUser}" ]]; then
       # get auth token and strip lead/trail quotes
-      echo $(sed -e 's/"//g' <<<$(jq -n '$c.authToken' --argjson c "$technicalUser"))
+      authToken=$(sed -e 's/"//g' <<<$(jq -n '$c.authToken' --argjson c "$technicalUser"))
+      # get username and strip lead/trail quotes
+      username=$(sed -e 's/"//g' <<<$(jq -n '$c.username' --argjson c "$technicalUser"))
+      echo "${username}:${authToken}"
     fi
   fi
 }
@@ -68,7 +71,16 @@ mkdir hugo/data
 
 # Parse $RELEASES_COUNT number of versions and separate them by comma `,`.
 versions=$(cat latestDocVersions | head -${RELEASES_COUNT} | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
-docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "versions=${versions}" --github-info-destination ../data || true
+
+docforgeCacheDir="$(${READLINK_BIN} -f $(dirname ${0})/../.docforge)"
+if [[ ! -d "${docforgeCacheDir}" ]]; then
+  echo "creating cache dir: ${docforgeCacheDir}"
+  mkdir -p "${docforgeCacheDir}"
+else
+
+export DOCFORGE_CACHE_DIR="${docforgeCacheDir}"
+echo "cache dir is set to: ${docforgeCacheDir}"
+docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "versions=${versions}" --github-info-destination ../data --use-git=true || true
 python3 scripts/generateVersioningFile.py
 rm -rf $CLONE
 rm -rf ${website}/*
