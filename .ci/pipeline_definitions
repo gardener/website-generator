@@ -29,7 +29,7 @@ gardener-website-generator:
           publish_to: ['gardener_website', 'gardener_documentation']
           vars:
               RELEASES_COUNT: '1'
-          cache_paths: ['.docforge/cache']
+          cache_paths: ['.docforge']
       traits:
         cronjob:
           interval: '24h'
