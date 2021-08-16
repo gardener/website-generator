@@ -72,7 +72,6 @@ mkdir hugo/data
 versions=$(cat latestDocVersions | head -${RELEASES_COUNT} | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
 
 docforgeCacheDir="$(${READLINK_BIN} -f ./../.docforge)"
-ls -l "${docforgeCacheDir}/cache"
 if [[ ! -d "${docforgeCacheDir}" ]]; then
   echo "creating cache dir: ${docforgeCacheDir}"
   mkdir -p "${docforgeCacheDir}"
