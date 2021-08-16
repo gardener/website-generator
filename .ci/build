@@ -94,9 +94,16 @@ cd hugo
 #
 echo
 
-if [ -z "$(npm list | grep postcss-cli)" ]; then
+isPostcssExists="$(npm list | grep postcss-cli)"
+if [[ -z "${isPostcssExists}" ]] || [[ "${isPostcssExists}" == *"UNMET DEPENDENCY"* ]]; then
   echo "installing postcss-cli"
   npm install postcss-cli
+fi
+
+isAutoprefixerExists="$(npm list | grep autoprefixer)"
+if [[ -z "${isAutoprefixerExists}" ]] || [[ "${isAutoprefixerExists}" == *"UNMET DEPENDENCY"* ]]; then
+  echo "installing autoprefixer"
+  npm install autoprefixer
 fi
 
 hugo --minify --destination ${website}
