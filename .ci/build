@@ -71,7 +71,12 @@ mkdir hugo/data
 # Parse $RELEASES_COUNT number of versions and separate them by comma `,`.
 versions=$(cat latestDocVersions | head -${RELEASES_COUNT} | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
 
-docforgeCacheDir="$(${READLINK_BIN} -f ./../.docforge)"
+if [[ -d "${HOME}/.docforge" ]]; then
+  docforgeCacheDir="${HOME}/.docforge"
+else
+  docforgeCacheDir="$(${READLINK_BIN} -f ./../.docforge)"
+fi
+
 if [[ ! -d "${docforgeCacheDir}" ]]; then
   echo "creating cache dir: ${docforgeCacheDir}"
   mkdir -p "${docforgeCacheDir}"
@@ -88,7 +93,12 @@ cd hugo
 # Generate site from ${content} into ${website}
 #
 echo
-npm install postcss-cli
+
+if [ -z "$(npm list | grep postcss-cli)" ]; then
+  echo "installing postcss-cli"
+  npm install postcss-cli
+fi
+
 hugo --minify --destination ${website}
 
 echo gardener.cloud >${website}/CNAME
