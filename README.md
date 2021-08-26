@@ -55,9 +55,11 @@ Feel free to reuse the image utilized by the CI/CD and avoid setting up the tool
 In other rare case or when you cannot use Docker for some reason, see the procedure below how to setup build environment and run local build.
 
 **Prerequisites**:
-- Git
-- [Hugo](https://github.com/gohugoio/hugo/releases) 
-- [NodeJS](https://nodejs.org/en/)/[NPM](https://www.npmjs.com/get-npm)
+- the latest versions of [GitBash](https://gitforwindows.org/) installed
+- the latest versions of [GoLang](https://golang.org/dl/) installed
+- the latest version of [NodeJS](https://nodejs.org/en/)/[NPM](https://www.npmjs.com/get-npm) installed
+- a [local folder setup with a Hugo and Docforge executable](https://github.com/gardener/website-generator#create-a-local-setup-with-hugo-and-docforge-executables) in it
+- a [GitHub token](https://github.com/gardener/website-generator#generate-a-github-token) generated for the [public site](https://github.com/)
 
 **Procedure**:
 ```sh
@@ -90,7 +92,7 @@ The build results are produced in `website/docs`.
 The build is parameterized by means of environment variables.
 
 #### Locations
-The build will apply some heuristics and infer `documentation` and `gardener` are the names of clonded repos that are peer to `website-generator`. To override their paths, use the coresponding environment variables:   
+The build will apply some heuristics and infer `documentation` and `gardener` are the names of cloned repos that are peer to `website-generator`. To override their paths, use the coresponding environment variables:   
 - `GARDENER_DOCUMENTATION_PATH` sets the path to the documentation repo (default: `/documentation`)  
 - `GARDENER_WEBSITE_PATH` sets the path to the build output repo (default: `/website`)
 - `GARDENER_GENERATOR_PATH` changes the infered location of `website-generator`defaulting to the directory where the build script is executed.
@@ -155,6 +157,43 @@ A helpful article on setting up WSL to work flawlesly with Desktop Docker for Wi
         ```
         export DOCKER_HOST=tcp://localhost:2375
         ```
+## Linked Tutorials
+
+### Create a local setup with Hugo and Docforge executables
+
+1. Download the latest version of Hugo from [GitHub](https://github.com/gohugoio/hugo/releases).
+> **Note:** You need to download the extended version.
+2. Download the latest version of Docforge from [GitHub](https://github.com/gardener/docforge/releases).
+> **Note:** In case of a problem with the executable, here is how to [build your local version of Docforge](https://github.com/gardener/website-generator#build-a-local-docforge-executable).
+2. Navigate to Local Disk C.
+3. Create a folder there and name it appropriately. 
+4. Extract the downloaded archive files into the folder.
+5. _(Optional)_ Delete the LICENSE and README files.
+
+### Build a local Docforge executable
+
+1. [Clone](https://github.com/gardener/website-generator#clone-a-repository) the [Docforge repository](https://github.com/gardener/docforge).
+2. Open a new GitBash terminal.
+3. In the terminal, navigate to the folder where you cloned Docforge.
+4. Enter `export LOCAL_BUILD=1 && ./.ci/build`.
+5. In your system, open the folder where you cloned Docforge.
+6. Open the "bin" folder and copy the "docforge" file there.
+7. Paste the file into the folder containing the Hugo executable and 
+8. **Optional:** Rename the file to "docforge.exe".
+
+### Generate a Github token
+
+1. Navigate to Profile -> Settings.
+2. Navigate to Developer settings -> Personal access tokens.
+3. Select "Generate new token".
+4. Enter your password.
+5. Enter a name for your token.
+6. Select an expiration date.
+> **Note:** While possible to create a token that never expires, it is advisable to change your tokens every couple of months.
+7. Check the "repo" and "admin:repo_hook" checkboxes.
+8. Select "Generate token".
+9. Copy and save your token. 
+> **Note:** This is the only time you will be able to see your token. It is highly recommended to save your token somewhere on your computer.
 
 # Troubleshooting
 
