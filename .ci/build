@@ -7,6 +7,7 @@ else
   READLINK_BIN="readlink"
 fi
 
+LOCAL_BUILD=${LOCAL_BUILD:-false}
 HUGO=${HUGO:-hugo}
 FORK=${FORK:-gardener}
 BRANCH=${BRANCH:-master}
@@ -93,6 +94,10 @@ cd hugo
 # Generate site from ${content} into ${website}
 #
 echo
+
+if [[ ${LOCAL_BUILD} = "false" ]]; then
+  npm install postcss-cli
+fi
 
 hugo --minify --destination ${website}
 
