@@ -94,6 +94,8 @@ cd hugo
 #
 echo
 
+npm audit fix
+
 isPostcssExists="$(npm list | grep postcss-cli)"
 if [[ -z "${isPostcssExists}" ]] || [[ "${isPostcssExists}" == *"UNMET DEPENDENCY"* ]]; then
   echo "installing postcss-cli"
