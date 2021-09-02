@@ -94,8 +94,6 @@ cd hugo
 #
 echo
 
-npm audit fix --force
-
 hugo --minify --destination ${website}
 
 echo gardener.cloud >${website}/CNAME
