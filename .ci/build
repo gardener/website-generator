@@ -85,7 +85,7 @@ fi
 
 export DOCFORGE_CACHE_DIR="${docforgeCacheDir}"
 echo "cache dir is set to: ${docforgeCacheDir}"
-docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "versions=${versions}" --github-info-destination ../data --use-git=true || true
+docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "versions=${versions}" --github-info-destination ../data --use-git=true
 python3 scripts/generateVersioningFile.py
 rm -rf $CLONE
 rm -rf ${website}/*
