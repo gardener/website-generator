@@ -12,7 +12,7 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && mkdir -p /usr/local/bin \
     && mv ./hugo /usr/local/bin/hugo
 
-FROM eu.gcr.io/gardener-project/docforge:v0.14.0 as docforge
+FROM eu.gcr.io/gardener-project/docforge:v0.15.0 as docforge
 FROM registry-1.docker.io/gardenerci/cc-job-image:1.1299.0
 
 COPY --from=docforge /usr/local/bin/docforge /usr/local/bin/docforge
@@ -20,7 +20,7 @@ COPY --from=base /usr/local/bin/hugo /usr/local/bin/hugo
 
 RUN apk add --update bash asciidoctor libc6-compat libstdc++ gcompat
 
-ARG NODE_VERSION=v16.8.0
+ARG NODE_VERSION=v16.10.0
 
 RUN NODE_HOME=/opt/nodejs; mkdir -p ${NODE_HOME} && \
     curl --fail --silent --output - "https://nodejs.org/dist/latest/node-${NODE_VERSION}-linux-x64.tar.gz" \
