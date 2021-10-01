@@ -12,10 +12,10 @@ The repositories involved in the process are:
   > Currently, [/gardener/documentation](https://github.com/gardener/documentation/) is configured to deliver the Gardener (core) documentation along with the other website content assets (blogs/adopters/community), but it is transitioning to a repository dedicated to only crosscutting documentation, such as tutorials and website content. The [Gardener repository](https://github.com/gardener/gardener) will be configured to contribute its own documentation upon release. All other components wil follow using the same scheme depicted on the diagram.
 - [/gardener/website](https://github.com/gardener/website/) is the home repository for the https://gradener.cloud website. It hosts the website content produced by the website-generator and is configured to have it served by GitHub Pages.
 
-The website builds and deployments are orchestrated by Concourse CI/CD [pipeline](https://concourse.ci.gardener.cloud/teams/gardener/pipelines/gardener-website-generator-master) and triggered upon depending component release or upon changes in [/gardener/documentation](https://github.com/gardener/documentation) or [/gardener/website-generator](https://github.com/gardener/website-generator) repositories. The build results are then pushed to [/gardener/website/docs](https://github.com/gardener/website/tree/master/docs) and served as [GitHub Pages](https://pages.github.com/) site.
+The website builds and deployments are orchestrated by Concourse CI/CD [pipeline](https://concourse.ci.gardener.cloud/teams/gardener/pipelines/gardener-website-generator-master) and triggered upon depending component release or upon changes in [/gardener/documentation](https://github.com/gardener/documentation) or [/gardener/website-generator](https://github.com/gardener/website-generator) repositories. The build results are then pushed to [/gardener/website/docs](https://github.com/gardener/website/tree/master/docs) and served as a [GitHub Pages](https://pages.github.com/) site.
 
 ## Build
-The build and deployment triggered by Concourse goes through the stages described here. Except the first two stages, the rest are all orchestrated by the [./ci/build](https://github.com/gardener/website-generator/blob/master/.ci/build) script.
+The build and deployment triggered by Concourse go through the stages described here. Except the first two stages, the rest are all orchestrated by the [./ci/build](https://github.com/gardener/website-generator/blob/master/.ci/build) script.
 
 ### Run the website build container 
 - Container Image: `eu.gcr.io/gardener-project/gardener-website-generator`
@@ -39,9 +39,9 @@ The stage is performed by a [NodeJS](https://github.com/gardener/website-generat
 
 ### Build the site
 The stage is performed by Hugo and goes through the following general phases:
-- _transform_ the website content (Markdown) from [website-generator/hugo](https://github.com/gardener/website-generator/tree/master/hugo)/content (see the symlink step above) into static HTML 
+- _transform_ the website content (Markdown) from [website-generator/hugo](https://github.com/gardener/website-generator/tree/master/hugo)/content (see the symlink step above) into static HTML.
 - _process shortcodes_ in the content, if any.
-- _apply the appropriate layouts_ for the content type and configuration
+- _apply the appropriate layouts_ for the content type and configuration.
 
 The result of the site build is output to the `/docs` folder of the [gardener](https://github.com/gardener/website) repo clone.
 
@@ -51,9 +51,9 @@ The changes to the website home repo clone from previous phase are _staged_, _co
 ## Build Locally
 In most cases when developing site content, you will not need to run the full site build and al you need is a site preview. For the rest of the cases there are several options outlined below.
 
-Feel free to reuse the image utilized by the CI/CD and avoid setting up the tools for the build environment. That has the advantage of keeping you up-to-date with the build setup effortlessly too. Clone the gardener-genrator repo in the contianer and use the [website-generator/scripts/setup](https://github.com/gardener/website-generator/blob/master/scripts/setup) script to setup the other clones as required. After you have cloned the repos in the container, you can reuse the [website-generator/.ci/build](https://github.com/gardener/website-generator/blob/master/.ci/build) script for full scale builds. Currently, there is no end-to-end script for the setup stage, so you have to come up with something yourself mount and run it. Contributions are welcome. 
+Feel free to reuse the image utilized by the CI/CD and avoid setting up the tools for the build environment. That has the advantage of keeping you up-to-date with the build setup effortlessly too. Clone the gardener-generator repo in the contianer and use the [website-generator/scripts/setup](https://github.com/gardener/website-generator/blob/master/scripts/setup) script to setup the other clones as required. After you have cloned the repos in the container, you can reuse the [website-generator/.ci/build](https://github.com/gardener/website-generator/blob/master/.ci/build) script for full scale builds. Currently, there is no end-to-end script for the setup stage, so you have to come up with something yourself, mount and run it. Contributions are welcome. 
 
-In other rare case or when you cannot use Docker for some reason, see the procedure below how to setup build environment and run local build.
+In other rare case or when you cannot use Docker for some reason, see the procedure below on how to setup a build environment and run a local build.
 
 **Prerequisites**:
 - [GoLang](https://golang.org/dl/) installed
@@ -127,10 +127,10 @@ $ hugo serve
 You can now explore the site and your changes upon save at `http://localhost:1313`.
 
 ## Windows 10 Users
-The instructions above are applicable when using Windows 10 WSL e.g. with Ubuntu. Here are a few hints how to setup your environment accordingly.
+The instructions above are applicable when using Windows 10 WSL e.g. with Ubuntu. Here are a few hints on how to setup your environment accordingly.
 
 ### Symlinks in Windows
-One of the problematic integration areas in WSL are symbolic links. Despite that a good progress was made it is still necessary to use Windows tools to create symbolic links on a Windows file system. The build and setup scripts above consider WSL environments and will automatically fallback to Windows `mklink` command instead of `ln` if necessary. A prerequisite to the success of this operation is to enable **Windows Developer Mode** (Settings > Update & Security > For developers > Use developer features).
+One of the problematic integration areas in WSL are symbolic links. Despite that a good progress was made, it is still necessary to use Windows tools to create symbolic links on a Windows file system. The build and setup scripts above consider WSL environments and will automatically fallback to Windows `mklink` command instead of `ln` if necessary. A prerequisite to the success of this operation is to enable **Windows Developer Mode** (Settings > Update & Security > For developers > Use developer features).
 
 Should you experience problems on this stage, create the symlink manually. The build script will work with existing `content` symlink and not attempt to create one.
 To create the `content` symlink in `website-generator` repo clone's `hugo` folder, start CMD as Administrator and make symlink to folder (`/D`)
@@ -144,7 +144,7 @@ symbolic link created for content <<===>> <actual-path-on-your-system>\website
 ```
 
 ### Scripts line endings
-Note that if you are using **GitBash** it is likely to be configured to change line endings with Windows (CRLF) instead of UNIX (LF) style. You will need to change line endings in the bash scripts you plan to use. If you use VS Code look in the lower right corner and you will notice CRLF, which can be changed to LF. Notepad++ also has a Line Ending change option. Consult with your favorite tool options how to deal with this best.
+Note that if you are using **GitBash**, it is likely to be configured to change line endings with Windows (CRLF) instead of UNIX (LF) style. You will need to change line endings in the bash scripts you plan to use. If you use VS Code look in the lower right corner and you will notice CRLF, which can be changed to LF. Notepad++ also has a Line Ending change option. Consult with your favorite tool options on how to deal with this best.
 
 ### Docker
 Install **Docker Desktop for Windows** if you plan to make use of the build image to preview changes or run the same full-scale build as the CI/CD.    
@@ -165,10 +165,8 @@ A helpful article on setting up WSL to work flawlesly with Desktop Docker for Wi
 > **Note:** You need to download the extended version.
 2. Download Docforge from [GitHub](https://github.com/gardener/docforge/releases).
 > **Note:** In case of a problem with the executable, here is how to [build your local version of Docforge](https://github.com/gardener/website-generator#build-a-local-docforge-executable).
-2. Navigate to Local Disk C.
 3. Create a folder there and name it appropriately. 
 4. Extract the downloaded archive files into the folder.
-5. _(Optional)_ Delete the LICENSE and README files.
 
 ### Build a local Docforge executable
 
@@ -176,10 +174,11 @@ A helpful article on setting up WSL to work flawlesly with Desktop Docker for Wi
 2. Open a new terminal.
 3. In the terminal, navigate to the folder where you cloned Docforge.
 4. Enter `export LOCAL_BUILD=1 && ./.ci/build`.
+> **Note:** This step is only for Windows. For MAC or Linux, you should call `make build`.
 5. In your system, open the folder where you cloned Docforge.
 6. Open the "bin" folder and copy the "docforge" file there.
-7. Paste the file into the folder containing the Hugo executable and 
-8. **Optional:** Rename the file to "docforge.exe".
+7. Paste the file into the folder containing the Hugo executable.
+8. Add the binary in the PATH environment.
 
 ### Generate a Github token
 
@@ -209,4 +208,4 @@ To troubleshoot failed website production [pipeline](https://concourse.ci.garden
    ```sh
    $ fly -t gardener hijack -u <url-of-your-build>
    ```
-   Example <url-of-your-build> is https://concourse.ci.gardener.cloud/teams/gardener/pipelines/gardener-website-generator-master/jobs/master-head-update-job/builds/102 , where 102 is the number of the build job that you wnat to inspect.
+   Example <url-of-your-build> is https://concourse.ci.gardener.cloud/teams/gardener/pipelines/gardener-website-generator-master/jobs/master-head-update-job/builds/102 , where 102 is the number of the build job that you want to inspect.
