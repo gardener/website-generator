@@ -40,3 +40,9 @@ image-build:
 .PHONY: image-push
 image-push:
 	@scripts/image-push
+# `make image-stable` pushes a local image to the project GCR repository with tag :stable. An installed and authenticated gcloud tool
+# is required to perform the operation. The image to push is identified by its tag. Use semver for tags.
+# Example: `$ make image-stable TAG=10.0.0`
+.PHONY: image-stable
+image-stable:
+	@scripts/image-stable
