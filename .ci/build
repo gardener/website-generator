@@ -55,6 +55,7 @@ getGitHubToken() {
   fi
 }
 GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN:-$(getGitHubToken github_com)}
+org=${DOCUMENTATION_REPOSITORY_ORG:-gardener}
 test $GIT_OAUTH_TOKEN #fail fast
 
 #
@@ -85,7 +86,7 @@ fi
 
 export DOCFORGE_CACHE_DIR="${docforgeCacheDir}"
 echo "cache dir is set to: ${docforgeCacheDir}"
-docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "versions=${versions}" --github-info-destination ../data --use-git=false
+docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "org=${org}" --github-info-destination ../data --use-git=false
 python3 scripts/generateVersioningFile.py
 rm -rf $CLONE
 rm -rf ${website}/*
