@@ -1,7 +1,7 @@
 pre {
   min-width: 12em;
   max-height: 31em;
-  margin: 1em;
+  margin: 0;
   border: 0;
   border-radius: 2px;
   font-size: 87.5%;
@@ -17,7 +17,7 @@ pre {
   box-shadow: 1px 1px 5px -1px #000;
   color: var(--textCodeColor);
   &.chroma {
-    /* Using grid display for pre.chroma elements for its 
+    /* Using grid display for pre.chroma elements for its
        side effect to wrap the pre-formatted code responsively */
     display: grid;
   }
@@ -89,6 +89,11 @@ pre code.hljs + span.copy-to-clipboard {
 pre .copy-to-clipboard:hover {
   background-color: inherit;
   color: inherit;
+}
+pre.mermaid {
+  max-height: none;
+  box-shadow: none;
+  font-size: 0;
 }
 
 @media print {

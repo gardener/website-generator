@@ -40,9 +40,16 @@ disableHugoGeneratorInject = true
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true
+    [markup.goldmark.parser]
+      autoHeadingID = true
+      autoHeadingIDType = 'github'
+      [markup.goldmark.parser.attribute]
+        block = false
+        title = true
   [markup.highlight]
-    guessSyntax = true
-    noClasses = false
+    guessSyntax = false
+    codeFences = true
+    noClasses = true
     style = "vs"
     tabWidth = 4
 
@@ -134,3 +141,7 @@ id = "UA-165447164-1"
 
 [params.mermaid]
 enable = true
+theme = "forest"
+
+[params.mermaid.themeVariables]
+mainBkg = "#d9f2e6"
