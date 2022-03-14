@@ -2,9 +2,6 @@
 hugo/content
 hugo/public
 hugo/resources
-hugo/hugo_stats.json
-hugo/package-lock.json
-hugo/.hugo_build.lock
 node_modules
 dev/
 hugo/data
