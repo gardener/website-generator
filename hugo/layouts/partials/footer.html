@@ -2,19 +2,19 @@
   <div class="container-fluid footer-wrapper">
     <ul class="nav">
       {{- with .Site.GetPage "section" "documentation/020_getting-started" -}}
-      <li><a href='{{ .URL }}'>{{.Title}}</a></li>
+      <li><a href='{{ .Permalink }}'>{{.Title}}</a></li>
       {{- end -}}
       {{- with .Site.GetPage "section" "blog" -}}
-      <li><a href='{{ .URL }}'>{{.Title}}</a></li>
+      <li><a href='{{ .Permalink }}'>{{.Title}}</a></li>
       {{- end -}}
       {{- with .Site.GetPage "section" "news" -}}
-      <li><a href='{{ .URL }}'>{{.Title}}</a></li>
+      <li><a href='{{ .Permalink }}'>{{.Title}}</a></li>
       {{- end -}}
       {{- with .Site.GetPage "section" "community" -}}
-      <li><a href='{{ .URL }}'>{{.Title}}</a></li>
+      <li><a href='{{ .Permalink }}'>{{.Title}}</a></li>
       {{- end -}}
       {{- with .Site.GetPage "section" "adopter" -}}
-      <li><a href='{{ .URL }}'>{{.Title}}</a></li>
+      <li><a href='{{ .Permalink }}'>{{.Title}}</a></li>
       {{- end -}}
       {{- with .Site.GetPage "section" "docs" -}}
       <li><a href='{{ (or .Params.remoteUrl .Params.redirectUrl .Permalink) | relURL }}'>Documentation</a></li>
