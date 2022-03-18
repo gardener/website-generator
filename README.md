@@ -55,7 +55,7 @@ In order to test local changes, for example [gardener/documentation](https://git
 3. Create `${HOME}/.docforge/config` file with the following content in it:
 
    ```resourceMappings:
-   https://github.sap/gardener/documentation: <Path to the cloned documentation repo>
+   https://github.com/gardener/documentation: <Path to the cloned documentation repo>
    ```
 4. Run `make build`
 5. Run `cd hugo && hugo serve`
