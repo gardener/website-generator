@@ -16,14 +16,14 @@
 .PHONY: 
 	@env LOCAL_BUILD=1 .ci/build
 # `make setup` creates full local development setup, pulling /documentation and
-# /gardener repos if not available and symlinking /documentation/website to /hugo/content.
+# /gardener repos if not available and symlink /documentation/website to /hugo/content.
 # Suitable for site-global development beyond content (e.g. hugo layouts, 
 # partials, shortcodes etc)
 .PHONY: setup
 setup:
 	@scripts/setup
 # `make build` will make a full site build, pulling remote content and rewriting links as appropriate,
-# uppdating git info, etc. It is the same operation performed by Concourse when a build job is triggered.
+# updating git info, etc. It is the same operation performed by Concourse when a build job is triggered.
 .PHONY: build
 build:
 	@.ci/build
