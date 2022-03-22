@@ -2,34 +2,34 @@
 
 sourceFilePath="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 filePath=$sourceFilePath/../latestDocVersions
-versions=$(cat $filePath)
+versions=$(cat "$filePath")
 
-if [ ! -f $filePath ]; then
-    echo ${DEPENDENCY_VERSION} >$sourceFilePath/../latestDocVersions && exit 0
+if [ ! -f "$filePath" ]; then
+  echo "${DEPENDENCY_VERSION}" >"$sourceFilePath/../latestDocVersions" && exit 0
 fi
 
-semver=(${DEPENDENCY_VERSION//./ })
-depVersionMajor=(${semver[0]//[!0-9]/ }) # without v prefix: "v1" -> "1"
+semver=("${DEPENDENCY_VERSION//./ }")
+depVersionMajor="${semver[0]//[!0-9]/ }" # without v prefix: "v1" -> "1"
 depVersionMinor=${semver[1]}
-depVersionPatch=${semver[2]}
+#depVersionPatch=${semver[2]}
 
-versionsSet=(${versions// /})
-latestVersionSemVer=(${versionsSet[0]//./ })
-latestVersionMajor=(${latestVersionSemVer[0]//v/ })
-latestVersionMinor=${latestVersionSemVer[1]}
+versionsSet=("${versions// /}")
+latestVersionSemVer=("${versionsSet[0]//./ }")
+latestVersionMajor="${latestVersionSemVer[0]//v/ }"
+latestVersionMinor="${latestVersionSemVer[1]}"
 
-echo Current latest major version is $latestVersionMajor
-echo Current latest minor version is $latestVersionMinor
+echo "Current latest major version is $latestVersionMajor"
+echo "Current latest minor version is $latestVersionMinor"
 
 if [[ $depVersionMajor -gt $latestVersionMajor || $depVersionMinor -gt $latestVersionMinor ]]; then
-    result=${DEPENDENCY_VERSION}
-    for i in $versions; do
-        result="${result}\n${i}"
-    done
-    echo -e $result >$filePath
-    echo successfully updated documentation versions && exit 0
+  result=${DEPENDENCY_VERSION}
+  for i in $versions; do
+    result="${result}\n${i}"
+  done
+  echo -e "$result" >"$filePath"
+  echo "successfully updated documentation versions && exit 0"
 fi
 
 f=${semver[0]}.${semver[1]}
-substitude="s/\(^${f}.*$\)/${DEPENDENCY_VERSION}/g"
-sed -i $substitude $filePath
+substitute="s/\(^${f}.*$\)/${DEPENDENCY_VERSION}/g"
+sed -i "$substitute" "$filePath"

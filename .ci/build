@@ -13,30 +13,30 @@ FORK=${FORK:-gardener}
 BRANCH=${BRANCH:-master}
 
 if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH:-}" ]]; then
-  generatorRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/..)"
+  generatorRepoPath="$(${READLINK_BIN} -f "$(dirname "${0}")/..")"
 else
   generatorRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_GENERATOR_PATH}")"
 fi
 if [[ ! -d "${generatorRepoPath}" ]]; then
-  echo "website-generator directory path is invalid ["${generatorRepoPath}"]. Set $GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo."
+  echo "website-generator directory path is invalid ['$generatorRepoPath']. Set GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo."
   exit 1
 fi
 if [[ -z "${GARDENER_WEBSITE_PATH:-}" ]]; then
   # Fallback to "website" repo cloned as peer directory to "website-generator"
-  websiteRepoPath="$(${READLINK_BIN} -f $(dirname ${0})/../../website)"
+  websiteRepoPath="$(${READLINK_BIN} -f "$(dirname "${0}")/../../website")"
 else
   websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")"
 fi
 
-generator=${generatorRepoPath}
-website=${websiteRepoPath}/docs
-echo "Generated site directory: ${website}"
+generator="${generatorRepoPath}"
+website="${websiteRepoPath}/docs"
+echo "Generated site directory: $website"
 
-cd ${generator}
+cd "${generator}"
 
 if [ ! -f "./latestDocVersions" ]; then
   echo "build failed: missing latestDocVersions file"
-  exit -1
+  exit 1
 fi
 
 getGitHubToken() {
@@ -47,31 +47,31 @@ getGitHubToken() {
     technicalUser=$(gardener-ci config model_element --cfg-type github --cfg-name "${1}" --key credentials | sed -e "s/^GithubCredentials //" -e "s/'/\"/g")
     if [[ -n "${technicalUser}" ]]; then
       # get auth token and strip lead/trail quotes
-      authToken=$(sed -e 's/"//g' <<<$(jq -n '$c.authToken' --argjson c "$technicalUser"))
+      authToken=$(jq -r '.authToken' <<<"$technicalUser")
       # get username and strip lead/trail quotes
-      username=$(sed -e 's/"//g' <<<$(jq -n '$c.username' --argjson c "$technicalUser"))
+      username=$(jq -r '.username' <<<"$technicalUser")
       echo "${username}:${authToken}"
     fi
   fi
 }
 GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN:-$(getGitHubToken github_com)}
 org=${DOCUMENTATION_REPOSITORY_ORG:-gardener}
-test $GIT_OAUTH_TOKEN #fail fast
 
 #
 CLONE="temp"
-HUGO_CONTENT=hugo/content
+HUGO_CONTENT="hugo/content"
 #
 
 # Clear from previous runs
-rm -rf $HUGO_CONTENT
-rm -rf $CLONE
-rm -rf hugo/data
+rm -rf "$HUGO_CONTENT"
+rm -rf "$CLONE"
+rm -rf "hugo/data"
 
-mkdir hugo/data
+mkdir -p "hugo/data"
 
 # Parse $RELEASES_COUNT number of versions and separate them by comma `,`.
-versions=$(cat latestDocVersions | head -${RELEASES_COUNT} | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
+# shellcheck disable=SC2016
+#versions=$(head -n "${RELEASES_COUNT:-1}" latestDocVersions | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
 
 if [[ -d "${HOME}/.docforge" ]]; then
   docforgeCacheDir="${HOME}/.docforge"
@@ -86,26 +86,30 @@ fi
 
 export DOCFORGE_CACHE_DIR="${docforgeCacheDir}"
 echo "cache dir is set to: ${docforgeCacheDir}"
-docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d $HUGO_CONTENT --hugo --github-oauth-token $GIT_OAUTH_TOKEN --variables "org=${org}" --github-info-destination ../data --cache-dir "$docforgeCacheDir"
+docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d "$HUGO_CONTENT" --hugo --github-oauth-token "$GIT_OAUTH_TOKEN" --variables "org=${org}" --github-info-destination "../data" --cache-dir "$docforgeCacheDir"
 python3 scripts/generateVersioningFile.py
 rm -rf $CLONE
-rm -rf ${website}/*
+rm -rf "$website"
+
+mkdir -p "$website"
+
 cd hugo
 
-# Generate site from ${content} into ${website}
+# Generate site from $HUGO_CONTENT into $website
 #
 echo
 
 if [[ ${LOCAL_BUILD} = "false" ]]; then
-  npm install postcss-cli
+  npm install
 fi
 
-hugo --minify --destination ${website}
+hugo --minify --destination "$website"
 
-echo gardener.cloud >${website}/CNAME
+echo gardener.cloud >"$website/CNAME"
+echo '' >"$website/.nojekyll"
 
 if [[ ${AUTO_PUBLISH:-true} != 'false' ]]; then
-  cd ${websiteRepoPath}
+  cd "$websiteRepoPath"
   echo
   echo "Committing website changes"
   git add . -A

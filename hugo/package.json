@@ -1,11 +1,7 @@
 {
-  "dependencies": {
-    "postcss-purgecss": "^1.0.0"
-  },
   "devDependencies": {
-    "@fullhuman/postcss-purgecss": "^4.0.3",
-    "autoprefixer": "^10.2.6",
-    "postcss": "^8.3.5",
-    "postcss-cli": "^8.3.1"
+    "autoprefixer": "^10.4.0",
+    "postcss": "^8.3.7",
+    "postcss-cli": "^9.0.2"
   }
 }

@@ -21,14 +21,14 @@ if [[ -z "${TAG}" ]]; then
 fi
 
 IMAGE="${HOST}/${PROJECT}/${IMAGE}"
-foundImage=$(docker images ${IMAGE}:${TAG} | tail -n +2)
+foundImage=$(docker images "${IMAGE}:${TAG}" | tail -n +2)
 if [[ -z "${foundImage}" ]]; then
   echo "Pulling locally image ${IMAGE}:${TAG}"
-  docker pull ${IMAGE}:${TAG}
+  docker pull "${IMAGE}:${TAG}"
 fi
 
 echo "Tagging image with tag ${TAG} as stable"
-docker tag ${IMAGE}:${TAG} ${IMAGE}:stable
+docker tag "${IMAGE}:${TAG}" "${IMAGE}:stable"
 
 echo "Pushing image to GCR. Tagged as :stable"
-docker push ${IMAGE}:stable
+docker push "${IMAGE}:stable"
