@@ -2,7 +2,10 @@
 hugo/content
 hugo/public
 hugo/resources
-node_modules
-dev/
+hugo/node_modules
 hugo/data
+hugo/.hugo_build.lock
+hugo/hugo_stats.json
+hugo/package-lock.json
+dev/
 *.DS_Store
