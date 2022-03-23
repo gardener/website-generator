@@ -35,14 +35,14 @@ else
   READLINK_BIN="readlink"
 fi
 
-ctxpath="$(${READLINK_BIN} -f $(dirname ${0})/..)"
+ctxpath="$(${READLINK_BIN} -f "$(dirname "${0}")/..")"
 
 echo "Building $HOST/$PROJECT/$IMAGE tagged as :$TAG and :latest"
-docker build --no-cache=true -t $HOST/$PROJECT/$IMAGE:$TAG -t $HOST/$PROJECT/$IMAGE:latest $ctxpath | tee /tmp/docker_build_result.log
+docker build --no-cache=true -t "$HOST/$PROJECT/$IMAGE:$TAG" -t "$HOST/$PROJECT/$IMAGE:latest" "$ctxpath" | tee /tmp/docker_build_result.log
 
 # Due to a bug in Docker we need to analyse the log to find out if build passed (see https://github.com/dotcloud/docker/issues/1875)
-RESULT=$(cat /tmp/docker_build_result.log | tail -n 1)
+RESULT=$(tail -n 1 /tmp/docker_build_result.log)
 if [[ "$RESULT" != *Successfully* ]];
 then
-  exit -1
+  exit 1
 fi
