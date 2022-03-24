@@ -2,7 +2,7 @@ FROM eu.gcr.io/gardener-project/3rd/alpine:3.12.1 as base
 
 RUN apk add curl
 
-ENV HUGO_VERSION=0.83.1
+ENV HUGO_VERSION=0.95.0
 ENV HUGO_TYPE=_extended
 ENV HUGO_ID=hugo${HUGO_TYPE}_${HUGO_VERSION}
 
@@ -12,7 +12,7 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && mkdir -p /usr/local/bin \
     && mv ./hugo /usr/local/bin/hugo
 
-FROM eu.gcr.io/gardener-project/docforge:v0.28.0 as docforge
+FROM eu.gcr.io/gardener-project/docforge:v0.29.0 as docforge
 FROM registry-1.docker.io/gardenerci/cc-job-image:1.1299.0
 
 COPY --from=docforge /usr/local/bin/docforge /usr/local/bin/docforge
