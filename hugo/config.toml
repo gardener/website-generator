@@ -55,6 +55,7 @@ disableHugoGeneratorInject = true
     tabWidth = 4
 
 [params]
+enable_personas = false
 github_repo = "https://github.com/gardener/website-generator"
 github_project_repo = "https://github.com/gardener/website-generator"
 defaultURL = "https://github.com/gardener/documentation/tree/master/website/"
