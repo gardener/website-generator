@@ -8,6 +8,7 @@ defaultContentLanguageInSubdir= true
 contentDir="content"
 enableGitInfo = true
 enableEmoji = true
+disableKinds = ["taxonomy", "taxonomyTerm"]
 
 # Google Analytics Track ID
 googleAnalytics = "UA-165447164-1"
