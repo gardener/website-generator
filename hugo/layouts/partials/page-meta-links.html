@@ -69,5 +69,31 @@
   {{ with .CurrentSection.AlternativeOutputFormats.Get "print" }}
   <a id="print" href="{{ .Permalink | safeURL }}"><i class="fa fa-print fa-fw"></i> {{ T "print_entire_section" }}</a>
   {{ end }}
-</div>
+  {{ if eq .Section "docs" }}
+    {{ if and (isset .Site.Params "enable_personas") .Site.Params.enable_personas }} 
+    <div id="role-selection">
+      <div class="taxonomy taxonomy-terms-cloud taxo-categories ">
+        <h5 class="taxonomy-title">Show only content relevant for:</h5>
+        <ul class="taxonomy-terms">
+          <li><a class="taxonomy-term" href=""><span class="taxonomy-label">Users</span></a></li>
+          <li><a class="taxonomy-term" href=""><span class="taxonomy-label">Operators</span></a></li>
+          <li><a class="taxonomy-term" href=""><span class="taxonomy-label">Developers</span></a></li>
+          <li><a class="taxonomy-term" href=""><span class="taxonomy-label">All</span></a></li>
+        </ul>
+      </div>
+    </div>
+    <script>
+      document.querySelectorAll(".taxonomy-term").forEach((el) => {
+        el.addEventListener("click",(event) => {
+          const roleSelected = event.currentTarget.querySelector(".taxonomy-label").innerHTML
+          window.sessionStorage.setItem("role_selected",roleSelected)
+        })
+      })
+      const taxonomyTerms = Array.from(document.querySelectorAll(".taxonomy-term"))
+      taxonomyTerms.filter(tt => tt.innerHTML.includes(window.sessionStorage.getItem("role_selected")))
+                  .map(tt => tt.setAttribute("class","taxonomy-term selectedTaxonomy"))
+    </script>
+    {{ end }}
+  {{ end }}
+  </div>
 {{ end }}
