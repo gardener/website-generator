@@ -23,7 +23,7 @@
     {{$catMap = merge $catMap (dict $parentPath (union (index $catMap $parentPath) (index $catMap .Permalink) )) }}
   {{end}}
 {{end}}
-
+<link rel="stylesheet" href="https://fonts.sandbox.google.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <div id="td-sidebar-menu" class="td-sidebar__inner{{ if $shouldDelayActive }} d-none{{ end }}">
   {{ if not .Site.Params.ui.sidebar_search_disable }}
   <form class="td-sidebar__search d-flex align-items-center">
@@ -80,7 +80,7 @@
     {{range index $catMapPar $s.Permalink}}
       <span class="category-label">{{ . }}</span>
     {{end}}    
-    <a href="{{ $manualLink }}"{{ if ne $s.LinkTitle $manualLinkTitle }} title="{{ $manualLinkTitle }}"{{ end }}{{ with $s.Params.manualLinkTarget }} target="{{ . }}"{{ if eq . "_blank" }} rel="noopener"{{ end }}{{ end }} class="align-left pl-0 pr-2{{ if $active}} active{{ end }} td-sidebar-link{{ if $s.IsPage }} td-sidebar-link__page{{ else }} td-sidebar-link__section{{ end }}{{ if $treeRoot }} tree-root{{ end }}" id="{{ $mid }}">{{ with $s.Params.Icon}}<i class="{{ . }}"></i>{{ end }}<span class="{{ if $active }}td-sidebar-nav-active-item{{ end }}">{{ $s.LinkTitle }}</span></a>
+    <a href="{{ $manualLink }}"{{ if ne $s.LinkTitle $manualLinkTitle }} title="{{ $manualLinkTitle }}"{{ end }}{{ with $s.Params.manualLinkTarget }} target="{{ . }}"{{ if eq . "_blank" }} rel="noopener"{{ end }}{{ end }} class="align-left pl-0 pr-2{{ if $active}} active{{ end }} td-sidebar-link{{ if $s.IsPage }} td-sidebar-link__page{{ else }} td-sidebar-link__section{{ end }}{{ if $treeRoot }} tree-root{{ end }}" id="{{ $mid }}">{{ if and (not $treeRoot) $s.IsSection}}<i style="padding:0px;vertical-align: middle;display: inline;" class="material-symbols-outlined">{{ if $s.IsAncestor $p }} expand_more {{ else }} chevron_right {{ end }}</i>{{ end }}<span class="{{ if $active }}td-sidebar-nav-active-item{{ end }}">{{ $s.LinkTitle }}</span></a>
     {{if $withChild }}
       {{ $ulNr := add $ulNr 1 }}
       <ul class="pr-md-3 ul-{{ $ulNr }}">
