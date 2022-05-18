@@ -1,8 +1,0 @@
-<!-- {{/*
-Usage: {{% img "title" "URL" %}}
-*/}}-->
-
-{{ if (strings.HasSuffix  (.Get 1) ".svg" )}}
-<object type="image/svg+xml" data="{{(.Get 1)}}" style="margin: 3rem auto;display: block;"></object>
-
-{{end}}

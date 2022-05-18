@@ -1,8 +1,0 @@
-{{ with .File }}
-  {{ with .Path }}
-    {{ $url := print "/data/" . ".json"}}
-    {{ if (fileExists $url) -}}
-      {{ (getJSON $url).weburl -}}
-    {{ end }}
-  {{ end }}
-{{ end }}

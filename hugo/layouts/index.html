@@ -11,20 +11,6 @@
 
   <!-- Scripts (web pack required in the future)
       –––––––––––––––––––––––––––––––––––––––––––––––––– -->
-  <script src='{{"js/resizesensor.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/jquery.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/jquery.tmpl.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/vivus.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/jquery.sticky.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/jquery.easing.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/fixed.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/scrollreveal.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/counter.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/slick.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/toastr.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/jso.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/inlineSVG.js"| relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-</head>
 
 <body data-url='{{ .RelPermalink }}'>
 
@@ -269,11 +255,8 @@
   <div class="container-fluid">
     {{ partial "footer.html" . }}
   </div>
-  <script src='{{"js/counter.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script src='{{"js/main-lp.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
 
   {{ partial "google-tags-manager-frame.html" . }}
-  {{ partial "tail-scripts.html" . }}
   {{ partialCached "scripts.html" . }}
 
 </body>

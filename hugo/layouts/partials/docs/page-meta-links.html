@@ -6,11 +6,11 @@
     {{if and (isset .Params "displayContributors") (eq .Params.displayContributors false)}}
     {{else if eq .Site.Params.pageTopBar.displayContributors false }}
     {{else}}
-    {{ $contributors := print (partial "git_author.html" .) }}
+    {{ $contributors := print (partial "docs/git_author.html" .) }}
     {{ $contributors = trim $contributors " \n\t"}}
     {{ if gt (len $contributors) 0 }}
     <div class="page-contributors">Contributors to this page
-      <div class="contributors-list">{{- partial "git_author.html" . -}}
+      <div class="contributors-list">{{- partial "docs/git_author.html" . -}}
       </div>
     </div>
     {{else}}
@@ -82,17 +82,6 @@
         </ul>
       </div>
     </div>
-    <script>
-      document.querySelectorAll(".taxonomy-term").forEach((el) => {
-        el.addEventListener("click",(event) => {
-          const roleSelected = event.currentTarget.querySelector(".taxonomy-label").innerHTML
-          window.sessionStorage.setItem("role_selected",roleSelected)
-        })
-      })
-      const taxonomyTerms = Array.from(document.querySelectorAll(".taxonomy-term"))
-      taxonomyTerms.filter(tt => tt.innerHTML.includes(window.sessionStorage.getItem("role_selected")))
-                  .map(tt => tt.setAttribute("class","taxonomy-term selectedTaxonomy"))
-    </script>
     {{ end }}
   {{ end }}
   </div>

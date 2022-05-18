@@ -1,9 +1,0 @@
-{{ partial "page-meta-links.html" . }}
-{{ if not .Params.notoc }}
-{{ with .TableOfContents }}
-{{ if ge (len .) 200 }}
-<span class="taxonomy-terms-cloud "><p class="taxonomy-title">Page Content</p></span>
-{{ . }}
-{{ end }}
-{{ end }}
-{{ end }}
