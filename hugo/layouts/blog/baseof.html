@@ -14,6 +14,14 @@
             {{ partial "sidebar.html" . }}
           </aside>
           <aside class="d-none d-xl-block col-xl-2 td-sidebar-toc d-print-none">
+            {{ partial "docs/page-meta-links.html" . }}
+            {{ if not .Params.notoc }}
+            {{ with .TableOfContents }}
+            {{ if ge (len .) 200 }}
+            <span class="taxonomy-terms-cloud "><p class="taxonomy-title">Page Content</p></span>
+            {{ end }}
+            {{ end }}
+            {{ end }}
             {{ partial "toc.html" . }}
          <!--   {{ partial "taxonomy_terms_clouds.html" . }} -->
           </aside>
