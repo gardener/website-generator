@@ -14,7 +14,7 @@
   {{else}}
   {{$isNewsBox := true}}
   <li class="news-box">
-    <a href='{{ if $isNewsBox }}#{{$index}}' data-lity{{else}}{{$page.RelPermalink}}'{{end}}>
+    <a href='{{.Permalink | absURL}}'>
       <div class="feed-heading">
         <span class="name">{{or $page.LinkTitle $page.Title}}</span>
         <span class="sub-title">{{$page.Params.newsSubtitle}}</span>
@@ -34,88 +34,3 @@
 <link href='{{"/lity/lity.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}' rel="stylesheet">
 <script src='{{"/lity/lity.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
 <script src='{{"js/clipboard.min.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-
-<style>
-  .lity-container {
-    margin: 0;
-    overflow: hidden;
-    min-width: 50%;
-  }
-
-  .lity-content .content {
-    display: flex;
-    overflow-y: auto;
-    min-height: 25vh;
-    background-color: #fff;
-  }
-
-  .lity-content .content [data-url] {
-    flex: 1 0 100%;
-    height: 100%;
-    padding: 3rem 3rem 4rem;
-  }
-
-  .lity-tools {
-    display: block;
-    height: 4rem;
-    padding: 1rem 0;
-    border: 0;
-    z-index: 9994;
-    font-size: 2rem;
-    text-decoration: none;
-    text-align: right;
-    color: #fff;
-    cursor: pointer;
-  }
-
-  .lity-tools a.tool-btn,
-  .lity-tools a.tool-btn:hover,
-  .lity-tools a.tool-btn:focus,
-  .lity-tools a.tool-btn:visited {
-    display: inline-block;
-    margin-left: 10px;
-    width: 3rem;
-    height: 2rem;
-    text-align: center;
-    text-decoration: none;
-    color: #fff;
-  }
-
-  .lity-tools .status {
-    display: none;
-    font-family: var(--font-family-regular);
-    font-size: 2rem;
-    color: #fff;
-  }
-</style>
-
-<script>
-  $(document).on('lity:open', function (event, instance) {
-    var $l = $(event.target);
-    $wr = $('<div class="lity-tools"><span class="status">Link to this news copied</span></div>');
-    $wr.append('<a href="#" class="tool-btn copy" data-clipboard-text="" title="Copy the link to this news"><span class="fa fa-clone"></span></a>');
-    var $close = $l.find('.lity-container button.lity-close').remove();
-    $('<a href="#" class="tool-btn close"><span class="fa fa-times"></span></a>')
-      .on("click", function () {
-        this.close();
-      }.bind(instance))
-      .appendTo($wr);
-    $l.find('.lity-container').prepend($wr);
-  });
-  $(document).on('lity:ready', function (event, instance) {
-    var url = $(event.target).find('div[data-url]').attr('data-url');
-    $('.tool-btn.copy').attr('data-clipboard-text', url);
-
-    var h = $('.lity-container .lity-content .content').outerHeight() - $('.lity-container .lity-tools').outerHeight();
-    $('.lity-container .lity-content .content').removeAttr('style').css({ "max-height": "calc(" + h + "px - 10vh)" });
-
-    var clipboard = new ClipboardJS('.tool-btn.copy');
-    clipboard.on('success', function (e) {
-      $('.lity-tools .status').fadeIn(100).fadeOut(700);
-    });
-  });
-  $(document).on('lity:resize', function (event, instance) {
-    var h = $('.lity-container .lity-content .content').outerHeight() - $('.lity-container .lity-tools').outerHeight();
-    $('.lity-container .lity-content .content').removeAttr('style').css({ "max-height": "calc(" + h + "px - 10vh)" });
-  })
-</script>
