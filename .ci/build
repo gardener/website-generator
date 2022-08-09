@@ -1,43 +1,6 @@
 #!/bin/bash
 set -eu
-
-if [[ $(uname) == 'Darwin' ]]; then
-  READLINK_BIN="greadlink"
-else
-  READLINK_BIN="readlink"
-fi
-
-LOCAL_BUILD=${LOCAL_BUILD:-false}
-HUGO=${HUGO:-hugo}
-FORK=${FORK:-gardener}
-BRANCH=${BRANCH:-master}
-
-if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH:-}" ]]; then
-  generatorRepoPath="$(${READLINK_BIN} -f "$(dirname "${0}")/..")"
-else
-  generatorRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_GENERATOR_PATH}")"
-fi
-if [[ ! -d "${generatorRepoPath}" ]]; then
-  echo "website-generator directory path is invalid ['$generatorRepoPath']. Set GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo."
-  exit 1
-fi
-if [[ -z "${GARDENER_WEBSITE_PATH:-}" ]]; then
-  # Fallback to "website" repo cloned as peer directory to "website-generator"
-  websiteRepoPath="$(${READLINK_BIN} -f "$(dirname "${0}")/../../website")"
-else
-  websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")"
-fi
-
-generator="${generatorRepoPath}"
-website="${websiteRepoPath}/docs"
-echo "Generated site directory: $website"
-
-cd "${generator}"
-
-if [ ! -f "./latestDocVersions" ]; then
-  echo "build failed: missing latestDocVersions file"
-  exit 1
-fi
+echo "Running website build script"
 
 getGitHubToken() {
   # Check if gardener-ci is available (in local setup)
@@ -54,61 +17,69 @@ getGitHubToken() {
     fi
   fi
 }
-GIT_OAUTH_TOKEN=${GIT_OAUTH_TOKEN:-$(getGitHubToken github_com)}
-org=${DOCUMENTATION_REPOSITORY_ORG:-gardener}
-
-#
-CLONE="temp"
-HUGO_CONTENT="hugo/content"
-#
-
+# Compute nessesary variables
+if [[ $(uname) == 'Darwin' ]]; then
+  READLINK_BIN="greadlink"
+else
+  READLINK_BIN="readlink"
+fi
+if [[ -z "${GARDENER_WEBSITE_GENERATOR_PATH:-}" ]]; then
+  generatorRepoPath="$(${READLINK_BIN} -f "$(dirname "${0}")/..")"
+else
+  generatorRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_GENERATOR_PATH}")"
+fi
+if [[ ! -d "${generatorRepoPath}" ]]; then
+  echo "website-generator directory path is invalid ['$generatorRepoPath']. Set GARDENER_WEBSITE_GENERATOR_PATH to a correct path or run from website-generator cloned repo."
+  exit 1
+fi
+if [[ -z "${GARDENER_WEBSITE_PATH:-}" ]]; then
+  # Fallback to "website" repo cloned as peer directory to "website-generator"
+  websiteRepoPath="$(${READLINK_BIN} -f "$(dirname "${0}")/../../website")"
+else
+  websiteRepoPath="$(${READLINK_BIN} -f "${GARDENER_WEBSITE_PATH}")"
+fi
+website="${websiteRepoPath}/docs"
+echo "Generated site directory: $website"
+# Variables
+GITHUB_OAUTH_TOKEN=${GITHUB_OAUTH_TOKEN:-$(getGitHubToken github_com)}
+# Navigating to website generator 
+cd "${generatorRepoPath}"
 # Clear from previous runs
-rm -rf "$HUGO_CONTENT"
-rm -rf "$CLONE"
+rm -rf "hugo/content"
 rm -rf "hugo/data"
-
-mkdir -p "hugo/data"
-
-# Parse $RELEASES_COUNT number of versions and separate them by comma `,`.
-# shellcheck disable=SC2016
-#versions=$(head -n "${RELEASES_COUNT:-1}" latestDocVersions | sed -n -e 'H;${x;s/\n/,/g;s/^,//;p;}')
-
+# Docforge prep and run
 if [[ -d "${HOME}/.docforge" ]]; then
   docforgeCacheDir="${HOME}/.docforge"
 else
   docforgeCacheDir="$(${READLINK_BIN} -f ./../.docforge)"
 fi
-
 if [[ ! -d "${docforgeCacheDir}" ]]; then
   echo "creating cache dir: ${docforgeCacheDir}"
   mkdir -p "${docforgeCacheDir}"
 fi
-
-export DOCFORGE_CACHE_DIR="${docforgeCacheDir}"
 echo "cache dir is set to: ${docforgeCacheDir}"
-docforge -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml -d "$HUGO_CONTENT" --hugo --github-oauth-token "$GIT_OAUTH_TOKEN" --variables "org=${org}" --github-info-destination "../data" --cache-dir "$docforgeCacheDir"
-python3 scripts/generateVersioningFile.py
-rm -rf $CLONE
-rm -rf "$website"
-
-mkdir -p "$website"
-
+docforge \
+  -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml \
+  -d "hugo/content" \
+  --hugo \
+  --github-oauth-token-map "github.com=$GITHUB_OAUTH_TOKEN" \
+  --github-info-destination "../data" \
+  --cache-dir "$docforgeCacheDir"
+# Navigating to hugo
 cd hugo
-
-# Generate site from $HUGO_CONTENT into $website
-#
-echo
-
-if [[ ${LOCAL_BUILD} = "false" ]]; then
+# Hugo prep and run
+if [ "${LOCAL_BUILD:-true}" = false ]; then
+  echo "Installing npm dependencies"
   npm install
 fi
-
+# Clear website from previous run
+rm -rf "$website"
 hugo --minify --destination "$website"
-
 echo gardener.cloud >"$website/CNAME"
+# Bypass Jekyll processing
 echo '' >"$website/.nojekyll"
-
-if [[ ${AUTO_PUBLISH:-true} != 'false' ]]; then
+# Commiting to github pages repo
+if [ "${PUBLISH:-false}" = true ]; then
   cd "$websiteRepoPath"
   echo
   echo "Committing website changes"

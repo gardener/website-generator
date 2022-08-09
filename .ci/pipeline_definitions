@@ -26,9 +26,10 @@ gardener-website-generator:
       steps:
         build:
           image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.34.0'
-          publish_to: ['gardener_website', 'gardener_documentation']
           vars:
-              RELEASES_COUNT: '1'
+              PUBLISH: "'true'"
+              LOCAL_BUILD: "'false'"
+          publish_to: ['gardener_website', 'gardener_documentation']
           cache_paths: ['.docforge']
       traits:
         cronjob:
