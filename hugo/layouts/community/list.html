@@ -1,11 +1,13 @@
 {{ define "main" }}
-<div class="td-content" id="body-inner">
-    <div class="container community">
+<div class="td-content container" id="body-inner">
+    <div class="community" style="padding:0px"> 
         <h1 class="title">Gardener Community</h1>
         <p class="subtitle">Follow - Engage - Contribute</p>
-        {{ with .Content }}
-        {{ . }}
-        {{ end }}
+    </div>
+    {{ with .Content }}
+    {{ . }}
+    {{ end }}
+    <div class="community" style="padding:0px"> 
         <h1 style="margin-top: 20px;">Get in Touch</h1>
         <div class="row" style="margin-top: 20px;">
             <div class="col-4">
@@ -31,7 +33,6 @@
                 <span>Discuss Gardener on our Slack channel in the Kubernetes workspace</span>
             </div>
         </div>
-       
     </div>
 </div>
 {{ end }}
