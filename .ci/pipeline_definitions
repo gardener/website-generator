@@ -25,7 +25,7 @@ gardener-website-generator:
     head-update:
       steps:
         build:
-          image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.34.0'
+          image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.35.0'
           vars:
               PUBLISH: "'true'"
               LOCAL_BUILD: "'false'"
