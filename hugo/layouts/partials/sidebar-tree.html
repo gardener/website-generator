@@ -69,7 +69,12 @@
   {{- $ulNr := add $ulNr 1 }}
   <ul class="ul-{{ $ulNr }}{{ if (gt $ulNr 1)}} foldable{{end}}">
     {{ range $pages -}}
-    {{ if (not (and (eq $s $p.Site.Home) (eq .Params.toc_root true))) -}}
+    {{ $expired := false }}
+    {{ with .Params.archivedate }}
+      {{ $exp := time . }}
+      {{ $expired = $exp.Before now }}
+    {{ end }}
+    {{ if and (not (and (eq $s $p.Site.Home) (eq .Params.toc_root true))) (not $expired) -}}
     {{ template "section-tree-nav-section" (dict "context" $c "computedMap" $catMapPar "page" $p "section" . "shouldDelayActive" $shouldDelayActive "sidebarMenuTruncate" $sidebarMenuTruncate "ulNr" $ulNr "ulShow" $ulShow) }}
     {{- end }}
     {{- end }}
