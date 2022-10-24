@@ -1,0 +1,102 @@
+.main-content-container {
+    max-width: fit-content;
+    height: 100%;
+    padding-left: 0px;
+  }
+  .main-content-container {
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    -webkit-flex-wrap: nowrap;
+    -ms-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-justify-content: flex-start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-align-content: stretch;
+    -ms-flex-line-pack: stretch;
+    align-content: stretch;
+    -webkit-align-items: stretch;
+    -ms-flex-align: stretch;
+    align-items: stretch;
+  }
+  .main-content-container > aside:first-of-type {
+    max-width: 1000px;
+    width: 275px;
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+  }
+  .main-content-container > main {
+  
+    -webkit-order: 0;
+    -ms-flex-order: 0;
+    order: 0;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    -webkit-align-self: auto;
+    -ms-flex-item-align: auto;
+    align-self: auto;
+  }
+  .main-content-container > aside:first-of-type,
+  .resize-handle--x {
+    -webkit-flex: 0 0 auto;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    height: 100%;
+    border-left-width: 1px;
+    border-left-style: solid;
+    border-left-color: lightgray;
+    border-right-width: 1px;
+    border-right-style: solid;
+    border-right-color: lightgray;
+  
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  .main-content-container .resize-handle--x{
+      width: 3px;
+      cursor: ew-resize;
+  }
+  .resize-handle--x:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    right: 100%;
+    height: 18px;
+    width: 2px;
+    margin-top: -9px;
+    border-left-color: lightgray;
+    border-left-width: 1px;
+    border-left-style: solid;
+  }
+  .resize-handle--x:after {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 100%;
+    height: 18px;
+    width: 2px;
+    margin-top: -9px;
+    border-right-color: lightgray;
+    border-right-width: 1px;
+    border-right-style: solid;
+  }
