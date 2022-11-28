@@ -64,6 +64,7 @@ issueURL = "https://github.com/gardener/documentation/issues"
 copyright = "Copyright 2019-2022 Gardener project authors."
 privacyPolicyURL = "https://www.sap.com/corporate/en/legal/privacy.html"
 description = "Project Gardener Website - A Managed Kubernetes Service Done Right"
+images = ["/images/lp/gardener-logo.svg"]
 
 # Enable local search
 offlineSearch = true
