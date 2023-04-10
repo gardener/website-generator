@@ -31,7 +31,7 @@ Before you can setup your local version of the website, you need to have:
 * [NodeJS](https://nodejs.org/en/)/[NPM](https://www.npmjs.com/get-npm)
 * [GitHub token](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token)
 
-### Steps
+### Setup
 
 1. Clone the repository and go to the repo's directory
 2. Enter `git submodule update --init --recursive`.
@@ -42,10 +42,13 @@ Before you can setup your local version of the website, you need to have:
    `export AUTO_PUBLISH=false`
 
    `export RELEASES_COUNT=1`
+4. `cd` in hugo directory and run `npm install`
 
-4. Run `make build` command
+### Build website
 
-5. Run `cd hugo && hugo serve`
+1. Run `make build` command
+
+2. Run `cd hugo && hugo serve`
 
 ### Test local changes
 In order to test local changes, for example [gardener/documentation](https://github.com/gardener/documentation/) changes, you need to go trough the following steps:
