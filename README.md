@@ -37,7 +37,7 @@ Before you can setup your local version of the website, you need to have:
 2. Enter `git submodule update --init --recursive`.
 3. Export the following environment variables:
 
-   `export GIT_OAUTH_TOKEN=<github-user>:<token>`
+   `export GIT_OAUTH_TOKEN=<token>`
 
    `export AUTO_PUBLISH=false`
 
