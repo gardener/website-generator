@@ -20,21 +20,22 @@ disableHugoGeneratorInject = true
 
 [menu]
   [[menu.main]]
+      name = "Adopters"
+      weight = 10
+      url = "/adopter"
+  [[menu.main]]
+      name = "Documentation"
+      weight = 20
+      url = "/docs"
+  [[menu.main]]
       name = "Blogs"
-      weight = 40
+      weight = 30
       url = "/blog"
   [[menu.main]]
       name = "Community"
       weight = 40
       url = "/community"
-  [[menu.main]]
-      name = "Adopters"
-      weight = 40
-      url = "/adopter"
-  [[menu.main]]
-      name = "Documentation"
-      weight = 40
-      url = "/docs"
+
 
 
 [markup]
