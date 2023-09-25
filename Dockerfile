@@ -12,7 +12,7 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && mkdir -p /usr/local/bin \
     && mv ./hugo /usr/local/bin/hugo
 
-FROM eu.gcr.io/gardener-project/docforge:v0.35.0 as docforge
+FROM eu.gcr.io/gardener-project/docforge:v0.37.0 as docforge
 FROM registry-1.docker.io/gardenerci/cc-job-image:1.1299.0
 
 COPY --from=docforge /docforge /usr/local/bin/docforge
