@@ -1,7 +1,7 @@
 {{$catMap := dict}}
 {{/* Custom cascade with merge instead of override*/}}
 {{ range sort .Site.Pages ".Permalink" "asc" }}
-  {{ $propagatedCategories := .Params.categories }}
+  {{ $propagatedCategories := (slice .Params.persona )}}
   {{ $permalink := .Permalink}}
   {{/* Iterate catMap and search for parent node(current Permalink begins with interated Permalink) */}}
   {{/* Merge propagated categories with parents categories */}}
