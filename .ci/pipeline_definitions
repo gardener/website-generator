@@ -31,9 +31,19 @@ gardener-website-generator:
               LOCAL_BUILD: "'false'"
           publish_to: ['gardener_website', 'gardener_documentation']
           cache_paths: ['.docforge']
+          notifications_cfg: 'website_maintainers'
       traits:
         cronjob:
           interval: '24h'
+        notifications:
+          website_maintainers:
+            on_error:
+              recipients:
+              - email_addresses:
+                - v.kostov@sap.com
+                - dimitar.kostadinov@sap.com
+                - jordan.jordanov@sap.com
+                - nikolay.boshnakov@sap.com
     # update-deps:
     #   traits:
     #     update_component_deps:
