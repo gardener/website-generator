@@ -1,0 +1,15 @@
+{{ define "main"}}
+    <main id="main" style="display: flex; justify-content: center; align-items: center;">
+      <div style="text-align: center; display: block;">
+       <h1 id="title" style="margin-bottom: 20px;">Not found</h1>
+        
+          <p >Oops! This page doesn't exist. Maybe it was moved. Please check the possible location of your page:</p>
+          <ul id="links" style="padding-left: 0px; list-style-position: inside;"></ul>
+          <p>Or go back to our <a href="{{ "/" | relURL }}">home page</a>.</p>
+       </div>
+    </main>
+
+    {{ $assetBusting := not .Site.Params.disableAssetsBusting }}
+    <script src='{{ "/js/404.js" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
+  
+{{ end }}
