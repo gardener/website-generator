@@ -67,6 +67,7 @@ docforge \
 ./.ci/404.sh
 # Navigating to hugo
 cd hugo
+sed -E 's|!\[teaser\]\(/__resources/teaser_.*\)|![teaser](https://raw.githubusercontent.com/gardener/documentation/master/website/adopter/images/teaser.svg)|' content/adopter/_index.md
 # Hugo prep and run
 if [ "${LOCAL_BUILD:-true}" = false ]; then
   echo "Installing npm dependencies"
