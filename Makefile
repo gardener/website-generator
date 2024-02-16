@@ -46,3 +46,9 @@ image-push:
 .PHONY: image-stable
 image-stable:
 	@scripts/image-stable
+
+
+.PHONY: release
+release:
+	@scripts/release
+
