@@ -37,9 +37,11 @@
             <img src='{{"images/lp/gardener-logo.svg" | relURL }}'>
           </div>
         </div>
-        <div class="news">
+        {{ if and (isset .Site.Params "enable_news") .Site.Params.enable_news }} 
+        <div class="news">    
           {{ partial "news.html" . }}
         </div>
+        {{ end }}
       </div>
     </div>
 
@@ -135,7 +137,7 @@
               clusters can also be managed by Gardener for maximum efficency.</div>
           </div>
         </div>
-        <a class="call-for-action is-centered" href="https://github.com/gardener/gardener/tree/master/docs"
+        <a class="call-for-action is-centered" href="https://gardener.cloud/docs/gardener/"
           target="_blank">Learn more about the concepts behind Gardener</a>
       </div>
     </div>
@@ -162,7 +164,7 @@
             <div>
               <span class="subtitle">100% Kubernetes compliant</span>
               <p>Gardener is Kubernetes native and is not shy to be completely transparent on its compliance, proudly
-                holding the 100% badge with <a href="https://k8s-testgrid.appspot.com/conformance-gardener">public
+                holding the 100% badge with <a href="https://testgrid.k8s.io/conformance-gardener">public
                   evidence</a> for that.</p>
             </div>
             <div>
@@ -218,7 +220,7 @@
             </li>
           </ul>
         </div>
-        <a href="https://github.com/gardener/gardener/blob/master/docs/development/new-cloud-provider.md"
+        <a href="https://gardener.cloud/docs/gardener/new-cloud-provider/"
           class="call-for-action">New infrastructure use case? Let’s build it together</a>
       </div>
     </div>
@@ -233,7 +235,7 @@
               <span class="subtitle">Extensible By Design</span>
               <p>Gardener is a modular system of managed extensions around a robust core, fully adaptable in multiple
                 dimensions. Extend the existing extension set or add completely new pieces. And while you are at it, why
-                not contribute them back to the community and benefit from contributions of others?</p>
+                not contribute them back to the community and benefit from the contributions of others?</p>
             </div>
             <div>
               <span class="subtitle">Managed Extensions</span>
@@ -248,7 +250,7 @@
           </div>
           <img class="one-half column image right" src='{{"images/lp/extensbility-overview.svg" | relURL }}'>
         </div>
-        <a href="https://github.com/gardener/gardener/blob/master/docs/extensions/overview.md"
+        <a href="https://gardener.cloud/docs/gardener/extensions/overview/"
           class="call-for-action">Learn more about Gardener’s extensibility</a>
       </div>
     </div>
