@@ -55,6 +55,8 @@ if [[ ! -d "${docforgeCacheDir}" ]]; then
   echo "creating cache dir: ${docforgeCacheDir}"
   mkdir -p "${docforgeCacheDir}"
 fi
+# Print docforge version
+docforge version
 echo "cache dir is set to: ${docforgeCacheDir}"
 docforge \
   -f https://github.com/gardener/documentation/blob/master/.docforge/website.yaml \
