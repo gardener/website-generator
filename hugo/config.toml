@@ -9,7 +9,6 @@ contentDir="content"
 enableGitInfo = true
 enableEmoji = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
-disableAssetsBusting = true
 
 [taxonomies]
   tag = 'tags'
@@ -71,6 +70,7 @@ copyright = "Copyright 2019-2023 Gardener project authors."
 privacyPolicyURL = "https://www.sap.com/corporate/en/legal/privacy.html"
 description = "Project Gardener Website - A Managed Kubernetes Service Done Right"
 images = ["/images/lp/gardener-logo.svg"]
+disableAssetsBusting = true
 
 # Enable local search
 offlineSearch = true
