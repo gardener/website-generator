@@ -9,6 +9,7 @@ contentDir="content"
 enableGitInfo = true
 enableEmoji = true
 disableKinds = ["taxonomy", "taxonomyTerm"]
+disableAssetsBusting = true
 
 [taxonomies]
   tag = 'tags'
