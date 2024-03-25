@@ -1,5 +1,7 @@
 # Gardener Website Generator
 
+[![REUSE status](https://api.reuse.software/badge/github.com/gardener/website-generator)](https://api.reuse.software/info/github.com/gardener/website-generator)
+
 This repository is wired via CI/CD and scripts to listen to component dependencies and upon their release to build a new version of the documentation for them and publish it. 
 
 ## Website Build/Publish Overview
