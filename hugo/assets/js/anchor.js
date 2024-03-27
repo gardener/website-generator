@@ -35,7 +35,9 @@
             }
         });
         if (window.location.hash && window.location.hash.length > 1) {
-            scrollToAnchor();
+            setTimeout(function () {
+                scrollToAnchor();
+            },0)
         }
         window.addEventListener('hashchange', scrollToAnchor);
     });
