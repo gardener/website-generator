@@ -86,5 +86,5 @@ if [ "${PUBLISH:-false}" = true ]; then
   echo
   echo "Committing website changes"
   git add . -A
-  git commit -m 'Automatic build triggered by last commit'
+  git commit -m 'Automatic build triggered by last commit' || true
 fi
