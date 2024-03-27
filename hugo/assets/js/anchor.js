@@ -34,10 +34,12 @@
                 });
             }
         });
-        if (scroller) {
-            scrollToAnchor();
-            window.addEventListener('hashchange', scrollToAnchor);
+        if (window.location.hash && window.location.hash.length > 1) {
+            setTimeout(function () {
+                scrollToAnchor();
+            },0)
         }
+        window.addEventListener('hashchange', scrollToAnchor);
     });
 }(jQuery));
 
@@ -45,9 +47,13 @@
  * function scrolls to header element if child anchor has 'github-heading-id-' prefix
  * @see https://github.com/go-gitea/gitea/blob/main/web_src/js/markup/anchors.js
  */
-function scrollToAnchor() {
-    if (document.querySelector(':target')) return;
-    if (!window.location.hash || window.location.hash.length <= 1) return;
+function scrollToAnchor() {    
+    // scroll to selected element
+    if (document.querySelector(':target')) {
+        document.querySelector(':target').scrollIntoView();
+        return
+    }
+    // scroll to github-heading-id element
     const id = decodeURIComponent(window.location.hash.substring(1));
     const el = document.getElementById(`github-heading-id-${id}`);
     if (el) {
