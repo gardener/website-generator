@@ -485,12 +485,12 @@ body {
   #section01 {
     height: 0;
     + .section {
-      padding-top: 150px;
+      padding-top: 250px;
       @media (min-width: 750px) {
-        padding-top: 100px;
+        padding-top: 200px;
       }
       @media (min-width: 1000px) {
-        padding-top: 150px;
+        padding-top: 250px;
       }
     }
   }
@@ -536,6 +536,15 @@ body {
         }
       }
     }
+  }
+  #section02aa{
+   .sub-title {
+    font-family: $font-family-book;
+    margin-bottom: 20px;
+   }
+   .aa-desc {
+    font-family: $font-family-light;
+   }
   }
   #section03 {
     .content {
