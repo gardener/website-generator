@@ -72,25 +72,27 @@
 
     <div class="container" id="section01">
       <div class="highlights-banner">
-        <div class="banner-item">
-          <img class="icon" src='{{"images/lp/lp-banner-everywhere.svg" | relURL }}'>
-          <span class="icon-title">Everywhere</span>
-        </div>
-        <div class="banner-item">
-          <img class="icon" src='{{"images/lp/lp-banner-homogeneous.svg" | relURL }}'>
-          <span class="icon-title">Homogeneous</span>
-        </div>
-        <div class="banner-item">
-          <img class="icon" src='{{"images/lp/lp-banner-managed.svg" | relURL }}'>
-          <span class="icon-title">Fully Managed</span>
-        </div>
-        <div class="banner-item">
-          <img class="icon" src='{{"images/lp/lp-banner-customizable.svg" | relURL }}'>
-          <span class="icon-title">Customizable</span>
-        </div>
-        <div class="banner-item">
-          <img class="icon" src='{{"images/lp/lp-banner-scalable.svg" | relURL }}'>
-          <span class="icon-title">Scalable</span>
+        <div class="row">
+          <div class="banner-item">
+            <img class="icon" src='{{"images/lp/lp-banner-everywhere.svg" | relURL }}'>
+            <span class="icon-title">Everywhere</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src='{{"images/lp/lp-banner-homogeneous.svg" | relURL }}'>
+            <span class="icon-title">Homogeneous</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src='{{"images/lp/lp-banner-managed.svg" | relURL }}'>
+            <span class="icon-title">Fully Managed</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src='{{"images/lp/lp-banner-customizable.svg" | relURL }}'>
+            <span class="icon-title">Customizable</span>
+          </div>
+          <div class="banner-item">
+            <img class="icon" src='{{"images/lp/lp-banner-scalable.svg" | relURL }}'>
+            <span class="icon-title">Scalable</span>
+          </div>
         </div>
       </div>
     </div>
@@ -139,6 +141,76 @@
         </div>
         <a class="call-for-action is-centered" href="https://gardener.cloud/docs/gardener/"
           target="_blank">Learn more about the concepts behind Gardener</a>
+      </div>
+    </div>
+    <div class="section papercut" id="section02aa">
+      <div class="container is-centered">
+        <h2 class="title-2 has-subtitle">Highlights</h2>
+          <div class="row is-centered">
+            <div class="col">
+              <img src='{{"images/highlights/cloud-agnostic.svg" | relURL }}'>
+              <div class="sub-title">Homogeneous</div>
+              <div class="aa-desc">Identical Day-1 & 2 operations on any supported infrastructure</div>
+            </div>
+            <div class="col">
+              <img src='{{"images/highlights/gardener.svg" | relURL }}'>
+              <div class="sub-title">Open Source Grown</div>
+              <div class="aa-desc">Powered by the open source Gardener project, developed in the public, pioneered by SAP</div>
+            </div>
+            <div class="col">
+              <img src='{{"images/highlights/extensible.svg" | relURL }}'>
+              <div class="sub-title">Ultra Scalable</div>
+              <div class="aa-desc">Fleet management of thousands of clusters with low TCO by design</div>
+            </div>
+          </div>
+          <div class="row is-centered">
+            <div class="col">
+              <img src='{{"images/highlights/certified.svg" | relURL }}'>
+              <div class="sub-title">Certified and Compliant</div>
+              <div class="aa-desc">Enterprise-grade security certifications, CNCF 100% Kubernetes compliant</div>
+            </div>
+            <div class="col">
+              <img src='{{"images/highlights/ubiqutious.svg" | relURL }}'>
+              <div class="sub-title">Ubiquitous</div>
+              <div class="aa-desc">The same experience in Amazon, Azure, Google, Alicloud</div>
+            </div>
+            <div class="col">
+              <img src='{{"images/highlights/autonomous.svg" | relURL }}'>
+              <div class="sub-title">Autonomous</div>
+              <div class="aa-desc">Self-healing, auto-scaling, and if you choose, auto-updating operating system and Kubernetes</div>
+            </div>
+          </div>
+          <style>
+            #section02aa .col {
+              margin-top: 70px;
+            }
+
+            .btn-container > div{
+              display: flex; 
+
+              justify-content: space-evenly;
+            }  
+             .btn-grad {
+                background-image: linear-gradient(to right, #0f674e 0%, #1dae85  51%, #0f674e  100%);
+                margin: 10px;
+                padding: 10px 20px;
+                text-align: center;
+                transition: 0.5s;
+                background-size: 200% auto;
+                color: white;            
+                border-radius: 20px;
+                display: block;
+                box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 3px 10px 0 rgb(0 0 0 / 19%);
+                border: 0px;
+              }
+    
+              .btn-grad:hover {
+                background-position: right center; /* change the direction of the change here */
+                color: #fff;
+                text-decoration: none;
+              }
+             
+        </style>
       </div>
     </div>
 
@@ -217,6 +289,10 @@
             <li>
               <img src='{{"images/lp/platforms/vmware.svg" | relURL }}' class="platform-icon">
               <div class="platform-text">VMware vSphere</div>
+            </li>
+            <li>
+              <img src='{{"images/lp/platforms/iron_core.svg" | relURL }}' class="platform-icon">
+              <div class="platform-text">Iron Core</div>
             </li>
           </ul>
         </div>
