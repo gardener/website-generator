@@ -37,7 +37,7 @@ const newLinks = links.map((element, index) => [element, titles[index]]
 })
 
 if (newLinks.length > 0) {
-    document.getElementById('404-title').innerHTML = "Page seems to be moved to:"
+    document.getElementById('404-descr').innerHTML = "It seems to be moved. Please check the possible locations of your page:"
 }
 
 EOF
