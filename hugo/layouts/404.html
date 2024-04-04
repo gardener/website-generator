@@ -1,11 +1,10 @@
 {{ define "main"}}
     <main id="main" style="display: flex; justify-content: center; align-items: center;">
       <div style="text-align: center; display: block;">
-       <h1 id="title" style="margin-bottom: 20px;">Page Not Found</h1>
-        
-          <p >Oops! This page doesn't exist. Maybe it was moved. Please check the possible location of your page:</p>
-          <ul id="links" style="padding-left: 0px; list-style-position: inside;"></ul>
-          <p>Or go back to our <a href="{{ "/" | relURL }}">home page</a>.</p>
+        <h3 style="margin-bottom: 20px;">Page Not Found</h3>
+        <p id="404-descr">Looks like you've followed a broken link or entered a URL that doesn't exist.</p>
+        <ul id="links" style="padding-left: 0px; list-style-position: inside;"></ul>
+        <p>You could use the search bar or go back to our <a href="{{ "/" | relURL }}">home page</a>.</p>
        </div>
     </main>
 

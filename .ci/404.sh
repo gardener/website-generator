@@ -23,7 +23,7 @@ cat >> ../static/js/404.js <<EOF
 
 let ul = document.getElementById('links');
 
-links.map((element, index) => [element, titles[index]]
+const newLinks = links.map((element, index) => [element, titles[index]]
 ).filter( el => {
     let splitUrl = window.location.href.split("/");
     return el[0].endsWith("/" + splitUrl[splitUrl.length - 2] + "/")
@@ -35,6 +35,10 @@ links.map((element, index) => [element, titles[index]]
     li.appendChild(a)
     ul.appendChild(li);
 })
+
+if (newLinks.length > 0) {
+    document.getElementById('404-descr').innerHTML = "It seems to be moved. Please check the possible locations of your page:"
+}
 
 EOF
 
