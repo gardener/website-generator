@@ -69,6 +69,17 @@ docforge \
 ./.ci/404.sh
 # Navigating to hugo
 cd hugo
+if [[ -f content/html/hardened_shoots_report.md ]]; then
+  mkdir -p static/html
+  mv content/html/hardened_shoots_report.md  static/html/hardened_shoots_report.html
+  # remove docforge added frontmatters
+  sed -i '/---/,/---/d'  static/html/hardened_shoots_report.html
+  sed -i 's@/docs/security-and-compliance/report/@/html/hardened_shoots_report.html@' content/docs/security-and-compliance/report.md
+  sed -i '/<!doctype html>/d' content/docs/security-and-compliance/report.md
+  sed -i 's/audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}//' content/docs/security-and-compliance/report.md
+  # workaround for a docforge multisource gitinfo build bug
+  sed -i -n '1,28p ; $p' data/docs/security-and-compliance/report.md.json
+fi
 # Hugo prep and run
 if [ "${LOCAL_BUILD:-true}" = false ]; then
   echo "Installing npm dependencies"
