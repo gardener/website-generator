@@ -32,12 +32,14 @@ const newLinks = links.map((element, index) => [element, titles[index]]
     let a = document.createElement('a')
     a.textContent = el[1]
     a.setAttribute("href",el[0])
+    li.setAttribute("style","margin-bottom: 10px;")
     li.appendChild(a)
     ul.appendChild(li);
 })
 
 if (newLinks.length > 0) {
-    document.getElementById('404-descr').innerHTML = "It seems to be moved. Please check the possible locations of your page:"
+    document.getElementById('404-descr').innerHTML = "It seems to have been planted somewhere else. Try checking some of these spots:"
+    document.getElementById('404-redirect').innerHTML = "You could also go back to our <a href="{{ "/" | relURL }}">home page</a> or use the search bar to find what you were looking for."
 }
 
 EOF
