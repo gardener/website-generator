@@ -77,6 +77,8 @@ if [[ -f content/html/hardened_shoots_report.md ]]; then
   sed -i 's@/docs/security-and-compliance/report/@/html/hardened_shoots_report.html@' content/docs/security-and-compliance/report.md
   sed -i '/<!doctype html>/d' content/docs/security-and-compliance/report.md
   sed -i 's/audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}//' content/docs/security-and-compliance/report.md
+  sed -i 's/a{color:inherit;text-decoration:inherit}//' content/docs/security-and-compliance/report.md
+  sed -i 's/<div class="tw-content tw-px-6">/<div class="tw-content">/' content/docs/security-and-compliance/report.md
   # workaround for a docforge multisource gitinfo build bug
   sed -i -n '1,/^}{$/p' data/docs/security-and-compliance/report.md.json
   sed -i 's/^}{$/}/' data/docs/security-and-compliance/report.md.json
