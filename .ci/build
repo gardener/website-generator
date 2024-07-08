@@ -64,7 +64,8 @@ docforge \
   --hugo \
   --github-oauth-token-map "github.com=$GITHUB_OAUTH_TOKEN" \
   --github-info-destination "../data" \
-  --cache-dir "$docforgeCacheDir"
+  --cache-dir "$docforgeCacheDir" \
+  --skip-link-validation="${SKIP_VALIDATION:-false}"
 # Building 404.js
 ./.ci/404.sh
 # Navigating to hugo

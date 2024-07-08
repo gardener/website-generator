@@ -27,6 +27,10 @@ setup:
 .PHONY: build
 build:
 	@.ci/build
+
+.PHONY: build-local
+build-local:
+	@env SKIP_VALIDATION=true .ci/build 
 # `make image-build` builds a new docker image. Use thee $TAG environment variable to specify the image tag.
 # The tag `latest` is automatically assigned in addition.
 # Example: `$ make image-build TAG=10.0.0`
