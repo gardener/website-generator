@@ -2,7 +2,6 @@ gardener-website-generator:
   template: 'default'
   base_definition:
     traits:
-      component_descriptor: ~
       version: ~
       scheduling:
         suppress_parallel_execution: true
