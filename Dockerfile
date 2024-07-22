@@ -1,4 +1,4 @@
-FROM eu.gcr.io/gardener-project/3rd/alpine:3.12.1 as base
+FROM europe-docker.pkg.dev/gardener-project/releases/3rd/alpine:3.20.1 as base
 
 RUN apk add curl
 
@@ -12,8 +12,8 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && mkdir -p /usr/local/bin \
     && mv ./hugo /usr/local/bin/hugo
 
-FROM eu.gcr.io/gardener-project/docforge:v0.46.0 as docforge
-FROM registry-1.docker.io/gardenerci/cc-job-image:1.1299.0
+FROM europe-docker.pkg.dev/gardener-project/releases/docforge:v0.46.0 as docforge
+FROM europe-docker.pkg.dev/gardener-project/releases/cicd/job-image:latest
 
 COPY --from=docforge /docforge /usr/local/bin/docforge
 COPY --from=base /usr/local/bin/hugo /usr/local/bin/hugo
