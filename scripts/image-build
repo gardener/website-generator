@@ -2,9 +2,10 @@
 
 set -ex
 
-# GCR coordinates
-HOST=eu.gcr.io
+# GAR coordinates
+HOST=europe-docker.pkg.dev
 PROJECT=gardener-project
+REPOSITORY=releases
 IMAGE=gardener-website-generator
 
 for i in "$@"
@@ -37,5 +38,5 @@ fi
 
 ctxpath="$(${READLINK_BIN} -f "$(dirname "${0}")/..")"
 
-echo "Building $HOST/$PROJECT/$IMAGE tagged as :$TAG and :latest"
-docker build --no-cache=true -t "$HOST/$PROJECT/$IMAGE:$TAG" -t "$HOST/$PROJECT/$IMAGE:latest" "$ctxpath" | tee /tmp/docker_build_result.log
+echo "Building $HOST/$PROJECT/$REPOSITORY/$IMAGE tagged as :$TAG and :latest"
+docker build --no-cache=true -t "$HOST/$PROJECT/$REPOSITORY/$IMAGE:$TAG" -t "$HOST/$PROJECT/$REPOSITORY/$IMAGE:latest" "$ctxpath" | tee /tmp/docker_build_result.log

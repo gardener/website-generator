@@ -2,8 +2,9 @@
 
 set -ex
 
-HOST=eu.gcr.io
+HOST=europe-docker.pkg.dev
 PROJECT=gardener-project
+REPOSITORY=releases
 IMAGE=gardener-website-generator
 for i in "$@"
 do
@@ -20,6 +21,6 @@ if [[ -z "${TAG}" ]]; then
   exit 1;
 fi
 
-echo "Pushing image to GCR. Tagged as :latest and :${TAG}"
-docker push "$HOST/$PROJECT/$IMAGE:$TAG"
-docker push "$HOST/$PROJECT/$IMAGE:latest"
+echo "Pushing image to GAR. Tagged as :latest and :${TAG}"
+docker push "$HOST/$PROJECT/$REPOSITORY/$IMAGE:$TAG"
+docker push "$HOST/$PROJECT/$REPOSITORY/$IMAGE:latest"

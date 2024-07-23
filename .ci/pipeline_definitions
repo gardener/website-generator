@@ -24,7 +24,7 @@ gardener-website-generator:
     head-update:
       steps:
         build:
-          image: 'eu.gcr.io/gardener-project/gardener-website-generator:10.46.0'
+          image: 'europe-docker.pkg.dev/gardener-project/releases/gardener-website-generator:10.46.0'
           vars:
               PUBLISH: "'true'"
               LOCAL_BUILD: "'false'"
