@@ -4,10 +4,6 @@ gardener-website-generator:
     - name: 'gardener_website'
       path: 'gardener/website'
       branch: 'master'
-    - name: 'gardener_documentation'
-      path: 'gardener/documentation'
-      branch: 'master'
-      trigger: true
   jobs:
     head-update:
       steps:
