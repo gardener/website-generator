@@ -1,25 +1,9 @@
 gardener-website-generator:
-  template: 'default'
   base_definition:
-    traits:
-      version: ~
-      scheduling:
-        suppress_parallel_execution: true
-    repo:
-      name: 'gardener_website_generator'
-      trigger: true
-      cfg_name: 'github_com'
     repos:
     - name: 'gardener_website'
       path: 'gardener/website'
       branch: 'master'
-      cfg_name: 'github_com'
-      trigger: false
-    - name: 'gardener_documentation'
-      path: 'gardener/documentation'
-      branch: 'master'
-      cfg_name: 'github_com'
-      trigger: true
   jobs:
     head-update:
       steps:
@@ -28,7 +12,7 @@ gardener-website-generator:
           vars:
               PUBLISH: "'true'"
               LOCAL_BUILD: "'false'"
-          publish_to: ['gardener_website', 'gardener_documentation']
+          publish_to: ['gardener_website']
           cache_paths: ['.docforge']
           notifications_cfg: 'website_maintainers'
       traits:
@@ -43,9 +27,3 @@ gardener-website-generator:
                 - dimitar.kostadinov@sap.com
                 - jordan.jordanov@sap.com
                 - nikolay.boshnakov@sap.com
-    # update-deps:
-    #   traits:
-    #     update_component_deps:
-    #       merge_policy: auto_merge
-    #     cronjob:
-    #       interval: '15m'
