@@ -23,6 +23,9 @@ disableHugoGeneratorInject = true
 
 [menu]
   [[menu.main]]
+      name = "Demo (soon!)"
+      weight = 5
+  [[menu.main]]
       name = "Adopters"
       weight = 10
       url = "/adopter"
