@@ -1,7 +1,8 @@
 document.querySelectorAll(".taxonomy-term").forEach((el) => {
     el.addEventListener("click",(event) => {
-      const roleSelected = event.currentTarget.querySelector(".taxonomy-label").innerHTML
+      const roleSelected = event.currentTarget.innerHTML
       window.sessionStorage.setItem("role_selected",roleSelected)
+      location.reload()
     })
   })
   const taxonomyTerms = Array.from(document.querySelectorAll(".taxonomy-term"))
