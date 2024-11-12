@@ -1,5 +1,5 @@
 {{- $gTags := .Site.Params.googleTagsManager -}}
-{{- $gAnalytics := .Site.GoogleAnalytics -}}
+{{- $gAnalytics := .Site.Config.Services.GoogleAnalytics.ID -}}
 {{- if not $gTags -}}
 {{- else if not $gAnalytics -}}
 {{- else -}}

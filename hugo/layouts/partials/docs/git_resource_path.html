@@ -2,7 +2,7 @@
   {{ with .Path }}
     {{ $url := print "/data/" . ".json"}}
     {{ if (fileExists $url) -}}
-      {{ (getJSON $url).path -}}
+      {{ (resources.Get $url | transform.Unmarshal).path -}}
     {{ end }}
   {{ end }}
 {{ end }}
