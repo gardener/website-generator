@@ -10,7 +10,7 @@
     {{ $contributors = trim $contributors " \n\t"}}
     {{ if gt (len $contributors) 0 }}
     <div class="page-contributors">Contributors to this page
-      <div class="contributors-list">{{- partial "docs/git_author.html" . -}}
+      <div class="contributors-list"> {{ partial "docs/git_author.html" . }}
       </div>
     </div>
     {{else}}
@@ -35,7 +35,7 @@
 
   {{ if ne (len $url) 0 }}
   {{ if (fileExists $url) -}}
-  {{ $jsonFile := (getJSON $url)}}
+  {{ $jsonFile := resources.Get $url | transform.Unmarshal}}
   <!-- Update to use data .json when Docforge updates -->
   {{ $editURL = printf "%s/edit/%s/%s" $jsonFile.weburl "master" $jsonFile.path -}}
   {{ $editURL = trim $editURL " \n\t"}}

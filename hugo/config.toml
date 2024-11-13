@@ -8,7 +8,7 @@ defaultContentLanguageInSubdir= true
 contentDir="content"
 enableGitInfo = true
 enableEmoji = true
-disableKinds = ["taxonomy", "taxonomyTerm"]
+disableKinds = ["taxonomy"]
 
 [taxonomies]
   tag = 'tags'
@@ -53,8 +53,9 @@ disableHugoGeneratorInject = true
       autoHeadingID = true
       autoHeadingIDType = 'github'
       [markup.goldmark.parser.attribute]
-        block = false
+        block = true
         title = true
+        unsafe = true
   [markup.highlight]
     guessSyntax = false
     codeFences = true

@@ -2,7 +2,7 @@ FROM europe-docker.pkg.dev/gardener-project/releases/3rd/alpine:3.20.1 as base
 
 RUN apk add curl
 
-ENV HUGO_VERSION=0.95.0
+ENV HUGO_VERSION=0.137.1
 ENV HUGO_TYPE=_extended
 ENV HUGO_ID=hugo${HUGO_TYPE}_${HUGO_VERSION}
 

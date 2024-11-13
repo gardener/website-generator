@@ -44,7 +44,7 @@ GITHUB_OAUTH_TOKEN=${GITHUB_OAUTH_TOKEN:-$(getGitHubToken github_com)}
 cd "${generatorRepoPath}"
 # Clear from previous runs
 rm -rf "hugo/content"
-rm -rf "hugo/data"
+rm -rf "hugo/assets/data"
 # Docforge prep and run
 if [[ -d "${HOME}/.docforge" ]]; then
   docforgeCacheDir="${HOME}/.docforge"
@@ -63,7 +63,7 @@ docforge \
   -d "hugo/content" \
   --hugo \
   --github-oauth-token-map "github.com=$GITHUB_OAUTH_TOKEN" \
-  --github-info-destination "../data" \
+  --github-info-destination "../assets/data" \
   --cache-dir "$docforgeCacheDir" \
   --skip-link-validation="${SKIP_VALIDATION:-false}"
 # Building 404.js
@@ -81,8 +81,8 @@ if [[ -f content/html/hardened_shoots_report.md ]]; then
   sed -i 's/a{color:inherit;text-decoration:inherit}//' content/docs/security-and-compliance/report.md
   sed -i 's/<div class="tw-content tw-px-6">/<div class="tw-content">/' content/docs/security-and-compliance/report.md
   # workaround for a docforge multisource gitinfo build bug
-  sed -i -n '1,/^}{$/p' data/docs/security-and-compliance/report.md.json
-  sed -i 's/^}{$/}/' data/docs/security-and-compliance/report.md.json
+  sed -i -n '1,/^}{$/p' assets/data/docs/security-and-compliance/report.md.json
+  sed -i 's/^}{$/}/' assets/data/docs/security-and-compliance/report.md.json
 fi
 # Hugo prep and run
 if [ "${LOCAL_BUILD:-true}" = false ]; then
