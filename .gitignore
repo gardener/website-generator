@@ -3,7 +3,7 @@ hugo/content
 hugo/public
 hugo/resources
 hugo/node_modules
-hugo/data
+hugo/assets/data
 hugo/.hugo_build.lock
 hugo/hugo_stats.json
 hugo/package-lock.json
