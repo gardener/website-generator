@@ -87,6 +87,7 @@ fi
 # Hugo prep and run
 if [ "${LOCAL_BUILD:-true}" = false ]; then
   echo "Installing npm dependencies"
+  npm install
   pushd themes/docsy
   npm install
   popd
