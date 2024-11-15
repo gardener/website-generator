@@ -39,4 +39,4 @@ fi
 ctxpath="$(${READLINK_BIN} -f "$(dirname "${0}")/..")"
 
 echo "Building $HOST/$PROJECT/$REPOSITORY/$IMAGE tagged as :$TAG and :latest"
-docker build --no-cache=true -t "$HOST/$PROJECT/$REPOSITORY/$IMAGE:$TAG" -t "$HOST/$PROJECT/$REPOSITORY/$IMAGE:latest" "$ctxpath" | tee /tmp/docker_build_result.log
+docker buildx build --platform linux/amd64,linux/arm64 --no-cache=true -t "$HOST/$PROJECT/$REPOSITORY/$IMAGE:$TAG" -t "$HOST/$PROJECT/$REPOSITORY/$IMAGE:latest" "$ctxpath" | tee /tmp/docker_build_result.log
