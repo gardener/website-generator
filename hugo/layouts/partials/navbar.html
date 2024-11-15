@@ -23,6 +23,9 @@
 	.td-search__input {
 		max-width: 90%;
 	}
+	.td-search:not(:focus-within) {
+		color: #fff !important
+	}
 	</style>
 	<a class="navbar-brand" href="{{ .Site.Home.RelPermalink }}">
 		<span class="navbar-logo">{{ if .Site.Params.ui.navbar_logo }}{{ with resources.Get "icons/logo.svg" }}{{ (
