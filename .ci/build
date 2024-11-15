@@ -87,7 +87,9 @@ fi
 # Hugo prep and run
 if [ "${LOCAL_BUILD:-true}" = false ]; then
   echo "Installing npm dependencies"
+  pushd themes/docsy
   npm install
+  popd
 fi
 # Clear website from previous run
 rm -rf "$website"
