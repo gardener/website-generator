@@ -41,7 +41,7 @@ Before you can setup your local version of the website, you need to have:
 
    `export GIT_OAUTH_TOKEN=<token>`
 
-4. `cd` in hugo directory and run `npm install`
+4. Run `npm install` in `hugo` and `hugo/themes/docsy` 
 
 ### Build Website
 
