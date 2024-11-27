@@ -39,7 +39,7 @@ Before you can setup your local version of the website, you need to have:
 2. Enter `git submodule update --init --recursive`.
 3. Export the following environment variables:
 
-   `export GIT_OAUTH_TOKEN=<token>`
+   `export GITHUB_OAUTH_TOKEN=<token>`
 
 4. Run `npm install` in `hugo` and `hugo/themes/docsy` 
 
