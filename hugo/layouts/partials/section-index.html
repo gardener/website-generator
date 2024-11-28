@@ -28,7 +28,7 @@
                     </h5>
                     <p>
                         {{ .Description | markdownify }}
-                        {{ partial "docs/section-index-element" (dict "categoryMap" $catMap "permalink" .Permalink)}}
+                        {{ partial "section-index-element" (dict "categoryMap" $catMap "permalink" .Permalink)}}
                     </p>
                 </div>
             {{ end }}
