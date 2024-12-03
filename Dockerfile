@@ -20,7 +20,8 @@ COPY --from=base /usr/local/bin/hugo /usr/local/bin/hugo
 
 RUN apk add --update bash asciidoctor libc6-compat libstdc++ gcompat nodejs npm
 
-VOLUME /src
-VOLUME /output
-
 EXPOSE 1313
+
+WORKDIR /hugo
+
+CMD hugo serve $HUGO_FLAGS
