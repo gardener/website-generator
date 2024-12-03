@@ -1,4 +1,5 @@
 .idea
+docforge_config.yaml
 hugo/content
 hugo/public
 hugo/resources

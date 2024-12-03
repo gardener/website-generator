@@ -7,3 +7,8 @@ services:
     - 1313:1313
     volumes:
     - ./hugo:/hugo 
+    secrets:
+    - docforge_config
+secrets:
+  docforge_config:
+    file: ./docforge_config.yaml
