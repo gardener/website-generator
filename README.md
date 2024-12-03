@@ -43,11 +43,19 @@ Before you can setup your local version of the website, you need to have:
 
 4. Run `npm install` in `hugo` and `hugo/themes/docsy` 
 
-### Build Website
+### Build Website Content
 
-1. Run `make build` command
+Run `make build-local`
 
-2. Run `cd hugo && hugo serve`
+### Run web server using the terminal
+
+Run `cd hugo && hugo serve`
+
+#### Run web server using `docker compose up`
+
+1. Initially build a local image `docker build -t testing-website-image .`
+
+2. Run `docker compose up`
 
 ### Test Local Changes
 
