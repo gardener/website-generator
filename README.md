@@ -43,19 +43,27 @@ Before you can setup your local version of the website, you need to have:
 
 4. Run `npm install` in `hugo` and `hugo/themes/docsy` 
 
-### Build Website Content
+### Run using the terminal
 
-Run `make build-local`
+1. Run `make build-local`
 
-### Run web server using the terminal
+2. Run `cd hugo && hugo serve`
 
-Run `cd hugo && hugo serve`
-
-#### Run web server using `docker compose up`
+### Run using `docker compose up`
 
 1. Initially build a local image `docker build -t testing-website-image .`
 
-2. Run `docker compose up`
+2. Provide `docforge_config.yaml`
+``` yaml
+manifest: https://github.com/gardener/documentation/blob/master/.docforge/website.yaml
+destination: content
+hugo: true
+github-oauth-token-map:
+  "github.com": <token>
+skip-link-validation: true
+```
+
+3. Run `docker compose up`
 
 ### Test Local Changes
 
