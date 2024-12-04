@@ -3,6 +3,7 @@ services:
     image: testing-website-image
     environment:
       HUGO_FLAGS: "--bind=0.0.0.0"
+      DOCFORGE_CONFIG: /run/secrets/docforge_config
     ports:
     - 1313:1313
     volumes:
