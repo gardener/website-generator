@@ -24,5 +24,4 @@ EXPOSE 1313
 
 WORKDIR /hugo
 
-ENV DOCFORGE_CONFIG=/run/secrets/docforge_config
 CMD rm -rf content && docforge && hugo serve $HUGO_FLAGS
