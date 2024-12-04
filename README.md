@@ -79,3 +79,22 @@ In order to test local changes, for example [gardener/documentation](https://git
    ```
 4. Run `make build`
 5. Run `cd hugo && hugo serve`
+
+### Local dev using `docker compose up`
+
+If you want to run the web server reflecting local changes done to some locally cloned repositories you need to go trough the following steps:
+
+1. Adapt `compose.yaml` by adding a volume mount entry for each repository
+   ```yaml
+    volumes:
+    - <path_to_cloned_repo_1>:/resourceMappings/<repo_1>
+    - <path_to_cloned_repo_2>:/resourceMappings/<repo_2>
+    - ...
+   ```
+2. Adapt `docforge_config.yaml`
+   ```yaml
+   resourceMappings:
+     <repo_1_url>: /resourceMappings/<repo_1>
+     <repo_2_url>: /resourceMappings/<repo_2>
+     ...
+   ```
