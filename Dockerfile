@@ -15,12 +15,18 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
 FROM europe-docker.pkg.dev/gardener-project/releases/docforge:v0.46.0 as docforge
 FROM europe-docker.pkg.dev/gardener-project/releases/cicd/job-image:latest
 
+ARG DOCSY_VERSION=v0.11.0
+
 COPY --from=docforge /docforge /usr/local/bin/docforge
 COPY --from=base /usr/local/bin/hugo /usr/local/bin/hugo
 
-RUN apk add --update bash asciidoctor libc6-compat libstdc++ gcompat nodejs npm
+RUN apk add --update bash asciidoctor libc6-compat libstdc++ gcompat nodejs npm git
 
 EXPOSE 1313
+
+COPY hugo/package.json hugo/package.json
+
+RUN mkdir -p hugo/themes && cd hugo/themes && git clone https://github.com/google/docsy.git && cd docsy && git checkout "${DOCSY_VERSION}" && cd ../.. && npm install && cd themes/docsy && npm install
 
 WORKDIR /hugo
 
