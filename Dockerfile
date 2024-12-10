@@ -30,4 +30,4 @@ RUN mkdir -p hugo/themes && cd hugo/themes && git clone https://github.com/googl
 
 WORKDIR /hugo
 
-CMD rm -rf content && docforge && hugo serve $HUGO_FLAGS
+CMD rm -rf content && docforge && if [ -n "$BUILD_DESTINATION" ]; then hugo --minify --destination "$BUILD_DESTINATION"; else hugo serve $HUGO_FLAGS; fi
