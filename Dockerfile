@@ -12,7 +12,7 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && mkdir -p /usr/local/bin \
     && mv ./hugo /usr/local/bin/hugo
 
-FROM europe-docker.pkg.dev/gardener-project/releases/docforge:v0.46.0 as docforge
+FROM europe-docker.pkg.dev/gardener-project/releases/docforge:v0.50.0 as docforge
 FROM europe-docker.pkg.dev/gardener-project/releases/cicd/job-image:latest
 
 ARG DOCSY_VERSION=v0.11.0
