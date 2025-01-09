@@ -6,8 +6,6 @@ services:
       DOCFORGE_CONFIG: /run/secrets/docforge_config
     ports:
     - 1313:1313
-    volumes:
-    - ./hugo:/hugo 
     secrets:
     - docforge_config
 secrets:
