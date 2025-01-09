@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-set -eu
-
-sed -i -E 's/docforge:v\S+/docforge:'"$DOCFORGE"'/' Dockerfile
-make image-build "TAG=${WEBSITE}"
-gcloud auth login
-make image-push "TAG=${WEBSITE}"
-sed -i -E 's/gardener-website-generator:\S+/gardener-website-generator:'"${WEBSITE}'"'/' .ci/pipeline_definitions

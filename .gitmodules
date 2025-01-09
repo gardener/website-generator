@@ -1,4 +1,0 @@
-[submodule "hugo/themes/docsy"]
-	path = hugo/themes/docsy
-	url = https://github.com/google/docsy.git
-	branch = main

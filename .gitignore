@@ -1,14 +1,2 @@
-.idea
-docforge_config.yaml
-hugo/content
-hugo/public
-hugo/resources
-hugo/node_modules
-hugo/assets/data
-hugo/.hugo_build.lock
-hugo/hugo_stats.json
-hugo/package-lock.json
-hugo/static/html/hardened_shoots_report.html
-hugo/static/js/404.js
-dev/
+*.yaml
 *.DS_Store
