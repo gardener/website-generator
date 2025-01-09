@@ -51,7 +51,7 @@ Before you can setup your local version of the website, you need to have:
 
 ### Run using `docker compose up`
 
-1. Initially build a local image `docker build -t testing-website-image .`
+1. Initially build a local image `docker build -t testing-website-image .` or `docker build --build-arg ARCH=_linux-arm64 -t testing-website-image .` for arm
 
 2. Provide `docforge_config.yaml`
 ``` yaml
