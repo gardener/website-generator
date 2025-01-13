@@ -6,7 +6,7 @@ languageCode = "en-US"
 defaultContentLanguage = "en"
 defaultContentLanguageInSubdir= false
 contentDir="content"
-enableGitInfo = true
+enableGitInfo = false
 enableEmoji = true
 disableKinds = ["taxonomy"]
 
