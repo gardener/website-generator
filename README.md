@@ -46,10 +46,3 @@ If you want to run the web server reflecting local changes done to some cloned r
      <repo_2_url>: /resourceMappings/<repo_2>
      ...
    ```
-
-If you want to make ad-hock changes to the website add the following volume mount entry. Chaning files in `<path_to_locally_placed_hugo>` will trigger website rebuild:
-
-```yaml
-volumes:
-- <path_to_locally_placed_hugo>:/hugo 
-```
