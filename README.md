@@ -28,7 +28,7 @@ skip-link-validation: true
 
 3. Run `docker compose up`
 
-# Dev using `docker compose up`
+## Local dev using `docker compose up`
 
 If you want to run the web server reflecting local changes done to some cloned repositories you need to go trough the following steps:
 
