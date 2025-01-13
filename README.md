@@ -6,7 +6,7 @@
 
 ## Defining docforge configuration
 
-The image builds the website bundle with the help of a docforge config file. It needs to be mounted to the container and it's path provided via `DOCFORGE_CONFIG` environment variable. It contains information like the docforge manifest URL, github auth tokens, content file formats and any docforge customisations.
+The image builds the website bundle with the help of a docforge config file. It needs to be mounted to the container and it's path provided via `DOCFORGE_CONFIG` environment variable. It contains information like the docforge manifest URL, github auth tokens, content file formats and any docforge customisations ([example](#local-web-server-using-docker-compose-up)).
 
 ## Dependency updates
 
