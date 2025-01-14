@@ -1,3 +1,17 @@
+# Hugo website dev and maintenance
+
+## Defining Hugo's directory structure
+
+[Hugo's directory structure](https://gohugo.io/getting-started/directory-structure/) is defined via the docforge manifest ([example](https://github.com/gardener/documentation/blob/master/.docforge/hugo.yaml)).
+
+## Defining docforge configuration
+
+The image builds the website bundle with the help of a docforge config file. It needs to be mounted to the container and it's path provided via `DOCFORGE_CONFIG` environment variable. It contains information like the docforge manifest URL, github auth tokens, content file formats and any docforge customisations ([example](#local-web-server-using-docker-compose-up)).
+
+## Dependency updates
+
+Change `europe-docker.pkg.dev/gardener-project/releases/docforge:<DOCFORGE_VERSION>`, `HUGO_VERSION` and `DOCSY_VERSION` to the desired version and rebuild the image.
+
 # Local web server using `docker compose up`
 
 1. Initially build a local image `docker build -t testing-website-image .` or `docker build --build-arg ARCH=_linux-arm64 -t testing-website-image .` for arm
@@ -14,7 +28,7 @@ skip-link-validation: true
 
 3. Run `docker compose up`
 
-# Dev using `docker compose up`
+## Local dev using `docker compose up`
 
 If you want to run the web server reflecting local changes done to some cloned repositories you need to go trough the following steps:
 
@@ -32,10 +46,3 @@ If you want to run the web server reflecting local changes done to some cloned r
      <repo_2_url>: /resourceMappings/<repo_2>
      ...
    ```
-
-If you want to make ad-hock changes to the website add the following volume mount entry. Chaning files in `<path_to_locally_placed_hugo>` will trigger website rebuild:
-
-```yaml
-volumes:
-- <path_to_locally_placed_hugo>:/hugo 
-```
