@@ -24,7 +24,7 @@
   display: none;
   position: absolute;
   background-color: #0c8161 !important;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  border-radius: 2px;
   z-index: 1;
 }
 
@@ -38,9 +38,10 @@
   text-decoration: none;
   display: block;
   background-color: #0c8161;
+  font-weight: 700;
 }
 
-.dropdown-content a:hover {background-color: #0f674e; color: white; font-weight: 700;}
+.dropdown-content a:hover {background-color: #0f674e; color: white; text-decoration: none;}
 
 .dropdown:hover .dropdown-content {display: block;}
 
