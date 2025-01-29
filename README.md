@@ -6,29 +6,17 @@
 
 ## Defining docforge configuration
 
-The image builds the website bundle with the help of a docforge config file. It needs to be mounted to the container and it's path provided via `DOCFORGE_CONFIG` environment variable. It contains information like the docforge manifest URL, github auth tokens, content file formats and any docforge customisations ([example](#local-web-server-using-docker-compose-up)).
+The image builds the website bundle with the help of a docforge config file. It needs to be mounted to the container and it's path provided via `DOCFORGE_CONFIG` environment variable. It contains information like the docforge manifest URL, github auth tokens, content file formats and any docforge customisations.
 
-## Dependency updates
+## Building the image locally
 
-Change `europe-docker.pkg.dev/gardener-project/releases/docforge:<DOCFORGE_VERSION>`, `HUGO_VERSION` and `DOCSY_VERSION` to the desired version and rebuild the image.
+Initially build a local image `docker build -t testing-website-image .` or `docker build --build-arg ARCH=_linux-arm64 -t testing-website-image .` for arm.
 
-# Local web server using `docker compose up`
+## Ability to run multiple websites locally
 
-1. Initially build a local image `docker build -t testing-website-image .` or `docker build --build-arg ARCH=_linux-arm64 -t testing-website-image .` for arm
+Multiple docforge configurations can be placed in this directory with a `.yaml` extension. To run a specific website just place it's content to `docforge_config.yaml` and run `docker compose up`. Before switching to a new website configuration run `docker compose down`.
 
-2. Provide `docforge_config.yaml`
-``` yaml
-manifest: https://github.com/gardener/documentation/blob/master/.docforge/website.yaml
-destination: content
-hugo: true
-github-oauth-token-map:
-  "github.com": <token>
-skip-link-validation: true
-```
-
-3. Run `docker compose up`
-
-## Local dev using `docker compose up`
+### Local dev using `docker compose up`
 
 If you want to run the web server reflecting local changes done to some cloned repositories you need to go trough the following steps:
 
@@ -46,3 +34,7 @@ If you want to run the web server reflecting local changes done to some cloned r
      <repo_2_url>: /resourceMappings/<repo_2>
      ...
    ```
+
+## Dependency updates
+
+Change `europe-docker.pkg.dev/gardener-project/releases/docforge:<DOCFORGE_VERSION>`, `HUGO_VERSION` and `DOCSY_VERSION` to the desired version and rebuild the image.

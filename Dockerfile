@@ -2,10 +2,10 @@ FROM europe-docker.pkg.dev/gardener-project/releases/3rd/alpine:3.20.1 as base
 
 RUN apk add curl
 
-ENV HUGO_VERSION=0.137.1
-ENV HUGO_TYPE=_extended
+ARG HUGO_VERSION=0.137.1
+ARG HUGO_TYPE=_extended
 ARG ARCH=_Linux-64bit
-ENV HUGO_ID=hugo${HUGO_TYPE}_${HUGO_VERSION}
+ARG HUGO_ID=hugo${HUGO_TYPE}_${HUGO_VERSION}
 
 RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/${HUGO_ID}${ARCH}.tar.gz \
     && curl -fsSL --compressed https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_${HUGO_VERSION}_checksums.txt | grep " ${HUGO_ID}${ARCH}.tar.gz\$" | sha256sum -c - \
@@ -13,7 +13,7 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && mkdir -p /usr/local/bin \
     && mv ./hugo /usr/local/bin/hugo
 
-FROM europe-docker.pkg.dev/gardener-project/releases/docforge:v0.50.0 as docforge
+FROM europe-docker.pkg.dev/gardener-project/releases/docforge:v0.51.0 as docforge
 FROM europe-docker.pkg.dev/gardener-project/releases/cicd/job-image:latest
 
 ARG DOCSY_VERSION=v0.11.0
@@ -25,10 +25,8 @@ RUN apk add --update bash asciidoctor libc6-compat libstdc++ gcompat nodejs npm 
 
 EXPOSE 1313
 
-COPY hugo/package.json hugo/package.json
+COPY package.json hugo/package.json
 
 RUN mkdir -p hugo/themes && cd hugo/themes && git clone https://github.com/google/docsy.git && cd docsy && git checkout "${DOCSY_VERSION}" && cd ../.. && npm install && cd themes/docsy && npm install
 
-WORKDIR /hugo
-
-CMD rm -rf content && if [ -n "$DOCFORGE_CONFIG_PATH" ]; then export DOCFORGE_CONFIG="/${DOCFORGE_CONFIG_PATH}/config"; fi ; docforge && if [ -n "$WEBSITE_BUILD_PATH" ]; then hugo --minify --destination "$WEBSITE_BUILD_PATH"; else hugo serve $HUGO_FLAGS; fi
+CMD if [ -n "$DOCFORGE_CONFIG_PATH" ]; then export DOCFORGE_CONFIG="/${DOCFORGE_CONFIG_PATH}/config"; fi ; cd / && docforge && cd hugo && if [ -n "$WEBSITE_BUILD_PATH" ]; then hugo --minify --destination "$WEBSITE_BUILD_PATH"; else hugo serve $HUGO_FLAGS; fi
