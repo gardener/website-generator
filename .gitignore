@@ -10,4 +10,5 @@ hugo/package-lock.json
 hugo/static/html/hardened_shoots_report.html
 hugo/static/js/404.js
 dev/
+*.yaml
 *.DS_Store
