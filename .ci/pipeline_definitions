@@ -5,6 +5,21 @@ gardener-website-generator:
       path: 'gardener/website'
       branch: 'master'
   jobs:
+    release:
+      traits:
+        version:
+          preprocess: "finalize"
+        release:
+          nextversion: "bump_minor"
+        publish:
+          oci-builder: docker-buildx
+          platforms:
+          - linux/amd64
+          - linux/arm64
+          dockerimages:
+            website-generator:
+              tag_as_latest: True
+              image: "europe-docker.pkg.dev/gardener-project/releases/gardener-website-generator"
     head-update:
       steps:
         build:
