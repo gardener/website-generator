@@ -2,7 +2,7 @@ FROM europe-docker.pkg.dev/gardener-project/releases/3rd/alpine:3.20.1 as base
 
 RUN apk add curl
 
-ARG HUGO_VERSION=0.137.1
+ARG HUGO_VERSION=0.138.0
 ARG HUGO_TYPE=_extended
 ARG ARCH=_Linux-64bit
 ARG HUGO_ID=hugo${HUGO_TYPE}_${HUGO_VERSION}
@@ -13,7 +13,7 @@ RUN curl -fsSLO --compressed https://github.com/gohugoio/hugo/releases/download/
     && mkdir -p /usr/local/bin \
     && mv ./hugo /usr/local/bin/hugo
 
-FROM europe-docker.pkg.dev/gardener-project/releases/docforge:v0.52.0 as docforge
+FROM europe-docker.pkg.dev/gardener-project/releases/docforge:v0.53.0 as docforge
 FROM europe-docker.pkg.dev/gardener-project/releases/cicd/job-image:latest
 
 ARG DOCSY_VERSION=v0.11.0
