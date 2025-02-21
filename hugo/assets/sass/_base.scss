@@ -10,6 +10,8 @@ body {
   background-color: #fff;
   color: $font-color;
   transition: all 0.5s;
+  overflow-x: hidden;
+  width: 100%;
 }
 .brandingColor {
   color: $color-highlight;
