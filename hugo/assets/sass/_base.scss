@@ -418,3 +418,23 @@ blockquote {
   height: auto !important;
   max-height: 100% !important;
 }
+
+li.td-sidebar-nav__section.without-child > label > a {
+  color: rgb(59,59,59);
+  font-weight: 400;
+
+  &:focus,
+  &:hover {
+    color: var(--bs-link-color);
+  }
+
+  &.active {
+    font-weight: $font-weight-bold;
+  }
+}
+
+.td-toc {
+  a {
+    font-weight: $font-weight-medium;
+  }
+}
