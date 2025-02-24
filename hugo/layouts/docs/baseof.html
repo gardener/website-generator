@@ -45,20 +45,4 @@
   <link rel="stylesheet" href='{{"css/font-awesome.css" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'>
   <script src='{{"/js/persona-filtering.js" | relURL }}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
   <script src='{{"js/resizable-sidebar.js" | relURL}}{{ if $assetBusting }}?{{ now.Unix }}{{ end }}'></script>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      $('pre').each(function() {
-                const $container = $(this);
-                const $target = $container.find('.fa-copy');
-
-                console.log($target);
-
-                $container.scroll(function() {
-                    const scrollLeft = $container.scrollLeft();
-                    console.log(scrollLeft);
-                    $target.stop().animate({"marginLeft": scrollLeft + "px !important"}, "slow");
-                });
-            });
-    });
-</script>
 </html>
