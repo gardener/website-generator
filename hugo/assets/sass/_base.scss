@@ -438,3 +438,15 @@ li.td-sidebar-nav__section.without-child > label > a {
     font-weight: $font-weight-medium;
   }
 }
+
+.main-content-container {
+  display: flex !important;
+}
+
+aside {
+  flex: 1 1 20% !important;
+}
+
+aside.td-sidebar-toc {
+  min-width: 16% !important;
+}
