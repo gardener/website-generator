@@ -102,3 +102,10 @@ pre.mermaid {
     max-height: none !important;
   }
 }
+
+button.fas.fa-copy.btn.btn-sm.td-click-to-copy {
+  position: absolute !important;
+  background-color: #fff !important;
+  z-index: 10 !important;
+  margin-top: 5px !important;
+}
