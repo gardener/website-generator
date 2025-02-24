@@ -414,11 +414,6 @@ blockquote {
   }
 }
 
-.td-sidebar-nav, .td-sidebar {
-  height: auto !important;
-  max-height: 100% !important;
-}
-
 li.td-sidebar-nav__section.without-child > label > a {
   color: rgb(59,59,59);
   font-weight: 400;
@@ -445,8 +440,19 @@ li.td-sidebar-nav__section.without-child > label > a {
 
 aside {
   flex: 1 1 20% !important;
+  overflow-y: hidden;
+}
+
+main {
+  min-width: 50% !important;
 }
 
 aside.td-sidebar-toc {
   min-width: 16% !important;
+}
+
+.td-sidebar-nav, .td-sidebar {
+  height: auto !important;
+  max-height: 100% !important;
+  align-self: flex-start !important;
 }
