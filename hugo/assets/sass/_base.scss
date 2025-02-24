@@ -454,5 +454,14 @@ aside.td-sidebar-toc {
 .td-sidebar-nav, .td-sidebar {
   height: auto !important;
   max-height: 100% !important;
-  align-self: flex-start !important;
+  padding-top: 5px !important;
+}
+
+.fa-copy::before {
+  font-family: "FontAwesome";
+  content: "\f0c5"; 
+}
+
+.fa-copy {
+  position: fixed !important;
 }
