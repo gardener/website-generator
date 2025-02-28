@@ -48,10 +48,22 @@
       </li>
     </ul>
     {{with .Site.Params.copyright}}
-    <span class="copyright">{{.}} {{with $.Site.Params.privacyPolicyURL}}<a href='{{.}}'>
-        Privacy policy
+    <span class="copyright">{{.}} {{with $.Site.Params.termsOfUseURL}}
+      <a href='{{.}}'>
+        Terms of Use
         <i class="fa fa-external-link" aria-hidden="true"></i>
-      </a>{{end}}</span>
+      </a>
+      | 
+      <a href='{{.}}'>
+        Privacy Statement
+        <i class="fa fa-external-link" aria-hidden="true"></i>
+      </a>
+      | 
+      <a href='{{.}}'>
+        Legal Disclosure
+        <i class="fa fa-external-link" aria-hidden="true"></i>
+    </a>
+    {{end}}</span>
     {{end}}
   </div>
 </footer>
