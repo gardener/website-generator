@@ -487,6 +487,7 @@ aside.td-sidebar-toc {
   .blocks {
     display: block;
     gap: 70px;
+    margin-bottom: 30px;
   }
   .block {
     width: 350px;
@@ -498,14 +499,11 @@ aside.td-sidebar-toc {
     text-align: center;
     margin: 10px;
     cursor: pointer;
-    a {
-      justify-self: center;
-      margin-left: 20px;
-    }
   }
   .bio-icon {
     height: 32px;
     max-width: unset;
     margin-left: 10px;
+    margin-right: 20px;
   }
 }
