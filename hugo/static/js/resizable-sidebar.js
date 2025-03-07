@@ -1,3 +1,15 @@
+function isMobileDevice() {
+  return /Mobi|Android/i.test(navigator.userAgent);
+}
+
+$(document).ready(() => {
+  // Check if the device is mobile
+  if (isMobileDevice()) {
+      const targetElement = document.querySelector("aside");
+      if (targetElement) {
+          $(targetElement).css("display", "none");
+      }
+  } else {
 const selectTarget = (fromElement, selector) => {
     if (!(fromElement instanceof HTMLElement)) {
       return null;
@@ -95,3 +107,4 @@ $(document).ready( () => {
     }
     $(document.body).css("display","block")
 })  
+}});
