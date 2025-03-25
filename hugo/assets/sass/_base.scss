@@ -430,6 +430,7 @@ li.td-sidebar-nav__section.without-child > label > a {
 .td-toc {
   a {
     font-weight: $font-weight-medium;
+    display: inline;
   }
 }
 
