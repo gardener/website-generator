@@ -1,3 +1,13 @@
+const params = new URLSearchParams(window.location.search);
+const roleParam = params.get("role");
+if (roleParam) {
+  const allowedRoles = Array.from(document.querySelectorAll(".taxonomy-term"))
+    .map(el => el.innerHTML);
+  if (allowedRoles.includes(roleParam) && window.sessionStorage.getItem("role_selected") !== roleParam) {
+    window.sessionStorage.setItem("role_selected", roleParam);
+  }
+}
+
 document.querySelectorAll(".taxonomy-term").forEach((el) => {
     el.addEventListener("click",(event) => {
       const roleSelected = event.currentTarget.innerHTML
