@@ -29,6 +29,11 @@
 					  <a class="taxonomy-term" href="/docs">All</a>
 					</div>
 				</div>
+				{{ else if eq .Name "Join us on"}}
+				<a href="https://join.slack.com/t/gardener-cloud/shared_invite/zt-33c9daems-3oOorhnqOSnldZPWqGmIBw" class="btn btn-primary slack-button">
+					<span>{{ .Name }}</span>
+					<img src="images/slack-icon.svg" alt="Slack">
+				</a>
 				{{ else }}
 				<a class="nav-link{{if $active }} active{{end}}"
 					href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}" {{ if ne
