@@ -45,7 +45,6 @@ disableHugoGeneratorInject = true
   [[menu.main]]
       name = "Join us on"
       weight = 60
-      url = "https://demo.gardener.cloud"
 
 
 
