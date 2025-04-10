@@ -21,16 +21,17 @@
 				{{ $baseurl := urls.Parse $.Site.Params.Baseurl }}
 				{{ if eq .Name "Documentation" }}
 				<div class="dropdown">
-					<a href="/docs" class="nav-link">Documentation</a>
+					<a href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}" class="nav-link">Documentation</a>
 					<div class="dropdown-content">
-					  <a class="taxonomy-term" href="/docs">Users</a>
-					  <a class="taxonomy-term" href="/docs">Operators</a>
-					  <a class="taxonomy-term" href="/docs">Developers</a>
-					  <a class="taxonomy-term" href="/docs">All</a>
+					  <a class="taxonomy-term" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}">Users</a>
+					  <a class="taxonomy-term" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}">Operators</a>
+					  <a class="taxonomy-term" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}">Developers</a>
+					  <a class="taxonomy-term" href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}">All</a>
 					</div>
 				</div>
 				{{ else if eq .Name "Join us on"}}
-				<a href="https://join.slack.com/t/gardener-cloud/shared_invite/zt-33c9daems-3oOorhnqOSnldZPWqGmIBw" class="btn btn-primary slack-button">
+				<a href="{{ with .Page }}{{ .RelPermalink }}{{ else }}{{ .URL | relLangURL }}{{ end }}" {{ if ne
+					$url.Host $baseurl.Host }}target="_blank" {{ end }} class="btn btn-primary slack-button">
 					<span>{{ .Name }}</span>
 					<img src="images/slack-icon.svg" alt="Slack">
 				</a>
