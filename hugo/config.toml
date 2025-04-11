@@ -24,24 +24,28 @@ disableHugoGeneratorInject = true
 [menu]
   [[menu.main]]
       name = "Demo"
-      weight = 5
+      weight = 10
       url = "https://demo.gardener.cloud"
   [[menu.main]]
       name = "Adopters"
-      weight = 10
+      weight = 20
       url = "/adopter"
   [[menu.main]]
       name = "Documentation"
-      weight = 20
+      weight = 30
       url = "/docs"
   [[menu.main]]
       name = "Blogs"
-      weight = 30
+      weight = 40
       url = "/blog"
   [[menu.main]]
       name = "Community"
-      weight = 40
+      weight = 50
       url = "/community"
+  [[menu.main]]
+      name = "Join us on"
+      weight = 60
+      url = "https://join.slack.com/t/gardener-cloud/shared_invite/zt-33c9daems-3oOorhnqOSnldZPWqGmIBw"
 
 
 
