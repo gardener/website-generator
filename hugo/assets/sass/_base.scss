@@ -566,8 +566,8 @@ aside.td-sidebar-toc {
 }
 
 // Slack Button
-.slack-button {
-  display: flex;
+a.slack-button {
+  display: flex !important;
   align-items: center;
   justify-content: center;
   border-radius: 25px;
@@ -576,6 +576,7 @@ aside.td-sidebar-toc {
   background-color: $primary;
   padding: 0.5rem 1rem;
   font-weight: $font-weight-bold;
+  height: 35px;
 
   span {
     margin-right: 0.5rem;
@@ -589,5 +590,11 @@ aside.td-sidebar-toc {
   &:hover {
     background-color: darken($primary, 10%);
     text-decoration: none;
+  }
+}
+
+.td-content {
+  .d-print-none {
+    display: none;
   }
 }
