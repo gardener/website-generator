@@ -1,3 +1,48 @@
+function isMobileDevice() {
+    return window.innerWidth <= 768;
+}
+
+function createDropdown() {
+    const navItems = document.querySelectorAll('.nav-item');
+    if (navItems.length == 6 && !isMobileDevice()) {
+        const dropdownMenu = document.createElement('div');
+        dropdownMenu.className = 'dropdown-content';
+
+        const dropdownItems = [
+            { text: 'Users', href: '/docs' },
+            { text: 'Operators', href: '/docs' },
+            { text: 'Developers', href: '/docs' },
+            { text: 'All', href: '/docs' }
+        ];
+
+        dropdownItems.forEach(item => {
+            const a = document.createElement('a');
+            a.className = 'taxonomy-term';
+            a.href = item.href;
+            a.textContent = item.text;
+
+            a.addEventListener('click', function(event) {
+                const allItems = dropdownMenu.querySelectorAll('.taxonomy-term');
+                allItems.forEach(item => item.classList.remove('selectedTaxonomy'));
+                this.classList.add('selectedTaxonomy');
+            });
+
+            dropdownMenu.appendChild(a);
+        });
+
+        navItems[2].appendChild(dropdownMenu);
+
+        navItems[2].classList.add('dropdown');
+        const navLink = navItems[2].querySelector('.nav-link');
+        navLink.classList.add('dropdown-toggle');
+        navLink.setAttribute('data-toggle', 'dropdown');
+        navLink.setAttribute('aria-haspopup', 'true');
+        navLink.setAttribute('aria-expanded', 'false');
+    }
+}
+
+createDropdown();
+
 document.querySelectorAll(".taxonomy-term").forEach((el) => {
     el.addEventListener("click",(event) => {
       const roleSelected = event.currentTarget.innerHTML
@@ -278,7 +323,7 @@ function shouldHide(href) {
     const personas = linkToPersona[href];
     // If there are no personas associated with the href, do not hide
     if (!personas) {
-        return false;
+        return true;
     }
     // If the selected persona is null or "All", do not hide
     if (selectedPersona == null || selectedPersona === "All") {
