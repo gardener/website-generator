@@ -43,6 +43,11 @@ function createDropdown() {
 
 createDropdown();
 
+const currentPath = window.location.pathname;
+
+const searchString = "/docs/";
+if (currentPath.includes(searchString)){
+
 document.querySelectorAll(".taxonomy-term").forEach((el) => {
     el.addEventListener("click",(event) => {
       const roleSelected = event.currentTarget.innerHTML
@@ -323,7 +328,7 @@ function shouldHide(href) {
     const personas = linkToPersona[href];
     // If there are no personas associated with the href, do not hide
     if (!personas) {
-        return true;
+        return false;
     }
     // If the selected persona is null or "All", do not hide
     if (selectedPersona == null || selectedPersona === "All") {
@@ -340,3 +345,5 @@ Array.from(document.querySelectorAll(".td-sidebar-nav__section")).filter(el => {
     const href = el.querySelector("a").getAttribute("href");    
     return shouldHide(href);
 }).forEach(bel => bel.style.display = "none");
+
+}
