@@ -557,3 +557,17 @@ a.slack-button {
 .td-page-meta__view, .td-page-meta__child, .td-page-meta__project-issue, .td-page-meta__issue {
   display: none !important;
 }
+
+@media (max-width: 768px) {
+  .td-navbar-nav-scroll {
+    height: 2.8rem !important;
+  }
+  .navbar-nav {
+    padding-bottom: 0px !important;
+    overflow-x: scroll !important;
+  }
+}
+
+.navbar-brand__name {
+  font-weight: 400 !important;
+}
