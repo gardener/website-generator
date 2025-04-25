@@ -68,8 +68,6 @@ disableHugoGeneratorInject = true
     tabWidth = 4
 
 [params]
-enable_personas = true
-enable_news = false
 github_repo = "https://github.com/gardener/website-generator"
 # Enables "create project issue" github_project_repo = "https://github.com/gardener/website-generator"
 defaultURL = "https://github.com/gardener/documentation/tree/master/website/"
