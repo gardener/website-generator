@@ -19,7 +19,7 @@ getGitHubToken() {
 
 websiteRepoPath=$(readlink -f ${GARDENER_WEBSITE_PATH})
 website="${websiteRepoPath}/docs"
-repoPath="$(readlink -f ${GARDENER_WEBSITE_GENERATOR_PATH})"
+repoPath="$(readlink -f "$(dirname "${0}")/..")"
 pushd "$repoPath"
 # Moving hugo to repo for building
 mv /hugo .
