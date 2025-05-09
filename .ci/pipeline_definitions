@@ -25,10 +25,7 @@ gardener-website-generator:
     head-update:
       steps:
         build:
-          image: 'europe-docker.pkg.dev/gardener-project/releases/gardener-website-generator:10.48.0'
-          vars:
-              PUBLISH: "'true'"
-              LOCAL_BUILD: "'false'"
+          image: 'europe-docker.pkg.dev/gardener-project/releases/gardener-website-generator:latest'
           publish_to: ['gardener_website']
           cache_paths: ['.docforge']
           notifications_cfg: 'website_maintainers'
@@ -44,3 +41,4 @@ gardener-website-generator:
                 - dimitar.kostadinov@sap.com
                 - jordan.jordanov@sap.com
                 - nikolay.boshnakov@sap.com
+                - rada.dimitrova@sap.com
